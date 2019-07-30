@@ -1,0 +1,124 @@
+a:link {text-decoration:none;
+	color:#353535;
+	}
+a:visited {text-decoration:none;
+	color:#353535;
+	}
+a:hover {text-decoration:none;
+	color:#353535;
+	}
+a:active {
+	text-decoration:none;
+	color:#353535;
+	}
+body {	font-size:10px;
+	font-family:Verdana;
+	background:#ededed;
+	margin:0px;
+	padding:3px;
+	}
+h2	{font-size:14px;
+	font-family:Verdana;
+	}
+.tabs a {text-decoration:none;
+	border:solid 1px #005119;
+	background:#d9d9d9;
+	padding-right:3px;
+	}
+.tabs a img { border:0px; }
+.tabs a:hover{
+	background:#F7F7F7;
+	}
+.search{text-decoration:none;
+	border:solid 1px black;
+	background:#F7F7F7;
+	padding-left:2px;
+	padding-right:2px;
+	}
+.search_selected{text-decoration:none;
+	border:solid 1px black;
+	background:#d9d9d9;
+	padding-left:2px;
+	padding-right:2px;
+	}
+table {	font-size:10px;
+	font-family:Verdana;
+	border:solid 0px #005119;
+	empty-cells:show;
+	border-spacing:0.1cm;
+	padding:1px;
+	}
+th {	border-bottom:solid 2px #999999;
+	border-right:solid 1px #999999;
+	border-left:solid 1px #000000;
+	border-top:solid 1px #000000;
+	text-align:center;
+	background:#ededed;
+	padding:1px;
+	}
+td {	border-bottom:solid 1px #999999;
+	border-right:solid 1px #999999;
+	border-left:solid 1px #999999;
+	border-top:solid 1px #999999;
+	background:#F7F7F7;
+	vertical-align:middle;
+	text-align:left;
+	padding:1px;
+	}
+td.right{text-align:right;}
+td.link {border:0px;
+	background:#F7F7F7;
+	vertical-align:middle;
+	text-align:left;
+	padding:1px;
+	}
+form {	padding:0px;
+	margin:1px;
+	}
+input {	font-size:10px;
+	font-family:Verdana;
+	background:#F7F7F7;
+	border:solid 1px #999999;
+	}
+select {font-size:10px;
+	font-family:Verdana;
+	background:#F7F7F7;
+	border:solid 1px #999999;
+	}
+textarea {font-size:10px;
+	font-family:Verdana;
+	background:#F7F7F7;
+	border:solid 1px #999999;
+	}
+div.infobox {margin-left:12px;
+	border-left:2px solid black;
+	display:none;
+	}
+.authors{ text-decoration:underline; }
+.menuicon ul.menu{ position:absolute;
+	display:none;
+	list-style-type:none;
+	width:150px;
+	margin:-2px 0px 0px 5px;
+	padding:0px;
+	border:1px solid black;
+	background: #F7F7F7;
+	}
+.menuicon:hover ul.menu { display:block; }
+.menuicon ul.menu li {
+	margin:2px;
+	}
+.menuicon ul.menu li:hover {
+	background: #ededed;
+	}
+ul.mini {	list-style-type:none;
+	padding:1px;
+	margin:2px;
+	border:solid 1px #999999;
+	background:#F7F7F7;
+	}
+ul.mini li { padding:1px; }
+h3.mini { margin:2px;
+	padding:1px;
+	font-size:11px;
+	}

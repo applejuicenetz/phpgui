@@ -1,0 +1,186 @@
+<?php
+error_reporting(0);
+
+Header("Cache-Control: no-cache");
+Header('Content-Type: text/html; charset=UTF-8');
+session_start();
+$_SESSION = array();	//session daten alle loeschen
+
+include_once "vars.php";
+
+
+echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
+	."\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+
+//sprache
+	if(!empty($_GET['c_lang'])){
+		$_GET['c_lang']=str_replace("/",'',$_GET['c_lang']);
+		$_GET['c_lang']=str_replace("\\",'',$_GET['c_lang']);
+	}
+	if(empty($_GET['c_lang']) || !preg_match('/\.xml$/i',$_GET['c_lang'])
+			|| !file_exists("language/".$_GET['c_lang'])){
+		$language_xml="language/".$standard_language_xml;
+	}else{
+		$language_xml="language/".$_GET['c_lang'];
+	}
+
+//sprachdatei lesen
+//------------------
+
+	$_SESSION['language']=array();
+	function startLanguageElement($parser, $name, $attrs) {
+		$keys=array_keys($attrs);
+		$_SESSION['language'][$name]=array();
+		foreach($keys as $l){
+			$_SESSION['language'][$name][$l]=$attrs[$l];
+		}
+	}
+
+	function endLanguageElement($parser, $name) {}
+
+	$language_file = @file($language_xml);
+	$language_file = join("",$language_file);
+		/*echo "<!--";
+		echo $language_file;
+		echo "\n-->\n\n";*/
+	$language_parser = xml_parser_create();
+	xml_set_element_handler($language_parser,
+		"startLanguageElement","endLanguageElement");
+	xml_parse($language_parser, $language_file);
+	xml_parser_free($language_parser);
+
+//------------------
+
+include_once "main/subs.php";
+
+//style
+	$styles_liste=dirlisting("style","php");
+	if(empty($_GET['c_style'])
+		|| !in_array($_GET['c_style'],$styles_liste[0])){
+		$_SESSION['stylefile']=$standard_stylefile;
+	}else{
+		$_SESSION['stylefile']=$_GET['c_style'];
+	}
+	include_once "style/".$_SESSION['stylefile'];
+	$_SESSION['stylesheet']="<link rel=\"stylesheet\" type=\"text/css\""
+		." href=\"../style/".$stylesheet."\" />\n";
+		
+$core_standard_pass="";
+
+//core daten aus url uebernehmen
+if(isset($_GET['l'])) {
+	$login_data = base64_decode(trim($_GET['l']));
+	if(strstr($login_data,'|')) {
+		$login_data = explode('|',$login_data);
+		if(count($login_data) == 3) {
+			$core_standard_ip=$login_data[0];
+			$core_standard_xml_port=$login_data[1];
+			$core_standard_pass=$login_data[2];
+		}
+	}
+}
+
+echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">
+<head>
+<title>php-applejuice</title>\n";
+echo "<link rel=\"stylesheet\" type=\"text/css\""
+	." href=\"style/".$stylesheet."\" />\n";
+echo '<style type="text/css">
+select {width:100%;}
+</style>';
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+<meta http-equiv=\"Cache-Control\" content=\"no-cache\" />\n";
+echo "</head>
+<body onload=\"document.loginform.cpass.focus()\">
+<div align=\"center\">";
+
+//testen, ob zlib funzt
+if($_SESSION['phpaj']['zipped'] && !function_exists("gzuncompress")){
+	$_SESSION['phpaj']['zipped']=0;
+	echo "<span style=\"background: #FF0000\">"
+		.$_SESSION['language']['ERROR']['GZIP_FAILED']."</span><br>";
+}
+	
+//testen, ob gd funzt
+if($_SESSION['phpaj']['progressbars_type']==1 
+		&& !function_exists("imagestring")){
+	$_SESSION['phpaj']['progressbars_type']=2;
+	echo "<span style=\"background: #FF0000\">"
+		.$_SESSION['language']['ERROR']['GD_FAILED']."</span><br>";
+}
+
+echo "<h2>".$_SESSION['language']['LOGIN']['HEADLINE']."</h2>\n";
+
+echo "<div>".$phpguiversion."</div>\n";
+
+echo "<table><tr><td>"
+	.$_SESSION['language']['LOGIN']['TEXT']
+	."</td></tr></table>\n"
+	."<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\" autocomplete=\"off\">\n"
+	."<input type=\"hidden\" name=\"reloadnews\" value=\""
+	.$start_shownews."\" /><input type=\"hidden\" name=\"reloadshare\" "
+	."value=\"".$start_showshareinfo."\" />\n"
+	."<table>\n";
+
+echo "<tr><td><label for=\"ip\">"
+	.$_SESSION['language']['LOGIN']['CORE_IP']."</label>:</td>"
+	."<td><input id=\"ip\" name=\"ip\" value=\"".$core_standard_ip."\" required />"
+	."</td></tr>\n";
+echo "<tr><td><label for=\"port\">"
+	.$_SESSION['language']['LOGIN']['CORE_XML_PORT']."</label>:</td>"
+	."<td><input id=\"port\" name=\"port\" type=\"number\" value=\"".$core_standard_xml_port."\" required />"
+	."</td></tr>\n";
+echo "<tr><td><label for=\"cpass\">"
+	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>:</td>"
+	."<td><input id=\"cpass\" type=\"password\" name=\"cpass\" value=\""
+	.$core_standard_pass."\" autofocus required /></td></tr>\n";
+
+//style-auswahl
+	echo "<tr><td><label for=\"c_style\">"
+		.$_SESSION['language']['LOGIN']['GUI_STYLE']."</label>:</td>"
+		."<td><select id=\"c_style\" name=\"c_style\" size=\"1\" onchange=\""
+		."window.location.href='index.php?c_style='"
+		."+document.forms[0].c_style.value+'&amp;c_lang='"
+		."+document.forms[0].c_lang.value+'&amp;".SID."';\">\n";
+	for($i=0;$i<count($styles_liste[0]);$i++){
+		echo "<option value='".$styles_liste[0][$i]."'";
+		if($styles_liste[0][$i]==$_SESSION['stylefile'])
+			echo " selected=\"selected\"";
+		echo ">".$styles_liste[1][$i]."</option>\n";
+	}
+	echo "</select></td></tr>\n";
+
+//sprach-auswahl
+	echo "<tr><td><label for=\"c_lang\">"
+		.$_SESSION['language']['LOGIN']['GUI_LANGUAGE']."</label>:</td>"
+		."<td><select id=\"c_lang\" name=\"c_lang\" size=\"1\" onchange=\""
+		."window.location.href='index.php?c_lang='"
+		."+document.forms[0].c_lang.value+'&amp;c_style='"
+		."+document.forms[0].c_style.value+'&amp;".SID."';\">\n";
+	$lang_liste=dirlisting("language","xml");
+	for($i=0;$i<count($lang_liste[0]);$i++){
+		echo "<option value=\"".$lang_liste[0][$i]."\"";
+		if("language/".$lang_liste[0][$i]==$language_xml)
+			echo " selected=\"selected\"";
+		echo ">".$lang_liste[1][$i]."</option>\n";
+	}
+
+echo "</select></td></tr>\n"
+	."<tr><td colspan=\"2\"><div align=\"right\">"
+	."<input type=\"submit\" value=\""
+	.$_SESSION['language']['LOGIN']['OK']."\" /></div></td></tr>\n"
+	."</table></form>\n";
+
+if(isset($_GET['l']))
+	echo "<script type=\"text/javascript\">\n<!--\n"
+		."document.loginform.submit();\n"
+		."//-->\n</script>";
+echo "<a href=\"minigui/\">[miniGUI]</a>";
+
+echo "<div class=\"authors\">\n";
+echo "Code by UP<br />";
+echo 'modified (again) by <a href="https://bitbucket.org/red171/" target="_blank">red171</a>';
+echo "</div>\n";
+echo "</div>
+</body>
+</html>";
