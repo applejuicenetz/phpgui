@@ -1,5 +1,10 @@
 # appleJuice phpGUI
 
+![Docker Pulls](https://img.shields.io/docker/pulls/red171/ajgui-php.svg)
+![Docker Stars](https://img.shields.io/docker/stars/red171/ajgui-php.svg)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/red171/ajgui-php.svg)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/red171/ajgui-php.svg)
+
 modified again to run with PHP 7
 
 ## docker
