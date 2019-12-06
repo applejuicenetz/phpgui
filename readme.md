@@ -4,6 +4,7 @@
 ![Docker Stars](https://img.shields.io/docker/stars/red171/ajgui-php.svg)
 ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/red171/ajgui-php.svg)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/red171/ajgui-php.svg)
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/red171/ajgui-php.svg)
 
 modified again to run with PHP 7
 
