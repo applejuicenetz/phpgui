@@ -8,7 +8,7 @@ if(empty($_SESSION['core_ip'])) $_SESSION['core_ip']=$_POST['ip'];
 if(empty($_SESSION['core_port'])) $_SESSION['core_port']=$_POST['port'];
 include_once "../main/subs.php";
 include_once "../main/classes/class_core.php";
-$core =& new Core;
+$core = new Core;
 
 echo writehead('phpaj-minigui',1);
 echo "<meta http-equiv=\"refresh\" content=\"60\" />";	//jede min neu laden
