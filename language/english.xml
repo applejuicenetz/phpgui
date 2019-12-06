@@ -3,6 +3,7 @@
 <login
 	Headline="appleJuice phpGUI"
 	Text="You have to enable JavaScript in your browser.&lt;br /&gt;The core-password must not be empty and your XML-Port has to be reachable from the host this script runs on.&lt;br /&gt;Make sure your XML-Port is not blocked by a firewall or router."
+	Core_HOST="Core Host"
 	Core_IP="Core IP"
 	Core_XML_Port="Core XML-Port"
 	Core_Password="Core Password"

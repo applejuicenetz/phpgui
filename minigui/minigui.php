@@ -1,11 +1,24 @@
 <?php
 session_start();
 
-if(empty($_SESSION['core_host'])) $_SESSION['core_host']=
-	$_POST['ip'].":".$_POST['port'];
-if(empty($_SESSION['core_pass'])) $_SESSION['core_pass']=md5($_POST['cpass']);
-if(empty($_SESSION['core_ip'])) $_SESSION['core_ip']=$_POST['ip'];
-if(empty($_SESSION['core_port'])) $_SESSION['core_port']=$_POST['port'];
+
+if (isset($_POST['host']) && !empty($_POST['host'])) {
+    $host = explode(':', $_POST['host'], 2);
+    $_SESSION['core_host'] = $_POST['host'];
+    $_SESSION['core_ip'] = $host[0];
+    $_SESSION['core_port'] = $host[1];
+}
+
+if (empty($_SESSION['core_host'])) {
+    header('Location: ../index.php');
+    die;
+}
+
+if (empty($_SESSION['core_pass'])) {
+    if (32 === strlen($_POST['cpass'])) $_SESSION['core_pass'] = ($_POST['cpass']);
+    else $_SESSION['core_pass'] = md5($_POST['cpass']);
+}
+
 include_once "../main/subs.php";
 include_once "../main/classes/class_core.php";
 $core = new Core;

@@ -2,13 +2,10 @@
 session_start();
 include_once "subs.php";
 include_once "classes/class_share.php";
-$lang =& $_SESSION['language']['SHARE'];
+$lang = $_SESSION['language']['SHARE'];
 
 echo writehead('Sharefiles');
 echo $_SESSION['stylesheet'];
-
-if(get_magic_quotes_gpc())
-	$_GET['dir']=stripslashes($_GET['dir']);
 
 echo "\n<script type=\"text/javascript\">
 <!--
@@ -130,17 +127,17 @@ if(!empty($_GET['forcereload'])){
 //sharecache neu laden, falls aelter als 60min
 $Sharelist->refresh_cache(60);
 
-if(!empty($_GET['shareexpfile'])){
-	foreach($_GET['shareexpfile'] as $expid){
-	if(empty($_SESSION['shareexport'])) $_SESSION['shareexport']=array();
-	$shareentry=&$Sharelist->get_file($expid);
-	$export_currlink="ajfsp://file|".$shareentry['SHORTFILENAME']."|".
-		$shareentry['CHECKSUM']."|".
-		$shareentry['SIZE']."/";
-	$testx = array_search($export_currlink, $_SESSION['shareexport']);
-	if($testx !== FALSE) continue;
-	array_push($_SESSION['shareexport'],$export_currlink);
-}
+if (!empty($_GET['shareexpfile'])) {
+    foreach ($_GET['shareexpfile'] as $expid) {
+        $_SESSION['shareexport'] = [];
+        $shareentry = $Sharelist->get_file($expid);
+        $export_currlink = 'ajfsp://file|' . $shareentry['SHORTFILENAME'] . '|' .
+            $shareentry['CHECKSUM'] . '|' .
+            $shareentry['SIZE'] . '/';
+        $testx = array_search($export_currlink, $_SESSION['shareexport']);
+        if ($testx !== FALSE) continue;
+        array_push($_SESSION['shareexport'], $export_currlink);
+    }
 }
 
 echo "<form name=\"shareprioform\" action=\"\">\n";

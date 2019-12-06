@@ -3,6 +3,7 @@
 <login
 	Headline="appleJuice phpGUI"
 	Text="JavaScript muss im Browser aktiviert sein!&lt;br /&gt;Damit die Verbindung zum Core hergestellt werden kann, muss beim Core ein Passwort gesetzt sein!&lt;br /&gt;evtl. muss der XML port am Router / an der Firewall freigegeben werden."
+	Core_HOST="Core URI"
 	Core_IP="Core IP"
 	Core_XML_Port="Core XML-Port"
 	Core_Password="Core Passwort"

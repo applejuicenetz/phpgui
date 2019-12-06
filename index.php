@@ -8,10 +8,6 @@ $_SESSION = array();	//session daten alle loeschen
 
 include_once "vars.php";
 
-
-echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
-	."\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-
 //sprache
 	if(!empty($_GET['c_lang'])){
 		$_GET['c_lang']=str_replace("/",'',$_GET['c_lang']);
@@ -80,55 +76,34 @@ if(isset($_GET['l'])) {
 	}
 }
 
-echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">
+echo "<!DOCTYPE html>
+<html>
 <head>
 <title>php-applejuice</title>\n";
-echo "<link rel=\"stylesheet\" type=\"text/css\""
-	." href=\"style/".$stylesheet."\" />\n";
+echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/".$stylesheet."\" />\n";
 echo '<style type="text/css">
 select {width:100%;}
 </style>';
-echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+echo "<meta charset=\"utf-8\">
 <meta http-equiv=\"Cache-Control\" content=\"no-cache\" />\n";
 echo "</head>
 <body onload=\"document.loginform.cpass.focus()\">
 <div align=\"center\">";
 
-//testen, ob zlib funzt
-if($_SESSION['phpaj']['zipped'] && !function_exists("gzuncompress")){
-	$_SESSION['phpaj']['zipped']=0;
-	echo "<span style=\"background: #FF0000\">"
-		.$_SESSION['language']['ERROR']['GZIP_FAILED']."</span><br>";
-}
-	
-//testen, ob gd funzt
-if($_SESSION['phpaj']['progressbars_type']==1 
-		&& !function_exists("imagestring")){
-	$_SESSION['phpaj']['progressbars_type']=2;
-	echo "<span style=\"background: #FF0000\">"
-		.$_SESSION['language']['ERROR']['GD_FAILED']."</span><br>";
-}
-
 echo "<h2>".$_SESSION['language']['LOGIN']['HEADLINE']."</h2>\n";
 
 echo "<div>".$phpguiversion."</div>\n";
 
-echo "<table><tr><td>"
-	.$_SESSION['language']['LOGIN']['TEXT']
-	."</td></tr></table>\n"
-	."<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\" autocomplete=\"off\">\n"
+echo "<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\" autocomplete=\"off\">\n"
 	."<input type=\"hidden\" name=\"reloadnews\" value=\""
 	.$start_shownews."\" /><input type=\"hidden\" name=\"reloadshare\" "
 	."value=\"".$start_showshareinfo."\" />\n"
 	."<table>\n";
 
 echo "<tr><td><label for=\"ip\">"
-	.$_SESSION['language']['LOGIN']['CORE_IP']."</label>:</td>"
-	."<td><input id=\"ip\" name=\"ip\" value=\"".$core_standard_ip."\" required />"
-	."</td></tr>\n";
-echo "<tr><td><label for=\"port\">"
-	.$_SESSION['language']['LOGIN']['CORE_XML_PORT']."</label>:</td>"
-	."<td><input id=\"port\" name=\"port\" type=\"number\" value=\"".$core_standard_xml_port."\" required />"
+	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>:</td>"
+	."<td><input id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required />"
 	."</td></tr>\n";
 echo "<tr><td><label for=\"cpass\">"
 	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>:</td>"

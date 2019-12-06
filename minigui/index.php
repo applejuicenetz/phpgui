@@ -94,12 +94,9 @@ echo "<form action=\"minigui.php?".SID."\" method=\"post\">\n";
 
 echo "<ul class=\"mini\">";
 echo "<li><label for=\"ip\">"
-	.$_SESSION['language']['LOGIN']['CORE_IP']."</label>: "
-	."<input id=\"ip\" name=\"ip\" value=\"".$core_standard_ip."\" required /></li>\n";
+	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>: "
+	."<input id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required /></li>\n";
 
-echo "<li><label for=\"port\">"
-	.$_SESSION['language']['LOGIN']['CORE_XML_PORT']."</label>: "
-	."<input id=\"port\" name=\"port\" type=\"number\" value=\"".$core_standard_xml_port."\" required /></li>\n";
 echo "<li><label for=\"cpass\">"
 	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>: "
 	."<input id=\"cpass\" type=\"password\" name=\"cpass\" value=\""

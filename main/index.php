@@ -1,28 +1,25 @@
 <?php
-Header("Cache-Control: no-cache");
-Header('Content-Type: text/html; charset=UTF-8');
+header('Cache-Control: no-cache');
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 
-if((empty($_SESSION['core_host']) && empty($_POST['ip']))
-		|| !isset($_SESSION['language'])){
-	die("<script type='text/javascript'>
-	<!--
-	parent.location.href='../index.php';
-	//-->\n</script>");
+if (isset($_POST['host']) && !empty($_POST['host'])) {
+    $host = explode(':', $_POST['host'], 2);
+    $_SESSION['core_host'] = $_POST['host'];
+    $_SESSION['core_ip'] = $host[0];
+    $_SESSION['core_port'] = $host[1];
 }
 
-if(empty($_SESSION['core_host']))
-	$_SESSION['core_host']=$_POST['ip'].":".$_POST['port'];
-if(empty($_SESSION['core_ip']))
-	$_SESSION['core_ip']=$_POST['ip'];
-if(empty($_SESSION['core_port']))
-	$_SESSION['core_port']=$_POST['port'];
-if(empty($_SESSION['core_pass'])){
-	if(get_magic_quotes_gpc())
-		$_POST['cpass']=stripslashes($_POST['cpass']);
-	if(strlen($_POST['cpass']) == 32) $_SESSION['core_pass']=($_POST['cpass']);
-	else $_SESSION['core_pass']=md5($_POST['cpass']);
+if (empty($_SESSION['core_host'])) {
+    header('Location: ../index.php');
+    die;
 }
+
+if (empty($_SESSION['core_pass'])) {
+    if (32 === strlen($_POST['cpass'])) $_SESSION['core_pass'] = ($_POST['cpass']);
+    else $_SESSION['core_pass'] = md5($_POST['cpass']);
+}
+
 if(isset($_COOKIE['savebw']))
 	$_SESSION['phpaj']['savebw']=$_COOKIE['savebw'];
 if(isset($_COOKIE['autocleandownloadlist']))
