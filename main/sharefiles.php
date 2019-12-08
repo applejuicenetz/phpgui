@@ -128,8 +128,8 @@ if(!empty($_GET['forcereload'])){
 $Sharelist->refresh_cache(60);
 
 if (!empty($_GET['shareexpfile'])) {
+    $_SESSION['shareexport'] = [];
     foreach ($_GET['shareexpfile'] as $expid) {
-        $_SESSION['shareexport'] = [];
         $shareentry = $Sharelist->get_file($expid);
         $export_currlink = 'ajfsp://file|' . $shareentry['SHORTFILENAME'] . '|' .
             $shareentry['CHECKSUM'] . '|' .
