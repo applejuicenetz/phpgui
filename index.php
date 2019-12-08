@@ -154,7 +154,7 @@ echo "<a href=\"minigui/\">[miniGUI]</a>";
 
 echo "<div class=\"authors\">\n";
 echo "Code by UP<br />";
-echo 'modified (again) by <a href="https://bitbucket.org/red171/" target="_blank">red171</a>';
+echo 'modified (again) by <a href="https://github.com/red171/" target="_blank">red171</a>';
 echo "</div>\n";
 echo "</div>
 </body>
