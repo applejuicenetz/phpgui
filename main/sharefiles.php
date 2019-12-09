@@ -4,12 +4,31 @@ include_once "subs.php";
 include_once "classes/class_share.php";
 $lang = $_SESSION['language']['SHARE'];
 
+$Share = new Share();
+
+$Sharelist = $Share;
+
+if (!empty($_GET['shareexpfile'])) {
+    $_SESSION['shareexport'] = [];
+    foreach ($_GET['shareexpfile'] as $expid) {
+        $shareentry = $Sharelist->get_file($expid);
+        $export_currlink = 'ajfsp://file|' . $shareentry['SHORTFILENAME'] . '|' .
+            $shareentry['CHECKSUM'] . '|' .
+            $shareentry['SIZE'] . '/';
+        $testx = array_search($export_currlink, $_SESSION['shareexport']);
+        if ($testx !== FALSE) continue;
+        $_SESSION['shareexport'][] = $export_currlink;
+    }
+    header('Location: shareexport.php');
+    exit;
+}
+
 echo writehead('Sharefiles');
 echo $_SESSION['stylesheet'];
 
-echo "\n<script type=\"text/javascript\">
+echo "\n<script>
 <!--
-share_ids = new Array();
+share_ids = [];
 
 function change(id){
 	var share_zeile=document.getElementById('zeile_'+id);
@@ -42,28 +61,26 @@ function changeshareprio(){
 		counter++;
 		shareline+='&sharefile['+counter+']=' + i;
 	}
-	//alert(shareline);
-	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir'])
-		."'+ shareline + '&sprio=' + document.shareprioform.shareprio.value
-		+'&".SID."';
+	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir']) . "'+ shareline + '&sprio=' + document.shareprioform.shareprio.value + '&".SID."';
 }
 
 function reload(){
-	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir'])
-		."&forcereload=1&".SID."';
+	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir']) . "&forcereload=1&".SID."';
 }
 
 function exportlinks(){
 	var shareexpline='';
 	var counter=-1;
+	
+	selectall();
+	
 	for (var i in share_ids){
 		if(share_ids[i]==0) continue;
 		counter++;
 		shareexpline+='&shareexpfile['+counter+']=' + i;
 	}
-	//alert(shareexpline);
-	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir'])
-		."'+ shareexpline+'&".SID."';
+
+	window.location.href='".$_SERVER['PHP_SELF']."?dir=".urlencode($_GET['dir']) . "'+ shareexpline+'&".SID."';
 }
 
 function toggleinfo(id,lastasked,askcount,searchcount,ajfsp){
@@ -111,10 +128,6 @@ function selectnone(){
 
 echo "</head>\n<body>\n";
 
-$Share = new Share();
-
-$Sharelist = $Share;
-
 //prio setzen
 if(!empty($_GET['sharefile'])){
 	$Sharelist->setpriority($_GET['sharefile'],$_GET['sprio']);
@@ -126,19 +139,6 @@ if(!empty($_GET['forcereload'])){
 
 //sharecache neu laden, falls aelter als 60min
 $Sharelist->refresh_cache(60);
-
-if (!empty($_GET['shareexpfile'])) {
-    $_SESSION['shareexport'] = [];
-    foreach ($_GET['shareexpfile'] as $expid) {
-        $shareentry = $Sharelist->get_file($expid);
-        $export_currlink = 'ajfsp://file|' . $shareentry['SHORTFILENAME'] . '|' .
-            $shareentry['CHECKSUM'] . '|' .
-            $shareentry['SIZE'] . '/';
-        $testx = array_search($export_currlink, $_SESSION['shareexport']);
-        if ($testx !== FALSE) continue;
-        array_push($_SESSION['shareexport'], $export_currlink);
-    }
-}
 
 echo "<form name=\"shareprioform\" action=\"\">\n";
 //verzeichnis anzeigen

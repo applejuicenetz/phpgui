@@ -19,7 +19,6 @@ function ShowFiles(dir){
 	dir=encodeURIComponent(dir);
 	var sharelist=window.open('sharefiles.php?dir='+dir+'&".SID."','ajsharelist',
 		'width=720,height=500,left=10,top=10,dependent=yes,scrollbars=yes');
-	sharelist.focus();
 }
 
 function do_setsubs(name, newsub){
@@ -39,9 +38,7 @@ function newshare(){
 }
 
 function share_export(){
-	var exportlist=window.open('shareexport.php?".SID."','ajshareexport',
-		'width=600,height=350,left=10,top=10,dependent=yes,scrollbars=no');
-	exportlist.focus();
+    window.location.href = 'shareexport.php';
 }
 
 function select_dir(){
@@ -58,22 +55,16 @@ function select_dir(){
 
 //einstellungen fuer unterverzeichnis aendern
 if(!empty($_GET['setsubs'])){
-	if(get_magic_quotes_gpc())
-		$_GET['setsubs']=stripslashes($_GET['setsubs']);
 	$share->changesub($_GET['setsubs'], $_GET['newsub']);
 }
 
 //verzeichnis aus share nehmen
 if(!empty($_GET['share_del'])){
-	if(get_magic_quotes_gpc())
-		$_GET['share_del']=stripslashes($_GET['share_del']);
 	$share->del_share($_GET['share_del']);
 }
 
 //verzeichnis sharen
 if(!empty($_GET['new_share'])){
-	if(get_magic_quotes_gpc())
-		$_GET['new_share']=stripslashes($_GET['new_share']);
 	$share->add_share($_GET['new_share'], $_GET['new_subs']);
 }
 
@@ -84,8 +75,7 @@ echo "<table width=\"100%\">\n
 	."</th><th>&nbsp;</th></tr>\n";
 
 //auch temp-verzeichnis anzeigen (f�r dateien die gerade geladen werden)
-echo "<tr>\n<td><a href=\"javascript:ShowFiles('"
-	.addslashes(htmlspecialchars($share->get_temp()))."');\">"
+echo "<tr>\n<td><a href=\"sharefiles.php?dir=" .addslashes(htmlspecialchars($share->get_temp()))."\">"
 	.htmlspecialchars($share->get_temp())."</a></td>\n";
 echo "<td>&nbsp;</td><td>&nbsp;</td></tr>";
 
@@ -95,8 +85,8 @@ $sharedirs=$share->get_shared_dirs(1);
 foreach($sharedirs as $a){
 	$cur_share=&$share->get_shared_dir($a);
 	//verzeichnisname -> link zu den einzelnen dateien
-	echo "<tr>\n<td><a href=\"javascript:ShowFiles('"
-		.addslashes(htmlspecialchars($cur_share['NAME']))."');\">"
+	echo "<tr>\n<td><a href=\"sharefiles.php?dir="
+		.addslashes(htmlspecialchars($cur_share['NAME']))."\">"
 		.htmlspecialchars($cur_share['NAME'])
 		."</a></td>\n";
 	//checkbox fuer unterverzeichnisse

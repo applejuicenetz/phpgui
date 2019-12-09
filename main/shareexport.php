@@ -23,7 +23,6 @@ echo "<input name=\"withsource\" type=\"checkbox\" value=\"1\" "
 if(!empty($_GET['withsource']) && $_GET['withsource']=="true")
 	echo " checked=\"checked\"";
 echo " /> ";
-echo $_SESSION['language']['SHARE']['EXPORT_WSOURCE']."<br />";
 $exportf = dirlisting("../export","php");
 for($i=0;$i<count($exportf[0]);$i++){
 	echo "<input type=\"button\" value=\"".$exportf[1][$i]
