@@ -3,7 +3,7 @@
 $standard_language_xml = (!empty($_ENV['GUI_LANGUAGE']) ? $_ENV['GUI_LANGUAGE'] : 'deutsch') . '.xml';
 
 //Standard Login Data
-$core_standard_ip = !empty($_ENV['CORE_HOST']) ? $_ENV['CORE_HOST'] : $_SERVER['REMOTE_ADDR'];
+$core_standard_ip = !empty($_ENV['CORE_HOST']) ? $_ENV['CORE_HOST'] : $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 $core_standard_xml_port = !empty($_ENV['CORE_PORT']) ? $_ENV['CORE_PORT'] : 9851;
 $core_standard_host = $core_standard_ip . ':' . $core_standard_xml_port;
 
