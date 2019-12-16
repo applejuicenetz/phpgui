@@ -4,11 +4,14 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 
 if (isset($_POST['host']) && !empty($_POST['host'])) {
-    $host = explode(':', $_POST['host'], 2);
-    $_SESSION['core_host'] = $_POST['host'];
-    $_SESSION['core_ip'] = $host[0];
-    $_SESSION['core_port'] = $host[1];
+    if(!parse_url($_POST['host'], PHP_URL_SCHEME)) {
+        $_SESSION['core_host'] = 'http://' . $_POST['host'];
+    }else{
+        $_SESSION['core_host'] = $_POST['host'];
+    }
 }
+
+#echo "<pre>";var_dump($_SESSION);die;
 
 if (empty($_SESSION['core_host'])) {
     header('Location: ../index.php');

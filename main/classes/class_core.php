@@ -74,42 +74,30 @@ class Core{
 		$this->depth = 0;
 		$this->lastname = array();
 		$this->lastsubname = array();
-		$this->lastcdata="";
-		if(strpos($anfrage,"?") === false) $anfrage.="?";
+		$this->lastcdata = '';
+
+        $params['password'] = $_SESSION['core_pass'];
+
+        if(strpos($anfrage,"?") === false) $anfrage.="?";
+
+        $url = $_SESSION['core_host'] . '/' . $type . '/' . $anfrage . '&' . http_build_query($params);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $xml_file = curl_exec($ch);
+
+        curl_close($ch);
+
+        if(false !== strstr("/wrongpassword", $xml_file)) {
+            echo $_SESSION['language']['ERROR']['WRONGCOREPW']."<br />";
+        }
 		
-		$fp = @fsockopen($_SESSION['core_ip'], $_SESSION['core_port'],
-			$errno, $errstr, 15);
-		if(!$fp){
-			echo "Error: $errstr ($errno)<br />\n";
-		}else{
-			$fp_out="GET /$type/$anfrage&password=".$_SESSION['core_pass'];
-			if(!empty($_SESSION['phpaj']['zipped']) && $type=="xml")
-				$fp_out.="&mode=zip";
-			$fp_out.=" HTTP/1.0\r\n";
-			$fp_out.="Host: ".$_SESSION['core_host']."\r\n";
-			$fp_out.="Connection: Close\r\n\r\n";
-			fwrite($fp, $fp_out);
-			$header="";
-			do $header.=fread($fp,1);
-				while(!preg_match('/\\r?\\n\\r?\\n$/',$header) && !empty($header));
-			preg_match('/location:\\s+(.*)\\n/',$header,$matches);
-			if(isset($matches[1]) && $matches[1]=="/wrongpassword")
-				echo $_SESSION['language']['ERROR']['WRONGCOREPW']."<br />";
-			$xml_file="";
-			while(!feof($fp)) $xml_file.=fread($fp,4096);
-			fclose($fp);
-		}
-		
-		if($type=="xml"){
-			if(!empty($_SESSION['phpaj']['zipped']))
-				$xml_file=@gzuncompress($xml_file);
+		if($type === "xml"){
 			if(empty($xml_file))
 				die ($_SESSION['language']['ERROR']['CONNECTION_FAILED']);
-			
-			/*echo "<pre>";
-			echo htmlspecialchars($xml_file);
-			echo "</pre>";*/
-			
+
 			$xml_parser=xml_parser_create("UTF-8");
 			xml_set_element_handler($xml_parser, array(&$this,"startElement"),
 				array(&$this,"endElement"));
