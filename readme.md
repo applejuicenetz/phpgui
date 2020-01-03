@@ -8,6 +8,16 @@
 
 modified again to run with PHP 7
 
+## auto login from url
+
+`index.php?l=base64encodedCredentials`
+
+`base64encodedCredentials` should be a base64 encoded string from this `http://HOST:PORT|PASSWORD`
+
+```bash
+echo "http://HOST:PORT|PASSWORD" | base64
+```
+
 ## docker
 
 create and run `ajgui-php` container with the following command

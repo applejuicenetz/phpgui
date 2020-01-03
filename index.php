@@ -60,20 +60,17 @@ include_once "main/subs.php";
 	include_once "style/".$_SESSION['stylefile'];
 	$_SESSION['stylesheet']="<link rel=\"stylesheet\" type=\"text/css\""
 		." href=\"../style/".$stylesheet."\" />\n";
-		
+
 $core_standard_pass="";
 
 //core daten aus url uebernehmen
-if(isset($_GET['l'])) {
-	$login_data = base64_decode(trim($_GET['l']));
-	if(strstr($login_data,'|')) {
-		$login_data = explode('|',$login_data);
-		if(count($login_data) == 3) {
-			$core_standard_ip=$login_data[0];
-			$core_standard_xml_port=$login_data[1];
-			$core_standard_pass=$login_data[2];
-		}
-	}
+if (isset($_GET['l']) && !empty($_GET['l'])) {
+    $login_data = explode('|', base64_decode(trim($_GET['l'])), 2);
+
+    if (2 === count($login_data)) {
+        $core_standard_host = $login_data[0];
+        $core_standard_pass = $login_data[1];
+    }
 }
 
 echo "<!DOCTYPE html>
