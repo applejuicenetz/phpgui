@@ -1,4 +1,5 @@
 <?php
+Header('Access-Control-Allow-Origin: *');
 session_start();
 include_once "subs.php";
 include_once "classes/class_core.php";

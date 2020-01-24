@@ -1,6 +1,7 @@
 <?php
 header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
+Header('Access-Control-Allow-Origin: *');
 session_start();
 
 if (isset($_POST['host']) && !empty($_POST['host'])) {

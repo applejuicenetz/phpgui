@@ -3,6 +3,8 @@ error_reporting(0);
 
 Header("Cache-Control: no-cache");
 Header('Content-Type: text/html; charset=UTF-8');
+Header('Access-Control-Allow-Origin: *');
+
 session_start();
 $_SESSION = array();	//session daten alle loeschen
 
