@@ -1,6 +1,6 @@
 <?php
 /*
-Diese Funktion wird f�r jeden link in der Exportliste ein Mal aufgerufen.
+Diese Funktion wird für jeden link in der Exportliste ein Mal aufgerufen.
 Die Ausgabe wird in das Textfeld geschrieben.
 Vorhandene Variablen:
 	$share_ex_link		-ajfsp link
@@ -9,7 +9,8 @@ Vorhandene Variablen:
 	$share_ex_bytesize	-Dateigroesse in Bytes
 	$share_ex_size		-Dateigroesse Formatiert
 */
-function write_linkexport($share_ex_link,$share_ex_name,$share_ex_hash,
-		$share_ex_bytesize,$share_ex_size){
-	echo $share_ex_link."\n";
+function write_linkexport($share_ex_link, $share_ex_name, $share_ex_hash,
+                          $share_ex_bytesize, $share_ex_size)
+{
+    echo $share_ex_link . PHP_EOL;
 }

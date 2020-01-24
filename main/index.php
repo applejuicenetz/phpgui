@@ -1,7 +1,7 @@
 <?php
 header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
-Header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: *');
 session_start();
 
 if (isset($_POST['host']) && !empty($_POST['host'])) {
@@ -11,8 +11,6 @@ if (isset($_POST['host']) && !empty($_POST['host'])) {
         $_SESSION['core_host'] = $_POST['host'];
     }
 }
-
-#echo "<pre>";var_dump($_SESSION);die;
 
 if (empty($_SESSION['core_host'])) {
     header('Location: ../index.php');

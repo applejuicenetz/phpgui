@@ -6,12 +6,12 @@ class Downloads{
 	var $cache;
 	var $core;
 	var $subdirs;
-	
+
 	function __construct(){
 		$this->cache =& $_SESSION['cache']['DOWNLOADS'];
 		$this->core = new Core();
 	}
-	
+
 	//stand der daten
 	function time(){
 		return date("j.n.y - H:i:s",
@@ -61,7 +61,7 @@ class Downloads{
 					$download['READY']=$download['SIZE'];
 				$download['phpaj_READY']=$download['READY'];
 			}
-			
+
 			if(!empty($this->cache['USER'])){
 				foreach(array_keys($this->cache['USER']) as $b){
 					//pruefen, ob quelle noch existiert, wenn nicht -> loeschen
@@ -115,7 +115,7 @@ class Downloads{
 					}
 				}
 			}
-			
+
 			foreach(array_keys($this->cache['DOWNLOAD']) as $a){
 				$download=&$this->cache['DOWNLOAD'][$a];
 				$this->subdirs[$download['TARGETDIRECTORY']][$a]=&$download;
@@ -136,7 +136,7 @@ class Downloads{
 		}
 	}
 
-		
+
 	//ids aller downloads sortiert zurueckgeben
 	function ids($sort = "name", $subdir=""){
 		$dlsort=array();
@@ -179,26 +179,27 @@ class Downloads{
 		}
 		return $dlsort;
 	}
-	
+
 	//infos zu bestimmtem download zurueckgeben
 	function download($id){
 		$download =& $this->cache['DOWNLOAD'][$id];
 		return $download;
 	}
-		
+
 	//infos zu bestimmter quelle zurueckgeben
 	function user($id){
 		$quelle =& $this->cache['USER'][$id];
 		return $quelle;
 	}
-		
+
 	//action
 	function action($action, $ids=array(), $value=""){
 		$info="";
+
 		if($action=="settargetdir"){
 			//core kann im moment das zeilverzeichnis nur fuer einen download
 				//gleichzeitig aendern...
-			for($v=0;$v<count($ids);$v++){
+			for($v=0, $vMax = count($ids); $v< $vMax; $v++){
 				$info .= $action." &rArr; "
 					.$this->core->command("function",$action
 					."?id=".$ids[$v]
@@ -206,7 +207,7 @@ class Downloads{
 			}
 		}else{
 			$changedl='';
-			for($v=0;$v<count($ids);$v++)
+			for($v=0, $vMax = count($ids); $v< $vMax; $v++)
 				$changedl.="&id$v=".$ids[$v];
 			$changedl=str_replace("&id0=","id=",$changedl);
 			if($action=="setpowerdownload"){
@@ -218,9 +219,7 @@ class Downloads{
 			}
 			if($action=="renamedownload")
 				$changedl.="&name=".rawurlencode($value);
-			//falls es der core mal kann...
-			//if($action=="settargetdir")
-				//$changedl.="&dir=".rawurlencode($value);
+
 			$info = $action." &rArr; "
 				.$this->core->command("function",$action."?".$changedl);
 		}

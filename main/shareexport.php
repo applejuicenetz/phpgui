@@ -57,7 +57,7 @@ if(!empty($_SESSION['shareexport'])){
 	asort($_SESSION['shareexport']);
 	foreach($_SESSION['shareexport'] as $a){
 		$share_ex = explode('/',$a);
-		$share_ex = explode("\|",$share_ex[2]);
+		$share_ex = explode('|',$share_ex[2]);
 		$share_ex_link = $a;
 		if(!empty($_GET['withsource']) && $_GET['withsource']=="true"){
 			$share_ex_link=substr($share_ex_link,0,strlen($share_ex_link)-1)."|"

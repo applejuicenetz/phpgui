@@ -4,13 +4,8 @@ include_once "subs.php";
 include_once "classes/class_downloads.php";
 include_once "classes/class_icons.php";
 
-$IconClass = "Icons";
-$newicon = new $IconClass();
-$DownClass = "Downloads";
-$newDown = new $DownClass();
-
-$icon_img =& $newicon;
-$Downloadlist =& $newDown;
+$icon_img =new Icons();
+$Downloadlist = new Downloads();
 $lang =& $_SESSION['language']['DOWNLOADS'];
 
 if(empty($_GET['sort'])) $_GET['sort']="name";
@@ -20,14 +15,13 @@ echo "<meta http-equiv=\"refresh\" content=\""
 	.$_SESSION['reloadtime']['downloads']."; URL=".$_SERVER['PHP_SELF']."?"
 	.SID."&amp;sort=".$_GET['sort']."\" />";
 echo $_SESSION['stylesheet'];
-echo "<script type=\"text/javascript\">
-<!--
-var dl_ids = new Array();		//download ausgewaehlt?
-var dl_names = new Array();		//download namen
-var dl_pdl = new Array();		//momentaner pdl-wert
-var dl_subdirs = new Array();	//unterverzeichnissnummern
+echo "<script>
+var dl_ids = [];		//download ausgewaehlt?
+var dl_names = [];		//download namen
+var dl_pdl = [];		//momentaner pdl-wert
+var dl_subdirs = [];	//unterverzeichnissnummern
 
-var renameopen=0;
+var renameopen = 0;
 var renamelink;
 
 function rename(id){
@@ -179,7 +173,6 @@ function togglesubdir(dircounter){
 	}
 }
 
-//-->
 </script>
 </head><body>";
 
