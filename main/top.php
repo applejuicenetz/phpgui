@@ -52,7 +52,7 @@ if (!empty($_REQUEST['ajfsp_link'])) {
             }
         }
 
-        // echo '<script>window.setTimeout(function() {document.getElementById("newlinkinfo").style.display="none"}, 5000);</script>';
+        echo '<script>window.setTimeout(function() {document.getElementById("newlinkinfo").style.display="none"}, 5000);</script>';
     }
     echo '</td>';
 }
