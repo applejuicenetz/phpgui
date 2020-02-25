@@ -95,7 +95,7 @@ echo "<form action=\"minigui.php?".SID."\" method=\"post\">\n";
 echo "<ul class=\"mini\">";
 echo "<li><label for=\"ip\">"
 	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>: "
-	."<input id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required /></li>\n";
+	."<input type='url' id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required /></li>\n";
 
 echo "<li><label for=\"cpass\">"
 	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>: "

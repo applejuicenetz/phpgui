@@ -2,14 +2,6 @@
 $phpguiversion="v0.25++";
 $requiredcoreversion=146;
 
-//logout wenn session daten fehlen
-if(empty($_SESSION['language'])){
-	die("<script type='text/javascript'>
-	<!--
-	parent.location.href='../index.php?".SID."';
-	//-->\n</script>");
-}
-
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
 function sizeformat($bytesize){
 	$i=0;

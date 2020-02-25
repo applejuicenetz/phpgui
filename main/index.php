@@ -1,25 +1,14 @@
 <?php
 header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
-header('Access-Control-Allow-Origin: *');
+
 session_start();
 
-if (isset($_POST['host']) && !empty($_POST['host'])) {
-    if(!parse_url($_POST['host'], PHP_URL_SCHEME)) {
-        $_SESSION['core_host'] = 'http://' . $_POST['host'];
-    }else{
-        $_SESSION['core_host'] = $_POST['host'];
-    }
-}
+include_once 'login.php';
 
 if (empty($_SESSION['core_host'])) {
     header('Location: ../index.php');
     die;
-}
-
-if (empty($_SESSION['core_pass'])) {
-    if (32 === strlen($_POST['cpass'])) $_SESSION['core_pass'] = ($_POST['cpass']);
-    else $_SESSION['core_pass'] = md5($_POST['cpass']);
 }
 
 if(isset($_COOKIE['savebw']))

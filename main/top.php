@@ -1,7 +1,9 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+
 session_start();
+
 include_once "subs.php";
+include_once "login.php";
 include_once "classes/class_core.php";
 
 $core = new Core();
@@ -96,7 +98,7 @@ echo "<a href=\"javascript:if(confirm('"
     . "style=\"margin-left:50px;\">"
     . "<img src=\"../style/" . $_SESSION['tabs_corekill_icon']
     . "\" alt=\"\" />" . $_SESSION['language']['TABS']['COREKILL'] . "</a> ";
-echo "<a href=\"../index.php?" . SID . "\" target=\"_parent\">"
+echo "<a href=\"../index.php?logout\" target=\"_parent\">"
     . "<img src=\"../style/" . $_SESSION['tabs_logout_icon']
     . "\" alt=\"\" />" . $_SESSION['language']['TABS']['LOGOUT'] . "</a> ";
 echo "</div>";

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 202-02-25
+- allow auto login in `top` frame
+
 ## 2020-01-27
 - add ability to handle multiple links 
 

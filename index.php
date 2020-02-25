@@ -1,9 +1,8 @@
 <?php
 error_reporting(0);
 
-header("Cache-Control: no-cache");
+header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
-header('Access-Control-Allow-Origin: *');
 
 session_start();
 $_SESSION = array();	//session daten alle loeschen
@@ -37,13 +36,9 @@ include_once "vars.php";
 	function endLanguageElement($parser, $name) {}
 
 	$language_file = @file($language_xml);
-	$language_file = join("",$language_file);
-		/*echo "<!--";
-		echo $language_file;
-		echo "\n-->\n\n";*/
+	$language_file = implode('', $language_file);
 	$language_parser = xml_parser_create();
-	xml_set_element_handler($language_parser,
-		"startLanguageElement","endLanguageElement");
+	xml_set_element_handler($language_parser,"startLanguageElement","endLanguageElement");
 	xml_parse($language_parser, $language_file);
 	xml_parser_free($language_parser);
 
@@ -64,16 +59,6 @@ include_once "main/subs.php";
 		." href=\"../style/".$stylesheet."\" />\n";
 
 $core_standard_pass="";
-
-//core daten aus url uebernehmen
-if (isset($_GET['l']) && !empty($_GET['l'])) {
-    $login_data = explode('|', base64_decode(trim($_GET['l'])), 2);
-
-    if (2 === count($login_data)) {
-        $core_standard_host = $login_data[0];
-        $core_standard_pass = $login_data[1];
-    }
-}
 
 echo "<!DOCTYPE html>
 <html>
@@ -102,7 +87,7 @@ echo "<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\"
 
 echo "<tr><td><label for=\"ip\">"
 	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>:</td>"
-	."<td><input id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required />"
+	."<td><input type='url' id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required />"
 	."</td></tr>\n";
 echo "<tr><td><label for=\"cpass\">"
 	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>:</td>"
