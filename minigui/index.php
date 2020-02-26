@@ -4,7 +4,6 @@ Header('Content-Type: text/html; charset=UTF-8');
 session_start();
 $_SESSION = array();	//session daten alle l�schen
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" "
 	."\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
 include_once "../vars.php";		//einstellungen holen
@@ -61,12 +60,6 @@ include_once "../main/subs.php";
 	include_once "../style/".$_SESSION['stylefile'];
 	$_SESSION['stylesheet']="<link rel=\"stylesheet\" type=\"text/css\" "
 		."href=\"../style/".$stylesheet."\" />";
-
-//core daten aus url in form �bernehmen
-if(!empty($_GET['ip'])) $core_standard_ip=$_GET['ip'];
-if(!empty($_GET['xmlport'])) $core_standard_xml_port=$_GET['xmlport'];
-$core_standard_pass="";
-if(!empty($_GET['password'])) $core_standard_pass=$_GET['password'];
 
 echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 ."<head>\n<title>php-applejuice-miniGUI</title>\n";
@@ -144,12 +137,6 @@ echo "</ul>";
 ///
 
 echo "</form>\n";
-
-if(isset($_GET['password']))
-	echo "<script type=\"text/javascript\">\n"
-		."<!--\n"
-		."document.loginform.submit();\n"
-		."//-->\n</script>";
 
 echo "<a href=\"../\">[GUI]</a>";
 echo "<div class=\"authors\">\n";

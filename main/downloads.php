@@ -51,7 +51,7 @@ function dorename(id){
 	var newname=encodeURIComponent(
 		eval('document.dl_form.newname_'+id+'.value'));
 	window.location.href='".$_SERVER['PHP_SELF']."?action=renamedownload&dl_id[0]='+
-		id+'&action_value=' + newname + '&".SID."';
+		id+'&action_value=' + newname + '&';
 }
 
 function dlparts(id){
@@ -136,7 +136,7 @@ function dlaction(action){
 		dlline+='&action_value='+document.dl_form.pdl.value;
 	if(action=='canceldownload' && !confirm(fragetext))
 		return;
-	window.location.href='".$_SERVER['PHP_SELF']."?' + dlline+'&".SID."';
+	window.location.href='".$_SERVER['PHP_SELF']."?' + dlline+'&';
 }
 
 function select_all(moep){
@@ -178,8 +178,6 @@ function togglesubdir(dircounter){
 
 //pause, fortsetzen, abbrechen, pdl setzen...
 	$action_echo='';
-	if(!empty($_SESSION['phpaj']['autocleandownloadlist']))
-		$Downloadlist->action("cleandownloadlist");
 	if(!empty($_GET['action'])){
 		if(!empty($_GET['dl_id'])){
 			if(empty($_GET['action_value'])) $_GET['action_value']="";
@@ -199,29 +197,26 @@ $Downloadlist->refresh_cache();
 
 echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\">";
 
-$spaltenzahl=8;
-if(empty($_SESSION['phpaj']['savebw'])) $spaltenzahl++;
+$spaltenzahl=9;
 
 //tabellenanfang + ueberschriften
 	echo "<table width=\"100%\">\n";
 	echo "<tr>
 		<th width=\"10\">&nbsp;</th>
-		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=sources&amp;".SID."\">"
+		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=sources&amp;\">"
 		.$lang['SOURCES']."</a></th>
-		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=name&amp;".SID."\">"
+		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=name&amp;\">"
 		.$lang['FILENAME']."</a></th>";
-		echo "<th><a href=\"".$_SERVER['PHP_SELF']."?sort=status&amp;".SID."\">"
+		echo "<th><a href=\"".$_SERVER['PHP_SELF']."?sort=status&amp;\">"
 		.$lang['STATUS']."</a></th>\n";
-	if(empty($_SESSION['phpaj']['savebw']))
-		echo "\t\t<th><a href=\"".$_SERVER['PHP_SELF']."?sort=speed&amp;"
-			.SID."\">".$lang['SPEED']."</a></th>\n";
-	echo "\t\t<th><a href=\"".$_SERVER['PHP_SELF']."?sort=pdl&amp;".SID."\">"
+		echo "\t\t<th><a href=\"".$_SERVER['PHP_SELF']."?sort=speed&amp;\">".$lang['SPEED']."</a></th>\n";
+	    echo "\t\t<th><a href=\"".$_SERVER['PHP_SELF']."?sort=pdl&amp;\">"
 		.$lang['POWERDOWNLOAD_SHORT']."</a></th>
-		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=size&amp;".SID."\">"
+		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=size&amp;\">"
 		.$lang['SIZE']."</a></th>
-		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=rest&amp;".SID."\">"
+		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=rest&amp;\">"
 		.$lang['REMAINING']."</a></th>
-		<th width=\"100\"><a href=\"".$_SERVER['PHP_SELF']."?sort=done&amp;".SID."\">"
+		<th width=\"100\"><a href=\"".$_SERVER['PHP_SELF']."?sort=done&amp;\">"
 		.$lang['FINISHED']."</a></th></tr>\n";
 
 
@@ -259,25 +254,12 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			echo "<input type=\"checkbox\" id=\"dlcheck_$a\""
 				." onclick=\"change($a);\" /></td>\n";
 			//quellenzahl (link zu dl details)
-			if(empty($_SESSION['phpaj']['savebw'])){
 				echo "<td class=\"right\">"
 					."<a href=\"javascript:dlusers($a)\" title=\"Mehr Info\">"
 					.($current_download['phpaj_quellen_queue']
 						+$current_download['phpaj_quellen_dl'])
 					."/".$current_download['phpaj_quellen_gesamt']
 					." (".$current_download['phpaj_quellen_dl'].")</a></td>\n";
-			}else{
-				if(empty($Downloadlist->cache['IDS']['DOWNLOADID']
-						[$current_download['ID']]['USERID'])){
-					$current_download['phpaj_quellen_gesamt']=0;
-				}else{
-					$current_download['phpaj_quellen_gesamt']=count(
-						$Downloadlist->cache['IDS']['DOWNLOADID']
-						[$current_download['ID']]['USERID']);
-				}
-				echo "<td class=\"right\">?/"
-					.$current_download['phpaj_quellen_gesamt']." (?)</td>\n";
-			}
 			//Dateiname
 			echo "<td id=\"nametd_$a\">"
 				."<a href=\"javascript:rename($a)\" title=\"".$lang['RENAME']."\">";
@@ -286,8 +268,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			echo "<td>".$_SESSION['language']['DLSTATUS']
 				['STATUS_'.$current_download['phpaj_STATUS']]."</td>\n";
 			//geschwindigkeit
-			if(empty($_SESSION['phpaj']['savebw']))
-				echo "<td class=\"right\">"
+            echo "<td class=\"right\">"
 				.sizeformat($current_download['phpaj_dl_speed'])
 				."/s</td>\n";
 			//pdl wert

@@ -1,6 +1,4 @@
 <?php
-error_reporting(0);
-
 header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -85,7 +83,7 @@ echo "<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\"
 	."value=\"".$start_showshareinfo."\" />\n"
 	."<table>\n";
 
-echo "<tr><td><label for=\"ip\">"
+echo "<tr><td><label for=\"host\">"
 	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>:</td>"
 	."<td><input type='url' id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required />"
 	."</td></tr>\n";

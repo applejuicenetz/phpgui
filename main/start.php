@@ -48,9 +48,7 @@ echo "<h2>".$lang['CLIENT']."</h2>";
 	if($Servers->netstats['firewalled']==='true'){
 		array_push($warnungen,$_SESSION['language']['SERVER']['FIREWALLED']);
 	}
-	if($coresubversions[2]<$requiredcoreversion){
-		array_push($warnungen,$lang['CORE_OLD']);
-	}
+
 	if(!empty($warnungen)){
 		echo "<h2>".$lang['WARNINGS']."</h2>";
 		echo "<div style=\"margin-left:0.5cm;background-color:#FF0000;\">";

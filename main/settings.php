@@ -8,35 +8,7 @@ $lang =& $_SESSION['language']['SETTINGS'];
 //einstellungen aendern
 if(!empty($_POST['change'])){
 	switch($_POST['change']){
-		case 'phpaj':
-			//if(!($_POST['zipped'] && !function_exists("gzuncompress")))
-			//	$_SESSION['phpaj']['zipped'] = empty($_POST['zipped']) ? 0 : 1;
-			if(empty($_POST['savebw']) && $_SESSION['phpaj']['savebw']==1){
-				include_once "classes/class_downloads.php";
-				$DownloadsClass = "Downloads";
-				$newDownloads = new $DownloadsClass();
-				$Downloadlist =& $newDownloads;
-				$Downloadlist->cache['LASTTIMESTAMP']=0;
-			}
-			$_SESSION['phpaj']['savebw'] = empty($_POST['savebw']) ? 0 : 1;
-			$_SESSION['phpaj']['autocleandownloadlist'] =
-				empty($_POST['autocleandownloadlist']) ? 0 : 1;
-			if(!($_POST['progressbars_type']==1
-					&& !function_exists("imagettftext")))
-				$_SESSION['phpaj']['progressbars_type']=
-					$_POST['progressbars_type'];
-			setcookie('savebw', $_SESSION['phpaj']['savebw'], time()+1209600);
-			setcookie('autocleandownloadlist',
-				$_SESSION['phpaj']['autocleandownloadlist'], time()+1209600);
-			setcookie('progressbars_type',
-				$_SESSION['phpaj']['progressbars_type'], time()+1209600);
-			break;
 		case 'standard':
-			if(get_magic_quotes_gpc()){
-				$_POST['incdir']=stripslashes($_POST['incdir']);
-				$_POST['tempdir']=stripslashes($_POST['tempdir']);
-				$_POST['nick']=stripslashes($_POST['nick']);
-			}
 			$_POST['incdir']=urlencode($_POST['incdir']);
 			$_POST['tempdir']=urlencode($_POST['tempdir']);
 			$_POST['nick']=urlencode($_POST['nick']);
@@ -62,15 +34,13 @@ if(!empty($_POST['change'])){
 echo writehead('Settings');
 echo $_SESSION['stylesheet'];
 
-echo "<script type=\"text/javascript\">
-<!--
+echo "<script>
 function GetDir(returnto){
 	var dirlist=window.open('directory.php?returninput='+returnto+'&"
 		.SID."','Dirlist',
 		'width=400,height=350,left=10,top=10,dependent=yes,scrollbars=no');
 	dirlist.focus();
 }
-//-->
 </script>
 </head>
 <body>";
@@ -78,39 +48,6 @@ function GetDir(returnto){
 $settings_xml=$core->command("xml","settings.xml");
 
 $_SESSION['phpaj']['core_source_port']=$settings_xml['PORT']['VALUES']['CDATA'];
-
-//einstellungen f�r phpaj
-echo "<form method=\"post\" name=\"phpaj\" action=\"".$_SERVER['PHP_SELF']."?"
-	.SID."\">";
-echo "<table width=\"500\"><tr><th colspan=\"2\">phpaj</th></tr>";
-//echo "<tr><td colspan=\"2\"><input type=\"checkbox\" id=\"zipped\" name=\"zipped\" value=\"true\"";
-//if(!empty($_SESSION['phpaj']['zipped'])) echo " checked=\"checked\"";
-//echo " /> <label for=\"zipped\">".$lang['ZIPPED']."</label></td></tr>";
-echo "<tr><td colspan=\"2\"><input type=\"checkbox\" id=\"savebw\" name=\"savebw\" "
-	."value=\"true\"";
-if(!empty($_SESSION['phpaj']['savebw']))
-	echo " checked=\"checked\"";
-echo " /> <label for=\"savebw\">".$lang['SAVEBW']."</label></td></tr>";
-echo "<tr><td colspan=\"2\"><input type=\"checkbox\" id=\"autoclean\""
-	."name=\"autocleandownloadlist\" value=\"true\"";
-if(!empty($_SESSION['phpaj']['autocleandownloadlist']))
-	echo " checked=\"checked\"";
-echo " /> <label for=\"autoclean\">".$lang['AUTOCLEANDOWNLOADLIST']
-	."</label></td></tr>";
-echo "<tr><td><label for=\"progtype\">".$lang['PROGRESSBARSTYPE']."</label>"
-	."</td><td><select size=\"1\" id=\"progtype\" name=\"progressbars_type\">";
-for($i=1;$i<4;$i++){
-	echo "<option value=\"$i\"";
-	if($_SESSION['phpaj']['progressbars_type']==$i)
-		echo " selected=\"selected\"";
-	echo">$i</option>";
-}
-echo "</select></td></tr>";
-echo "<tr><td colspan=\"2\"><input type=\"hidden\" name=\"change\" "
-	."value=\"phpaj\" />";
-echo "<input type=\"submit\" value=\""
-	.$lang['OK']."\" /></td></tr>";
-echo "</table></form><br />";
 
 //standardeinstellungen
 echo "<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."?".SID

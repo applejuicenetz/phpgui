@@ -1,7 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 202-02-25
+## 2020-02-26
+- document ENV Vars for docker 
+- remove phpaj savebw option
+- remove phpaj downloads autoclean option
+- remove now useless phpaj options from settings view
+- allow progressbar configuration from ENV
+
+## 2020-02-25
 - allow auto login in `top` frame
 
 ## 2020-01-27

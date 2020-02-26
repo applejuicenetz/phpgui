@@ -119,39 +119,37 @@ foreach(array_keys($partliste['PART']) as $a){
 
 $Downloadlist = new Downloads;
 //ladende parts einzeichnen
-if(empty($_SESSION['phpaj']['savebw'])){
-	if(!empty($_GET['dl_id'])){
-		$dl =& $Downloadlist->download($_GET['dl_id']);
-		if(!empty($dl['phpaj_loading_parts'])){
-			// alle ladenden parts vom dl einzeichnen
-			foreach(array_keys($dl['phpaj_loading_parts']) as $a){
-				$current_dlpart =& $dl['phpaj_loading_parts'][$a];
-				$obenlinks_x=($pixelsize*$current_dlpart['DOWNLOADFROM']);
-				$untenrechts_x=($pixelsize*$current_dlpart['DOWNLOADTO']);
-				$part_prozent=floor((
-					($current_dlpart['ACTUALDOWNLOADPOSITION']
-						- $current_dlpart['DOWNLOADFROM'])/
-					($current_dlpart['DOWNLOADTO']
-						- $current_dlpart['DOWNLOADFROM']))*10);
-				imagefilledrectangle($image,$obenlinks_x,$obenlinks_y,
-					$untenrechts_x,$untenrechts_y, $gelb[$part_prozent]);
-			}
-		}
-	}elseif(!empty($_GET['usr_id'])){
-			$current_dlpart=&$Downloadlist->user($_GET['usr_id']);
-			if($current_dlpart['DOWNLOADFROM']>-1){
-				// wenn was von dem user geladen wird -> part einzeichnen
-				$obenlinks_x=($pixelsize*$current_dlpart['DOWNLOADFROM']);
-				$untenrechts_x=($pixelsize*$current_dlpart['DOWNLOADTO']);
-				$part_prozent=floor((
-					($current_dlpart['ACTUALDOWNLOADPOSITION']
-						- $current_dlpart['DOWNLOADFROM'])/
-					($current_dlpart['DOWNLOADTO']
-						- $current_dlpart['DOWNLOADFROM']))*10);
-				imagefilledrectangle($image,$obenlinks_x,$obenlinks_y,
-					$untenrechts_x,$untenrechts_y, $gelb[$part_prozent]);
-			}
-	}
+if(!empty($_GET['dl_id'])){
+    $dl =& $Downloadlist->download($_GET['dl_id']);
+    if(!empty($dl['phpaj_loading_parts'])){
+        // alle ladenden parts vom dl einzeichnen
+        foreach(array_keys($dl['phpaj_loading_parts']) as $a){
+            $current_dlpart =& $dl['phpaj_loading_parts'][$a];
+            $obenlinks_x=($pixelsize*$current_dlpart['DOWNLOADFROM']);
+            $untenrechts_x=($pixelsize*$current_dlpart['DOWNLOADTO']);
+            $part_prozent=floor((
+                ($current_dlpart['ACTUALDOWNLOADPOSITION']
+                    - $current_dlpart['DOWNLOADFROM'])/
+                ($current_dlpart['DOWNLOADTO']
+                    - $current_dlpart['DOWNLOADFROM']))*10);
+            imagefilledrectangle($image,$obenlinks_x,$obenlinks_y,
+                $untenrechts_x,$untenrechts_y, $gelb[$part_prozent]);
+        }
+    }
+}elseif(!empty($_GET['usr_id'])){
+        $current_dlpart=&$Downloadlist->user($_GET['usr_id']);
+        if($current_dlpart['DOWNLOADFROM']>-1){
+            // wenn was von dem user geladen wird -> part einzeichnen
+            $obenlinks_x=($pixelsize*$current_dlpart['DOWNLOADFROM']);
+            $untenrechts_x=($pixelsize*$current_dlpart['DOWNLOADTO']);
+            $part_prozent=floor((
+                ($current_dlpart['ACTUALDOWNLOADPOSITION']
+                    - $current_dlpart['DOWNLOADFROM'])/
+                ($current_dlpart['DOWNLOADTO']
+                    - $current_dlpart['DOWNLOADFROM']))*10);
+            imagefilledrectangle($image,$obenlinks_x,$obenlinks_y,
+                $untenrechts_x,$untenrechts_y, $gelb[$part_prozent]);
+        }
 }
 
 //in zeilen aufteilen

@@ -11,18 +11,6 @@ if (empty($_SESSION['core_host'])) {
     die;
 }
 
-if(isset($_COOKIE['savebw']))
-	$_SESSION['phpaj']['savebw']=$_COOKIE['savebw'];
-if(isset($_COOKIE['autocleandownloadlist']))
-	$_SESSION['phpaj']['autocleandownloadlist']=$_COOKIE['autocleandownloadlist'];
-if(isset($_COOKIE['progressbars_type']))
-	$_SESSION['phpaj']['progressbars_type']=$_COOKIE['progressbars_type'];
-setcookie('savebw', $_SESSION['phpaj']['savebw'], time()+1209600);
-setcookie('autocleandownloadlist', $_SESSION['phpaj']['autocleandownloadlist'],
-	time()+1209600);
-setcookie('progressbars_type', $_SESSION['phpaj']['progressbars_type'],
-	time()+1209600);
-
 echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" "
 	."\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">\n";
 echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"

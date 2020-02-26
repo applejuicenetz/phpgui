@@ -1,4 +1,5 @@
 hooks
+.docker
 .gitignore
 readme.md
 Dockerfile

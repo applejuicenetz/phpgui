@@ -20,8 +20,7 @@ class Downloads{
 
 	//neue infos vom core holen
 	function refresh_cache(){
-		$corecommand_filter="down;ids";
-		if(empty($_SESSION['phpaj']['savebw'])) $corecommand_filter.=";user";
+		$corecommand_filter="down;ids;user";
 		//alte id-liste aus cache loeschen
 		if(!empty($this->cache['IDS']))
 			unset($this->cache['IDS']);
@@ -125,7 +124,7 @@ class Downloads{
 				$download['phpaj_DONE']=
 					($download['phpaj_READY']/$download['SIZE'])*100;
 				//zwischen Suchen und Uebertrage unterscheiden
-				if($download['STATUS']=="0" && empty($_SESSION['phpaj']['savebw'])){
+				if($download['STATUS']=="0"){
 					if($download['phpaj_quellen_dl']>0)
 						$download['phpaj_STATUS']='0_2';
 						else

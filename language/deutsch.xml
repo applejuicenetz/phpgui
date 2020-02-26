@@ -150,8 +150,6 @@
 />
 <settings
 	Zipped="Daten komprimiert vom Core holen"
-	SaveBW="Bandbreite sparen (weniger Downloadinfos)"
-	AutoCleanDownloadList="Fertige und Abgebrochene Downloads automatisch l&amp;ouml;schen"
 	ProgressbarsType="Anzeige Fortschrittsbalken"
 	Standard="Standard"
 	Tempdir="Temp-Verzeichnis"

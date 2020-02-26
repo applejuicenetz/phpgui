@@ -1,6 +1,5 @@
 <?php
-$phpguiversion="v0.25++";
-$requiredcoreversion=146;
+$phpguiversion = !empty($_ENV['VERSION']) ? $_ENV['VERSION'] : 'v0.26';
 
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
 function sizeformat($bytesize){
@@ -17,8 +16,7 @@ function sizeformat($bytesize){
 function writehead($title,$strict=0){
 	Header("Cache-Control: no-cache");
 	Header('Content-Type: text/html; charset=UTF-8');
-	$text="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
-	$text.=($strict)?
+	$text=($strict)?
 		"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" "
 			."\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n"
 		: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "

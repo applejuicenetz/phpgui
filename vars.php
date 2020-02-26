@@ -3,8 +3,8 @@
 $standard_language_xml = (!empty($_ENV['GUI_LANGUAGE']) ? $_ENV['GUI_LANGUAGE'] : 'deutsch') . '.xml';
 
 //Standard Login Data
-$core_standard_ip = !empty($_ENV['CORE_HOST']) ? $_ENV['CORE_HOST'] : $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
-$core_standard_xml_port = isset($_ENV['CORE_PORT']) ? $_ENV['CORE_PORT'] : 9851;
+$core_standard_ip = !empty($_ENV['CORE_HOST']) ? $_ENV['CORE_HOST'] : ('http://'. $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
+$core_standard_xml_port = $_ENV['CORE_PORT'] ?? 9851;
 $core_standard_host = $core_standard_ip . (empty($core_standard_xml_port) ? '' : ':' . $core_standard_xml_port);
 
 //Style
@@ -19,17 +19,11 @@ $_SESSION['reloadtime']['search'] = !empty($_ENV['GUI_REFRESH_SEARCH']) ? $_ENV[
 //allowed tags in servermessage
 $_SESSION['phpaj']['allowed_servermsg_tags'] = '<a><b><i><u><br>';
 
-//do not fetch dowload-sources from core?
-$_SESSION['phpaj']['savebw'] = 0;
-
-//clean finished and canceled downloads automatically?
-$_SESSION['phpaj']['autocleandownloadlist'] = 0;
-
 //show Progressbars
 // 1 = use GD to create images
 // 2 = without GD, but text-problems in IE (works fine in Firefox, Opera and Konqueror)
 // 3 = without GD, works in IE, Firefox, Opera and Konqueror but the text might be harder to read
-$_SESSION['phpaj']['progressbars_type'] = 1;
+$_SESSION['phpaj']['progressbars_type'] = !empty($_ENV['GUI_PROGRESSBARS_TYPE']) ? $_ENV['GUI_PROGRESSBARS_TYPE'] : 1;
 
 //Start
 $start_shownews = !empty($_ENV['GUI_SHOW_NEWS']) ? $_ENV['GUI_SHOW_NEWS'] : 1;
