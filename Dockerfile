@@ -41,6 +41,6 @@ HEALTHCHECK --interval=60s --start-period=5s CMD curl -I --fail http://localhost
 LABEL org.label-schema.name="appleJuice phpGUI" \
       org.label-schema.vcs-ref=${VCS_REF} \
       org.label-schema.build-date=${BUILD_DATE} \
-      org.label-schema.vcs-url="https://github.com/red171/applejuice-docker-core" \
+      org.label-schema.vcs-url="https://github.com/appleJuicenet/phpgui" \
       org.label-schema.version=${BUILD_VERSION} \
       org.label-schema.schema-version="1.0"
