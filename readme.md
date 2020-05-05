@@ -1,8 +1,9 @@
 # appleJuice phpGUI
 
-![Docker Pulls](https://img.shields.io/docker/pulls/red171/ajgui-php.svg)
-![Docker Stars](https://img.shields.io/docker/stars/red171/ajgui-php.svg)
-![MicroBadger Size](https://img.shields.io/microbadger/image-size/red171/ajgui-php.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/applejuicenet/phpgui.svg)
+![Docker Stars](https://img.shields.io/docker/stars/applejuicenet/phpgui.svg)
+![Docker Build](https://github.com/applejuicenet/phpgui/workflows/%5Bdocker%5D%20CI%20for%20releases/badge.svg?event=create)
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/applejuicenet/phpgui.svg)
 
 modified again to run with PHP 7
 
@@ -18,7 +19,7 @@ echo "http://HOST:PORT|PASSWORD" | base64
 
 ## Docker
 
-https://hub.docker.com/r/red171/ajgui-php
+https://hub.docker.com/r/applejuicenet/phpgui
 
 ### Exposed Ports
 
@@ -49,7 +50,7 @@ create and run `ajgui-php` container with the following command
 docker run -d \
         -p 8080:80 \
         --name ajgui-php \
-        red171/ajgui-php:latest
+        applejuicenet/phpgui:latest
 ```
 
 optional: add `CORE_HOST` and/or `CORE_PORT` with your environment
@@ -62,7 +63,7 @@ docker run -d \
         -e "CORE_HOST=http://192.168.1.2" \
         -e "CORE_PORT=9851" \
         --name ajgui-php \
-        red171/ajgui-php:latest
+        applejuicenet/phpgui:latest
 ```
 
 ### docker-compose.yml
@@ -72,7 +73,7 @@ version: '2.4'
 
 services:
     php-gui:
-        image: red171/ajgui-php:latest
+        image: applejuicenet/phpgui:latest
         restart: always
         container_name: ajgui-php
         mem_limit: 128MB
