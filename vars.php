@@ -28,3 +28,7 @@ $_SESSION['phpaj']['progressbars_type'] = !empty($_ENV['GUI_PROGRESSBARS_TYPE'])
 //Start
 $start_shownews = !empty($_ENV['GUI_SHOW_NEWS']) ? $_ENV['GUI_SHOW_NEWS'] : 1;
 $start_showshareinfo = !empty($_ENV['GUI_SHOW_SHARE']) ? $_ENV['GUI_SHOW_SHARE'] : 1;
+
+if(isset($_ENV['TZ'])) {
+    date_default_timezone_set($_ENV['TZ']);
+}
