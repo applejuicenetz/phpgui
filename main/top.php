@@ -31,9 +31,28 @@ if (!empty($_SESSION['ajfsp_link']) && empty($_REQUEST['ajfsp_link'])) {
 
 if (!empty($_REQUEST['ajfsp_link'])) {
 
-    preg_match_all('#ajfsp://(file|server)\|([^|]*)\|([a-z0-9]{32})\|([0-9]*)/#', urldecode($_REQUEST['ajfsp_link']), $links, PREG_SET_ORDER);
-    echo '<td id="newlinkinfo">';
+    $regexe = [
+        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)/#',
 
+        // ajfsp://server|knastbruder.applejuicenet.de|9855/
+        '#ajfsp://(server)\|([^|]*)\|([\d]{1,5})/#',
+
+        // ajfsp://file|ajcore-0.31.149.110.so|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}/#',
+
+        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850:knastbruder.applejuicenet.de:9855/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}:[^:]*:[\d]{1,5}/#',
+    ];
+
+    $links = [];
+
+    foreach($regexe as $regex) {
+        preg_match_all($regex, urldecode($_REQUEST['ajfsp_link']), $matches, PREG_SET_ORDER);
+        $links = array_merge($links, $matches);
+    }
+
+    echo '<td id="newlinkinfo">';
     foreach ($links as $link) {
 
         //Infos fr Dateilink anzeigen + im hauptfenster die downloads zeigen
