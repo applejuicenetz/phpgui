@@ -2,9 +2,9 @@
 
 session_start();
 
-include_once "subs.php";
-include_once "login.php";
-include_once "classes/class_core.php";
+require_once "subs.php";
+require_once "login.php";
+require_once "classes/class_core.php";
 
 $core = new Core();
 
@@ -47,7 +47,7 @@ if (!empty($_REQUEST['ajfsp_link'])) {
 
     $links = [];
 
-    foreach($regexe as $regex) {
+    foreach ($regexe as $regex) {
         preg_match_all($regex, urldecode($_REQUEST['ajfsp_link']), $matches, PREG_SET_ORDER);
         $links = array_merge($links, $matches);
     }
@@ -86,42 +86,59 @@ if (!empty($_REQUEST['killcore'])) {
 	</script>";
 }
 
-echo "<div class=\"tabs\">";
-echo "<a href=\"start.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_start_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['START'] . "</a> ";
-echo "<a href=\"downloads.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_downloads_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['DOWNLOADS'] . "</a> ";
-echo "<a href=\"uploads.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_uploads_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['UPLOADS'] . "</a> ";
-echo "<a href=\"shares.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_share_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['SHARE'] . "</a> ";
-echo "<a href=\"search.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_search_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['SEARCH'] . "</a> ";
-echo "<a href=\"server.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_server_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['SERVER'] . "</a> ";
-echo "<a href=\"settings.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_settings_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['SETTINGS'] . "</a> ";
-echo "<a href=\"extras.php?" . SID . "\" target=\"main\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_extras_icon']
-    . "\"alt=\"\" />" . $_SESSION['language']['TABS']['EXTRAS'] . "</a> ";
-echo "<a href=\"javascript:if(confirm('"
-    . addslashes($_SESSION['language']['TABS']['COREKILL_QUESTION'])
-    . "')) window.location.href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&amp;killcore=1'\" "
-    . "style=\"margin-left:50px;\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_corekill_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['COREKILL'] . "</a> ";
-echo "<a href=\"../index.php?logout\" target=\"_parent\">"
-    . "<img src=\"../style/" . $_SESSION['tabs_logout_icon']
-    . "\" alt=\"\" />" . $_SESSION['language']['TABS']['LOGOUT'] . "</a> ";
-echo "</div>";
+$currentUrl = sprintf(
+    '%s://%s%s',
+    isset($_SERVER['HTTPS']) ? 'https' : 'http',
+    $_SERVER['HTTP_HOST'],
+    str_replace('top.php', 'index.php', $_SERVER['REQUEST_URI'])
+);
 
+$permaLink = sprintf('%s|%s', $_SESSION['core_host'], $_SESSION['core_pass']);
+
+echo '<div class="tabs">';
+echo '<a href="start.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_start_icon']
+    . '" />' . $_SESSION['language']['TABS']['START'] . "</a> ";
+echo '<a href="downloads.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_downloads_icon']
+    . '" />' . $_SESSION['language']['TABS']['DOWNLOADS'] . "</a> ";
+echo '<a href="uploads.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_uploads_icon']
+    . '" />' . $_SESSION['language']['TABS']['UPLOADS'] . "</a> ";
+echo '<a href="shares.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_share_icon']
+    . '" />' . $_SESSION['language']['TABS']['SHARE'] . "</a> ";
+echo '<a href="search.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_search_icon']
+    . '" />' . $_SESSION['language']['TABS']['SEARCH'] . "</a> ";
+echo '<a href="server.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_server_icon']
+    . '" />' . $_SESSION['language']['TABS']['SERVER'] . "</a> ";
+echo '<a href="settings.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_settings_icon']
+    . '" />' . $_SESSION['language']['TABS']['SETTINGS'] . "</a> ";
+echo '<a href="extras.php" target="main">'
+    . '<img src="../style/' . $_SESSION['tabs_extras_icon']
+    . '" />' . $_SESSION['language']['TABS']['EXTRAS'] . "</a> ";
+
+echo '<a href="javascript:if(confirm(\''
+    . addslashes($_SESSION['language']['TABS']['COREKILL_QUESTION'])
+    . "')) window.location.href='" . $_SERVER['PHP_SELF'] . "?killcore=1'\" "
+    . 'style="margin-left:50px;">'
+    . '<img src="../style/' . $_SESSION['tabs_corekill_icon']
+    . '" />' . $_SESSION['language']['TABS']['COREKILL'] . "</a> ";
+
+if ($_ENV['TOP_SHOW_PERMALINK']) {
+    echo '<a href="' . sprintf('%s?l=%s', $currentUrl, base64_encode($permaLink)) . '" target="_parent" title="php-applejuice">'
+        . '<img src="../style/' . $_SESSION['tabs_favorite_icon']
+        . '" alt="php-applejuic" />' . $_SESSION['language']['TABS']['FAVORITE'] . "</a> ";
+}
+
+echo '<a href="../index.php?logout" target="_parent">'
+    . '<img src="../style/' . $_SESSION['tabs_logout_icon']
+    . '" />' . $_SESSION['language']['TABS']['LOGOUT'] . "</a> ";
+
+echo '</div>';
 echo '</form>
 </body>
 </html>';

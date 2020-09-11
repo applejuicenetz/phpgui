@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_downloads.php";
-include_once "classes/class_icons.php";
+require_once "subs.php";
+require_once "classes/class_downloads.php";
+require_once "classes/class_icons.php";
 $icon_img = new Icons;
 $Downloadlist = new Downloads;
 $Downloadlist->refresh_cache();
@@ -10,15 +10,13 @@ $Downloadlist->refresh_cache();
 echo writehead('Download Info ('.htmlspecialchars($Downloadlist->cache
 	['DOWNLOAD'][$_GET['dl_id']]['FILENAME']).')');
 echo $_SESSION['stylesheet'];
-echo "<script type=\"text/javascript\">
-<!--
+echo "<script>
 function showparts(id){
 	var ajpartinfo=window.open('dl_parts.php?usr_id='+id+'&".SID."',
 		'ajdlparts',
 		'width=540,height=300,left=10,top=10,dependent=yes,scrollbars=no');
 	ajpartinfo.focus();
 }
-//-->
 </script>";
 echo "</head><body>\n";
 
@@ -46,7 +44,7 @@ echo "<tr>
 
 //download zeigen
 if(!empty($Downloadlist->cache['DOWNLOAD'])){
-	$a =& $Downloadlist->download($_GET['dl_id']);
+	$a = $Downloadlist->download($_GET['dl_id']);
 	echo "<tr>\n";
 	echo "<td>&nbsp;</td>\n";
 	echo "<td class=\"right\">"
@@ -61,11 +59,11 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 	echo "<td class=\"right\">".sizeformat($a['SIZE'])."</td>";
 	$fortschritt=&$a['phpaj_DONE'];
 	echo "<td width=\"100\">"
-		.progressbar($fortschritt,sizeformat($a['phpaj_READY']))."</td>";		
+		.progressbar($fortschritt,sizeformat($a['phpaj_READY']))."</td>";
 	echo "<td></td>";
 	echo "</tr>\n";
-	
-	
+
+
 //Einzelne Quellen
 	//Uebertrage
 	if($_GET['show_dls']==1){
@@ -79,7 +77,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 			."</b> (".$a['phpaj_quellen_dl'].")</a></td></tr>\n";
 		if(!empty($Downloadlist->cache['USER'])){
 			foreach($a['phpaj_ids_quellen_dl'] as $b){
-				$current_user =& $Downloadlist->user($b);
+				$current_user = $Downloadlist->user($b);
 				echo "<tr><td></td>";
 				echo "<td>".$icon_img->directstate[$current_user['DIRECTSTATE']]
 					."<a href=\"javascript:showparts($b)\" title=\""
@@ -119,7 +117,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 			.$_SESSION['language']['DOWNLOADS']['TRANSFERRING']
 			."</b> (".$a['phpaj_quellen_dl'].")</a></td></tr>\n";
 	}
-	
+
 	//Warteschlange
 	if($_GET['show_queue']==1){
 		echo "<tr><td colspan=\"4\">"
@@ -134,7 +132,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 			."</th><td colspan=\"4\">&nbsp;</td></tr>\n";
 		if(!empty($Downloadlist->cache['USER'])){
 		foreach($a['phpaj_ids_quellen_queue'] as $b){
-					$current_user =& $Downloadlist->user($b);
+					$current_user = $Downloadlist->user($b);
 					echo "<tr><td></td>";
 					echo "<td>"
 						.$icon_img->directstate[$current_user['DIRECTSTATE']]
@@ -180,7 +178,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 		echo "<th>".$_SESSION['language']['DOWNLOADS']['USERSOURCE']
 			."</th><td colspan=\"4\">&nbsp;</td></tr>\n";
 	}
-	
+
 	//Rest
 	if($_GET['show_rest']==1){
 		echo "<tr><td colspan=\"9\">"
@@ -194,7 +192,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 			-$a['phpaj_quellen_dl']).")</a></td></tr>\n";
 		if(!empty($Downloadlist->cache['USER'])){
 		foreach($a['phpaj_ids_quellen_rest'] as $b){
-					$current_user =& $Downloadlist->user($b);
+					$current_user = $Downloadlist->user($b);
 					echo "<tr><td></td>";
 					echo "<td>"
 						.$icon_img->directstate[$current_user['DIRECTSTATE']]

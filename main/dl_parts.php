@@ -1,16 +1,17 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_downloads.php";
+require_once "subs.php";
+require_once "classes/class_downloads.php";
 $Downloadlist = new Downloads;
 
 if(!empty($_GET['dl_id'])){
-	$dl =& $Downloadlist->download($_GET['dl_id']);
+	$dl = $Downloadlist->download($_GET['dl_id']);
 	$title = $dl['TEMPORARYFILENUMBER'].".data - ".htmlspecialchars($dl['FILENAME']);
 }elseif(!empty($_GET['usr_id'])){
-	$usr =& $Downloadlist->user($_GET['usr_id']);
+	$usr = $Downloadlist->user($_GET['usr_id']);
 	$title = htmlspecialchars($usr['NICKNAME']." - ".$usr['FILENAME']);
-}else die("wtf");
+}else die('wtf');
+
 echo writehead('Download Parts ('.$title.')');
 echo $_SESSION['stylesheet'];
 

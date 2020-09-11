@@ -1,9 +1,9 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_share.php";
-include_once "classes/class_uploads.php";
-include_once "classes/class_icons.php";
+require_once "subs.php";
+require_once "classes/class_share.php";
+require_once "classes/class_uploads.php";
+require_once "classes/class_icons.php";
 
 $icon_img = new Icons();
 $lang =& $_SESSION['language']['UPLOADS'];
@@ -15,7 +15,7 @@ $lang =& $_SESSION['language']['UPLOADS'];
 echo writehead('Uploads');
 //neu laden
 echo "<meta http-equiv=\"refresh\" content=\""
-	.$_SESSION['reloadtime']['uploads']."; URL=".$_SERVER['PHP_SELF']."?"
+	.$_ENV['GUI_REFRESH_UPLOADS']."; URL=".$_SERVER['PHP_SELF']."?"
 	."show_uplds=".$_GET['show_uplds']."&amp;show_queue=".$_GET['show_queue']
 	."&amp;".SID."\" />";
 echo $_SESSION['stylesheet'];
@@ -46,8 +46,11 @@ echo strtr($lang['LIMIT'], array("%percent"=>$uploaduserpercent));
 // Tabelle anlegen + Zeilenueberschriften
 echo "<table width=\"100%\">\n";
 echo "<tr>
-<th colspan=\"2\">".$lang['FILE']."</th>
-<th>".$lang['USERNAME']."</th>
+<th colspan=\"2\">".$lang['FILE']."</th>";
+if(!empty($_ENV['REL_INFO'])) {
+    echo '<th width="16" align="center"><img src="../style/default/info.png" width="16" alt="" /></th>';
+}
+echo "<th>".$lang['USERNAME']."</th>
 <th>".$lang['STATUS']."</th>
 <th>".$lang['SPEED']."</th>
 <th>".$lang['SIZE']."</th>
@@ -66,16 +69,19 @@ if($_GET['show_uplds']==1){
 		.$Uploadlist->cache['phpaj_ul'].")</a></td></tr>";
 	if(!empty($Uploadlist->cache['UPLOAD'])){
 		foreach($Uploadlist->cache['phpaj_ids_ul'] as $a){
-			$current_upload=&$Uploadlist->get_upload($a);
+			$current_upload=$Uploadlist->get_upload($a);
 			echo "<tr><td width=\"10\"></td>";
 			$current_shareid=&$current_upload['SHAREID'];
-			$current_share=&$Sharelist->get_file($current_shareid);
+			$current_share=$Sharelist->get_file($current_shareid);
 			echo "<td>".$icon_img->directstate[$current_upload['DIRECTSTATE']];
-			echo "<a href=\"ajfsp://file|".$current_share['SHORTFILENAME']."|"
-				.$current_share['CHECKSUM']."|"
-				.$current_share['SIZE']."/\">";
 			//dateiname
-			echo htmlspecialchars($current_share['SHORTFILENAME'])."</a></td>\n";
+			echo '<a href="'.$current_share['LINK'].'">' . htmlspecialchars($current_share['SHORTFILENAME']).'</a></td>';
+
+            //relInfo
+            if (!empty($_ENV['REL_INFO'])) {
+                echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+            }
+
 			//Nick des Users
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"
 				.htmlspecialchars(cutstring($current_upload['NICK'],30))."</td>\n";
@@ -139,15 +145,18 @@ if($_GET['show_queue']==1){
 		.$Uploadlist->cache['phpaj_queue'].")</a></td></tr>";
 	if(!empty($Uploadlist->cache['UPLOAD'])){
 		foreach($Uploadlist->cache['phpaj_ids_queue'] as $a){
-			$current_upload=&$Uploadlist->get_upload($a);
+			$current_upload=$Uploadlist->get_upload($a);
 			echo "<tr><td width=\"10\"></td>";
-			$current_shareid=&$current_upload['SHAREID'];
-			$current_share=&$Sharelist->get_file($current_shareid);
+			$current_shareid=$current_upload['SHAREID'];
+			$current_share=$Sharelist->get_file($current_shareid);
 			echo "<td>".$icon_img->directstate[$current_upload['DIRECTSTATE']];
-			echo "<a href=\"ajfsp://file|".$current_share['SHORTFILENAME']."|".
-				$current_share['CHECKSUM']."|".
-				$current_share['SIZE']."/\">";
-			echo htmlspecialchars($current_share['SHORTFILENAME'])."</a></td>\n";
+            echo '<a href="'.$current_share['LINK'].'">' . htmlspecialchars($current_share['SHORTFILENAME']).'</a></td>';
+
+            //relInfo
+            if (!empty($_ENV['REL_INFO'])) {
+                echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+            }
+
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"
 				.htmlspecialchars(cutstring($current_upload['NICK'],30))."</td>\n";
 			if(isset($current_upload['LASTCONNECTION'])){

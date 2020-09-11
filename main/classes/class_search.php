@@ -1,15 +1,15 @@
 <?php
-include_once "classes/class_core.php";
+require_once "classes/class_core.php";
 
 class Search{
 	var $cache;
 	var $core;
-	
+
 	function __construct(){
 		$this->cache =& $_SESSION['cache']['SEARCH'];
 		$this->core = new Core();
 	}
-	
+
 	//stand der daten
 	function time(){
 		return date("j.n.y - H:i:s",
@@ -24,7 +24,7 @@ class Search{
 			.$this->cache['LASTTIMESTAMP'], $this->cache);
 		$this->cache['LASTTIMESTAMP']=$this->cache['TIME']['VALUES']['CDATA'];
 	}
-	
+
 	function process_results(){
 		$alle_suchen_anzahl=0;
 		if(!empty($this->cache['SEARCH'])){
@@ -34,7 +34,7 @@ class Search{
 				$this->cache['SEARCH'][$b]['phpaj_FOUNDFILES']=0;
 			}
 		}
-	
+
 		if(!empty($this->cache['SEARCHENTRY'])){
 			foreach(array_keys($this->cache['SEARCHENTRY'])
 					as $a){
@@ -63,12 +63,12 @@ class Search{
 		}
 		$this->cache['SEARCHENTRY_count']=$alle_suchen_anzahl;
 	}
-	
+
 	function start($string){
 		//suche starten
 		$this->core->command("function","search?search=".rawurlencode($string));
 	}
-		
+
 	function delete($id){
 		//suche aus cache loeschen
 		$ausgabe="";
@@ -86,7 +86,7 @@ class Search{
 		}
 		return $ausgabe;
 	}
-		
+
 	function delete_all(){
 		$ausgabe="";
 		if(!empty($this->cache['SEARCH'])){
@@ -103,7 +103,7 @@ class Search{
 		}
 		return $ausgabe;
 	}
-		
+
 	function cancel($id){
 		$this->cache['SEARCH'][$id]['RUNNING']="canceled";
 		return "cancelsearch &rArr; ".$this->core->command("function",

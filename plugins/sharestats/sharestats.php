@@ -1,10 +1,10 @@
 <?php
-include_once "classes/class_core.php";
+require_once "classes/class_core.php";
 $core = new Core;
 /*
 sharestats
 */
-include_once "classes/class_share.php";
+require_once "classes/class_share.php";
 echo "<div class=\"tabs\" style=\"float:left;\">";
 echo "<a href=\"".$phpaj_ownurl."&amp;stats=last\">"
 	."Recently Requested</a><br /><br />";

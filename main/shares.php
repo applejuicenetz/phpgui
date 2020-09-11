@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_core.php";
-include_once "classes/class_share.php";
+require_once "subs.php";
+require_once "classes/class_core.php";
+require_once "classes/class_share.php";
 
 $core = new Core();
 $share = new Share();
@@ -13,8 +13,7 @@ echo '<style type="text/css">
 select {width:100%;}
 </style>';
 echo $_SESSION['stylesheet'];
-echo "<script type=\"text/javascript\">
-<!--
+echo "<script>
 function ShowFiles(dir){
 	dir=encodeURIComponent(dir);
 	var sharelist=window.open('sharefiles.php?dir='+dir+'&".SID."','ajsharelist',
@@ -47,8 +46,6 @@ function select_dir(){
 		'Dirlist','width=400,height=350,left=10,top=10,dependent=yes,scrollbars=no');
 	dirlist.focus();
 }
-
-//-->
 </script>
 </head>
 <body>";
@@ -74,7 +71,7 @@ echo "<table width=\"100%\">\n
 	."</th><th width=\"160\">".$_SESSION['language']['SHARE']['W_SUBDIRS']
 	."</th><th>&nbsp;</th></tr>\n";
 
-//auch temp-verzeichnis anzeigen (f�r dateien die gerade geladen werden)
+//auch temp-verzeichnis anzeigen (für dateien die gerade geladen werden)
 echo "<tr>\n<td><a href=\"sharefiles.php?dir=" .addslashes(htmlspecialchars($share->get_temp()))."\">"
 	.htmlspecialchars($share->get_temp())."</a></td>\n";
 echo "<td>&nbsp;</td><td>&nbsp;</td></tr>";
@@ -83,7 +80,7 @@ $sharedirs=$share->get_shared_dirs(1);
 
 //freigegebene verzeichnisse anzeigen
 foreach($sharedirs as $a){
-	$cur_share=&$share->get_shared_dir($a);
+	$cur_share=$share->get_shared_dir($a);
 	//verzeichnisname -> link zu den einzelnen dateien
 	echo "<tr>\n<td><a href=\"sharefiles.php?dir="
 		.addslashes(htmlspecialchars($cur_share['NAME']))."\">"
@@ -99,7 +96,7 @@ foreach($sharedirs as $a){
 	echo "<td><a href=\"javascript:delshare('"
 		.addslashes(htmlspecialchars($cur_share['NAME']))."');\">"
 		.$_SESSION['language']['SHARE']['DELETE']
-		."</a></td></tr>\n\n";	//l�schen
+		."</a></td></tr>\n\n";	//löschen
 }
 
 //Neues verzeichnis freigeben

@@ -9,7 +9,7 @@
 	Core_Password="Core Password"
 	GUI_Style="Style"
 	GUI_Language="Language"
-	OK="OK"
+	OK="Login"
 />
 <general
 	Time="Status"
@@ -31,6 +31,7 @@
 	Server="Server"
 	Settings="Settings"
 	Extras="Extras"
+	Favorite="Permalink"
 	Logout="Logout"
 	CoreKill="Shutdown Core"
 	CoreKill_question="Are you sure you want to shut your Core down?"

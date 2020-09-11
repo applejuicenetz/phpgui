@@ -1,8 +1,9 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_downloads.php";
-include_once "classes/class_icons.php";
+
+require_once "subs.php";
+require_once "classes/class_downloads.php";
+require_once "classes/class_icons.php";
 
 $icon_img =new Icons();
 $Downloadlist = new Downloads();
@@ -12,7 +13,7 @@ if(empty($_GET['sort'])) $_GET['sort']="name";
 
 echo writehead('Downloads');
 echo "<meta http-equiv=\"refresh\" content=\""
-	.$_SESSION['reloadtime']['downloads']."; URL=".$_SERVER['PHP_SELF']."?"
+	.$_ENV['GUI_REFRESH_DOWNLOADS']."; URL=".$_SERVER['PHP_SELF']."?"
 	.SID."&amp;sort=".$_GET['sort']."\" />";
 echo $_SESSION['stylesheet'];
 echo "<script>
@@ -198,15 +199,21 @@ $Downloadlist->refresh_cache();
 echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\">";
 
 $spaltenzahl=9;
+if(!empty($_ENV['REL_INFO'])) {
+    $spaltenzahl++;
+}
 
 //tabellenanfang + ueberschriften
-	echo "<table width=\"100%\">\n";
+	echo '<table width="100%">';
 	echo "<tr>
 		<th width=\"10\">&nbsp;</th>
 		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=sources&amp;\">"
 		.$lang['SOURCES']."</a></th>
 		<th><a href=\"".$_SERVER['PHP_SELF']."?sort=name&amp;\">"
 		.$lang['FILENAME']."</a></th>";
+        if(!empty($_ENV['REL_INFO'])) {
+            echo '<th width="16" align="center"><img src="../style/default/info.png" width="16" alt="" /></th>';
+        }
 		echo "<th><a href=\"".$_SERVER['PHP_SELF']."?sort=status&amp;\">"
 		.$lang['STATUS']."</a></th>\n";
 		echo "\t\t<th><a href=\"".$_SERVER['PHP_SELF']."?sort=speed&amp;\">".$lang['SPEED']."</a></th>\n";
@@ -242,7 +249,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 		.$_SESSION['language']['GENERAL']['NONE']."</a></td></tr>\n";
 	foreach(array_keys($downloadids) as $a){
 			//sieht doch etwas uebersichtlicher aus :)
-			$current_download =& $Downloadlist->download($a);
+			$current_download = $Downloadlist->download($a);
 			echo "<tr id=\"zeile_$a\">\n";
 			//checkbox zur auswahl
 			echo "<td>\n<script type=\"text/javascript\">\n<!--\n"
@@ -264,7 +271,13 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			echo "<td id=\"nametd_$a\">"
 				."<a href=\"javascript:rename($a)\" title=\"".$lang['RENAME']."\">";
 			echo htmlspecialchars($current_download['FILENAME'])."</a></td>\n";
-			//status
+
+            //relInfo
+            if (!empty($_ENV['REL_INFO'])) {
+                echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $current_download['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+            }
+
+            //status
 			echo "<td>".$_SESSION['language']['DLSTATUS']
 				['STATUS_'.$current_download['phpaj_STATUS']]."</td>\n";
 			//geschwindigkeit

@@ -5,7 +5,7 @@ class Core{
 	var $lastname;
 	var $lastsubname;
 	var $xml_array;
-	
+
 	// XML-Parser funktionen
 	//-----------------------
 	function startElement($parser, $name, $attrs) {
@@ -32,13 +32,13 @@ class Core{
 			$this->lastsubname[$this->depth] = 'VALUES';
 		}
 	}
-	
+
 	function endElement($parser, $name) {
 		unset($this->lastname[$this->depth]);
 		unset($this->lastsubname[$this->depth]);
 		$this->depth--;
 	}
-	
+
 	function characterData($parser, $data) {
 		if(strlen(trim($data))>0 || $this->lastcdata==$this->lastname[$this->depth]
 				."*".$this->lastsubname[$this->depth]
@@ -68,7 +68,7 @@ class Core{
 		if($update=="0"){
 			$this->xml_array = array();
 		}else{
-			if(empty($update)) $update=array();
+			if(empty($update)) $update= [];
 			$this->xml_array = $update;	//daten aus xml in altes array schreiben
 		}
 		$this->depth = 0;
@@ -82,25 +82,19 @@ class Core{
 
         $url = $_SESSION['core_host'] . '/' . $type . '/' . $anfrage . '&' . http_build_query($params);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $xml_file = file_get_contents($url);
 
-        $xml_file = curl_exec($ch);
-
-        curl_close($ch);
-
-        if(false !== strstr("/wrongpassword", $xml_file)) {
+        if(false !== strpos($xml_file, "wrong password. access denied.")) {
             echo $_SESSION['language']['ERROR']['WRONGCOREPW']."<br />";
+            die;
         }
-		
+
 		if($type === "xml"){
 			if(empty($xml_file))
 				die ($_SESSION['language']['ERROR']['CONNECTION_FAILED']);
 
 			$xml_parser=xml_parser_create("UTF-8");
-			xml_set_element_handler($xml_parser, array(&$this,"startElement"),
-				array(&$this,"endElement"));
+			xml_set_element_handler($xml_parser, array(&$this,"startElement"), array(&$this,"endElement"));
 			xml_set_character_data_handler($xml_parser, array(&$this,"characterData"));
 			if(!xml_parse($xml_parser, $xml_file)){
 				echo "<br/><b>XML-Parser Fehler:</b> ";
@@ -114,7 +108,7 @@ class Core{
 			if(!empty($xml_file)) return($xml_file);
 		}
 	}
-	
+
 	function getcoreversion(){
 		//Core version + betriebssystem holen
 		if(empty($_SESSION['cache']['STATUSBAR']['VERSION'])){

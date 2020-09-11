@@ -1,9 +1,11 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_share.php";
-include_once "classes/class_server.php";
-$lang =& $_SESSION['language']['START'];
+
+require_once "subs.php";
+require_once "classes/class_share.php";
+require_once "classes/class_server.php";
+
+$lang = $_SESSION['language']['START'];
 
 echo writehead('Start');
 echo $_SESSION['stylesheet'];
@@ -31,8 +33,7 @@ if(!empty($Servers->netstats['welcome'])){
 //Client
 echo "<h2>".$lang['CLIENT']."</h2>";
 	echo "<div style=\"margin-left:0.5cm;\"><table>";
-	echo "<tr><td>".$lang['GUIVERSION'].":</td><td>"
-		.$phpguiversion."</td></tr>";
+	echo "<tr><td>".$lang['GUIVERSION'].":</td><td>".PHP_GUI_VERSION."</td></tr>";
 	$coreinfo=$Servers->core->getcoreversion();
 	$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
 	echo "<tr><td>".$lang['COREVERSION'].":</td><td>"
@@ -46,22 +47,24 @@ echo "<h2>".$lang['CLIENT']."</h2>";
 //Warnungen
 	$warnungen=array();
 	if($Servers->netstats['firewalled']==='true'){
-		array_push($warnungen,$_SESSION['language']['SERVER']['FIREWALLED']);
+		$warnungen[] = $_SESSION['language']['SERVER']['FIREWALLED'];
 	}
 
 	if(!empty($warnungen)){
 		echo "<h2>".$lang['WARNINGS']."</h2>";
 		echo "<div style=\"margin-left:0.5cm;background-color:#FF0000;\">";
-		foreach($warnungen as $a) echo "<img src=\"../style/"
-			.$_SESSION['server_warning_icon']."\" alt=\"[!]\" />".$a."<br />";
+		foreach($warnungen as $a) {
+		    echo "<img src=\"../style/" .$_SESSION['server_warning_icon']."\" alt=\"[!]\" />".$a."<br />";
+        }
 		echo "</div>";
 	}
 
 //News
 	echo "<h2>".$lang['NEWS']."</h2>";
 	echo "<div style=\"margin-left:0.5cm;\">";
-	if(!empty($_GET['reloadnews']))
-		getnews(0,$coreinfo['VERSION']);
+	if($_ENV['GUI_SHOW_NEWS']) {
+	    getnews(0,$coreinfo['VERSION']);
+    }
 	if(!empty($_SESSION['cache']['NEWS']['ITEMS'])){
 		getnews(90,$coreinfo['VERSION']);
 		echo "(<a href=\"".$_SERVER['PHP_SELF']."?".SID."&amp;reloadnews=1\">"
@@ -79,10 +82,10 @@ echo "<h2>".$lang['CLIENT']."</h2>";
 //Share
 	echo "<h2>".$lang['SHARE']."</h2>";
 	echo "<div style=\"margin-left:0.5cm;\">";
-	$ShareClass = "Share";
-	$Sharelist = new $ShareClass();
-	//$Sharelist = new Share;
-	if(!empty($_GET['reloadshare'])) $Sharelist->refresh_cache(30);
+	$Sharelist = new Share();
+	if($_ENV['GUI_SHOW_SHARE']) {
+	    $Sharelist->refresh_cache(30);
+    }
 	if(!empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])){
 		$share_anzahl=0;
 		$share_groesse=0;
@@ -126,6 +129,6 @@ echo "<h2>".$lang['CLIENT']."</h2>";
 			."<br />";
 	echo "</td></tr></table>";
 	echo "</div>";
-	
+
 echo "</body>
 </html>";

@@ -1,6 +1,6 @@
 <?php
-include_once "classes/class_core.php";
-include_once "subs.php";
+require_once "classes/class_core.php";
+require_once "subs.php";
 
 class Share{
 	var $core;
@@ -9,7 +9,7 @@ class Share{
 	var $separator;
 	var $spentprio;
 	var $sharemode;
-	
+
 	function __construct(){
 		$this->core = new Core();
 		$this->cache =& $_SESSION['cache']['SHARE'];
@@ -18,7 +18,7 @@ class Share{
 		$this->sharemode = array("subdirectory" => "checked=\"checked\"",
 			"singledirectory" => "");
 	}
-	
+
 	function add_share($name, $sharesubs=0){
 		$oldshares=$this->get_shared_dirs();
 		$countshares=count($oldshares)+1;
@@ -36,7 +36,7 @@ class Share{
 		$share_args.=!empty($sharesubs) ? "True&" : "False&";
 		$this->core->command("function","setsettings?".$share_args);
 	}
-	
+
 	function del_share($name){
 		$oldshares=$this->get_shared_dirs();
 		$countshares=count($oldshares)-1;
@@ -55,7 +55,7 @@ class Share{
 		}
 		$this->core->command("function","setsettings?".$share_args);
 	}
-	
+
 	function changesub($name, $sharesubs=0){
 		$shares=$this->get_shared_dirs();
 		$countshares=count($shares);
@@ -75,25 +75,25 @@ class Share{
 		}
 		$this->core->command("function","setsettings?".$share_args);
 	}
-	
+
 	function get_temp(){
 		if(empty($this->dirxml)) $this->get_shared_dirs();
 		$tempdirname=$this->dirxml['TEMPORARYDIRECTORY']['VALUES']['CDATA'];
 		$tempdirname=substr($tempdirname,0,strlen($tempdirname)-1);
 		return $tempdirname;
 	}
-	
+
 	function get_shared_dirs($force=0){
-		if(empty($this->dirxml) || $force) 
+		if(empty($this->dirxml) || $force)
 			$this->dirxml=$this->core->command("xml","settings.xml");
 		ksort($this->dirxml['SHARE']['VALUES']['DIRECTORY']);	//sortieren
 		return array_keys($this->dirxml['SHARE']['VALUES']['DIRECTORY']);
 	}
-	
+
 	function get_shared_dir($id){
 		return $this->dirxml['SHARE']['VALUES']['DIRECTORY'][$id];
 	}
-	
+
 	function refresh_cache($zeit){
 		//share-cache neu laden, falls er aelter als $zeit minuten ist
 		if(empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])
@@ -115,7 +115,7 @@ class Share{
 		$temp=strlen($verzeichnis);
 		$this->spentprio=0;
 		foreach(array_keys($this->cache['SHARES']['VALUES']['SHARE']) as $a){
-			$file=&$this->get_file($a);
+			$file=$this->get_file($a);
 			if($file['PRIORITY']>1)
 				$this->spentprio+=$file['PRIORITY'];
 			if(substr($file['FILENAME'],0,$temp)==$verzeichnis
@@ -126,16 +126,17 @@ class Share{
 			$sfsort=ajsort($ids,'SHORTFILENAME',SORT_STRING,0);
 		return array_keys($sfsort);
 	}
-		
+
 	function get_file($id){
 		if(empty($this->cache['SHARES']['VALUES']['SHARE'][$id])){
 			$fileobject=$this->core->command("xml","getobject.xml?id=$id");
 			$this->cache['SHARES']['VALUES']['SHARE'][$id]=$fileobject['SHARE'][$id];
 		}
-		$file=&$this->cache['SHARES']['VALUES']['SHARE'][$id];
+		$file=$this->cache['SHARES']['VALUES']['SHARE'][$id];
+		$file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
 		return $file;
 	}
-	
+
 	function setpriority($ids, $prio){
 		$changeprio_ids='';
 		for($i=0;$i<count($ids);$i++){
@@ -150,7 +151,7 @@ class Share{
 			$this->cache['SHARES']['VALUES']['SHARE'][$i]=$fileobject['SHARE'][$i];
 		}
 	}
-	
+
 	function directory($dir="",$getseponly=0){
 		$dirlist=array();
 		if(!empty($dir))
@@ -172,7 +173,7 @@ class Share{
 			//schoen sortieren ;)
 			ksort($dirxml['DIR']);
 		}
-			
+
 		//eintrag ".."
 		$dirup='';
 		if(!empty($dir)){
@@ -181,7 +182,7 @@ class Share{
 			$dirup = join($sep,$dirup);
 			array_push($dirlist,array($dirup,".."));
 		}
-			
+
 		//restliche eintraege
 		if(!empty($dirxml['DIR'])){
 			foreach(array_keys($dirxml['DIR']) as $a){
@@ -197,7 +198,7 @@ class Share{
 					$dirxml['DIR'][$a]['NAME']));
 			}
 		}
-		
+
 		return $dirlist;
 	}
 }

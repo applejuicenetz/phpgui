@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_share.php";
+require_once "subs.php";
+require_once "classes/class_share.php";
 $lang = $_SESSION['language']['SHARE'];
 
 $Share = new Share();
@@ -12,9 +12,7 @@ if (!empty($_GET['shareexpfile'])) {
     $_SESSION['shareexport'] = [];
     foreach ($_GET['shareexpfile'] as $expid) {
         $shareentry = $Sharelist->get_file($expid);
-        $export_currlink = 'ajfsp://file|' . $shareentry['SHORTFILENAME'] . '|' .
-            $shareentry['CHECKSUM'] . '|' .
-            $shareentry['SIZE'] . '/';
+        $export_currlink = $shareentry['LINK'];
         $testx = array_search($export_currlink, $_SESSION['shareexport']);
         if ($testx !== FALSE) continue;
         $_SESSION['shareexport'][] = $export_currlink;
@@ -102,7 +100,7 @@ function toggleinfo(id,lastasked,askcount,searchcount,ajfsp){
 			infobox.appendChild(text3);
 			infobox.appendChild(document.createElement('br'));
 			var ajlink=document.createElement('a');
-				ajlink.setAttribute('href', 'ajfsp://file|'+ajfsp+'|"
+				ajlink.setAttribute('href', ajfsp+'|"
 					.$_SESSION['phpaj']['core_source_ip'].":"
 					.$_SESSION['phpaj']['core_source_port']."/');
 			ajlink.appendChild(document.createTextNode('[source link]'));
@@ -160,9 +158,13 @@ echo "<table width=\"100%\">\n";
 
 $spaltenzahl=4;
 echo "<tr><th width=\"20\">&nbsp;</th>
-<th>".$lang['FILENAME']."</th>
-<th>".$lang['FILESIZE']."</th>
-<th>".$lang['PRIORITY']."</th></tr>\n";
+<th>".$lang['FILENAME']."</th>";
+
+if(!empty($_ENV['REL_INFO'])) {
+    echo '<th width="16" align="center"><img src="../style/default/info.png" width="16" alt="" /></th>';
+}
+
+echo "<th>".$lang['FILESIZE']."</th><th>".$lang['PRIORITY']."</th></tr>\n";
 
 //unterverzeichnisse
 $dirliste=$Sharelist->directory($_GET['dir']);
@@ -175,7 +177,7 @@ foreach($dirliste as $a){
 
 //dateien anzeigen
 foreach($Sharelist->get_fileids($_GET['dir']) as $a){
-	$shareentry=&$Sharelist->get_file($a);
+	$shareentry=$Sharelist->get_file($a);
 	echo "\n<tr id=\"zeile_$a\"><td><input type=\"checkbox\" "
 		."id=\"sharecheck_$a\" onclick=\"change($a)\" />"
 		."<script type=\"text/javascript\">\n"
@@ -183,8 +185,7 @@ foreach($Sharelist->get_fileids($_GET['dir']) as $a){
 		."share_ids[$a]=0;\n"
 		."//-->\n</script>\n"
 		."</td><td>\n";
-	$ajfsp=$shareentry['SHORTFILENAME']."|".$shareentry['CHECKSUM']."|"
-		.$shareentry['SIZE'];
+
 	$lastasked=(isset($shareentry['LASTASKED'])) ?
 		date("j.n.y - H:i:s",($shareentry['LASTASKED']/1000))
 		: "N/A";
@@ -192,13 +193,18 @@ foreach($Sharelist->get_fileids($_GET['dir']) as $a){
 	if(!isset($shareentry['SEARCHCOUNT'])) $shareentry['SEARCHCOUNT']="N/A";
 	echo "<a href=\"javascript:toggleinfo($a,'"
 		.$lastasked."','".$shareentry['ASKCOUNT']."','"
-		.$shareentry['SEARCHCOUNT']."','".addslashes($ajfsp)."')\">";
+		.$shareentry['SEARCHCOUNT']."','".addslashes($shareentry['LINK'])."')\">";
 	echo "<img border=\"0\" src=\"../style/"
 		.$_SESSION['search_info_icon']."\" alt='info' /></a>\n";
-	echo "<a href=\"ajfsp://file|".$ajfsp."/\">"
+	echo "<a href=\"".$shareentry['LINK']."/\">"
 		.$shareentry['SHORTFILENAME']."</a>";
 	echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div>";
 	echo "</td>";
+
+    if (!empty($_ENV['REL_INFO'])) {
+        echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $shareentry['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+    }
+
 	//groesse der datei
 	echo "<td class=\"right\">"
 		.sizeformat($shareentry['SIZE'])."</td>";

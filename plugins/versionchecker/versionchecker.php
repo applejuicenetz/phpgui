@@ -2,7 +2,7 @@
 /*
 versionchecker
 */
-include_once "classes/class_icons.php";
+require_once "classes/class_icons.php";
 $icon_img = new Icons;
 
 function versionchecker($srcarray){
@@ -52,7 +52,7 @@ function versionchecker_merge($array1=array(),$array2=array()){
 $versionchecker['download']=array();
 $versionchecker['upload']=array();
 
-include_once "classes/class_downloads.php";
+require_once "classes/class_downloads.php";
 $Downloadlist = new Downloads;
 $Downloadlist->refresh_cache();
 if(!empty($Downloadlist->cache['USER'])){
@@ -67,7 +67,7 @@ if(!empty($Downloadlist->cache['USER'])){
 	}
 }
 
-include_once "classes/class_uploads.php";
+require_once "classes/class_uploads.php";
 $Uploadlist = new Uploads;
 $Uploadlist->refresh_cache();
 if(!empty($Uploadlist->cache['UPLOAD'])){

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_search.php";
+require_once "subs.php";
+require_once "classes/class_search.php";
 $Search = new Search();
 $lang =& $_SESSION['language']['SEARCH'];
 
@@ -9,7 +9,7 @@ echo writehead('Search');
 
 if(empty($_GET['searchid'])) $_GET['searchid']="alles";
 echo "<meta http-equiv=\"refresh\" content=\""
-	.$_SESSION['reloadtime']['search']."; URL=".$_SERVER['PHP_SELF']."?searchid="
+	.$_ENV['GUI_REFRESH_SEARCH']."; URL=".$_SERVER['PHP_SELF']."?searchid="
 	.$_GET['searchid']."&amp;".SID."\" />";    //neu laden
 echo $_SESSION['stylesheet'];
 echo "<script type=\"text/javascript\">
@@ -170,8 +170,13 @@ $searchsort=$Search->sortieren($_GET['sort']);
 echo "<tr>
 <th><a href=\"".$_SERVER['PHP_SELF']."?sort=name&amp;searchid=".$_GET['searchid']
 	."&amp;".SID."\">"
-	.$lang['NAME']."</a></th>
-<th><a href=\"".$_SERVER['PHP_SELF']."?sort=size&amp;searchid="
+	.$lang['NAME']."</a></th>";
+
+if(!empty($_ENV['REL_INFO'])) {
+    echo '<th width="16" align="center"><img src="../style/default/info.png" width="16" alt="" /></th>';
+}
+
+echo "<th><a href=\"".$_SERVER['PHP_SELF']."?sort=size&amp;searchid="
 	.$_GET['searchid']."&amp;".SID."\">"
 	.$lang['SIZE']."</a></th>
 <th><a href=\"".$_SERVER['PHP_SELF']."?sort=count&amp;searchid=".$_GET['searchid']
@@ -185,7 +190,7 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 	foreach(array_keys($searchsort) as $a ){
 		$cur_search =& $Search->cache['SEARCHENTRY'][$a];
 		//pruefen, ob ergebnis zu suche geh�rt
-		if($_GET['searchid']!=="alles" 
+		if($_GET['searchid']!=="alles"
 			&& $cur_search['SEARCHID']!==$_GET['searchid']) continue;
 		$result_counter--;
 		if($result_counter<0 && empty($_GET['nolimit'])){
@@ -215,7 +220,12 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 		echo "<a href=\"javascript:dllink('".$ajfsp_link
 			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
 		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
-		//dateigr��e
+		//dateigröße
+
+        if (!empty($_ENV['REL_INFO'])) {
+            echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $ajfsp_link) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+        }
+
 		echo "<td class=\"right\">"
 			.sizeformat($cur_search['SIZE'])
 			."</td>\n";

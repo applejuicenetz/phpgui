@@ -1,7 +1,8 @@
-.docker
 .github
 .idea
 .run
+.env
 .gitignore
-readme.md
+README.md
+CHANGELOG.md
 Dockerfile

@@ -1,6 +1,6 @@
 <?php
-include_once "classes/class_core.php";
-include_once "subs.php";
+require_once "classes/class_core.php";
+require_once "subs.php";
 
 class Downloads{
 	var $cache;
@@ -118,7 +118,9 @@ class Downloads{
 			foreach(array_keys($this->cache['DOWNLOAD']) as $a){
 				$download=&$this->cache['DOWNLOAD'][$a];
 				$this->subdirs[$download['TARGETDIRECTORY']][$a]=&$download;
-				//werte zum sortieren
+                $download['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $download['FILENAME'], $download['HASH'], $download['SIZE']);
+
+                //werte zum sortieren
 				$download['phpaj_REST']=
 					$download['SIZE']-$download['phpaj_READY'];
 				$download['phpaj_DONE']=

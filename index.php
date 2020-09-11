@@ -3,141 +3,117 @@ header('Cache-Control: no-cache');
 header('Content-Type: text/html; charset=UTF-8');
 
 session_start();
-$_SESSION = array();	//session daten alle loeschen
+session_unset();
 
-include_once "vars.php";
+require_once 'main/subs.php';
 
 //sprache
-	if(!empty($_GET['c_lang'])){
-		$_GET['c_lang']=str_replace("/",'',$_GET['c_lang']);
-		$_GET['c_lang']=str_replace("\\",'',$_GET['c_lang']);
-	}
-	if(empty($_GET['c_lang']) || !preg_match('/\.xml$/i',$_GET['c_lang'])
-			|| !file_exists("language/".$_GET['c_lang'])){
-		$language_xml="language/".$standard_language_xml;
-	}else{
-		$language_xml="language/".$_GET['c_lang'];
-	}
+$languages = dirlisting('language', 'xml');
 
-//sprachdatei lesen
-//------------------
+if (!empty($_GET['c_lang']) && array_key_exists($_GET['c_lang'] . '.xml', $languages)) {
+    $_SESSION['language']['name'] = $_GET['c_lang'];
+} else {
+    $_SESSION['language']['name'] = ($_ENV['GUI_LANGUAGE'] ?: 'deutsch');
+}
 
-	$_SESSION['language']=array();
-	function startLanguageElement($parser, $name, $attrs) {
-		$keys=array_keys($attrs);
-		$_SESSION['language'][$name]=array();
-		foreach($keys as $l){
-			$_SESSION['language'][$name][$l]=$attrs[$l];
-		}
-	}
+$language_file = file_get_contents('language/' . $_SESSION['language']['name'] . '.xml');
+$language_parser = xml_parser_create();
+xml_set_element_handler($language_parser, function ($parser, $name, $attrs) {
+    $keys = array_keys($attrs);
+    $_SESSION['language'][$name] = [];
+    foreach ($keys as $l) {
+        $_SESSION['language'][$name][$l] = $attrs[$l];
+    }
+}, null);
+xml_parse($language_parser, $language_file);
+xml_parser_free($language_parser);
 
-	function endLanguageElement($parser, $name) {}
+$styles = dirlisting('style', 'php');
 
-	$language_file = @file($language_xml);
-	$language_file = implode('', $language_file);
-	$language_parser = xml_parser_create();
-	xml_set_element_handler($language_parser,"startLanguageElement","endLanguageElement");
-	xml_parse($language_parser, $language_file);
-	xml_parser_free($language_parser);
+if (isset($_GET['c_style']) && array_key_exists($_GET['c_style'], $styles)) {
+    $_SESSION['stylefile'] = $_GET['c_style'];
+} else {
+    $_SESSION['stylefile'] = $_ENV['GUI_STYLE'];
+}
 
-//------------------
 
-include_once "main/subs.php";
+require_once 'style/' . $_SESSION['stylefile'];
 
-//style
-	$styles_liste=dirlisting("style","php");
-	if(empty($_GET['c_style'])
-		|| !in_array($_GET['c_style'],$styles_liste[0])){
-		$_SESSION['stylefile']=$standard_stylefile;
-	}else{
-		$_SESSION['stylefile']=$_GET['c_style'];
-	}
-	include_once "style/".$_SESSION['stylefile'];
-	$_SESSION['stylesheet']="<link rel=\"stylesheet\" type=\"text/css\""
-		." href=\"../style/".$stylesheet."\" />\n";
-
-$core_standard_pass="";
-
-echo "<!DOCTYPE html>
+$_SESSION['stylesheet'] = '<link rel="stylesheet" type="text/css" href="../style/' . $stylesheet . '" />';
+?>
+<!DOCTYPE html>
 <html>
 <head>
-<title>php-applejuice</title>\n";
-echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/".$stylesheet."\" />\n";
-echo '<style type="text/css">
-select {width:100%;}
-</style>';
-echo "<meta charset=\"utf-8\">
-<meta http-equiv=\"Cache-Control\" content=\"no-cache\" />\n";
-echo "</head>
-<body onload=\"document.loginform.cpass.focus()\">
-<div align=\"center\">";
-
-echo "<h2>".$_SESSION['language']['LOGIN']['HEADLINE']."</h2>\n";
-
-echo "<div>".$phpguiversion."</div>\n";
-
-echo "<form name=\"loginform\" action=\"main/index.php?".SID."\" method=\"post\" autocomplete=\"off\">\n"
-	."<input type=\"hidden\" name=\"reloadnews\" value=\""
-	.$start_shownews."\" /><input type=\"hidden\" name=\"reloadshare\" "
-	."value=\"".$start_showshareinfo."\" />\n"
-	."<table>\n";
-
-echo "<tr><td><label for=\"host\">"
-	.$_SESSION['language']['LOGIN']['CORE_HOST']."</label>:</td>"
-	."<td><input type='url' id=\"host\" name=\"host\" value=\"".$core_standard_host."\" required />"
-	."</td></tr>\n";
-echo "<tr><td><label for=\"cpass\">"
-	.$_SESSION['language']['LOGIN']['CORE_PASSWORD']."</label>:</td>"
-	."<td><input id=\"cpass\" type=\"password\" name=\"cpass\" value=\""
-	.$core_standard_pass."\" autofocus required /></td></tr>\n";
-
-//style-auswahl
-	echo "<tr><td><label for=\"c_style\">"
-		.$_SESSION['language']['LOGIN']['GUI_STYLE']."</label>:</td>"
-		."<td><select id=\"c_style\" name=\"c_style\" size=\"1\" onchange=\""
-		."window.location.href='index.php?c_style='"
-		."+document.forms[0].c_style.value+'&amp;c_lang='"
-		."+document.forms[0].c_lang.value+'&amp;".SID."';\">\n";
-	for($i=0;$i<count($styles_liste[0]);$i++){
-		echo "<option value='".$styles_liste[0][$i]."'";
-		if($styles_liste[0][$i]==$_SESSION['stylefile'])
-			echo " selected=\"selected\"";
-		echo ">".$styles_liste[1][$i]."</option>\n";
-	}
-	echo "</select></td></tr>\n";
-
-//sprach-auswahl
-	echo "<tr><td><label for=\"c_lang\">"
-		.$_SESSION['language']['LOGIN']['GUI_LANGUAGE']."</label>:</td>"
-		."<td><select id=\"c_lang\" name=\"c_lang\" size=\"1\" onchange=\""
-		."window.location.href='index.php?c_lang='"
-		."+document.forms[0].c_lang.value+'&amp;c_style='"
-		."+document.forms[0].c_style.value+'&amp;".SID."';\">\n";
-	$lang_liste=dirlisting("language","xml");
-	for($i=0;$i<count($lang_liste[0]);$i++){
-		echo "<option value=\"".$lang_liste[0][$i]."\"";
-		if("language/".$lang_liste[0][$i]==$language_xml)
-			echo " selected=\"selected\"";
-		echo ">".$lang_liste[1][$i]."</option>\n";
-	}
-
-echo "</select></td></tr>\n"
-	."<tr><td colspan=\"2\"><div align=\"right\">"
-	."<input type=\"submit\" value=\""
-	.$_SESSION['language']['LOGIN']['OK']."\" /></div></td></tr>\n"
-	."</table></form>\n";
-
-if(isset($_GET['l']))
-	echo "<script type=\"text/javascript\">\n<!--\n"
-		."document.loginform.submit();\n"
-		."//-->\n</script>";
-echo "<a href=\"minigui/\">[miniGUI]</a>";
-
-echo "<div class=\"authors\">\n";
-echo "Code by UP<br />";
-echo 'modified (again) by <a href="https://github.com/red171/" target="_blank">red171</a>';
-echo "</div>\n";
-echo "</div>
+    <title>php-applejuice</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/<?php echo $stylesheet; ?>"/>
+    <style>
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h2><?php echo $_SESSION['language']['LOGIN']['HEADLINE']; ?></h2>
+    <form name="loginform" action="main/index.php" method="post" autocomplete="off">
+        <table>
+            <tr>
+                <td>
+                    <label for="host"><?php echo $_SESSION['language']['LOGIN']['CORE_HOST']; ?></label>:
+                </td>
+                <td>
+                    <input type="url" id="host" name="host" value="<?php echo ($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']) . ':' . ($_ENV['CORE_PORT'] ?? 9851); ?>" size="24" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="cpass"><?php echo $_SESSION['language']['LOGIN']['CORE_PASSWORD']; ?></label>:
+                </td>
+                <td>
+                    <input id="cpass" type="password" name="cpass" value="" size='24' autofocus required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="c_style"><?php echo $_SESSION['language']['LOGIN']['GUI_STYLE']; ?></label>:
+                </td>
+                <td>
+                    <select id="c_style" name="c_style" size="1" onchange="window.location.href='index.php?c_style='+document.forms[0].c_style.value+'&amp;c_lang='+document.forms[0].c_lang.value;">
+                        <?php foreach ($styles as $styleValue => $styleName): ?>
+                            <option <?php if ($styleValue === $_SESSION['stylefile']) echo ' selected'; ?> value="<?php echo $styleValue; ?>"><?php echo $styleName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="c_lang"><?php echo $_SESSION['language']['LOGIN']['GUI_LANGUAGE']; ?></label>:
+                </td>
+                <td>
+                    <select id="c_lang" name="c_lang" size="1" onchange="window.location.href='index.php?c_lang='+document.forms[0].c_lang.value+'&amp;c_style='+document.forms[0].c_style.value;">
+                        <?php foreach ($languages as $languageValue => $languageName): ?>
+                            <option <?php if ($languageName === $_SESSION['language']['name']) echo ' selected'; ?> value="<?php echo $languageName; ?>"><?php echo $languageName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div align="right">
+                        <input type="submit" value="<?php echo $_SESSION['language']['LOGIN']['OK']; ?>"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div class="authors">
+        Code by UP &middot; maintained by <a href="https://github.com/red171/" target="_blank">red171</a>
+    </div>
+    <div class="authors">
+        <a href="https://github.com/applejuicenet/phpgui" target="_blank"><?php echo PHP_GUI_VERSION; ?></a>
+    </div>
+</div>
 </body>
-</html>";
+</html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "../plugins/register.php";
+require_once "subs.php";
+require_once "../plugins/register.php";
 $Plugin =new Plugin();
 $Plugin->Find_Plugins();
 

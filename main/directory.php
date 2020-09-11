@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_share.php";
+require_once "subs.php";
+require_once "classes/class_share.php";
 $Share = new Share;
 
 echo writehead('Directory');

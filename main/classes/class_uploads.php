@@ -1,21 +1,21 @@
 <?php
-include_once "classes/class_core.php";
+require_once "classes/class_core.php";
 
 class Uploads{
 	var $cache;
 	var $core;
-	
+
 	function __construct(){
 		$this->cache =& $_SESSION['cache']['UPLOADS'];
 		$this->core = new Core();
 	}
-	
+
 	//stand der daten
 	function time(){
 		return date("j.n.y - H:i:s",
 			($this->cache['TIME']['VALUES']['CDATA'])/1000);
 	}
-	
+
 	//neue infos vom core holen
 	function refresh_cache(){
 		//liste mit alten ids l�schen
@@ -44,7 +44,7 @@ class Uploads{
 					unset($this->cache['UPLOAD'][$a]);
 					continue;
 				}
-				$current_upload=&$this->get_upload($a);
+				$current_upload=$this->get_upload($a);
 				if($current_upload['STATUS']==="1"){
 					//laufende uploads
 					$this->cache['phpaj_ul']++;
@@ -72,4 +72,4 @@ class Uploads{
 	}
 
 }
-	
+

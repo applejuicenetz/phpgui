@@ -1,11 +1,11 @@
-name: '[docker] CI for releases'
+name: 'docker'
 
 on:
     create:
         tags:
 
 jobs:
-    release:
+    build:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout

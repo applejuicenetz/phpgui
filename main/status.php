@@ -1,13 +1,13 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_core.php";
+require_once "subs.php";
+require_once "classes/class_core.php";
 $core = new Core;
 
 echo writehead('Status');
 //neu laden
 echo "<meta http-equiv=\"refresh\" content=\""
-	.$_SESSION['reloadtime']['status']."; URL=".$_SERVER['PHP_SELF']."?".SID."\" />";
+	.$_ENV['GUI_REFRESH_STATUS']."; URL=".$_SERVER['PHP_SELF']."?".SID."\" />";
 
 echo $_SESSION['stylesheet'];
 echo "</head><body class=\"status\">

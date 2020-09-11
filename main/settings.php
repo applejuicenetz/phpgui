@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_core.php";
+require_once "subs.php";
+require_once "classes/class_core.php";
 $core = new Core();
 $lang =& $_SESSION['language']['SETTINGS'];
 

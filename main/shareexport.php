@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_core.php";
+require_once "subs.php";
+require_once "classes/class_core.php";
 $core = new Core;
 
 echo writehead('Share-Export');
@@ -36,7 +36,7 @@ echo "<br /><textarea cols=\"90\" rows=\"16\" wrap=\"off\">";
 if(!empty($_SESSION['shareexport'])){
 	if(!in_array($_GET['exp_format'],$exportf[1]))
 		$_GET['exp_format']="Default";
-	include_once "../export/".$_GET['exp_format'].".php";
+	require_once "../export/".$_GET['exp_format'].".php";
 	if(!empty($_GET['withsource']) && $_GET['withsource']=="true"){
 		$netinfo=$core->command("xml",
 			"modified.xml?filter=informations;server");

@@ -19,6 +19,7 @@ $_SESSION['tabs_search_icon']="tango/icons/search.png";
 $_SESSION['tabs_server_icon']="tango/icons/server.png";
 $_SESSION['tabs_settings_icon']="tango/icons/preferences.png";
 $_SESSION['tabs_extras_icon']="tango/icons/extras.png";
+$_SESSION['tabs_favorite_icon']="tango/icons/favorite.png";
 $_SESSION['tabs_corekill_icon']="tango/icons/kill.png";
 $_SESSION['tabs_logout_icon']="tango/icons/logout.png";
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once "subs.php";
-include_once "classes/class_icons.php";
-include_once "classes/class_server.php";
+require_once "subs.php";
+require_once "classes/class_icons.php";
+require_once "classes/class_server.php";
 $icon_img = new Icons();
 $Servers = new Server();
 $lang =& $_SESSION['language']['SERVER'];
@@ -80,7 +80,7 @@ foreach($Servers->ids() as $a){
 	$server_delete_link="<a href=\"".$_SERVER['PHP_SELF']
 		."?action=removeserver&amp;serv_id=".$serverinfo['ID']."&amp;"
 		.SID."\">".$lang['DELETE']."</a>";
-	
+
 	if($Servers->netstats['connectedwith']<0 || $srv_timediff>=30){
 		$server_connect_link="<a href=\"".$_SERVER['PHP_SELF']
 			."?action=serverlogin&amp;serv_id="	.$serverinfo['ID']."&amp;"

@@ -19,6 +19,7 @@ $_SESSION['tabs_search_icon']="default/tabs/suchen.gif";
 $_SESSION['tabs_server_icon']="default/tabs/server.gif";
 $_SESSION['tabs_settings_icon']="default/tabs/optionen.gif";
 $_SESSION['tabs_extras_icon']="default/tabs/extras.gif";
+$_SESSION['tabs_favorite_icon']="default/tabs/favorite.gif";
 $_SESSION['tabs_corekill_icon']="default/tabs/kill.gif";
 $_SESSION['tabs_logout_icon']="default/tabs/logout.gif";
 
@@ -53,4 +54,4 @@ $_SESSION['minus_icon']="default/minus.png";
 $_SESSION['search_cancel_icon']="default/stop.png";
 $_SESSION['search_delete_icon']="default/x.png";
 $_SESSION['search_info_icon']="default/info.png";
-?>    
+?>

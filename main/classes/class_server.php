@@ -1,5 +1,5 @@
 <?php
-include_once "classes/class_core.php";
+require_once 'classes/class_core.php';
 
 class Server{
 	var $server_xml;
@@ -23,7 +23,7 @@ class Server{
 		return date("j.n.y - H:i:s",
 			($this->server_xml['TIME']['VALUES']['CDATA'])/1000);
 	}
-		
+
 	function netstats(){
 		$networkinfo=array_keys($this->server_xml['NETWORKINFO']);
 		$netinfo=&$this->server_xml['NETWORKINFO'][$networkinfo[0]];
@@ -38,14 +38,14 @@ class Server{
 				.$this->server_xml['SERVER']
 				[$netinfo['CONNECTEDWITHSERVERID']]['PORT'];
 		}
-			
+
 		$timeconnected='?';
 		if(isset($netinfo['CONNECTEDSINCE'])
 				&& $netinfo['CONNECTEDSINCE']!=0){
 			$timeconnected=($this->server_xml['TIME']['VALUES']['CDATA']
 				-$netinfo['CONNECTEDSINCE'])/1000;
 		}
-		
+
 		$connectedwith=&$netinfo['CONNECTEDWITHSERVERID'];
 		$trytoconnectto=&$netinfo['TRYCONNECTTOSERVER'];
 		$firewalled=&$netinfo['FIREWALLED'];
@@ -61,9 +61,9 @@ class Server{
 				['WELCOMEMESSAGE']['VALUES']['CDATA']='';
 		$welcomemsg=trim($this->server_xml['NETWORKINFO']
 			['WELCOMEMESSAGE']['VALUES']['CDATA']);
-		$welcomemsg=strip_tags($welcomemsg,$_SESSION['phpaj']['allowed_servermsg_tags']);
+		$welcomemsg=strip_tags($welcomemsg,$_ENV['ALLOWED_SERVERMSG_TAGS']);
 		$welcomemsg=str_replace("<br>","<br />",$welcomemsg);
-		
+
 		return array('servername'=>$servername,
 				'timeconnected'=>$timeconnected,
 				'firewalled'=>$firewalled,
@@ -75,46 +75,51 @@ class Server{
 				'trytoconnectto'=>$trytoconnectto,
 				'welcome'=>$welcomemsg);
 	}
-		
+
 	function ids(){
-		$idliste=array();
 		$idliste=array_keys($this->server_xml['SERVER']);
 		asort($idliste);
 		array_shift($idliste);	// -1 entfernen
 		return $idliste;
 	}
-	
+
 	function serverinfo($id){
 		return $this->server_xml['SERVER'][$id];
 	}
-		
-	function getmore(){
-		$new_servers=get_http_file("www.applejuicenet.de",80,"/18.0.html");
-		if(empty($new_servers)) return;
-		preg_match_all("/ajfsp:\/\/server\\|(.*)\//U",
-			$new_servers, $new_servers_array);
-		$new_rand_server=array();
-		//10 zufaellige nummern nehmen, ist zwar moeglich,
-		// aber unwahrscheinlich, oefters die gleiche zu erwischen
-		for($h=0;$h<10;$h++)
-			array_push($new_rand_server,rand(0,count($new_servers_array[1])-1));
-		foreach($new_rand_server as $rand_nummer){
-			if(!empty($new_servers_array[1][$rand_nummer]))
-				$this->core->command("function","processlink?link=ajfsp://server|"
-				.$new_servers_array[1][$rand_nummer]."/");
-		}
-	}
 
-	function info(){
+    function getmore()
+    {
+        // TODO https://www.applejuicenet.de/serverlist/xmllist.php
+        $new_servers = file_get_contents('http://www.applejuicenet.de/18.0.html');
+
+        if (empty($new_servers)) {
+            return;
+        }
+
+        preg_match_all("/ajfsp:\/\/server\\|(.*)\//U", $new_servers, $new_servers_array);
+        $new_rand_server = [];
+
+        //10 zufaellige nummern nehmen, ist zwar moeglich, aber unwahrscheinlich, oefters die gleiche zu erwischen
+        for ($h = 0; $h < 10; $h++) {
+            $new_rand_server[] = random_int(0, count($new_servers_array[1]) - 1);
+        }
+
+        foreach ($new_rand_server as $rand_nummer) {
+            if (!empty($new_servers_array[1][$rand_nummer])) {
+                $this->core->command('function', 'processlink?link=ajfsp://server|' . $new_servers_array[1][$rand_nummer] . '/');
+            }
+        }
+    }
+
+    function info(){
 		$info=array_keys($this->server_xml['INFORMATION']);
 		return $this->server_xml['INFORMATION'][$info[0]];
 	}
-		
-	function action($action, $id){
-		$info = $action." &rArr; "
-			.$this->core->command("function",$action."?id=".$id);
-		return $info;
-	}
+
+    function action($action, $id)
+    {
+        return $action . ' &rArr; ' . $this->core->command('function', $action . '?id=' . $id);
+    }
 
 }
 

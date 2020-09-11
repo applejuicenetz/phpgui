@@ -2,10 +2,10 @@
 Header("Cache-Control: no-cache");
 Header("Content-type: image/png");
 session_start();
-include_once "subs.php";
-include_once "classes/class_core.php";
-include_once "classes/class_share.php";
-include_once "classes/class_downloads.php";
+require_once "subs.php";
+require_once "classes/class_core.php";
+require_once "classes/class_share.php";
+require_once "classes/class_downloads.php";
 $core = new Core;
 
 if(!empty($_GET['dl_id'])){
@@ -120,7 +120,7 @@ foreach(array_keys($partliste['PART']) as $a){
 $Downloadlist = new Downloads;
 //ladende parts einzeichnen
 if(!empty($_GET['dl_id'])){
-    $dl =& $Downloadlist->download($_GET['dl_id']);
+    $dl = $Downloadlist->download($_GET['dl_id']);
     if(!empty($dl['phpaj_loading_parts'])){
         // alle ladenden parts vom dl einzeichnen
         foreach(array_keys($dl['phpaj_loading_parts']) as $a){
@@ -137,7 +137,7 @@ if(!empty($_GET['dl_id'])){
         }
     }
 }elseif(!empty($_GET['usr_id'])){
-        $current_dlpart=&$Downloadlist->user($_GET['usr_id']);
+        $current_dlpart=$Downloadlist->user($_GET['usr_id']);
         if($current_dlpart['DOWNLOADFROM']>-1){
             // wenn was von dem user geladen wird -> part einzeichnen
             $obenlinks_x=($pixelsize*$current_dlpart['DOWNLOADFROM']);

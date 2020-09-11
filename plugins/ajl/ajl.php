@@ -49,7 +49,7 @@ if(!empty($_POST['source'])){
 	}else{
 		$ajl_file=explode("\n",$_POST['linktext']);
 	}
-	include_once "classes/class_core.php";
+	require_once "classes/class_core.php";
 	$core = new Core;
 	switch($_POST['filetype']){
 		case "ajl":
