@@ -9,12 +9,12 @@ appleJuice Client GUI geschrieben in PHP.
 
 ## Abhängigkeiten
 
-Es wird PHP mindestens `7.4.0` benötigt!
+Es wird mindestens PHP `7.4.0` benötigt!
 
 
 ## Konfiguration (nur bei selbst hosting ohne Docker)
 
-Die Datei `.env.dist` kopieren und zu `.env` umbenennen und mit einem Texteditor die gewünschte Konfiguration vornehmen.
+Die Datei `.env.dist` kopieren, zu `.env` umbenennen und mit einem Texteditor die gewünschte Konfiguration vornehmen.
 
 
 ## auto login via url
@@ -26,6 +26,7 @@ Die Datei `.env.dist` kopieren und zu `.env` umbenennen und mit einem Texteditor
 ```bash
 echo "http://HOST:PORT|PASSWORD" | base64
 ```
+Das Passwort kann sowohl ein `md5sum` sein, als auch `plain`.
 
 ## Docker
 

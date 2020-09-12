@@ -79,7 +79,7 @@ if($_GET['show_uplds']==1){
 
             //relInfo
             if (!empty($_ENV['REL_INFO'])) {
-                echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+                echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
             }
 
 			//Nick des Users
@@ -154,7 +154,7 @@ if($_GET['show_queue']==1){
 
             //relInfo
             if (!empty($_ENV['REL_INFO'])) {
-                echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+                echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $current_share['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
             }
 
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"

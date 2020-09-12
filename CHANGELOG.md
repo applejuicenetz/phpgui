@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.1
+- fix relinfo link builder
+
 ## 0.27.0
 - add back a simplified RelInfo Icon in `downloads`, `uploads`, `share` and `search` view
 - add `permalink` on top Bar

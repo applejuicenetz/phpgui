@@ -202,7 +202,7 @@ foreach($Sharelist->get_fileids($_GET['dir']) as $a){
 	echo "</td>";
 
     if (!empty($_ENV['REL_INFO'])) {
-        echo '<td align="center"><a target="_blank" href="' . sprintf($_SESSION['rel_info'], $shareentry['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+        echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $shareentry['LINK']) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
     }
 
 	//groesse der datei

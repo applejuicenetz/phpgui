@@ -1,5 +1,5 @@
 <?php
-define('PHP_GUI_VERSION', !empty($_ENV['VERSION']) ? $_ENV['VERSION'] : 'v0.27.0');
+define('PHP_GUI_VERSION', !empty($_ENV['VERSION']) ? $_ENV['VERSION'] : 'v0.27.1');
 
 require_once 'env.php';
 
