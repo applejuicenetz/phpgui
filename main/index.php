@@ -4,6 +4,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 session_start();
 
+require_once 'subs.php';
 require_once 'login.php';
 
 if (empty($_SESSION['core_host'])) {

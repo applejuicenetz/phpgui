@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.2
+- fix permalink usage
+
 ## 0.27.1
 - fix relinfo link builder
 

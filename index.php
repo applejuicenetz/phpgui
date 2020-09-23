@@ -6,40 +6,7 @@ session_start();
 session_unset();
 
 require_once 'main/subs.php';
-
-//sprache
-$languages = dirlisting('language', 'xml');
-
-if (!empty($_GET['c_lang']) && array_key_exists($_GET['c_lang'] . '.xml', $languages)) {
-    $_SESSION['language']['name'] = $_GET['c_lang'];
-} else {
-    $_SESSION['language']['name'] = ($_ENV['GUI_LANGUAGE'] ?: 'deutsch');
-}
-
-$language_file = file_get_contents('language/' . $_SESSION['language']['name'] . '.xml');
-$language_parser = xml_parser_create();
-xml_set_element_handler($language_parser, function ($parser, $name, $attrs) {
-    $keys = array_keys($attrs);
-    $_SESSION['language'][$name] = [];
-    foreach ($keys as $l) {
-        $_SESSION['language'][$name][$l] = $attrs[$l];
-    }
-}, null);
-xml_parse($language_parser, $language_file);
-xml_parser_free($language_parser);
-
-$styles = dirlisting('style', 'php');
-
-if (isset($_GET['c_style']) && array_key_exists($_GET['c_style'], $styles)) {
-    $_SESSION['stylefile'] = $_GET['c_style'];
-} else {
-    $_SESSION['stylefile'] = $_ENV['GUI_STYLE'];
-}
-
-
-require_once 'style/' . $_SESSION['stylefile'];
-
-$_SESSION['stylesheet'] = '<link rel="stylesheet" type="text/css" href="../style/' . $stylesheet . '" />';
+require_once 'main/login.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,7 +14,7 @@ $_SESSION['stylesheet'] = '<link rel="stylesheet" type="text/css" href="../style
     <title>php-applejuice</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style/<?php echo $stylesheet; ?>"/>
+    <?php echo $_SESSION['stylesheet']; ?>
     <style>
         select {
             width: 100%;
@@ -109,7 +76,7 @@ $_SESSION['stylesheet'] = '<link rel="stylesheet" type="text/css" href="../style
         </table>
     </form>
     <div class="authors">
-        Code by UP &middot; maintained by <a href="https://github.com/red171/" target="_blank">red171</a>
+        Code by UP &middot; maintained by <a href="https://github.com/appleJuiceNET/" target="_blank">appleJuiceNET</a>
     </div>
     <div class="authors">
         <a href="https://github.com/applejuicenet/phpgui" target="_blank"><?php echo PHP_GUI_VERSION; ?></a>
