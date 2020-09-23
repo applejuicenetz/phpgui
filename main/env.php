@@ -11,9 +11,9 @@ if (file_exists('.env')) {
     $config = parse_ini_file('.env');
     if (false === $config) {
         die('.env file parse error?!');
-    } else {
-        $_ENV = array_merge($_ENV, $config);
     }
+
+    $_ENV = array_merge($_ENV, $config);
 }
 
 $_ENV['REAL_IP'] = 'http://' . ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);

@@ -40,9 +40,7 @@ echo "<h2>".$lang['CLIENT']."</h2>";
 		.$coreinfo['VERSION']."</td></tr>";
 	echo "<tr><td>".$lang['COREOS'].":</td><td>"
 		.$coreinfo['SYSTEM']."</td></tr>";
-	echo "</table>
-	<a href=\"http://wiki.applejuicenet.de/\" target=\"_blank\">FAQ</a>";
-	echo "</div>";
+	echo "</table></div>";
 
 //Warnungen
 	$warnungen=array();
