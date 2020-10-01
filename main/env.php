@@ -31,3 +31,6 @@ $_ENV['REL_INFO'] = $_ENV['REL_INFO'] ?? base64_decode('aHR0cDovL3d3dy5hcHBsZS1k
 $_ENV['GUI_STYLE'] = ($_ENV['GUI_STYLE'] ?? 'new') . '.php';
 
 date_default_timezone_set($_ENV['TZ'] ?? 'Europe/Berlin');
+
+ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '0');
+ini_set('display_errors', $_ENV['PHP_INI_DISPLAY_ERRORS'] ?? 'Off');

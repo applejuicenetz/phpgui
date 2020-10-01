@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.4
+- set default `error_reporting` to `0` (can be changed with `PHP_INI_ERROR_REPORTING`) 
+- set default `display_errors` to `Off` (can be changed with `PHP_INI_DISPLAY_ERRORS`) 
+
 ## 0.27.3
 - allow tab selection in perma link
 
