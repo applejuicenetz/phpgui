@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.3
+- allow tab selection in perma link
+
 ## 0.27.2
 - fix permalink usage
 
