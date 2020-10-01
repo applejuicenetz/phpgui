@@ -17,6 +17,14 @@
               <option name="name" value="CORE_PORT" />
               <option name="value" value="9851" />
             </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="PHP_INI_ERROR_REPORTING" />
+              <option name="value" value="0" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="PHP_INI_DISPLAY_ERRORS" />
+              <option name="value" value="Off" />
+            </DockerEnvVarImpl>
           </list>
         </option>
         <option name="portBindings">

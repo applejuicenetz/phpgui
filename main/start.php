@@ -31,16 +31,14 @@ if(!empty($Servers->netstats['welcome'])){
 }
 
 //Client
+$coreinfo=$Servers->core->getcoreversion();
+$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
 echo "<h2>".$lang['CLIENT']."</h2>";
-	echo "<div style=\"margin-left:0.5cm;\"><table>";
-	echo "<tr><td>".$lang['GUIVERSION'].":</td><td>".PHP_GUI_VERSION."</td></tr>";
-	$coreinfo=$Servers->core->getcoreversion();
-	$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
-	echo "<tr><td>".$lang['COREVERSION'].":</td><td>"
-		.$coreinfo['VERSION']."</td></tr>";
-	echo "<tr><td>".$lang['COREOS'].":</td><td>"
-		.$coreinfo['SYSTEM']."</td></tr>";
-	echo "</table></div>";
+echo "<div style=\"margin-left:0.5cm;\"><table>";
+echo "<tr><td>".$lang['GUIVERSION'].":</td><td>".PHP_GUI_VERSION."</td></tr>";
+echo "<tr><td>".$lang['COREVERSION'].":</td><td>" .$coreinfo['VERSION']."</td></tr>";
+echo "<tr><td>".$lang['COREOS'].":</td><td>" .$coreinfo['SYSTEM']."</td></tr>";
+echo "</table></div>";
 
 //Warnungen
 	$warnungen=array();
