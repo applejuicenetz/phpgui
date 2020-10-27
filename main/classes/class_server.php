@@ -89,8 +89,7 @@ class Server{
 
     function getmore()
     {
-        // TODO https://www.applejuicenet.de/serverlist/xmllist.php
-        $new_servers = file_get_contents('http://www.applejuicenet.de/18.0.html');
+        $new_servers = file_get_contents('https://www.applejuicenet.cc/serverlist/xmllist.php');
 
         if (empty($new_servers)) {
             return;
