@@ -29,7 +29,7 @@ $action_echo='';
 if(!empty($_GET['action'])){
 	if(!empty($_GET['serv_id']) && $_GET['serv_id'] > 0)
 		$action_echo = $Servers->action($_GET['action'], $_GET['serv_id']);
-	//mehr server von applejuicenet.de holen
+	//mehr server von applejuicenet.cc holen
 	if($_GET['action']=='getservers'){
 		$Servers->getmore();
 	}

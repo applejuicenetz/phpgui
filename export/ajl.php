@@ -10,7 +10,7 @@ Vorhandene Variablen:
 	$share_ex_size		-Dateigroesse Formatiert
 */
 echo "\r\nDu benoetigst ein appleJuice-GUI, um diese Datei zu oeffnen. "
-    . "http://www.applejuicenet.de\r\n\r\n";
+    . "http://www.applejuicenet.cc\r\n\r\n";
 echo "Diese Datei darf nicht modifiziert werden!\r\n-----\r\n100\r\n";
 
 function write_linkexport($share_ex_link, $share_ex_name, $share_ex_hash, $share_ex_bytesize, $share_ex_size)
