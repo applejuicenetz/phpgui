@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## 0.27.5
-- replace `applejuicenet.de` with `applejuicenet.cc`
+- make `NEWS_URL` configurable
+- make `SERVERLIST_URL` configurable
+- get GUI NEWS from Github
 
 ## 0.27.4
 - set default `error_reporting` to `0` (can be changed with `PHP_INI_ERROR_REPORTING`) 

@@ -18,6 +18,10 @@ if (file_exists('.env')) {
 
 $_ENV['REAL_IP'] = 'http://' . ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
 
+$_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
+
+$_ENV['SERVERLIST_URL'] = $_ENV['SERVERLIST_URL'] ?? 'http://www.applejuicenet.cc/serverlist/xmllist.php';
+
 $_ENV['GUI_REFRESH_STATUS'] = $_ENV['GUI_REFRESH_STATUS'] ?? 10;
 $_ENV['GUI_REFRESH_DOWNLOADS'] = $_ENV['GUI_REFRESH_DOWNLOADS'] ?? 30;
 $_ENV['GUI_REFRESH_UPLOADS'] = $_ENV['GUI_REFRESH_UPLOADS'] ?? 30;

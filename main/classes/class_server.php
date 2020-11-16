@@ -89,7 +89,7 @@ class Server{
 
     function getmore()
     {
-        $new_servers = file_get_contents('https://www.applejuicenet.cc/serverlist/xmllist.php');
+        $new_servers = file_get_contents($_ENV['SERVERLIST_URL']);
 
         if (empty($new_servers)) {
             return;

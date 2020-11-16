@@ -1,5 +1,5 @@
 <?php
-define('PHP_GUI_VERSION', 'v0.27.4');
+define('PHP_GUI_VERSION', 'v0.27.5');
 
 require_once 'env.php';
 
@@ -51,7 +51,8 @@ function getnews($zeit, $version)
         || ((time() - $_SESSION['cache']['NEWS']['LASTTIMESTAMP']) > ($zeit * 60))) {
         $_SESSION['cache']['NEWS']['LASTTIMESTAMP'] = time();
         $_SESSION['cache']['NEWS']['ITEMS'] = '';
-        $news_file = file_get_contents('https://www.applejuicenet.cc/inprog/news.php?version=' . $version);
+        $news_file = file_get_contents(sprintf($_ENV['NEWS_URL'], $version), false, stream_context_create(['http' => ['ignore_errors' => true]]));
+
         $_SESSION['cache']['NEWS']['ITEMS'] = strtr($news_file, ["a href=" => "a target=\"_blank\" href=", "<br>" => "<br />"]);
         $_SESSION['cache']['NEWS']['ITEMS'] = preg_replace(
             '/&([^;]*?=)/', '&amp;$1', $_SESSION['cache']['NEWS']['ITEMS']);
@@ -115,7 +116,8 @@ function progressbar($fortschritt, $fertig, $link = "")
     return $ausgabe;
 }
 
-function debug($var) {
+function debug($var)
+{
     echo '<pre>';
     print_r($var);
     die;
