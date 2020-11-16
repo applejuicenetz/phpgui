@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="phpaj" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+  <configuration default="false" name="phpgui" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="applejuicenet/phpaj:dev" />
@@ -11,7 +11,7 @@
           <list>
             <DockerEnvVarImpl>
               <option name="name" value="CORE_HOST" />
-              <option name="value" value="http://192.168.155.15" />
+              <option name="value" value="http://192.168.155.10" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="CORE_PORT" />

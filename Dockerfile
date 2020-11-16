@@ -32,11 +32,9 @@ EXPOSE 80
 
 HEALTHCHECK --interval=60s --start-period=5s CMD curl -I --fail http://localhost:80 || exit 1
 
-LABEL org.label-schema.name="appleJuice phpGUI" \
-      org.label-schema.version=${BUILD_VERSION} \
-      org.label-schema.vendor="appleJuiceNET" \
-      org.label-schema.url="https://applejuicenet.cc" \
-      org.label-schema.build-date=${BUILD_DATE} \
-      org.label-schema.vcs-ref=${VCS_REF} \
-      org.label-schema.vcs-url="https://github.com/appleJuicenet/phpgui" \
-      org.label-schema.schema-version="1.0"
+LABEL org.opencontainers.image.version=${VERSION} \
+      org.opencontainers.image.vendor="appleJuiceNETZ" \
+      org.opencontainers.image.url="https://applejuicenet.cc" \
+      org.opencontainers.image.created=${BUILD_DATE} \
+      org.opencontainers.image.revision=${VCS_REF} \
+      org.opencontainers.image.source="https://github.com/applejuicenetz/phpgui"

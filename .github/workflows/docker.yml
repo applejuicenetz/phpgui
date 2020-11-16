@@ -18,9 +18,8 @@ jobs:
                 uses: 1466587594/get-current-time@v1
                 id: current-time
 
-            -   name: Dockerhub login
-                run: |
-                    echo "${{ secrets.DOCKER_TOKEN }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            -   name: docker registry login
+                run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             -   name: Set up Docker Buildx
                 id: buildx
@@ -28,7 +27,7 @@ jobs:
                 with:
                     version: latest
 
-            -   name: Build docker multiarch images and push to Dockerhub
+            -   name: Build docker multiarch images and push to Registry
                 run: |
                     docker buildx build \
                     --platform=linux/386,linux/amd64,linux/arm/v7,linux/arm64 \
@@ -37,5 +36,5 @@ jobs:
                     --build-arg VCS_REF=${{ env.GITHUB_SHA_SHORT }} \
                     --output "type=image,push=true" \
                     --file ./Dockerfile . \
-                    -t "${{ secrets.DOCKER_IMAGE }}:${{ env.GITHUB_REF_SLUG }}" \
-                    -t "${{ secrets.DOCKER_IMAGE }}:latest"
+                    -t "ghcr.io/${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}" \
+                    -t "ghcr.io/${{ github.repository }}:latest"

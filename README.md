@@ -1,10 +1,8 @@
 # appleJuice phpGUI
 
-![](https://img.shields.io/github/license/applejuicenet/phpgui.svg)
-![](https://img.shields.io/github/tag/applejuicenet/phpgui.svg)
-![](https://img.shields.io/docker/pulls/applejuicenet/phpgui)
-![](https://img.shields.io/docker/image-size/applejuicenet/phpgui)
-![](https://github.com/applejuicenet/phpgui/workflows/docker/badge.svg)
+![](https://img.shields.io/github/license/applejuicenetz/phpgui.svg)
+![](https://img.shields.io/github/tag/applejuicenetz/phpgui.svg)
+![](https://github.com/applejuicenetz/phpgui/workflows/docker/badge.svg)
 
 appleJuice Client GUI geschrieben in PHP.
 
@@ -30,10 +28,6 @@ echo "http://HOST:PORT|PASSWORD" | base64
 ```
 Das Passwort kann sowohl ein `md5sum` sein, als auch `plain`.
 
-## Docker
-
-https://hub.docker.com/r/applejuicenet/phpgui
-
 
 ### Exposed Ports
 
@@ -56,15 +50,17 @@ https://hub.docker.com/r/applejuicenet/phpgui
 | `GUI_SHOW_SHARE`        | `1`                  | show share stats on `status page`          |
 
 
+## Docker
+
 ### docker run
 
-create and run `ajgui-php` container with the following command
+create and run `ajphpgui` container with the following command
 
 ```bash
 docker run -d \
         -p 8080:80 \
-        --name ajgui-php \
-        applejuicenet/phpgui:latest
+        --name phpgui \
+        ghcr.io/applejuicenetz/phpgui:latest
 ```
 
 optional: add `CORE_HOST` and/or `CORE_PORT` with your environment
@@ -76,8 +72,8 @@ docker run -d \
         -p 8080:80 \
         -e "CORE_HOST=http://192.168.1.2" \
         -e "CORE_PORT=9851" \
-        --name ajgui-php \
-        applejuicenet/phpgui:latest
+        --name phpgui \
+        ghcr.io/applejuicenetz/phpgui:latest
 ```
 
 ### docker-compose.yml
@@ -87,9 +83,9 @@ version: '2.4'
 
 services:
     php-gui:
-        image: applejuicenet/phpgui:latest
+        image: ghcr.io/applejuicenetz/phpgui:latest
         restart: always
-        container_name: ajgui-php
+        container_name: phpgui
         mem_limit: 128MB
         networks:
             - bridge
