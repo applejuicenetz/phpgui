@@ -19,15 +19,10 @@ Die Datei `.env.dist` kopieren, zu `.env` umbenennen und mit einem Texteditor di
 
 ## auto login via url
 
-`/main/index.php?l=base64encodedCredentials`
+Zwischen dem `Core Beenden` und `Logout` Button befindet sich eine `Permalink` Button.
+Dieser kann als Lesezeichen gesetzt werden und logt dich automatisch in den gerade eingeloggten Core ein.
 
-`base64encodedCredentials` ist ein base64 kodierter Werte von folgendem: `http://HOST:PORT|PASSWORD`
-
-```bash
-echo "http://HOST:PORT|PASSWORD" | base64
-```
-Das Passwort kann sowohl ein `md5sum` sein, als auch `plain`.
-
+Zusätzlich kann manuell der URL-Parameter `&tab=NAME_DES_TAB` hinzugefügt werden, um bspw. direkt in den `downloads` oder `uploads` Tab zu springen.
 
 ### Exposed Ports
 
@@ -48,13 +43,17 @@ Das Passwort kann sowohl ein `md5sum` sein, als auch `plain`.
 | `GUI_REFRESH_SEARCH`    | `30`                 | refresh `search` view in seconds           |
 | `GUI_SHOW_NEWS`         | `1`                  | show news on `status page`                 |
 | `GUI_SHOW_SHARE`        | `1`                  | show share stats on `status page`          |
+| `TOP_SHOW_PERMALINK`    | `1`                  | show `Perma Link` in Top Navbar            |
+| `NEWS_URL`              | `http://XY`          | url where to get news from                 |
+| `SERVERLIST_URL`        | `http://ABC`         | url where to find new servers              |
+| `REL_INFO`              | `http://MN/ajfps/%s` | set them to empty to disable rel info col  |
 
 
 ## Docker
 
 ### docker run
 
-create and run `ajphpgui` container with the following command
+create and run `phpgui` container with the following command
 
 ```bash
 docker run -d \
@@ -87,8 +86,7 @@ services:
         restart: always
         container_name: phpgui
         mem_limit: 128MB
-        networks:
-            - bridge
+        network_mode: bridge
         ports:
             - 8080:80/tcp
         environment:
