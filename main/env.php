@@ -31,7 +31,7 @@ $_ENV['ALLOWED_SERVERMSG_TAGS'] = $_ENV['ALLOWED_SERVERMSG_TAGS'] ?? '<a><b><i><
 $_ENV['GUI_SHOW_NEWS'] = $_ENV['GUI_SHOW_NEWS'] ?? 1;
 $_ENV['GUI_SHOW_SHARE'] = $_ENV['GUI_SHOW_SHARE'] ?? 1;
 $_ENV['TOP_SHOW_PERMALINK'] = $_ENV['TOP_SHOW_PERMALINK'] ?? 1;
-$_ENV['REL_INFO'] = $_ENV['REL_INFO'] ?? base64_decode('aHR0cDovL3d3dy5hcHBsZS1kZWx1eGUuY2MvaW5kZXgucGhwP2N0PTQwMyZ2YT0lcw==');
+$_ENV['REL_INFO'] = $_ENV['REL_INFO'] ?? base64_decode('aHR0cHM6Ly93d3cuYXBwbGUtZGVsdXhlLmNvL2luZGV4LnBocD9jdD00MDMmdmE9JXM=');
 $_ENV['GUI_STYLE'] = ($_ENV['GUI_STYLE'] ?? 'new') . '.php';
 
 date_default_timezone_set($_ENV['TZ'] ?? 'Europe/Berlin');
