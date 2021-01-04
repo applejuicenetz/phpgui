@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
+## 0.27.6
+- correct rel info url
+
 ## 0.27.5
 - make `NEWS_URL` configurable
 - make `SERVERLIST_URL` configurable
