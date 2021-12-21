@@ -25,7 +25,6 @@ echo writehead('Sharefiles');
 echo $_SESSION['stylesheet'];
 
 echo "\n<script>
-<!--
 share_ids = [];
 
 function change(id){
@@ -121,7 +120,6 @@ function selectnone(){
 		if(share_ids[v]==1) change(v);
 	}
 }
-//-->
 </script>";
 
 echo "</head>\n<body>\n";
@@ -176,14 +174,24 @@ foreach($dirliste as $a){
 }
 
 //dateien anzeigen
-foreach($Sharelist->get_fileids($_GET['dir']) as $a){
-	$shareentry=$Sharelist->get_file($a);
+$items = $Sharelist->get_fileids($_GET['dir']);
+
+$list = [];
+foreach($items as $item) {
+    $file = $Sharelist->get_file($item);
+    $list[$file['SHORTFILENAME']] = $file;
+}
+unset($items);
+
+ksort($list);
+
+foreach($list as $shareentry){
+    $a = $shareentry['ID'];
 	echo "\n<tr id=\"zeile_$a\"><td><input type=\"checkbox\" "
 		."id=\"sharecheck_$a\" onclick=\"change($a)\" />"
-		."<script type=\"text/javascript\">\n"
-		."<!--\n"
+		."<script>\n"
 		."share_ids[$a]=0;\n"
-		."//-->\n</script>\n"
+		."</script>\n"
 		."</td><td>\n";
 
 	$lastasked=(isset($shareentry['LASTASKED'])) ?

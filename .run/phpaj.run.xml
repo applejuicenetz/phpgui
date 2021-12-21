@@ -3,15 +3,12 @@
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="applejuicenet/phpaj:dev" />
-        <option name="buildCliOptions" value="" />
-        <option name="command" value="" />
         <option name="containerName" value="phpaj" />
-        <option name="entrypoint" value="" />
         <option name="envVars">
           <list>
             <DockerEnvVarImpl>
               <option name="name" value="CORE_HOST" />
-              <option name="value" value="http://192.168.155.10" />
+              <option name="value" value="http://192.168.155.15" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="CORE_PORT" />
@@ -35,7 +32,6 @@
             </DockerPortBindingImpl>
           </list>
         </option>
-        <option name="commandLineOptions" value="" />
         <option name="sourceFilePath" value="Dockerfile" />
         <option name="volumeBindings">
           <list>

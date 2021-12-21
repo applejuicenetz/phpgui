@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.8
+- alphabetical ordering in files view 
+
 ## 0.27.7
 - restore gd stuff for partlist
 
