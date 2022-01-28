@@ -1,8 +1,12 @@
 # appleJuice phpGUI
 
+![](https://img.shields.io/github/release/applejuicenetz/phpgui.svg)
+![](https://img.shields.io/github/downloads/applejuicenetz/phpgui/total)
 ![](https://img.shields.io/github/license/applejuicenetz/phpgui.svg)
-![](https://img.shields.io/github/tag/applejuicenetz/phpgui.svg)
-![](https://github.com/applejuicenetz/phpgui/workflows/docker/badge.svg)
+
+![](https://github.com/applejuicenetz/phpgui/actions/workflows/container.yml/badge.svg)
+![](https://img.shields.io/docker/pulls/applejuicenetz/phpgui)
+![](https://img.shields.io/docker/image-size/applejuicenetz/phpgui)
 
 appleJuice Client GUI geschrieben in PHP.
 
