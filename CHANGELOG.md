@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.9
+- set php `memory_limit` to `-1` in docker container
+- `phpinfo` plugin 
+- use PHP 8 as base docker image
+- install php `opcache` extension for better performance
+
 ## 0.27.8
 - alphabetical ordering in files view 
 
