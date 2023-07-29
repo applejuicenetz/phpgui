@@ -28,11 +28,6 @@ Dieser kann als Lesezeichen gesetzt werden und logt dich automatisch in den gera
 
 Zusätzlich kann manuell der URL-Parameter `&tab=NAME_DES_TAB` hinzugefügt werden, um bspw. direkt in den `downloads` oder `uploads` Tab zu springen.
 
-### Exposed Ports
-
-- `80` - HTTP Port
-
-
 ### Environment Variables
 
 | Variable                | Value                | Description                                |
@@ -54,6 +49,10 @@ Zusätzlich kann manuell der URL-Parameter `&tab=NAME_DES_TAB` hinzugefügt werd
 
 
 ## Docker
+
+### Exposed Ports
+
+- `80` - HTTP Port
 
 ### docker run
 
@@ -82,20 +81,19 @@ docker run -d \
 ### docker-compose.yml
 
 ```yaml
-version: '2.4'
+version: '3.9'
 
 services:
-    php-gui:
-        image: ghcr.io/applejuicenetz/phpgui:latest
-        restart: always
-        container_name: phpgui
-        mem_limit: 128MB
-        network_mode: bridge
-        ports:
-            - 8080:80/tcp
-        environment:
-            TZ: Europe/Berlin
-            CORE_HOST: http://192.168.1.2
-            CORE_PORT: 9851
-            GUI_STYLE: tango
+  php-gui:
+    image: ghcr.io/applejuicenetz/phpgui:latest
+    restart: always
+    container_name: phpgui
+    network_mode: bridge
+    ports:
+      - "8080:80/tcp"
+    environment:
+      TZ: Europe/Berlin
+      CORE_HOST: http://192.168.1.2
+      CORE_PORT: 9851
+      GUI_STYLE: tango
 ```

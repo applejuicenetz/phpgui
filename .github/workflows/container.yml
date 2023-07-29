@@ -20,6 +20,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ github.repository }},ghcr.io/${{ github.repository }}
+          labels: |
+            org.opencontainers.image.vendor=appleJuiceNETZ
+            org.opencontainers.image.url="https://applejuicenet.cc"
 
       - name: Login to ghcr.io
         uses: docker/login-action@v2
@@ -46,8 +49,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/386,linux/arm
           push: true
-          build-args: |
-            BUILD_DATE=${{ steps.current-time.outputs.time }}
-            VERSION=${{ github.ref_name }}
-            VCS_REF=${{ env.GITHUB_SHA_SHORT }}
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

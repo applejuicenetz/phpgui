@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.27.10
+- revert back to PHP 7 in docker image
+
 ## 0.27.9
 - set php `memory_limit` to `-1` in docker container
 - `phpinfo` plugin 
