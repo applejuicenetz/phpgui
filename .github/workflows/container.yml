@@ -1,6 +1,9 @@
 name: 'container'
 
 on:
+  push:
+    branches:
+      - main
   release:
     types: [ released ]
 
@@ -9,11 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Get build time
-        uses: 1466587594/get-current-time@v1
-        id: current-time
+        uses: actions/checkout@v3
 
       - name: Docker meta
         id: meta
@@ -22,7 +21,7 @@ jobs:
           images: ${{ github.repository }},ghcr.io/${{ github.repository }}
           labels: |
             org.opencontainers.image.vendor=appleJuiceNETZ
-            org.opencontainers.image.url="https://applejuicenet.cc"
+            org.opencontainers.image.url=https://applejuicenet.cc
 
       - name: Login to ghcr.io
         uses: docker/login-action@v2

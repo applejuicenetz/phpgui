@@ -56,8 +56,6 @@ echo '</head><body>';
 $action_echo='';
 //suchanfrage an core uebergeben
 if(!empty($_POST['searchstring'])){
-	if(get_magic_quotes_gpc())
-		$_POST['searchstring']=stripslashes($_POST['searchstring']);
 	$_POST['searchstring']=trim($_POST['searchstring']);
 	$Search->start($_POST['searchstring']);
 }

@@ -96,11 +96,19 @@ class Core{
 			$xml_parser=xml_parser_create("UTF-8");
 			xml_set_element_handler($xml_parser, array(&$this,"startElement"), array(&$this,"endElement"));
 			xml_set_character_data_handler($xml_parser, array(&$this,"characterData"));
-			if(!xml_parse($xml_parser, $xml_file)){
-				echo "<br/><b>XML-Parser Fehler:</b> ";
-				echo xml_error_string(xml_get_error_code($xml_parser));
-				echo "<br/><br/>";
-			}
+
+            $chunks = str_split($xml_file, 4096);
+
+            foreach($chunks as $chunk) {
+                if(!xml_parse($xml_parser, $chunk)){
+                    echo "<br/><b>XML-Parser Fehler:</b> ";
+                    echo xml_error_string(xml_get_error_code($xml_parser));
+                    echo "<br/><br/>";
+                }
+            }
+
+            xml_parse($xml_parser, '', true);
+
 			xml_parser_free($xml_parser);
 			unset($xml_file);   //weg damit...
 			return($this->xml_array);

@@ -1,5 +1,5 @@
 <?php
-define('PHP_GUI_VERSION', 'v0.27.10');
+define('PHP_GUI_VERSION', 'v0.28.0');
 
 require_once 'env.php';
 

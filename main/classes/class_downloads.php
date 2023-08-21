@@ -208,7 +208,7 @@ class Downloads{
 			}
 		}else{
 			$changedl='';
-			for($v=0, $vMax = count($ids); $v< $vMax; $v++)
+			for($v=0, $vMax = count((array)$ids); $v< $vMax; $v++)
 				$changedl.="&id$v=".$ids[$v];
 			$changedl=str_replace("&id0=","id=",$changedl);
 			if($action=="setpowerdownload"){
