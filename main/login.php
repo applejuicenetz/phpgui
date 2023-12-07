@@ -25,7 +25,9 @@ $styles = dirlisting(__DIR__ . '/../style', 'php');
 
 if (isset($_GET['c_style']) && array_key_exists($_GET['c_style'], $styles)) {
     $_SESSION['stylefile'] = $_GET['c_style'];
-} else {
+}
+
+if (!isset($_SESSION['stylefile'])) {
     $_SESSION['stylefile'] = $_ENV['GUI_STYLE'];
 }
 
@@ -47,6 +49,6 @@ if (isset($_POST['cpass']) && !empty($_POST['cpass'])) {
     $_SESSION['core_pass'] = 32 === strlen($_POST['cpass']) ? $_POST['cpass'] : md5($_POST['cpass']);
 }
 
-require_once __DIR__ . '/../style/' . $_ENV['GUI_STYLE'];
+require_once __DIR__ . '/../style/' . $_SESSION['stylefile'];
 
 $_SESSION['stylesheet'] = '<link rel="stylesheet" type="text/css" href="../style/' . $stylesheet . '" />';

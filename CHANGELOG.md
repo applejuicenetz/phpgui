@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.28.1
+
+- fix style switcher
+
 ## 0.28.0
 
 - php 8 adaptations

@@ -1,5 +1,5 @@
 <?php
-define('PHP_GUI_VERSION', 'v0.28.0');
+const PHP_GUI_VERSION = 'v0.28.1';
 
 require_once 'env.php';
 
