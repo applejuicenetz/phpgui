@@ -1,4 +1,4 @@
-FROM php:8-apache
+FROM php:7-apache
 
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
