@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.30.0
+
+- new Style for the GUI
+- Portaible Version
+- modern
+- Community Version 
+
 ## 0.28.1
 
 - fix style switcher
