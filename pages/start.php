@@ -58,261 +58,201 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 	}
 ?>
 
-    <section class="section dashboard">
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-
-            <!-- Sales Card -->
-            <div class="col-xxl-6 col-md-12">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">aktueller Server</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-server"></i>
-                    </div>
-                    <div class="ps-3 fw-bold">
-                      <?php echo $Servers->netstats['servername']; ?><br>
-                      <span class="small pt-1"><?php
+<div class="row clearfix">
+<?php echo $warnung; ?>
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		<!-- aktueller Server -->
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                <div class="panel-heading bg-success"><i class="fa fa-server"></i> aktueller Server</div>
+                <div class="panel-body">
+                	<h3><?php echo $Servers->netstats['servername']; ?></h3>
+					<?php
                       //server welcome msg
-if(!empty($Servers->netstats['welcome'])){
-		echo $Servers->netstats['welcome'];
-		
-} 
-?></span>
-
-                    </div>
-                  </div>
+						if(!empty($Servers->netstats['welcome'])){
+							echo $Servers->netstats['welcome'];
+						} 
+					?>
                 </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-<!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">aktive Downloads</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-download"></i>
-                    </div>
-                    <div class="ps-3">
-                     <?php
-                     $Downloadlist = new Downloads();
-                     $counddown = $downloadids=$Downloadlist->ids("name",$subdir);
-                     
-$Downloadlist->refresh_cache();
-$subdircounter=0;
-//alle downloads zeigen
-foreach(array_keys($Downloadlist->subdirs) as $subdir){
-	$subdircounter++;
-	$downloadids=$Downloadlist->ids("",$subdir); //ids der downloads sortiert holen
-			}
-	echo"<h6>".count($downloadids)." Downloads</h6>"; 
-?></span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-<!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">aktive Uploads</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-upload"></i>
-                    </div>
-                    <div class="ps-3">
-                      <?php
-                     $Uploadlist = new Uploads();
-	echo"<h6>".$Uploadlist->cache['phpaj_ul']." Uploads</h6>"; 
-	
-?></span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-<!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">Share</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-file-earmark-check"></i>
-                    </div>
-                    <div class="ps-3">
-                      <?php
-                     $Sharelist = new Share();
-	if($_ENV['GUI_SHOW_SHARE']) {
-	    $Sharelist->refresh_cache(30);
-    }
-	if(!empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])){
-		$share_anzahl=0;
-		$share_groesse=0;
-		foreach(array_keys($Sharelist->cache['SHARES']
-				['VALUES']['SHARE']) as $a){
-			$share_anzahl++;
-			$share_groesse+=$Sharelist->cache['SHARES']
-				['VALUES']['SHARE'][$a]['SIZE'];
-		}
-		echo "<h6>".number_format($share_anzahl)." Dateien</h6><span class='small pt-1 fw-bold'> ".
-				sizeformat($share_groesse);
-		echo "";
-	}else{
-		echo $lang['SHAREINFO_MISSING']
-			." (<a href=\"".$_SERVER['PHP_SELF']."?".SID."&amp;reloadshare=1\">"
-			.$_SESSION['language']['GENERAL']['REFRESH']."</a>)<br />";
-	}
-	
-?></span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-<!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">Credits</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-coin"></i>
-                    </div>
-                    <div class="ps-3">
-                      <?php
-If($information['CREDITS'] <= 0){
-$creditcolor = " class='text-danger'";
-}else{
-$creditcolor =" class='ext-success'"; 
-}
-	echo"<h6".$creditcolor." >".sizeformat($information['CREDITS'])." Credits</h6>"; 
-	?></span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-<?php
-$coreinfo = $Servers->core->getcoreversion();
-$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
-$info = $Servers->info();
-?>
-                  </div>
-                </div>
-<div class="col-lg-4">
-          <div class="row">
- <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Core & Netzwerk Info</h5>
-
-              <!-- Default Table -->
-              <table class="table">
-                <thead>
-                  <tr>
-                  </tr>
-                </thead>
-                <tbody>
-<tr>
-<td>Server Zeit</td>
-<td>
-<?php
-echo"".$Servers->time()."   ";
-echo "<a href=\"javascript: window.location.href='".$_SERVER['PHP_SELF']."?"
-	.SID."'\"><i class=\"bi bi-arrow-clockwise\"></i></a>";
-?></td>
-                  <tr>
-                    <td>phpGUI Version</td>
-                    <td><?php echo"".PHP_GUI_VERSION.""; ?></td>
-                  </tr>
-<tr>
-                    <td>Core Version</td>
-                    <td><?php echo $coreinfo['VERSION']; ?></td>
-                  </tr>
-<tr>
-                    <td>Betriebssystem</td>
-                    <td><?php echo $icon_img->os["2"]." ".$coreinfo['SYSTEM']; ?></td>
-                  </tr>
-<tr>
-                    <td>verbunden seit</td>
-                    <td><?php 
-$srv_timediff=$Servers->netstats['timeconnected'];
-	$srv_timediff=sprintf("%dh %dmin %ds",
-		$srv_timediff/3600,($srv_timediff%3600)/60,$srv_timediff%60);
-echo"".$srv_timediff."";
-	 ?></td>
-                  </tr>
-<tr>
-                    <td>offene Verbindungen</td>
-                    <td><?php echo"".$info['OPENCONNECTIONS'].""; ?></td>
-                  </tr>
-<tr>
-                    <td>Anzahl User sharen</td>
-                    <td><?php echo"".$Servers->netstats['users'].""; ?></td>
-                  </tr>
-<tr>
-                    <td>gesamte Dateien</td>
-                    <td><?php echo"".number_format($Servers->netstats['filecount'])." - ".sizeformat($Servers->netstats['filesize']).""; ?></td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Default Table Example -->
             </div>
-          </div>
-
-<div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Connection Infos</h5>
-
-              <!-- Default Table -->
-              <table class="table">
-                <thead>
-                  <tr>
-                  </tr>
-                </thead>
-                <tbody>
-<tr>
-<tr>
-                    <td>Bytes in</td>
-                    <td><?php echo"".sizeformat($information['SESSIONDOWNLOAD']).""; ?></td>
-                  </tr>
-<tr>
-                    <td>Bytes out</td>
-                    <td><?php echo"".sizeformat($information['SESSIONUPLOAD']).""; ?></td>
-                  </tr>
-<tr>
-                   <td>Downloadspeed</td>
-                    <td><?php echo"".sizeformat($information['DOWNLOADSPEED']).""; ?></td>
-                  </tr>
-<tr>
-                   <td>Uploadspeed</td>
-                    <td><?php echo"".sizeformat($information['UPLOADSPEED']).""; ?></td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Default Table Example -->
-            </div>
-          </div>
-</div>
+        </div>
+        <!-- DOWNLOADS UND UPLOADS COUNTER -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="info-box infobox-type-5">
+                <div class="icon text-primary">
+                    <i class="material-icons">cloud_download</i>
                 </div>
-
+                <div class="content">
+                	<div class="text">aktive Downloads</div>
+                    <div class="number">
+                    <?php
+                    	$Downloadlist = new Downloads();
+                    	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
+                    	$Downloadlist->refresh_cache();
+						$subdircounter=0;
+						//alle downloads zeigen
+						foreach(array_keys($Downloadlist->subdirs) as $subdir){
+							$subdircounter++;
+							$downloadids=$Downloadlist->ids("",$subdir); //ids der downloads sortiert holen
+						}
+						echo count($downloadids); 
+					?>
+					</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+            <div class="info-box infobox-type-5 hover-expand-effect">
+            <div class="icon text-warning">
+            	<i class="material-icons">cloud_upload</i>
+            </div>
+            <div class="content">
+            	<div class="text">aktive Uploads</div>
+                <div class="number">
+                	<?php
+                    	$Uploadlist = new Uploads();
+						echo $Uploadlist->cache['phpaj_ul']; 
+					?>
+				</div>
+            </div>
+        	</div>
+        </div>
+        <!-- Files shares und Credits-->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+        	<div class="info-box infobox-type-5 hover-expand-effect">
+                <div class="icon text-success">
+                    <i class="fa fa-file"></i>
+                </div>
+                <?php
+                	$Sharelist = new Share();
+					if($_ENV['GUI_SHOW_SHARE']) {
+		    			$Sharelist->refresh_cache(30);
+    				}
+					if(!empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])){
+						$share_anzahl=0;
+						$share_groesse=0;
+						foreach(array_keys($Sharelist->cache['SHARES']['VALUES']['SHARE']) as $a){
+							$share_anzahl++;
+							$share_groesse+=$Sharelist->cache['SHARES']['VALUES']['SHARE'][$a]['SIZE'];
+						}
+					echo'<div class="content">
+                    		<div class="text">'.number_format($share_anzahl).' geteilte Dateien</div>
+                    		<div class="number">
+                    			'.sizeformat($share_groesse).'
+						 </div>';
+					}else{
+					}
+				?>
+            </div>
+        </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+        	<div class="info-box infobox-type-5 hover-expand-effect">
+                <div class="icon text-success">
+                    <i class="fa fa-coins"></i>
+                </div>
+                <div class="content">
+                    <div class="text">Credits</div>
+                    <div class="number">
+                    	<?php
+							if($information['CREDITS'] <= 0){
+								$creditcolor = " class='text-danger'";
+							}else{
+								$creditcolor =" class='ext-success'"; 
+							}
+							echo"<span".$creditcolor." >".sizeformat($information['CREDITS'])."</span>"; 
+						?>
+					</div>
+                </div>
+            </div>
+        </div>
+    
+                    
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<!--INFOS EINHOLEN -->
+		<?php	
+			$coreinfo = $Servers->core->getcoreversion();
+			$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
+			$info = $Servers->info();
+		?>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                <div class="panel-heading bg-success"><i class="material-icons">public</i> Core & Netzwerk Info</div>
+                <div class="panel-body">
+        			<table class="table">
+                		<tbody>		
+							<tr>
+								<td>Server Zeit</td>
+								<td>
+									<?php
+										echo $Servers->time();
+										echo "<a href=\"javascript: window.location.href='".$_SERVER['PHP_SELF']."\"><i class=\"bi bi-arrow-clockwise\"></i></a>";
+									?>
+								</td>
+                			<tr>
+                    			<td>phpGUI Version</td>
+                    			<td><?php echo"".PHP_GUI_VERSION.versions_checker(PHP_GUI_VERSION).""; ?></td>
+                			</tr>
+							<tr>
+                    			<td>Core Version</td>
+                    			<td><?php echo $coreinfo['VERSION']; ?></td>
+                			</tr>
+							<tr>
+                    			<td>Betriebssystem</td>
+                    			<td><?php echo $icon_img->os["2"]." ".$coreinfo['SYSTEM']; ?></td>
+                			</tr>
+							<tr>
+                    			<td>verbunden seit</td>
+                    			<td>
+                    				<?php 
+										$srv_timediff=$Servers->netstats['timeconnected'];
+										$srv_timediff=sprintf("%dh %dmin %ds",$srv_timediff/3600,($srv_timediff%3600)/60,$srv_timediff%60);
+										echo $srv_timediff;
+									?>
+								</td>
+                			</tr>
+							<tr>
+                    			<td>offene Verbindungen</td>
+                    			<td><?php echo"".$info['OPENCONNECTIONS'].""; ?></td>
+                			</tr>
+							<tr>
+                    			<td>Anzahl User sharen</td>
+                    			<td><?php echo"".$Servers->netstats['users'].""; ?></td>
+                			</tr>
+							<tr>
+                    			<td>gesamte Dateien</td>
+                    			<td><?php echo"".number_format($Servers->netstats['filecount'])." - ".sizeformat($Servers->netstats['filesize']).""; ?></td>
+                			</tr>
+                		</tbody>
+            		</table>
+                </div>
+            </div>
+            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                <div class="panel-heading"><i class="material-icons">compare_arrows</i> Connection Info</div>
+                <div class="panel-body">
+        			<table class="table">
+                		<tbody>		
+							<tr>
+								<td>Bytes in</td>
+                    			<td><?php echo"".sizeformat($information['SESSIONDOWNLOAD']).""; ?></td>
+                			</tr>
+							<tr>
+                    			<td>Bytes out</td>
+                    			<td><?php echo"".sizeformat($information['SESSIONUPLOAD']).""; ?></td>
+                			</tr>
+							<tr>
+                				<td>Downloadspeed</td>
+                    			<td><?php echo"".sizeformat($information['DOWNLOADSPEED']).""; ?></td>
+                			</tr>
+							<tr>
+                				<td>Uploadspeed</td>
+                    			<td><?php echo"".sizeformat($information['UPLOADSPEED']).""; ?></td>
+                			</tr>
+                		</tbody>
+            		</table>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>	
