@@ -5,12 +5,7 @@ class core{
 	var $lastsubname;
 	var $xml_array;
 
-function env($wert){
-	if(file_exists(".env")){
-		$env = parse_ini_file(".env");
-		return $env[$wert];
-	}
-	}
+
 	// XML-Parser funktionen
 	//-----------------------
 	function startElement($parser, $name, $attrs) {
