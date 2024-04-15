@@ -14,5 +14,5 @@ $template = new template();
 
 $lang->ermitteln();
 $login->check_login();
-exit;
+
 ?>
