@@ -1,0 +1,21 @@
+﻿.bootstrap-datetimepicker-widget {
+    table {
+        td {
+
+            &.active,
+            &.active:hover {
+                background-color: $color_success;
+            }
+
+            &.today {
+                &:before {
+                    border-bottom-color: $color_success;
+                }
+            }
+
+            a[data-action] {
+                color: $color_success;
+            }
+        }
+    }
+}

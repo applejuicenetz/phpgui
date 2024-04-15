@@ -1,0 +1,121 @@
+﻿.outlook-view {
+    .outlook-panel {
+        .body {
+
+            .from-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border: 1px solid #d5d5d5;
+                overflow-y: auto;
+
+                li {
+                    &.date-info {
+                        font-weight: bold;
+                        font-size: 13px;
+                        background-color: #f5f5f5;
+                        color: #666;
+                        padding: 8px 15px;
+                        border-bottom: 1px solid #d5d5d5;
+                    }
+
+                    .item {
+                        position: relative;
+                        background-color: #fff;
+                        color: #666;
+                        padding: 15px 18px;
+                        border-bottom: 1px solid #d5d5d5;
+                        cursor: pointer;
+                        @include transition(.5s);
+
+                        .title {
+                            font-size: 15px;
+                            font-weight: 600;
+                        }
+
+                        .info {
+                            color: #999;
+                            font-size: 11px;
+                            position: absolute;
+                            top: 15px;
+                            right: 18px;
+                        }
+
+                        .subject {
+                            font-size: 13px;
+                            font-weight: 300;
+                            @include three-dots-overflow();
+                        }
+
+                        .summary {
+                            font-size: 12px;
+                            color: #999;
+                            @include three-dots-overflow();
+                        }
+                    }
+
+                    &.active {
+                        .item {
+                            background-color: #e5e5e5;
+                        }
+                    }
+
+                    &:hover {
+                        .item {
+                            background-color: #eee;
+                        }
+                    }
+                }
+            }
+
+            .mail-detail {
+                background-color: #fff;
+                padding: 15px;
+                border: 1px solid #d5d5d5;
+                border-left: none;
+                color: #666;
+                line-height: 24px;
+                position: relative;
+
+                .sender-info {
+                    min-height: 100px;
+
+                    .user {
+                        float: left;
+                        margin-right: 15px;
+                        max-width: 80px;
+                    }
+
+                    .title {
+                        font-size: 15px;
+                    }
+
+                    .info {
+                        font-size: 12px;
+                        color: #888;
+                    }
+
+                    .subject {
+                        margin-top: 5px;
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+
+                    .btn-mail-process {
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                    }
+                }
+
+                .mail {
+                    position: relative;
+                    font-size: 13px;
+                    border-top: 1px solid #eee;
+                    padding-top: 15px;
+                    overflow-y: auto;
+                }
+            }
+        }
+    }
+}

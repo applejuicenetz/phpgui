@@ -1,0 +1,95 @@
+﻿.dashboard {
+    .dashboard-heading {
+        background-color: #fff;
+        color: #666;
+        padding: 25px;
+
+        h1 {
+            font-weight: 600;
+            padding: 0;
+            margin: 8px 0 0 0;
+            font-size: 20px;
+
+            small {
+                display: block;
+                font-size: 13px;
+                margin-top: 8px;
+            }
+        }
+
+        .stats {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+            @include three-dots-overflow();
+
+            small {
+                font-weight: normal;
+                font-size: 12px;
+                color: #888;
+                margin-left: 5px;
+            }
+        }
+
+        .graph {
+            text-align: right;
+        }
+    }
+
+    .main-graph {
+        color: #666;
+        border: 1px solid #e7ebee;
+        background-color: #fff;
+        margin-bottom: 25px;
+        @include border-radius(5px);
+
+        #line_chart {
+            height: 380px;
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+
+        .stats-area {
+            background-color: #f5f6f8;
+            border-left: 1px solid #f6f6f6;
+            padding: 25px 30px;
+            @include border-radius(0 5px 5px 0);
+
+            .total {
+                font-weight: 600;
+                font-size: 25px;
+
+                small {
+                    display: block;
+                    font-weight: normal;
+                    font-size: 13px;
+                }
+            }
+
+            .stats {
+                margin-top: 25px;
+                font-weight: 600;
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 12px;
+                color: #888;
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .info-box {
+        .icon {
+            i {
+                color: #e5e5e5;
+            }
+        }
+    }
+
+    .jvector-map {
+        height: 480px;
+    }
+}
