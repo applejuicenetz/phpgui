@@ -161,7 +161,7 @@ if (isset($_GET['site'])) {
                                     <li class="body">
                                         <ul>
                                             <li>
-                                                <a href="index.php?page=settings">
+                                                <a href="index.php?site=settings">
                                                     <i class="material-icons">settings</i> Einstellungen
                                                 </a>
                                             </li>
@@ -197,7 +197,7 @@ if (isset($_GET['site'])) {
                     </li>
                     <li <?php active("start"); ?>>
                     	<a href="index.php?site=start">
-                    		<i class="material-icons"></i>
+                    		<i class="material-icons">dashboard</i>
                     		<span class="nav-label">Dashboard</span>
                     	</a>
                     </li>
@@ -239,7 +239,7 @@ if (isset($_GET['site'])) {
                     </li>
                     <li  <?php active("extras"); ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">addons</i>
+                            <i class="material-icons">extension</i>
                             <span class="nav-label">Addons</span>
                         </a>
                         <ul>
