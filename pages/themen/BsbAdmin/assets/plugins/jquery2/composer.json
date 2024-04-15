@@ -1,0 +1,35 @@
+{
+    "name": "iki/jquery2",
+    "description": "jQuery v2 component - if you need both v2 (ie9+) and v1 (ie8-)",
+    "type": "component",
+    "homepage": "http://jquery.com",
+    "license": "MIT",
+    "support": {
+        "irc": "irc://irc.freenode.org/jquery",
+        "issues": "http://bugs.jquery.com",
+        "forum": "http://forum.jquery.com",
+        "wiki": "http://docs.jquery.com/",
+        "source": "https://github.com/jquery/jquery"
+    },
+    "authors": [
+        {
+            "name": "John Resig",
+            "email": "jeresig@gmail.com"
+        }
+    ],
+    "require": {
+        "robloach/component-installer": "*"
+    },
+    "extra": {
+        "component": {
+            "scripts": [
+                "jquery.js"
+            ],
+            "files": [
+                "jquery.min.js",
+                "jquery-migrate.js",
+                "jquery-migrate.min.js"
+            ]
+        }
+    }
+}
