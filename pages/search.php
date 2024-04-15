@@ -5,10 +5,12 @@ require_once "_classes/search.php";
 $Search = new Search();
 $lang =& $_SESSION['language']['SEARCH'];
 
+
 if(empty($_GET['searchid'])) $_GET['searchid']="alles";
 echo "<meta http-equiv=\"refresh\" content=\""
 	.$_ENV['GUI_REFRESH_SEARCH']."; URL=".$_SERVER['PHP_SELF']."?site=search&searchid="
 	.$_GET['searchid']."&amp;".SID."\" />";    //neu laden
+echo $_SESSION['stylesheet'];
 echo "<script type=\"text/javascript\">
 <!--
 function dllink(ajfsplink){
@@ -61,28 +63,21 @@ if(!empty($_POST['searchstring'])){
 if(!empty($_GET['cancelid'])){
 	$Search->cancel($_GET['cancelid']);
 }
-echo'<div class="card">
-            <div class="card-body">
-              <h5 class="card-title">'; 
-              
+
 echo "<form action=\"".$_SERVER['PHP_SELF']."?site=search&".SID."\" method=\"post\">";
 echo "<input size=\"50\" name=\"searchstring\" /> ";
 echo "<input type=\"submit\" value='"
 	.$lang['SEARCH']."' />";
 echo "</form>\n";
 
-echo'</h5>
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#alles" type="button" role="tab" aria-controls="home" aria-selected="true">
-                  '.$lang['ALL_RESULTS'].'('.$Search->cache['SEARCHENTRY_count'].')
-                  <a href="'.$_SERVER['PHP_SELF'].'?site=search&deleteall=1&'.SID.'"><span class="badge bg-danger"><i class="bi bi-x-square-fill"></i></span></a>
-                  </button>
-                </li>
-               ';
-
-
 $Search->refresh_cache();
+
+echo $_SESSION['language']['GENERAL']['TIME'].": ".$Search->time();;
+echo " (<a href=\"javascript: window.location.href='".$_SERVER['PHP_SELF']."?searchid="
+	.$_GET['searchid']."&amp;".SID."'\">"
+	.$_SESSION['language']['GENERAL']['REFRESH']
+	."</a>)<br />\n";
+echo "<table width=\"100%\">\n";
 
 //suche loeschen
 if(!empty($_GET['deleteid'])){
@@ -94,40 +89,151 @@ if(!empty($_GET['deleteall'])){
 	$action_echo .= $Search->delete_all();
 }
 
+echo "<tr><td colspan=\"4\">\n";
+echo "<span";
+if($_GET['searchid']==="alles"){
+	echo " class='search_selected'>";
+}else{
+	echo " class='search'>";
+}
 
 $Search->process_results();
 
+//link fuer alle ergebnisse
+echo "<a href=\"".$_SERVER['PHP_SELF']."?site=search&searchid=alles&amp;".SID."\">"
+	.$lang['ALL_RESULTS']."("
+	.$Search->cache['SEARCHENTRY_count']
+	.")</a><a href=\"".$_SERVER['PHP_SELF']."?deleteall=1&amp;"
+	.SID."\" title=\"Delete all\">"
+	."<img border=\"0\" src=\"../style/".$_SESSION['search_delete_icon']
+	."\" alt='delete' /></a></span>\n";
+echo "&nbsp;";
 if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $b){
-echo'<li class="nav-item" role="presentation">
-                  <button class="nav-link" id="'.$b.'-tab" data-bs-toggle="tab" data-bs-target="#'.$b.'" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                  '.$Search->cache["SEARCH"][$b]["SEARCHTEXT"].'('.$Search->cache["SEARCH"][$b]["phpaj_FOUNDFILES"].')
-                  
-       ';
-			//icon zum abbrechen/loeschen der suche
+		echo "<span";
+		//suche ausgewaehlt, oder nicht?
+		if(!empty($_GET['searchid']) && $b==$_GET['searchid']){
+			echo " class='search_selected'>";
+		}else{
+			echo " class='search'>";
+		}
+		//name der suche + zahl der ergebnisse
+		echo "<a href=\"".$_SERVER['PHP_SELF']."?searchid=".$b."&amp;".SID."\">"
+			.$Search->cache['SEARCH'][$b]['SEARCHTEXT']
+			."(".$Search->cache['SEARCH'][$b]['phpaj_FOUNDFILES']
+			.")</a>";
+		//icon zum abbrechen/loeschen der suche
 		if($Search->cache['SEARCH'][$b]['RUNNING']==="true"){
-			
-			echo'<a href="'.$_SERVER['PHP_SELF'].'?site=search&cancleid='.$b.'"><span class="badge bg-danger"><i class="bi bi-circle-fill"></i></span></a>
-                  
-                  </button>
-                </li>';
-				}else{
-			echo'<a href="'.$_SERVER['PHP_SELF'].'?site=search&deleteid='.$b.'"><span class="badge bg-danger"><i class="bi bi-x-square-fill"></i></span></a>
-                  
-                  </button>
-                </li>';
-			}
-		
-	}echo'</ul>';
+			echo "<a href=\"".$_SERVER['PHP_SELF']."?cancelid=".$b
+				."&amp;".SID."\" title=\"Cancel search\">"
+				."<img border=\"0\" src=\"../style/"
+				.$_SESSION['search_cancel_icon']."\" alt='cancel' /></a>";
+		}else{
+			echo "<a href=\"".$_SERVER['PHP_SELF']."?deleteid=".$b
+				."&amp;".SID."\" title=\"Delete search\">"
+				."<img border=\"0\" src=\"../style/"
+				.$_SESSION['search_delete_icon']."\" alt='delete' /></a>";
+		}
+		echo "</span>\n";
+		echo "&nbsp;";
+	}
 }
-echo'  <div class="tab-content pt-2" id="myTabContent">';
+echo "</td></tr>\n";
 
-if(!empty($Search->cache['SEARCH'])){
-	foreach(array_keys($Search->cache['SEARCH']) as $b){
-echo'<div class="tab-pane fade" id="'.$b.'-tab" role="tabpanel" aria-labelledby="'.$b.'-tab">
-                  Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
-                </div>
-                ';
-	}}
-echo"</div></div></div>2";
+if($_GET['searchid']!=="alles"){
+	echo "<tr><td colspan=\"4\">";
+	$current_search=&$Search->cache['SEARCH'][$_GET['searchid']];
+	if(($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES'])>0){
+		$current_search_percent=(($current_search['SUMSEARCHES']*100)/
+			($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']));
+		echo "<div style=\"width:".round($current_search_percent,0)
+			."%;\" class=\"search_selected\" align=\"center\">"
+			.number_format($current_search_percent,2)."% ("
+			.$current_search['SUMSEARCHES']."/"
+			.($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES'])
+			.")</div>";
+	}
+	echo "</td></tr>";
+}
+
+//Sortieren
+if(!empty($Search->cache['SEARCHENTRY'])){
+if(empty($_GET['sort'])) $_GET['sort']="count";
+$searchsort=$Search->sortieren($_GET['sort']);
+}
+
+//tabellenueberschriften
+echo "<tr>
+<th><a href=\"".$_SERVER['PHP_SELF']."?sort=name&amp;searchid=".$_GET['searchid']
+	."&amp;".SID."\">"
+	.$lang['NAME']."</a></th>";
+
+if(!empty($_ENV['REL_INFO'])) {
+    echo '<th width="16" align="center"><img src="../style/default/info.png" width="16" alt="" /></th>';
+}
+
+echo "<th><a href=\"".$_SERVER['PHP_SELF']."?sort=size&amp;searchid="
+	.$_GET['searchid']."&amp;".SID."\">"
+	.$lang['SIZE']."</a></th>
+<th><a href=\"".$_SERVER['PHP_SELF']."?sort=count&amp;searchid=".$_GET['searchid']
+	."&amp;".SID."\">"
+	.$lang['COUNT']."</a></th>
+<th>&nbsp;</th></tr>";
+
+//suchergebnisse anzeigen
+if(!empty($Search->cache['SEARCHENTRY'])){
+	$result_counter=500;
+	foreach(array_keys($searchsort) as $a ){
+		$cur_search =& $Search->cache['SEARCHENTRY'][$a];
+		//pruefen, ob ergebnis zu suche gehrt
+		if($_GET['searchid']!=="alles"
+			&& $cur_search['SEARCHID']!==$_GET['searchid']) continue;
+		$result_counter--;
+		if($result_counter<0 && empty($_GET['nolimit'])){
+			//nach 500 ergebnissen den rest weglassen, wenn nicht anders gewuenscht
+			echo "<tr><th colspan=\"4\"><a href=\"".$_SERVER['PHP_SELF']."?searchid="
+				.$_GET['searchid']."&amp;nolimit=1&amp;".SID."\">"
+				.$lang['NO_LIMIT']."</a></th></tr>";
+			break;
+		}
+		//anzeige aller namen + anzahl
+		$sort_names=array();
+			foreach(array_keys($cur_search['FILENAME']) as $b){
+				$sort_names["$b"]=$cur_search['FILENAME'][$b]['USER'];
+			}
+		arsort($sort_names,SORT_NUMERIC);
+		$names=array_keys($sort_names);
+		echo "<tr><td>\n<a href=\"javascript:toggleinfo($a,'";
+		foreach($names as $c){
+			echo $sort_names["$c"]."/".addslashes(htmlspecialchars($c))."|";
+		}
+		echo $cur_search['CHECKSUM']."/".$cur_search['SIZE'];
+		echo "')\"><img border=\"0\" src=\"../style/"
+			.$_SESSION['search_info_icon']."\" alt='info' /></a>\n";
+		//download starten
+		$ajfsp_link="ajfsp://file|".addslashes(htmlspecialchars($names[0]))."|"
+			.$cur_search['CHECKSUM']."|".$cur_search['SIZE']."/";
+		echo "<a href=\"javascript:dllink('".$ajfsp_link
+			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
+		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
+		//dateigröße
+
+        if (!empty($_ENV['REL_INFO'])) {
+            echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><img src="../style/default/info.png" width="16" alt="" border="0" title="Information" /></a></td>';
+        }
+
+		echo "<td class=\"right\">"
+			.sizeformat($cur_search['SIZE'])
+			."</td>\n";
+		//anzahl der ergebnisse
+		echo "<td class=\"right\">"
+			.$cur_search['phpaj_COUNT']
+			."\n</td>";
+		//ajfsp-link zu datei
+		echo "<td><a href=\"".$ajfsp_link."\">ajfsp-link</a></td></tr>\n\n";
+	}
+}
+
+echo "</table>";
+echo $action_echo;
