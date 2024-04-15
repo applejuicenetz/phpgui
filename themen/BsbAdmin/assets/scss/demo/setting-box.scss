@@ -1,0 +1,156 @@
+﻿@import '../themes/_themecolorvariables.scss';
+
+.setting-box {
+    background: #fff;
+    border: 1px solid #009688;
+    color: #666;
+    font-size: 13px;
+    width: 215px;
+    position: fixed;
+    right: -215px;
+    top: 100px;
+    z-index: 9999;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+
+    &.open {
+        right: 0;
+    }
+
+    .open-close-ear {
+        position: absolute;
+        background: #009688;
+        height: 34px;
+        width: 34px;
+        text-align: center;
+        border: 1px solid #009688;
+        left: -34px;
+        top: -1px;
+        cursor: pointer;
+        line-height: 43px;
+
+        .material-icons {
+            font-size: 20px;
+            color: #fff;
+        }
+    }
+
+    .configuration-list-container {
+        ul {
+            margin: 0;
+            padding: 10px 15px;
+            list-style: none;
+
+            li {
+                display: block;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    .label {
+        color: #fff;
+        padding: 10px 0;
+        background: #009688;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        display: block;
+        margin-bottom: 5px;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+
+    .switch {
+        float: right;
+    }
+
+    .theme-choose-list-container {
+        margin-top: -5px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                border-bottom: 1px solid #eee;
+                padding: 8px 8px 4px 8px;
+                position: relative;
+                cursor: pointer;
+                -moz-transition: .5s;
+                -o-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+
+                &.active {
+                    background-color: #f3f3f3;
+
+                    &:after {
+                        font-family: 'Material Icons';
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        content: '\E876';
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                }
+
+                div {
+                    width: 24px;
+                    height: 24px;
+                    display: inline-block;
+                    -webkit-border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    -ms-border-radius: 3px;
+                    border-radius: 3px;
+
+                    &.red {
+                        background-color: $theme_red;
+                    }
+
+                    &.blue {
+                        background-color: $theme_blue;
+                    }
+
+                    &.default {
+                        background-color: $theme_default;
+                    }
+
+                    &.purple {
+                        background-color: $theme_purple;
+                    }
+
+                    &.warning {
+                        background-color: $theme_warning;
+                    }
+                }
+
+                span {
+                    position: relative;
+                    bottom: 7px;
+                    left: 5px;
+                }
+
+                &:hover {
+                    background-color: #f3f3f3;
+                }
+            }
+        }
+    }
+}
+
+.demo-google-material-icon {
+    margin-bottom: 5px;
+    text-align: left;
+
+    .icon-name {
+        position: relative;
+        top: -8px;
+        left: 7px;
+    }
+}

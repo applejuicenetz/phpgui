@@ -1,0 +1,60 @@
+﻿.pagination {
+    @include border-radius(3px);
+
+    li {
+        a {
+            border-color: #e5e5e5;
+            color: #999;
+            font-weight: 600;
+
+            &:hover,
+            &:focus,
+            &:active {
+                color: #666;
+            }
+        }
+
+        &.active {
+            a {
+                background-color: $active-bg-color;
+                border-color: $active-bg-color;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    background-color: $active-bg-color;
+                    border-color: $active-bg-color;
+                }
+            }
+        }
+
+        &:first-child {
+            > a {
+                @include border-radius(3px 0 0 3px);
+            }
+        }
+    }
+}
+
+.pager {
+    li {
+        a {
+            @include border-radius(3px);
+            border-color: #e5e5e5;
+            color: #999;
+            font-weight: 600;
+        }
+    }
+
+    .disabled {
+        > a {
+            color: #ccc;
+
+            &:hover,
+            &:focus,
+            &:active {
+                color: #ccc;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+﻿.tooltip {
+    font-size: 13px;
+
+    .tooltip-inner {
+        @include border-radius(3px);
+    }
+}
+
+.popover {
+    @include border-radius(3px);
+    border: 1px solid #ddd;
+
+    .popover-title {
+        font-weight: bold;
+        @include border-radius(3px 3px 0 0);
+        color: #6E7483;
+        background-color: #F5F6F8;
+        border-bottom: 1px solid rgba(238, 238, 238, 0.6);
+    }
+
+    .popover-content {
+        font-size: 13px;
+        color: #777;
+        @include border-radius(0);
+    }
+
+    &.right {
+        > .arrow {
+            border-right-color: #ddd;
+        }
+    }
+
+    &.left {
+        > .arrow {
+            border-left-color: #ddd;
+        }
+    }
+
+    &.top {
+        > .arrow {
+            border-top-color: #ddd;
+        }
+    }
+
+    &.bottom {
+        > .arrow {
+            border-bottom-color: #ddd;
+        }
+    }
+}

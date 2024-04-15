@@ -34,7 +34,7 @@ echo'<div class="row clearfix">
                                 <div class="align-right">
                                 	'. strtr($lang['LIMIT'], array("%percent"=>$uploaduserpercent)).'
                                 </div>';
-//TabellenÃ¼berschrift
+//Tabellenüberschrift
 echo'<div class="table-responsive">
 			  <table class="table table-striped">
 				<thead>

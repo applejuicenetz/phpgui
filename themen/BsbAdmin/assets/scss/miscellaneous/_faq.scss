@@ -1,0 +1,25 @@
+.faq-group {
+  margin-bottom: 0 !important;
+
+  a {
+    &.list-group-item {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      margin-top: 1px;
+      color: #6e74a0;
+      border-color: #eee;
+      font-size: 13px;
+      padding: 15px 15px;
+
+      &:after {
+        font-family: 'FontAwesome', Arial, sans-serif;
+        content: '\f105';
+        position: absolute;
+        right: 15px;
+        top: calc(50% - 8px);
+        color: #888888;
+      }
+    }
+  }
+}

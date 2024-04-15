@@ -1,0 +1,353 @@
+﻿.navbar {
+    @include border-radius(0);
+    margin-bottom: 0;
+    position: relative;
+    z-index: 100;
+
+    .fullscreen {
+        padding: 13px 6px 8px 6px !important;
+
+        .material-icons {
+            font-size: 24px !important;
+        }
+    }
+
+    &.navbar-default {
+        background-color: #009688;
+        border: none;
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            width: 230px;
+            @include transition(.5s);
+            @include three-dots-overflow();
+
+            .logo {
+                display: block;
+            }
+
+            .logo-minimized {
+                display: none;
+            }
+        }
+
+        .navbar-nav {
+            > li {
+                > a {
+                    color: #fff;
+                    padding: 15px 8px 10px 8px;
+                    @include transition(.5s);
+
+                    .material-icons {
+                        font-size: 20px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(0,0,0,0.1);
+                    }
+                }
+
+                > .dropdown-menu {
+                    @include border-radius(3px);
+                }
+            }
+
+            &.navbar-right {
+                > li {
+                    > a {
+                        padding: 15px 8px 10px 8px;
+
+                        .material-icons {
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+
+            .menu-info {
+                .material-icons {
+                    font-size: 12px !important;
+                }
+            }
+
+            > .open {
+                > a {
+                    background-color: #009688;
+
+                    &:hover,
+                    &:focus {
+                        background-color: #009688;
+                    }
+                }
+            }
+
+            .dropdown {
+                &.user-menu {
+                    padding-left: 10px;
+
+                    a {
+                        img {
+                            width: 30px;
+                            height: 30px;
+                            margin-top: -5px;
+                            @include border-radius(50%);
+                        }
+
+                        span {
+                            margin-left: 5px;
+                            font-size: 13px;
+                            position: relative;
+                            top: -1px;
+                        }
+                    }
+
+                    .dropdown-menu {
+                        .header {
+                            padding-top: 20px;
+                            padding-bottom: 15px;
+
+                            img {
+                                width: 80px;
+                                height: 80px;
+                                margin-bottom: 7px;
+                                @include border-radius(50%);
+                            }
+
+                            .user {
+                                font-size: 14px;
+
+                                .title {
+                                    display: block;
+                                    font-weight: normal;
+                                    font-size: 12px;
+                                }
+                            }
+                        }
+
+                        .body {
+                            ul {
+                                list-style: none;
+                                margin: 0;
+                                padding: 0;
+
+                                li {
+                                    border-bottom: 1px solid #eee;
+
+                                    a {
+                                        display: block;
+                                        text-decoration: none;
+                                        padding: 11px 8px 7px 8px;
+                                        @include transition(.5s);
+
+                                        .material-icons {
+                                            vertical-align: middle;
+                                            margin-top: -3px;
+                                            color: #888;
+                                        }
+
+                                        &:hover {
+                                            background-color: #f9f9f9;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .footer {
+                            padding: 10px;
+                        }
+                    }
+                }
+
+                &.email-menu {
+                    .dropdown-menu {
+                        .body {
+                            .menu {
+                                li {
+                                    a {
+                                        position: relative;
+
+                                        img {
+                                            width: 36px;
+                                            height: 36px;
+                                            margin-top: -24px;
+                                            @include border-radius(50%);
+                                        }
+
+                                        .info {
+                                            display: inline-block;
+                                            position: relative;
+                                            top: 3px;
+                                            left: 5px;
+
+                                            h4 {
+                                                margin: 0;
+                                                font-size: 13px;
+                                                font-weight: 600;
+                                                color: #666;
+                                                max-width: 200px;
+                                                @include three-dots-overflow();
+                                            }
+
+                                            p {
+                                                margin: 3px 0 0 0;
+                                                font-size: 12px;
+                                                color: #888;
+                                                max-width: 200px;
+                                                @include three-dots-overflow();
+                                            }
+
+                                            .time {
+                                                position: absolute;
+                                                top: 0;
+                                                right: 0;
+                                                font-size: 10px;
+                                                color: #999;
+
+                                                .material-icons {
+                                                    font-size: 12px;
+                                                    position: relative;
+                                                    top: 2px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .search-bar {
+        border-bottom: 1px solid #eee;
+        position: absolute;
+        left: 0;
+        top: -60px;
+        width: 100%;
+        z-index: 999;
+        @include transition(.5s);
+
+        &.open {
+            top: 0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            font-size: 13px;
+            padding: 15px 45px 16px 45px;
+            border: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 14px;
+            left: 12px;
+        }
+
+        .close-search {
+            position: absolute;
+            cursor: pointer;
+            font-size: 30px;
+            top: 11px;
+            right: 11px;
+            width: 30px;
+            height: 30px;
+            padding-top: 8px;
+            @include transition(.05s);
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            .material-icons {
+                position: relative;
+                top: -15px;
+                right: -5px;
+            }
+        }
+
+        .material-icons {
+            font-size: 20px;
+            color: #777;
+        }
+    }
+}
+
+.left-toggle-left-sidebar {
+    display: none;
+}
+
+.label-count {
+    position: absolute;
+    top: 9px;
+    right: 2px;
+    font-size: 10px;
+    line-height: 15px;
+    background-color: $color_danger;
+    padding: 0 4px;
+    @include border-radius(3px);
+}
+
+.navbar-toggle {
+    border: none;
+    padding: 0;
+    margin: 0;
+    padding: 12px 5px 6px 5px;
+    @include border-radius(0);
+
+    .material-icons {
+        color: #fff;
+        font-size: 26px;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: rgba(0, 0, 0, 0.1) !important;
+    }
+}
+
+body {
+    &.ls-toggled {
+        header {
+            .navbar {
+                .navbar-brand {
+                    width: 50px;
+
+                    .logo {
+                        display: none;
+                    }
+
+                    .logo-minimized {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    &.navbar-fixed {
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        &.boxed-layout {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: auto;
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+    }
+}

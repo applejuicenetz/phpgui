@@ -78,14 +78,11 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
         </div>
         <!-- DOWNLOADS UND UPLOADS COUNTER -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="info-box infobox-type-5">
-                <div class="icon text-primary">
-                    <i class="material-icons">cloud_download</i>
-                </div>
-                <div class="content">
-                	<div class="text">aktive Downloads</div>
-                    <div class="number">
-                    <?php
+                        <div class="info-box infobox-type-1">
+                            <div class="icon bg-primary"><i class="material-icons">cloud_download</i></div>
+                            <div class="content">
+                                <div class="text">aktive Downloads</div>
+                                <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
                     	$Downloadlist = new Downloads();
                     	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
                     	$Downloadlist->refresh_cache();
@@ -96,34 +93,35 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 							$downloadids=$Downloadlist->ids("",$subdir); //ids der downloads sortiert holen
 						}
 						echo count($downloadids); 
-					?>
-					</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-            <div class="info-box infobox-type-5 hover-expand-effect">
-            <div class="icon text-warning">
-            	<i class="material-icons">cloud_upload</i>
-            </div>
-            <div class="content">
-            	<div class="text">aktive Uploads</div>
-                <div class="number">
-                	<?php
-                    	$Uploadlist = new Uploads();
-						echo $Uploadlist->cache['phpaj_ul']; 
-					?>
-				</div>
-            </div>
-        	</div>
-        </div>
-        <!-- Files shares und Credits-->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-        	<div class="info-box infobox-type-5 hover-expand-effect">
-                <div class="icon text-success">
-                    <i class="fa fa-file"></i>
-                </div>
-                <?php
+					?></div>
+                            </div>
+                        </div>
+                    </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="info-box infobox-type-1">
+                            <div class="icon bg-warning"><i class="material-icons">cloud_upload</i></div>
+                            <div class="content">
+                                <div class="text">aktive Uploads</div>
+                                <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
+                    	$Downloadlist = new Downloads();
+                    	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
+                    	$Downloadlist->refresh_cache();
+						$subdircounter=0;
+						//alle downloads zeigen
+						foreach(array_keys($Downloadlist->subdirs) as $subdir){
+							$subdircounter++;
+							$downloadids=$Downloadlist->ids("",$subdir); //ids der downloads sortiert holen
+						}
+						echo count($downloadids); 
+					?></div>
+                            </div>
+                        </div>
+                    </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="info-box infobox-type-1">
+                            <div class="icon bg-success"><i class="material-icons">folder_open</i></div>
+                            <?php
+                   
                 	$Sharelist = new Share();
 					if($_ENV['GUI_SHOW_SHARE']) {
 		    			$Sharelist->refresh_cache(30);
@@ -143,18 +141,16 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 					}else{
 					}
 				?>
-            </div>
-        </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-        	<div class="info-box infobox-type-5 hover-expand-effect">
-                <div class="icon text-success">
-                    <i class="fa fa-coins"></i>
-                </div>
-                <div class="content">
-                    <div class="text">Credits</div>
-                    <div class="number">
-                    	<?php
+                            </div>
+                        </div>
+                    </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="info-box infobox-type-1">
+                            <div class="icon bg-primary"><i class="material-icons">star</i></div>
+                            <div class="content">
+                                <div class="text">Credits</div>
+                                <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
+                                
 							if($information['CREDITS'] <= 0){
 								$creditcolor = " class='text-danger'";
 							}else{
@@ -162,11 +158,11 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 							}
 							echo"<span".$creditcolor." >".sizeformat($information['CREDITS'])."</span>"; 
 						?>
-					</div>
-                </div>
-            </div>
-        </div>
-    
+		</div>
+                            </div>
+                        </div>
+                    </div>
+    <div class="">hllo test</div>        
                     
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">

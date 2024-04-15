@@ -3,7 +3,7 @@ session_start();
 require_once "_classes/subs.php";
 require_once "_classes/share.php";
 $lang = $_SESSION['language']['SHARE'];
-$queryString = strstr($_SERVER['REQUEST_URI'], '?');    // $queryString enthÃ¤lt jetzt "?arg1=foo&arg2=bar" oder (bool)false falls keine Parameter definiert wurden
+$queryString = strstr($_SERVER['REQUEST_URI'], '?');    // $queryString enthält jetzt "?arg1=foo&arg2=bar" oder (bool)false falls keine Parameter definiert wurden
 $queryString = ($queryString===false) ? '' : substr($queryString, 1);
  
 $Share = new Share();
@@ -12,7 +12,7 @@ $Sharelist = $Share;
 
 if(!empty($_GET['clear_list'])){
 	$_SESSION['shareexport']=array();
-	Â§template->allert("success","Erfolgreich!","Linkexport erfolgreih geleert!");
+	§template->allert("success","Erfolgreich!","Linkexport erfolgreih geleert!");
 }
 
 if (!empty($_GET['shareexpfile'])) {
@@ -174,7 +174,7 @@ echo'<div class="row clearfix">
                     							<th scope="col">#</th>
                 								<th scope="col">Name</th>
                     							<th width="1" scope="col"><i class="fa fa-info-circle text-info"></i></th>
-                    							<th scope="col">GrÃ¶ÃŸe</th>
+                    							<th scope="col">Größe</th>
                     							<th width="3" scope="col">Prio</th>
                     						</tr>
             							</thead>

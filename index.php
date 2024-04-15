@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include("_classes/env.php");
 include("_classes/core.php");
 include("_classes/lang.php");
 include("_classes/login.php");
@@ -13,6 +14,5 @@ $template = new template();
 
 $lang->ermitteln();
 $login->check_login();
-
 exit;
 ?>
