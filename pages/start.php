@@ -14,6 +14,7 @@ $Servers = new Server();
 $core = new Core;
 $icon_img = new Icons();
 $subs = new subs();
+$template = new template();
 
 //Info holen
 $statusbar_xml=$core->command("xml","modified.xml?filter=informations");
@@ -45,16 +46,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 //Warnungen
 	$warnungen=array();
 	if($Servers->netstats['firewalled']==='true'){
-		$warnungen[] = $_SESSION['language']['SERVER']['FIREWALLED'];
-	}
-
-	if(!empty($warnungen)){
-		echo "<h2>".$lang['WARNINGS']."</h2>";
-		echo "<div style=\"margin-left:0.5cm;background-color:#FF0000;\">";
-		foreach($warnungen as $a) {
-		    echo "<img src=\"../style/" .$_SESSION['server_warning_icon']."\" alt=\"[!]\" />".$a."<br />";
-        }
-		echo "</div>";
+		$template->alert("danger", $_SESSION['language']['SYSTEM']['WARNING'], $_SESSION['language']['SERVER']['FIREWALLED']);	
 	}
 ?>
 
@@ -174,6 +166,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 			$coreinfo = $Servers->core->getcoreversion();
 			$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
 			$info = $Servers->info();
+			
 		?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
@@ -199,7 +192,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                 			</tr>
 							<tr>
                     			<td><?php echo $lang['OP_SYSTEM']; ?></td>
-                    			<td><?php echo $icon_img->os["2"]." ".$coreinfo['SYSTEM']; ?></td>
+                    			<td><?php echo $icon_img->os_system["".$coreinfo['SYSTEM'].""]." ".$coreinfo['SYSTEM']; ?></td>
                 			</tr>
 							<tr>
                     			<td><?php echo $lang['CONNECTED_SINCE']; ?></td>
