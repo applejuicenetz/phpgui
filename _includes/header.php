@@ -42,7 +42,7 @@ if (isset($_GET['site'])) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Welcome To | AdminBSB - Sensitive</title>
+    <title>AppleJuice - phpGUI</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -270,6 +270,9 @@ if (isset($_GET['site'])) {
             <!-- Dashboard Heading -->
             				<!-- Search Ausgabe -->
 <?php 
+$template = new template();
+$template->errors();
+
 if (!empty($_SESSION['ajfsp_link']) && empty($_REQUEST['ajfsp_link'])) {
     $_REQUEST['ajfsp_link'] = $_SESSION['ajfsp_link'];
     $_REQUEST['showlinkpage'] = 1;
