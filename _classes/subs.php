@@ -1,14 +1,36 @@
 <?php
-
-ini_set("allow_url_fopen", 1);
-
+//Neue Subs
 const PHP_GUI_VERSION = 'v0.28.1';
+class subs{
+	function versions_checker(){
+	echo''.fileGetContents("robots.txt");
+		echo "hall";
+	}
+	
 
-function versions_checker($wert){
 }
 
-require_once '_classes/env.php';
 
+
+
+function fileGetContents( $fileName )
+{
+  $errmsg = '' ;
+  ob_start( ) ;
+  $contents = file_get_contents( $fileName );
+  if ( $contents === FALSE )
+  {
+    $errmsg = ob_get_contents( ) ;
+    $errmsg .= "\nfile name:$fileName";
+    $contents = '' ;
+  }
+  ob_end_clean( ) ;
+  return (object)[ 'errmsg' => $errmsg, 'contents' => $contents ];
+}
+
+//Alte Subs
+require_once '_classes/env.php';
+function versions_checker(){}
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
 function sizeformat($bytesize)
 {
