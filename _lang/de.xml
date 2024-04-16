@@ -26,36 +26,40 @@
 	OK="OK"
 />
 <tabs
-	Start="Start"
-	Downloads="Downloads"
-	Uploads="Uploads"
-	Share="Share"
-	Search="Suche"
-	Server="Server"
-	Settings="Einstellungen"
-	Extras="Extras"
-	Favorite="Permalink"
-	Logout="Logout"
-	CoreKill="Core Beenden"
 	CoreKill_question="Bist du sicher, dass du den Core beenden willst? Du wirst die Kontrolle &amp;uuml;ber den Core verlieren!"
 />
+<nav
+	dashboard="Dashboard"
+	downloads="Downloads"
+	uploads="Uploads"
+	search="Suche"
+	shares="geteilte Ordner"
+	settings="Einstellungen"
+	addons="Plugins"
+	server_list="Serverliste"
+	logout="Logout"
+	kick_core="Core beenden"
+	
+	
+/>
 <start
-	Client="Client"
-	GuiVersion="phpGui"
-	CoreVersion="Core"
-	Core_old="Deine Coreversion ist &amp;auml;lter als diejenige, f&amp;uuml;r die diese phpGui version ausgelegt ist! Es k&amp;ouml;nnten Problem auftreten."
-	CoreOS="Betriebssystem"
-	Warnings="Warnungen"
-	News="News"
-	News_missing="News noch nicht geladen"
-	Share="Share"
-	Shareinfo_missing="Info noch nicht geladen"
-	Share_Text="Du hast %sharecount Dateien im Share (%sharesize)"
-	Network="Netzwerk"
-	NoServer="&amp;lt;Kein Server&amp;gt;"
-	Server_Text="Du bist seit %timediff mit %servername verbunden. Das ist einer von %servercount bekannten Servern."
-	OpenConnections=" offene Verbindungen"
-	Server_Msg="Nachricht von Server"
+	Current_server="aktueller Server"
+	Active_downloads="aktive Downloads"
+	Active_uploads="aktive Uploads"
+	share_dat="geteilte Dateien"
+	credits="Punkte"
+	core_info="Core Informationen"
+	server_time="Server Zeit"
+	op_system="Betriebssystem"
+	connected_since="verbunden seit"
+	open_connections="offene Verbindungen"
+	shared_users="Anzahl Shared User"
+	all_data="gesamte Dateien"
+	network_info="Netzwerk Informationen"
+	bytes_in="Bytes in"
+	bytes_out="Bytes out"
+	download_speed="Downloadgeschwindigkeit"
+	upload_speed="Uploadgeschwindigkeit"
 />
 <downloads
 	Sources="Quellen"
@@ -171,14 +175,7 @@
 	Autoconnect="Automatisch verbinden"
 	OK="OK"
 />
-<statusbar
-	Core="Core"
-	Connections="Connections"
-	Traffic="Traffic"
-	Up="Up"
-	Down="Down"
-	Credits="Credits"
-/>
+
 <dlstatus
 	status_0="Suchen/Laden"
 	status_0_1="Suchen"
