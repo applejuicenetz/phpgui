@@ -6,13 +6,18 @@ include("_classes/core.php");
 include("_classes/lang.php");
 include("_classes/login.php");
 include("_classes/template.php");
+include("_classes/subs.php");
+
 
 $core = new core();
-$lang = new lang();
 $login = new login();
 $template = new template();
+$subs = new subs();
 
-$lang->ermitteln();
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
+
 $login->check_login();
+
 
 ?>

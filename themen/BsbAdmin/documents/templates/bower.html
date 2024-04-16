@@ -1,0 +1,39 @@
+﻿<div class="panel panel-default">
+    <div class="panel-body">
+        <p>Bower can manage components that contain HTML, CSS, JavaScript, fonts or even image files. Bower doesn’t concatenate or minify code or do anything else - it just installs the right versions of the packages you need and their dependencies.</p>
+        <br />
+
+        <h3>Installing Bower</h3>
+        <p>To install gulp first you must have <a href="http://nodejs.org/download/" target="_blank">NodeJs installed</a>, NodeJS will have npm.</p>
+        <p>And then install <code>bower</code> globally by running the following command <code>npm install -g bower</code></p>
+        <br />
+
+        <h3>Installing Package</h3>
+        <p>Install packages with <code>bower install</code>. Bower installs packages to <code>bower_components/</code>.</p>
+        <pre>bower install PACKAGE_NAME</pre>
+        <p>A package can be a GitHub shorthand, a Git endpoint, a URL, and more. Read more about <a href="https://bower.io/docs/api/#install" target="_blank">bower install</a>.</p>
+        <p><b>Examples</b></p>
+        <pre>
+# installs the project dependencies listed in bower.json
+bower install
+
+# registered package
+bower install jquery
+
+# GitHub shorthand
+bower install desandro/masonry
+
+# Git endpoint
+bower install git://github.com/user/package.git
+
+# URL
+bower install http://example.com/script.js
+</pre>
+        <br />
+        
+        <h3>Save Packages</h3>
+        <p>Create a <code>bower.json</code> file for your package with <a href="https://bower.io/docs/creating-packages/#bowerjson" target="_blank">bower init</a>.</p>
+        <p>Then save new dependencies to your <code>bower.json</code> with;</p>
+        <pre>bower install PACKAGE_NAME --save</pre>
+    </div>
+</div>

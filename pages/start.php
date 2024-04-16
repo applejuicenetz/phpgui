@@ -56,7 +56,6 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 ?>
 
 <div class="row clearfix">
-<?php echo $warnung; ?>
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		<!-- aktueller Server -->
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
