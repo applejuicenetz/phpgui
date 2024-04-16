@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 
 require_once "_classes/subs.php";
 require_once "_classes/core.php";
@@ -14,6 +13,7 @@ $lang = $_SESSION['language']['START'];
 $Servers = new Server();
 $core = new Core;
 $icon_img = new Icons();
+$subs = new subs();
 
 //Info holen
 $statusbar_xml=$core->command("xml","modified.xml?filter=informations");
@@ -64,7 +64,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 		<!-- aktueller Server -->
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading bg-success"><i class="fa fa-server"></i> aktueller Server</div>
+                <div class="panel-heading bg-success"><i class="fa fa-server"></i> <?php echo $lang['CURRENT_SERVER']; ?></div>
                 <div class="panel-body">
                 	<h3><?php echo $Servers->netstats['servername']; ?></h3>
 					<?php
@@ -81,7 +81,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                         <div class="info-box infobox-type-1">
                             <div class="icon bg-primary"><i class="material-icons">cloud_download</i></div>
                             <div class="content">
-                                <div class="text">aktive Downloads</div>
+                                <div class="text"><?php echo $lang['ACTIVE_DOWNLOADS']; ?></div>
                                 <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
                     	$Downloadlist = new Downloads();
                     	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
@@ -101,7 +101,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                         <div class="info-box infobox-type-1">
                             <div class="icon bg-warning"><i class="material-icons">cloud_upload</i></div>
                             <div class="content">
-                                <div class="text">aktive Uploads</div>
+                                <div class="text"><?php echo $lang['ACTIVE_UPLOADS']; ?></div>
                                 <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
                     	$Downloadlist = new Downloads();
                     	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
@@ -134,7 +134,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 							$share_groesse+=$Sharelist->cache['SHARES']['VALUES']['SHARE'][$a]['SIZE'];
 						}
 					echo'<div class="content">
-                    		<div class="text">'.number_format($share_anzahl).' geteilte Dateien</div>
+                    		<div class="text">'.number_format($share_anzahl).' '.$lang['SHARE_DAT'].'</div>
                     		<div class="number">
                     			'.sizeformat($share_groesse).'
 						 </div>';
@@ -148,7 +148,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                         <div class="info-box infobox-type-1">
                             <div class="icon bg-primary"><i class="material-icons">star</i></div>
                             <div class="content">
-                                <div class="text">Credits</div>
+                                <div class="text"><?php echo $lang['CREDITS']; ?></div>
                                 <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
                                 
 							if($information['CREDITS'] <= 0){
@@ -162,7 +162,10 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                             </div>
                         </div>
                     </div>
-    <div class="">hllo test</div>        
+    <div class="">
+    test
+    
+    </div>        
                     
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -174,12 +177,12 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 		?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading bg-success"><i class="material-icons">public</i> Core & Netzwerk Info</div>
+                <div class="panel-heading bg-success"><i class="material-icons">public</i> <?php echo $lang['CORE_INFO']; ?></div>
                 <div class="panel-body">
         			<table class="table">
                 		<tbody>		
 							<tr>
-								<td>Server Zeit</td>
+								<td><?php echo $lang['SERVER_TIME']; ?></td>
 								<td>
 									<?php
 										echo $Servers->time();
@@ -195,11 +198,11 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                     			<td><?php echo $coreinfo['VERSION']; ?></td>
                 			</tr>
 							<tr>
-                    			<td>Betriebssystem</td>
+                    			<td><?php echo $lang['OP_SYSTEM']; ?></td>
                     			<td><?php echo $icon_img->os["2"]." ".$coreinfo['SYSTEM']; ?></td>
                 			</tr>
 							<tr>
-                    			<td>verbunden seit</td>
+                    			<td><?php echo $lang['CONNECTED_SINCE']; ?></td>
                     			<td>
                     				<?php 
 										$srv_timediff=$Servers->netstats['timeconnected'];
@@ -209,15 +212,15 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 								</td>
                 			</tr>
 							<tr>
-                    			<td>offene Verbindungen</td>
+                    			<td><?php echo $lang['OPEN_CONNECTIONS']; ?></td>
                     			<td><?php echo"".$info['OPENCONNECTIONS'].""; ?></td>
                 			</tr>
 							<tr>
-                    			<td>Anzahl User sharen</td>
+                    			<td><?php echo $lang['SHARED_USERS']; ?></td>
                     			<td><?php echo"".$Servers->netstats['users'].""; ?></td>
                 			</tr>
 							<tr>
-                    			<td>gesamte Dateien</td>
+                    			<td><?php echo $lang['ALL_DATA']; ?></td>
                     			<td><?php echo"".number_format($Servers->netstats['filecount'])." - ".sizeformat($Servers->netstats['filesize']).""; ?></td>
                 			</tr>
                 		</tbody>
@@ -225,24 +228,24 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                 </div>
             </div>
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading"><i class="material-icons">compare_arrows</i> Connection Info</div>
+                <div class="panel-heading"><i class="material-icons">compare_arrows</i> <?php echo $lang['NETWORK_INFO']; ?></div>
                 <div class="panel-body">
         			<table class="table">
                 		<tbody>		
 							<tr>
-								<td>Bytes in</td>
+								<td><?php echo $lang['BYTES_IN']; ?></td>
                     			<td><?php echo"".sizeformat($information['SESSIONDOWNLOAD']).""; ?></td>
                 			</tr>
 							<tr>
-                    			<td>Bytes out</td>
+                    			<td><?php echo $lang['BYTES_OUT']; ?></td>
                     			<td><?php echo"".sizeformat($information['SESSIONUPLOAD']).""; ?></td>
                 			</tr>
 							<tr>
-                				<td>Downloadspeed</td>
+                				<td><?php echo $lang['DOWNLOAD_SPEED']; ?></td>
                     			<td><?php echo"".sizeformat($information['DOWNLOADSPEED']).""; ?></td>
                 			</tr>
 							<tr>
-                				<td>Uploadspeed</td>
+                				<td><?php echo $lang['UPLOAD_SPEED']; ?></td>
                     			<td><?php echo"".sizeformat($information['UPLOADSPEED']).""; ?></td>
                 			</tr>
                 		</tbody>
