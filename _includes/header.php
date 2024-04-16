@@ -117,7 +117,7 @@ if (isset($_GET['site'])) {
                         <!-- Logo -->
                         <a class="navbar-brand" href="index.html">
                             <span class="logo-minimized">AJ</span>
-                            <span class="logo">AppleJuice - PHP Gui</span>
+                            <span class="logo">appleJuice - phpGUI</span>
                         </a>
                         <!-- #END# Logo -->
                     </div>
