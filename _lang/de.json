@@ -1,0 +1,54 @@
+{
+   "Login": {
+      "headline": "Logge dich ein um zu starten",
+      "ok": "Ok",
+      "login": "Login",
+      "password": "Passwort",
+      "remember": "an mich errinnern!"
+   },
+   
+   "System": {
+		"warning": "Warnung!",
+		"firewall": "Es ist m&amp;ouml;glich, dass du hinter einer Firewall, einem Router, Proxy oder &amp;auml;hnlichem sitzt. Dies vermindert die Chance etwas zu laden."
+   },
+   
+   "Start": {
+		"current_server": "aktueller Server",
+		"active_downloads": "aktive Downloads",
+		"active_uploads": "aktive Uploads",
+		"share_dat": "geteilte Dateien",
+		"credits": "Punkte",
+		"core_info": "Core Informationen",
+		"server_time": "Server Zeit",
+		"op_system": "Betriebssystem",
+		"connected_since": "verbunden seit",
+		"open_connections": "offene Verbindungen",
+		"shared_users": "Anzahl Shared User",
+		"all_data": "gesamte Dateien",
+		"network_info": "Netzwerk Informationen",
+		"bytes_in": "Bytes in",
+		"bytes_out": "Bytes out",
+		"download_speed": "Downloadgeschwindigkeit",
+		"upload_speed": "Uploadgeschwindigkeit"
+	
+   },
+   
+   "Navigation": {
+	"dashboard": "Dashboard",
+	"downloads": "Downloads",
+	"uploads": "Uploads",
+	"search": "Suche",
+	"shares": "geteilte Ordner",
+	"settings": "Einstellungen",
+	"addons": "Plugins",
+	"server_list": "Serverliste",
+	"logout": "Logout",
+	"kick_core": "Core beenden"
+   },
+   
+   "Downloads": {
+	"source": "Quellen",
+	"filename": "Dateiennamen"
+   }
+ 
+}

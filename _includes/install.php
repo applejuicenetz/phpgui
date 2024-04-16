@@ -1,6 +1,5 @@
-<?php
-$language = new language($_ENV['GUI_LANGUAGE']);
-$lang = $language->translate();
+<?php 
+$core = new core();
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -8,7 +7,7 @@ $lang = $language->translate();
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login - appleJuice phpGUI</title>
+    <title>Installation - AppleJuice PHP-GUI</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -29,36 +28,67 @@ $lang = $language->translate();
 </head>
 <body class="sign-in-page">
     <div class="signin-form-area">
-        <h1><b>appleJuice</b> - phpGUI</h1>
-        <div class="signin-top-info"><?php echo $lang->Login->headline; ?></div>
+        <h1><b>AppleJuice</b> - PHP-Gui</h1>
+        <div class="signin-top-info"><?php echo $_SESSION["language"]["INSTALL"]["HEADLINE"]; ?></div>
         <div class="row padding-15">
             <div class="col-sm-2 col-md-2 col-lg-4"></div>
             <div class="col-sm-8 col-md-8 col-lg-4">
             	<?php
-                $core = new core();
-				$error = "";
+                if(isset($_GET['install'])){
+					if($_GET["install"] = "1"){
+						echo"ok";
+				phpinfo(INFO_ENVIRONMENT);
+}
+					
+				}
+				if(!isset($_GET["lang"])){
+					
+					echo'<div class="social-media-area">
+                    <span>Choose a language</span>
+                    <ul>
+                        <li>
+                            <a href="index.php?lang=de" data-toggle="tooltip" data-title="Deutsch">
+                            	<img src="themen/BsbAdmin/assets/images/flags/de.png">
+                            </a>
+                        </li>
+                        <li>
+                        	<a href="index.php?lang=en" data-toggle="tooltip" data-title="Englisch">
+                            	<img src="themen/BsbAdmin/assets/images/flags/usa.png">
+                            </a>
+                        </li>
+                    </ul>
+                </div>';
+                    	
+				}else{
 				echo '
-                <form name="core" action="index.php?login=1" method="post" autocomplete="off">
+                <form name="core" action="index.php?lang='.$_GET["lang"].'&install=1" method="post" autocomplete="off">
     				<div class="form-group has-feedback">
-                        <input type="url" class="form-control" placeholder="Core-URL" name="chost" id="chost" value="'.($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']).':'.$_ENV["CORE_PORT"].'" required/>
+                        <input type="url" class="form-control" placeholder="Core-URL" name="chost" id="chost" value="" placeholder="Core-Host" required/>
                         <span class="glyphicon glyphicon-globe form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="'.$lang->Login->password.'" name="cpass" id="cpass"
+                        <input type="number" class="form-control" placeholder="Port Standartm&auml;ssig 9851" name="cport" id="cport"
+                               required/>
+                        <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Password" name="cpass" id="cpass"
                                required/>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
+                    
                     <div class="row">
                         <div class="col-xs-8">
                             <div class="checkbox icheck m-l--20">
-                                <label><input type="checkbox"> '.$lang->Login->remember.'</label>
+                                <label><input type="checkbox"> '.$_SESSION["language"]["LOGIN"]["REMEMBER"].'</label>
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-success btn-block btn-flat">'.$lang->Login->login.'</button>
+                            <button type="submit" class="btn btn-success btn-block btn-flat">'.$_SESSION["language"]["LOGIN"]["OK"].'</button>
                         </div>
                     </div>
                 </form>'; 
+				}
             	?>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-4"></div>

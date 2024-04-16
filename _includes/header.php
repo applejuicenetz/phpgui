@@ -10,7 +10,8 @@ $core = new core();
 $settings_xml=$core->command("xml","settings.xml");
 
 //Language
-$lang = $_SESSION['language'];
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
 
 $tab = 'Start';
 if($_GET["site"] == "sharefiles" OR $_GET["site"] == "shareexport") $tab = "Shares";
@@ -165,7 +166,7 @@ if (isset($_GET['site'])) {
                                         <ul>
                                             <li>
                                                 <a href="index.php?site=settings">
-                                                    <i class="material-icons">settings</i> <?php echo $lang['NAV']['SETTINGS']; ?>
+                                                    <i class="material-icons">settings</i> <?php echo $lang->Navigation->settings; ?>
                                                 </a>
                                             </li>
                                         </ul>
@@ -177,7 +178,7 @@ if (isset($_GET['site'])) {
                                             </div>
                                             <div class="col-xs-2"></div>
                                             <div class="col-xs-5">
-                                                <a href="index.php?site=kickcore" class="btn btn-default btn-sm btn-block"><?php echo $lang['NAV']['KICK_CORE']; ?></a>
+                                                <a href="index.php?site=kickcore" class="btn btn-default btn-sm btn-block"><?php echo $lang->Navigation->kick_core; ?></a>
                                             </div>
                                         </div>
                                     </li>
@@ -201,49 +202,49 @@ if (isset($_GET['site'])) {
                     <li <?php active("start"); ?>>
                     	<a href="index.php?site=start">
                     		<i class="material-icons">dashboard</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['DASHBOARD']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->dashboard; ?></span>
                     	</a>
                     </li>
                     <li <?php active("downloads"); ?>>
                     	<a href="index.php?site=downloads">
                     		<i class="material-icons">download</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['DOWNLOADS']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->downloads; ?></span>
                     	</a>
                     </li>
                     <li <?php active("uploads"); ?>>
                     	<a href="index.php?site=uploads">
                     		<i class="material-icons">upload</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['UPLOADS']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("search"); ?>>
                     	<a href="index.php?site=search">
                     		<i class="material-icons">search</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['SEARCH']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->search; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("shares"); ?>>
                     	<a href="index.php?site=shares">
                     		<i class="material-icons">share</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['SHARES']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->shares; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("server"); ?>>
                     	<a href="index.php?site=server">
                     		<i class="material-icons">dns</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['SERVER_LIST']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->server_list; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("settings"); ?>>
                     	<a href="index.php?site=settings">
                     		<i class="material-icons">settings</i>
-                    		<span class="nav-label"><?php echo $lang['NAV']['SETTINGS']; ?></span>
+                    		<span class="nav-label"><?php echo $lang->Navigation->settings; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("extras"); ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">extension</i>
-                            <span class="nav-label"><?php echo $lang['NAV']['ADDONS']; ?></span>
+                            <span class="nav-label"><?php echo $lang->Navigation->addons; ?></span>
                         </a>
                         <ul>
                         <?php

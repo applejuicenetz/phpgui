@@ -3,9 +3,13 @@ require_once "_classes/subs.php";
 require_once "_classes/downloads.php";
 require_once "_classes/icons.php";
 
+//Language switch
+
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
+
 $icon_img =new Icons();
 $Downloadlist = new Downloads();
-$lang =& $_SESSION['language']['DOWNLOADS'];
 
 if(empty($_GET['sort'])) $_GET['sort']="name";
 
@@ -114,7 +118,7 @@ function change(id){
 function dlaction(action){
 	var dlline='site=downloads&action='+action;
 	var counter=-1;
-	var fragetext='".addslashes($lang['CANCEL_QUESTION'])."';
+	var fragetext='".addslashes("question")."';
 	for (var v in dl_ids){
 		if(dl_ids[v]==0) continue;
 		counter++;
@@ -215,8 +219,8 @@ echo'<div class="table-responsive">
 				<thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Quellen</th>
-                    <th scope="col">Dateiennamen</th>
+                    <th scope="col">'.$lang->Downloads->source.'</th>
+                    <th scope="col">'.$lang->Downloads->filename.'</th>
                     <th scope="col">Status</th>
                     <th scope="col">Geschwindigkeit</th>
                     <th scope="col">PDL</th>
