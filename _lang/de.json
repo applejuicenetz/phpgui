@@ -9,7 +9,26 @@
    
    "System": {
 		"warning": "Warnung!",
-		"firewall": "Es ist m&amp;ouml;glich, dass du hinter einer Firewall, einem Router, Proxy oder &amp;auml;hnlichem sitzt. Dies vermindert die Chance etwas zu laden."
+		"firewall": "Es ist m&amp;ouml;glich, dass du hinter einer Firewall, einem Router, Proxy oder &amp;auml;hnlichem sitzt. Dies vermindert die Chance etwas zu laden.",
+		"select": "Ausw&auml;hlen",
+		"all": "Alle",
+		"none": "Keine",
+		"error404": {
+			"title": "Entschuldige, die Seite existiert nicht!",
+			"subtitle": "Es scheint als w&uuml;dest du eine falsche Adresse eingegeben haben der eine veraltete Seite aufrufen wollen. Bitte kontaktiere den Administrator."
+		},
+		"pagetitle": {
+			"start": "Dashboard",
+			"downloads": "Downloads",
+			"uploads": "Uploads",
+			"search": "Suche",
+			"shares": "geteile Ordner",
+			"settings": "Einstellugen",
+			"server": "Serverliste",
+			"sharefiles": "geteilte Dateien",
+			"extras": "Addons",
+			"dl_users": "Downloaddetails"
+		}
    },
    
    "Start": {
@@ -34,21 +53,132 @@
    },
    
    "Navigation": {
-	"dashboard": "Dashboard",
-	"downloads": "Downloads",
-	"uploads": "Uploads",
-	"search": "Suche",
-	"shares": "geteilte Ordner",
-	"settings": "Einstellungen",
-	"addons": "Plugins",
-	"server_list": "Serverliste",
-	"logout": "Logout",
-	"kick_core": "Core beenden"
+		"dashboard": "Dashboard",
+		"downloads": "Downloads",
+		"uploads": "Uploads",
+		"search": "Suche",
+		"shares": "geteilte Ordner",
+		"settings": "Einstellungen",
+		"addons": "Plugins",
+		"server_list": "Serverliste",
+		"logout": "Logout",
+		"kick_core": "Core beenden",
+		"user_settings": "Benutzereinstellungen"
    },
    
    "Downloads": {
-	"source": "Quellen",
-	"filename": "Dateiennamen"
+		"source": "Quellen",
+		"filename": "Dateiennamen",
+		"statuss": "Status",
+		"speed": "Geschwindigkeit",
+		"pdl": "PDL",
+		"size": "Gr&ouml;&szlig;e",
+		"rest": "Rest",
+		"progress": "Fortschritt",
+		"rename": "Umbenennen",
+		"set_pdl_title": "Powerdownload setzen",
+		"set_pdl": "PDL setzen",
+		"cleardownloadlist": "Fertige und Abgebrochene Downloads aus der Liste entfernt.",
+		"canceldownload": "Ausgew&auml;hlte Downloads erfolgreich abgebrochen.",
+		"finished": "Fertig",
+		"clientversion": "Version",
+		"dl_status":{
+			"status_0": "Suchen/Laden",
+			"status_0_1": "Suchen",
+			"status_0_2": "&Uuml;bertrage",
+			"status_1": "Platte voll",
+			"status_12": "Fertigstellen...",
+			"status_13": "Fehler beim Fertigstellen",
+			"status_14": "Fertig",
+			"status_15": "Abbrechen...",
+			"status_16": "Erstelle .data",
+			"status_17": "Abgebrochen",
+			"status_18": "Pausiert"
+		}
+   },
+   
+   "Uploads":{
+   		"limit": "Uploadliste zu %percent% voll",
+   		"files": "Datei",
+   		"username": "Username",
+   		"statuss": "Status",
+		"speed": "Geschwindigkeit",
+		"pdl": "PDL",
+		"size": "Gr&ouml;&szlig;e",
+		"finish": "Fertig",
+		"finished": "Wasserstand",
+		"clientversion": "Version",
+		"transferring": "&Uuml;bertragungen",
+		"ul_status":{
+			"1": "&Uuml;bertrage",
+			"2": "In Warteschlange",
+			"5": "Versuche zu verbinden",
+			"6": "Versuche indir. zu verbinden",
+			"7": "Kann nicht verbinden"
+		},
+		"queue": "Warteschlange"
+   },
+   "Server": {
+		"connectet": "Verbunden",
+		"try_connect": "versuche zu verbinden",
+		"been_connected": "verbunden gewesen",
+		"no_con": "nicht verbunden",
+		"last_connection": "letzte Verbindung",
+		"not_yet": "noch nicht verbunden",
+		"login": "Login",
+		"delet": "L&ouml;schen"
+   },
+   "Settings": {
+		"zipped": "Daten komprimiert vom Core holen",
+		"progressbars_type": "Anzeige Fortschrittsbalken",
+		"standard": "Standard",
+		"tempdir": "Temp-Verzeichnis",
+		"incomingdir": "Incoming-Verzeichnis",
+		"port": "Core-Port",
+		"xml_port": "XML-Port",
+		"nick": "Nickname",
+		"Connection": "Verbindung",
+		"max_connections": "Max. Verbindungen",
+		"max_ul": "Max. Upload in KB/s",
+		"speed_per_slot": "KB/s pro upload-slot",
+		"max_dl": "Max. Download in KB/s",
+		"max_dl_src": "Max. Quellen pro Datei",
+		"max_connections_per_turn": "Max. neue Verbindungen /10sek (1-200)",
+		"autoconnect": "Automatisch verbinden",
+		"ok": "OK",
+		"save": "Speichern",
+		"get_save": "Gespeichert",
+		"alert_save_1": "Einstellungen aktualliesiert!",
+		"alert_save_2": "Verbindungseinstellungen aktualliesiert!"
+   },
+   "Share": {
+		"shared_directories": "Freigegebene Verzeichnisse",
+		"name": "Name",
+		"size": "Gr&ouml;&szlig;e",
+		"prio": "Prio",
+		"check": "Share&uuml;berpr&uuml;fung starten",
+		"exportlist": "Link Export",
+		"new_share": "Shareverzichnisse werden neu eingelesen und an den Server weitergeleitet.",
+		"in_progress": "Anfrage verarbeiten",
+		"success": "Erfolgreich!",
+		"link_export_alert": "Linkexport erfolgreich geleert!",
+		"link_export_title": "Link Export",
+		"delet_export": "Liste leeren",
+		"export": "Links exportieren",
+		"prio_spent": "Priorit&auml;t: %spent von 1000 Punkten vergeben"
+	
+   },
+   "Search": {
+		"button": "Suchen",
+		"all": "Alle",
+		"nolimit": "Alle Sucheintr&auml;ge anzeigen",
+		"name": "Dateienname",
+		"size": "Gr&ouml;&szlig;e",
+		"counter": "Anzahl",
+		"know_filename": "Datei bekannt als"
    }
+   
+  
+ 
  
 }

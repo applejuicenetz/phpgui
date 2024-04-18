@@ -7,6 +7,11 @@ require_once "_classes/share.php";
 $core = new Core();
 $share = new Share();
 $template = new template();
+
+//Language
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
+
 echo "<script>
 function ShowFiles(dir){
 	dir=encodeURIComponent(dir);
@@ -16,12 +21,12 @@ function ShowFiles(dir){
 
 function do_setsubs(name, newsub){
 	name=encodeURIComponent(name);
-	window.location.href='".$_SERVER['PHP_SELF']."?site=shares&setsubs='+name+'&newsub='+newsub;
+	window.location.href='?site=shares&setsubs='+name+'&newsub='+newsub;
 }
 
 function delshare(name){
 	name=encodeURIComponent(name);
-	window.location.href='".$_SERVER['PHP_SELF']."?".SID."&share_del='+name;
+	window.location.href='?site=shares&".SID."&share_del='+name;
 }
 
 function newshare(){
@@ -36,7 +41,7 @@ function share_export(){
 
 function select_dir(){
 	var dirlist=window.open(
-		'directory.php?returninput=mainform.new_share.value&amp;".SID."',
+		'?site=directory&returninput=mainform.new_share.value&amp;".SID."',
 		'Dirlist','width=400,height=350,left=10,top=10,dependent=yes,scrollbars=no');
 	dirlist.focus();
 }
@@ -47,7 +52,7 @@ function select_dir(){
 //einstellungen fuer unterverzeichnis aendern
 if(!empty($_GET['setsubs'])){
 	$share->changesub($_GET['setsubs'], $_GET['newsub']);
-	$template->alert("info", "Inprogress", "Share Daten werden neu eingelesen!");
+	$template->alert("info", $lang-Share->in_progress, $lang->Share->new_share);
 }
 
 //verzeichnis aus share nehmen
@@ -58,7 +63,7 @@ if(!empty($_GET['share_del'])){
 //verzeichnis sharen
 if(!empty($_GET['new_share'])){
 	$share->add_share($_GET['new_share'], $_GET['new_subs']);
-	$message("Shareverzichnisse werden neu eingelesen und an den Server weitergeleitet.");
+	$template->alert("info", $lang->Share->in_progress, $lang->Share->new_share);
 }
 
 echo "<form action=\"\" name=\"mainform\">";
@@ -66,17 +71,17 @@ echo "<form action=\"\" name=\"mainform\">";
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
                         <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                        	<div class="panel-heading bg-success"><i class="fa fa-folder"></i> Freigegebene Verzeichnisse</div>
+                        	<div class="panel-heading bg-success"><i class="fa fa-folder"></i> '.$lang->Share->shared_directories.'</div>
                             <div class="panel-body">
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
                 							<tr>
                     							<th scope="col">#</th>
-                								<th scope="col">Name</th>
+                								<th scope="col">'.$lang->Share->name.'</th>
                     							<th width="1" scope="col"><i class="fa fa-info-circle text-info"></i></th>
-                    							<th scope="col">Größe</th>
-                    							<th width="3" scope="col">Prio</th>
+                    							<th scope="col">'.$lang->Share->size.'</th>
+                    							<th width="3" scope="col">'.$lang->Share->prio.'</th>
                     						</tr>
             							</thead>
                 						<tbody>';
@@ -122,9 +127,9 @@ echo'
 //
 //echo "<br />\n";
 echo "<div align=\"center\"><table><tr>\n";
-echo "<td><input type=\"button\" onclick=\"do_setsubs('*sharecheck',0);\" value='"
-	.$_SESSION['language']['SHARE']['SHARECHECK']."' /></td>";
-echo "<td><input type=\"button\" onclick=\"share_export()\" value='"
-	.$_SESSION['language']['SHARE']['EXPORTLIST']."' /></td>\n";
+echo "<td><input type=\"button\" onclick=\"do_setsubs('*sharecheck',0);\" value=\""
+	.$lang->Share->check."\" /></td>";
+//echo "<td><input type=\"button\" onclick=\"share_export()\" value=\""
+//	.$lang->Share->exportlist."\" /></td>\n";
 echo "</tr></table></div>\n";
 echo "</form>\n";

@@ -1,35 +1,49 @@
 <?php
 //Neue Subs
 const PHP_GUI_VERSION = 'v0.28.1';
+
+require_once '_classes/env.php';
+
 class subs{
-	function versions_checker(){
-	echo''.fileGetContents("robots.txt");
-		echo "hall";
+	function appleJuiceNews($zeit, $version){
+		$subs = new subs();
+			
+		if(!empty($_ENV['GUI_SHOW_NEWS'])){
+			echo'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            		<div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                		<div class="panel-heading bg-success"><i class="fa fa-news"></i> appleJuice News</div>
+                		<div class="panel-body">
+                		'.$subs->getnews($zeit, $version).'
+                		</div>
+    				</div>
+    			</div>';
+                		
+		}
+		
+	}
+	function getnews($zeit, $version){
+		$news_file =file_get_contents(sprintf($_ENV['NEWS_URL'], $version ?: '404'),false,
+    		stream_context_create(
+        		[
+            		'http' => [
+                			'ignore_errors' => true,
+            		],
+        		]
+    		));
+		return $news_file;
 	}
 	
+	function get_title($site){
+		$language = new language($_ENV['GUI_LANGUAGE']);
+		$lang = $language->translate();
+		
+		return $lang->System->pagetitle->$site;
+	}
 
-}
-
-
-
-
-function fileGetContents( $fileName )
-{
-  $errmsg = '' ;
-  ob_start( ) ;
-  $contents = file_get_contents( $fileName );
-  if ( $contents === FALSE )
-  {
-    $errmsg = ob_get_contents( ) ;
-    $errmsg .= "\nfile name:$fileName";
-    $contents = '' ;
-  }
-  ob_end_clean( ) ;
-  return (object)[ 'errmsg' => $errmsg, 'contents' => $contents ];
+	
 }
 
 //Alte Subs
-require_once '_classes/env.php';
 function versions_checker(){}
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
 function sizeformat($bytesize)
@@ -57,23 +71,6 @@ function dirlisting($verzeichnis, $endung)
 
 }
 
-function getnews($zeit, $version)
-{
-    if (empty($_SESSION['cache']['NEWS']['LASTTIMESTAMP']))
-        $_SESSION['cache']['NEWS']['LASTTIMESTAMP'] = time();
-    if (empty($_SESSION['cache']['NEWS']['ITEMS'])
-        || ((time() - $_SESSION['cache']['NEWS']['LASTTIMESTAMP']) > ($zeit * 60))) {
-        $_SESSION['cache']['NEWS']['LASTTIMESTAMP'] = time();
-        $_SESSION['cache']['NEWS']['ITEMS'] = '';
-        $news_file = file_get_contents(sprintf($_ENV['NEWS_URL'], $version), false, stream_context_create(['http' => ['ignore_errors' => true]]));
-
-        $_SESSION['cache']['NEWS']['ITEMS'] = strtr($news_file, ["a href=" => "a target=\"_blank\" href=", "<br>" => "<br />"]);
-        $_SESSION['cache']['NEWS']['ITEMS'] = preg_replace(
-            '/&([^;]*?=)/', '&amp;$1', $_SESSION['cache']['NEWS']['ITEMS']);
-        $_SESSION['cache']['NEWS']['ITEMS'] =
-            utf8_encode($_SESSION['cache']['NEWS']['ITEMS']);
-    }
-}
 
 //sortiert alle keys von $srcarray nach den werten von $sortkey eine ebene tiefer
 function ajsort($srcarray, $sortkey, $type, $reverse)
@@ -114,11 +111,3 @@ function debug($var)
     print_r($var);
     die;
 }
-function message($wert){
-		echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
-                	<i class="bi bi-check-circle me-1"></i>
-                	'.$wert.'
-                	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>';
-	
-	}

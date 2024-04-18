@@ -7,7 +7,6 @@ require_once "_classes/server.php";
 require_once "_classes/uploads.php";
 require_once "_classes/downloads.php";
 require_once "_classes/icons.php";
-require_once "_classes/lang.php";
 
 //Language switch
 
@@ -158,33 +157,19 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                             </div>
                         </div>
                     </div>
-    <div class="">
-    test
-    <?php
-$homepage =file_get_contents(
-    sprintf('http://applejuicenetz.github.io/news/%s.html', $_REQUEST['version'] ?: '404'),
-    false,
-    stream_context_create(
-        [
-            'http' => [
-                'ignore_errors' => true,
-            ],
-        ]
-    ));
-echo $homepage;
-$newsUrl = sprintf('http://applejuicenetz.github.io/news/%s.html', $_REQUEST['version'] ?: '404');
-echo $newsUrl;?>
-    </div>        
+        
+    <?php	
+			$coreinfo = $Servers->core->getcoreversion();
+			$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
+			$info = $Servers->info();
+			//AJ News
+			$subs->appleJuiceNews(90,$coreinfo['VERSION']);
+	?>
                     
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 		<!--INFOS EINHOLEN -->
-		<?php	
-			$coreinfo = $Servers->core->getcoreversion();
-			$coresubversions=explode(".",$_SESSION['cache']['STATUSBAR']['VERSION']);
-			$info = $Servers->info();
-			
-		?>
+		
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
                 <div class="panel-heading bg-success"><i class="material-icons">public</i> <?php echo $lang->Start->core_info; ?></div>

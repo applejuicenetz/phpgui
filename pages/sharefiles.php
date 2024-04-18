@@ -1,18 +1,24 @@
 <?php
-session_start();
 require_once "_classes/subs.php";
 require_once "_classes/share.php";
-$lang = $_SESSION['language']['SHARE'];
+require_once "_classes/core.php";
+
+$core = new Core;
+$Share = new Share();
+$template = new template();
+
+//Language
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
+
 $queryString = strstr($_SERVER['REQUEST_URI'], '?');    // $queryString enthält jetzt "?arg1=foo&arg2=bar" oder (bool)false falls keine Parameter definiert wurden
 $queryString = ($queryString===false) ? '' : substr($queryString, 1);
  
-$Share = new Share();
-$template = new template();
 $Sharelist = $Share;
 
 if(!empty($_GET['clear_list'])){
 	$_SESSION['shareexport']=array();
-	§template->allert("success","Erfolgreich!","Linkexport erfolgreih geleert!");
+	§template->allert("success",$lang->Share->success, $lang->Share->link_export_alert);
 }
 
 if (!empty($_GET['shareexpfile'])) {
@@ -24,9 +30,7 @@ if (!empty($_GET['shareexpfile'])) {
         if ($testx !== FALSE) continue;
         $_SESSION['shareexport'][] = $export_currlink;
     }
-    require_once "classes/class_core.php";
-$core = new Core;
-
+    
 
 if(empty($_GET['exp_format'])) $_GET['exp_format']="Default";
 
@@ -35,7 +39,7 @@ if(!empty($_GET['withsource']) && $_GET['withsource']=="true"){}
 
 echo '<div class="card">
             <div class="card-body">
-              <h5 class="card-title">Link Export</h5>
+              <h5 class="card-title">'.$lang->Share->Link_export_title.'</h5>
 ';
 if(!empty($_SESSION['shareexport'])){
 	asort($_SESSION['shareexport']);
@@ -62,7 +66,7 @@ if(!empty($_SESSION['shareexport'])){
 }
 echo "</div></div>";
 echo "<input type=\"button\" value=\""
-	.$_SESSION['language']['SHARE']['DEL_EXPORT']
+	.$lang->Share->delet_export.""
 	."\" onclick=\"document.location.href='index.php?site=sharefiles&dir=".$_GET["dir"]."&clear_list=1&"
 	.SID."';\" />";
 echo "</form>";
@@ -87,7 +91,7 @@ function change(id){
 		share_ids[id]=1;
 		while(zelle!=null){
 			if(zelle.nodeName=='TD')
-				zelle.style.backgroundColor='';
+				zelle.style.backgroundColor='#01c0c8';
 			zelle=zelle.nextSibling;
 		}
 		document.getElementById('sharecheck_'+id).checked=true;
@@ -119,7 +123,7 @@ function exportlinks(){
 		shareexpline+='&shareexpfile['+counter+']=' + i;
 	}
 
-	window.location.href='index.php?site=sharefiles&dir=".urlencode($_GET['dir']) . "'+ shareexpline+'&".SID."';
+	window.location.href='?site=sharefiles&dir=".urlencode($_GET['dir']) . "'+ shareexpline+'&".SID."';
 }
 
 function selectall(){
@@ -156,12 +160,9 @@ echo'<div class="row clearfix">
                             <div class="align-right"><nav aria-label="Page navigation">
                 <ul class="pagination">
                   <li class="page-item">
-                    <a class="page-link" onclick="exportlinks();">'.$lang["EXPORT"].'</a>
+                    <a class="page-link" onclick="exportlinks();">'.$lang->Share->export.'</a>
                   </li>
-                  <li class="page-item"><a class="page-link" onclick="reload();">'.$lang['RELOAD'].'</a></li>
-                  <li class="page-item"><a class="page-link" onclick="selectall();">'.$_SESSION['language']['GENERAL']['ALL'].'</a></li>
-                  <li class="page-item"><a class="page-link" onclick="selectnone();">'.$_SESSION['language']['GENERAL']['NONE'].'</a></li>
-                  
+                  <li class="page-item"><a class="page-link" onclick="reload();"><i class="fa fa-repeat"></i></a></li>
                 </ul>
               </nav>
        </div>   
@@ -172,21 +173,19 @@ echo'<div class="row clearfix">
 										<thead>
                 							<tr>
                     							<th scope="col">#</th>
-                								<th scope="col">Name</th>
+                								<th scope="col">'.$lang->Share->name.'</th>
                     							<th width="1" scope="col"><i class="fa fa-info-circle text-info"></i></th>
-                    							<th scope="col">Größe</th>
-                    							<th width="3" scope="col">Prio</th>
+                    							<th scope="col">'.$lang->Share->size.'</th>
+                    							<th width="3" scope="col">'.$lang->Share->prio.'</th>
                     						</tr>
             							</thead>
                 						<tbody>';
-echo"<tr><th colspan=\"5\" class=\"align-right\">";
-echo $_SESSION['language']['GENERAL']['SELECT'].": ";
-echo "<input type=\"button\" value=\""
-	.$_SESSION['language']['GENERAL']['ALL']
-	."\" onclick=\"selectall();\" /> ";
-echo "<input type=\"button\" value=\""
-	.$_SESSION['language']['GENERAL']['NONE']
-	."\" onclick=\"selectnone();\" /></th></tr>";
+echo'<tr>
+		<th colspan="5" class="align-right">'.$lang->System->select.'
+		<input type="button" value="'.$lang->System->all.'" onclick="selectall();" />
+		<input type="button" value="'.$lang->System->none.'"" onclick="selectnone();" />
+		</th>
+	</tr>';
 //unterverzeichnisse
 $dirliste=$Sharelist->directory($_GET['dir']);
 foreach($dirliste as $a){
@@ -215,22 +214,18 @@ ksort($list);
 
 foreach($list as $shareentry){
     $a = $shareentry['ID'];
-    if($shareentry["PRIORITY"] != "1"){
-    
     $prio = $shareentry['PRIORITY'];
-    }else{
-    }
     $lastasked=(isset($shareentry['LASTASKED'])) ?
 		date("j.n.y - H:i:s",($shareentry['LASTASKED']/1000))
 		: "N/A";
 	if(!isset($shareentry['ASKCOUNT'])) $shareentry['ASKCOUNT']="N/A";
 	if(!isset($shareentry['SEARCHCOUNT'])) $shareentry['SEARCHCOUNT']="N/A";
 	
-    $tooltip = "<small align='lef'>ID:".$a."<br>Letzte Anfrage: ".$lastasked."<br>Anzahl Anfragen: "
+    $tooltip = "<small align='left'>ID:".$a."<br>Letzte Anfrage: ".$lastasked."<br>Anzahl Anfragen: "
     			.$shareentry['ASKCOUNT']."<br>Anzahl Suchanfragen: ".$shareentry['SEARCHCOUNT']."<br>"
     			."<a href='".addslashes($shareentry['LINK'])."'>Scource Link</a></small>";
     echo'<tr>
-		<td width="1" class="form-group"><input type="checkbox" data-icheck-theme="square" data-icheck-color="green" id="sharecheck_'.$a.'" onclick="change('.$a.')" />';
+		<td width="1" class="form-group"><input type="checkbox" id="sharecheck_'.$a.'" onclick="change('.$a.')" />';
                     echo"<script>\n"
 						."share_ids[$a]=0;\n"
 						."</script>";
@@ -245,7 +240,7 @@ foreach($list as $shareentry){
 
 echo "</tbody></table></div></div></div></div></div>
 </form>";
-echo strtr($lang['PRIO_SPENT'],array("%spent"=>$Sharelist->spentprio));
+echo strtr($lang->Share->prio_spend ,array("%spent"=>$Sharelist->spentprio));
 
 echo "</body>
 </html>";

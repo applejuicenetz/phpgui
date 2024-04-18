@@ -13,8 +13,6 @@ $settings_xml=$core->command("xml","settings.xml");
 $language = new language($_ENV['GUI_LANGUAGE']);
 $lang = $language->translate();
 
-$tab = 'Start';
-if($_GET["site"] == "sharefiles" OR $_GET["site"] == "shareexport") $tab = "Shares";
 function active($a){
     if($a == $_GET["site"]){
         $action = "class='active' ";
@@ -165,8 +163,8 @@ if (isset($_GET['site'])) {
                                     <li class="body">
                                         <ul>
                                             <li>
-                                                <a href="index.php?site=settings">
-                                                    <i class="material-icons">settings</i> <?php echo $lang->Navigation->settings; ?>
+                                                <a href="index.php?site=user_settings">
+                                                    <i class="material-icons">settings</i> <?php echo $lang->Navigation->user_settings; ?>
                                                 </a>
                                             </li>
                                         </ul>

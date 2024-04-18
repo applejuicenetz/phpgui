@@ -5,7 +5,9 @@ require_once "_classes/server.php";
 $Servers = new Server();
 $template = new template();
 
-$lang =& $_SESSION['language']['SERVER'];
+//Language
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
 
 //zum connecten + loeschen
 $action_echo='';
@@ -26,25 +28,25 @@ foreach($Servers->ids() as $a){
 	$serverinfo=$Servers->serverinfo($a);
 	$server_delete_link="<a href=\"".$_SERVER['PHP_SELF']
 		."?site=server&action=removeserver&amp;serv_id=".$serverinfo['ID']."&amp;"
-		.SID."\">".$lang['DELETE']."</a>";
+		.SID."\">".$lang->Server->delet."</a>";
 
 	if($Servers->netstats['connectedwith']<0 || $srv_timediff>=30){
 		$server_connect_link="<a href=\"".$_SERVER['PHP_SELF']
 			."?site=server&action=serverlogin&amp;serv_id="	.$serverinfo['ID']."&amp;"
-			.SID."\">".$lang['LOGIN']."</a>";
+			.SID."\">".$lang->Server->login."</a>";
 	}else{
-		$server_connect_link=$lang['LOGIN'];
+		$server_connect_link=$lang->Server->login;
 	}
 	//passendes bildchen raussuchen
 	if($Servers->netstats['connectedwith'] == $serverinfo['ID']){
-        $status = 'Verbunden <i class="fa fa-circle text-success"></i>';
+        $status = $lang->Server->connectet.' <i class="material-icons col-success">network_wifi</i>';
 	}elseif($Servers->netstats['trytoconnectto'] == $serverinfo['ID']){
-        $status = 'versuche zu verbinden <i class="fa fa-circle text-danger"></i>';
+        $status = $lang->Server->try_connect.' <i class="material-icons col-danger">network_wifi</i>';
 	}elseif((($Servers->server_xml['TIME']['VALUES']['CDATA']
 			-$serverinfo['LASTSEEN'])/1000) <= 86400){
-        $status = '<24h verbunden gewesen <i class="fa fa-circle text-warning"></i>';
+        $status = '<24h '.$lang->Server->been_connected.' <i class="material-icons col-warning">network_wifi</i>';
 	}else{
-        $status = ' nicht verbunden <i class="f fa-circle-notch"></i>';
+        $status = $lang->Server->no_con.' <i class="material-icons">signal_wifi_off</i>';
 	}
     if(empty($serverinfo["NAME"])) $serverinfo["NAME"] = "N/A";
     echo'           <div class="col-sm-4">
@@ -66,11 +68,11 @@ foreach($Servers->ids() as $a){
               <td>'.$serverinfo["PORT"].'</td>
               </tr>
               <tr>
-              <td class="fw-bold">letzte Verbindung</td>
+              <td class="fw-bold">'.$lang->Server->last_connection.'</td>
               </tr>
               <tr>
               <td>';echo ($serverinfo['LASTSEEN']>0) ?
-        date("d.m.y - H:i:s",($serverinfo['LASTSEEN'])/1000) : "noch nicht verbunden"; echo'</td>
+        date("d.m.y - H:i:s",($serverinfo['LASTSEEN'])/1000) : $lang->Server->not_yet; echo'</td>
               </tr>
               </table>
               '.$server_delete_link.'   '.$server_connect_link.' ('.$serverinfo["CONNECTIONTRY"].')<br>

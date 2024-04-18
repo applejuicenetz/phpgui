@@ -5,7 +5,10 @@ require_once "_classes/share.php";
 require_once "_classes/uploads.php";
 require_once "_classes/icons.php";
 
-$lang =& $_SESSION['language']['UPLOADS'];
+//Language switch
+
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
 
 //standardmaessig nur laufende uploads zeigen
 	if(empty($_GET['show_uplds'])) $_GET['show_uplds']=1;
@@ -32,26 +35,23 @@ echo'<div class="row clearfix">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="align-right">
-                                	'. strtr($lang['LIMIT'], array("%percent"=>$uploaduserpercent)).'
+                                	'. strtr($lang->Uploads->limit, array("%percent"=>$uploaduserpercent)).'
                                 </div>';
 //Tabellenüberschrift
 echo'<div class="table-responsive">
 			  <table class="table table-striped">
 				<thead>
                   <tr>
-                    <th scope="col">'.$lang['FILE'].'</th>
-					<th scope="col">'.$lang['USERNAME'].'</th>';
-					if(!empty($_ENV["REL_INFO"])){
-						echo'<th><i class="text-warning material-icons">info</i></th>';
-					}
-					echo'
-                    <th scope="col">'.$lang['STATUS'].'</th>
-                    <th scope="col">'.$lang['SPEED'].'</th>
-                    <th scope="col">'.$lang['SIZE'].'</th>
-                    <th scope="col">'.$lang['FINISHED'].'</th>
-                    <th scope="col">'.$lang['FINISHED_FILE'].'</th>
-                    <th scope="col">PDO</th>
-                    <th scope="col">'.$lang['CLIENTVERSION'].'</th>
+                    <th scope="col">'.$lang->Uploads->files.'</th>
+					<th scope="col">'.$lang->Uploads->username.'</th>
+					<th><i class="text-warning material-icons">info</i></th>
+					<th scope="col">'.$lang->Uploads->statuss.'</th>
+                    <th scope="col">'.$lang->Uploads->speed.'</th>
+                    <th scope="col">'.$lang->Uploads->size.'</th>
+                    <th scope="col">'.$lang->Uploads->finish.'</th>
+                    <th scope="col">'.$lang->Uploads->finished.'</th>
+                    <th scope="col">'.$lang->Uploads->pdl.'</th>
+                    <th scope="col">'.$lang->Uploads->clientversion.'</th>
                   </tr>
                 </thead>
                 <tbody>';	
@@ -60,7 +60,7 @@ if($_GET['show_uplds']==1){
 	echo "<tr>
 			<td colspan=\"10\">
 				<a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=-1&show_queue=".$_GET['show_queue']."&amp;".SID."\">
-					<i class='fa fa-minus'></i>&nbsp;&nbsp;<b>".$lang['TRANSFERRING']."</b> (".$Uploadlist->cache['phpaj_ul'].")</a>
+					<i class='fa fa-minus'></i>&nbsp;&nbsp;<b>".$lang->Uploads->transferring."</b> (".$Uploadlist->cache['phpaj_ul'].")</a>
 			</td>
 		 </tr>";
 	if(!empty($Uploadlist->cache['UPLOAD'])){
@@ -84,7 +84,7 @@ if($_GET['show_uplds']==1){
             }
 			
 			//Status
-			echo "<td>".$_SESSION['language']['ULSTATUS']['STATUS_'.$current_upload['STATUS']]."</td>\n";
+			echo "<td>".$lang->Uploads->dl_status->$current_upload['STATUS']."</td>\n";
 			
 			//Geschwindigkeit
 			echo "<td class=\"right\">"
@@ -132,7 +132,7 @@ if($_GET['show_uplds']==1){
 	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=1&amp;"
 		."show_queue=".$_GET['show_queue']."&amp;"
 		.SID."\"><i class='fa fa-plus'></i>&nbsp;&nbsp;<b>"
-		.$lang['TRANSFERRING']."</b> ("
+		.$lang->Uploads->transferring."</b> ("
 		.$Uploadlist->cache['phpaj_ul'].")</a></td></tr>";
 }
 
@@ -141,7 +141,7 @@ if($_GET['show_queue']==1){
 	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
 		.$_GET['show_uplds']."&amp;show_queue=-1"."&amp;"
 		.SID."\"><i class='fa fa-minus'></i>&nbsp;&nbsp;<b>"
-		.$lang['QUEUE']."</b> ("
+		.$lang->Uploads->queue."</b> ("
 		.$Uploadlist->cache['phpaj_queue'].")</a></td></tr>";
 	if(!empty($Uploadlist->cache['UPLOAD'])){
 		foreach($Uploadlist->cache['phpaj_ids_queue'] as $a){
@@ -197,7 +197,7 @@ if($_GET['show_queue']==1){
 	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
 		.$_GET['show_uplds']."&amp;show_queue=1"."&amp;".SID."\">"
 		."<i class='fa fa-plus'></i>&nbsp;&nbsp;<b>"
-		.$lang['QUEUE']."</b> ("
+		.$lang->Uploads->queue."</b> ("
 		.$Uploadlist->cache['phpaj_queue'].")</a></td></tr>";
 }
 

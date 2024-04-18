@@ -7,7 +7,7 @@ class gui {
      }
 
    function check() {
-      $data = file_get_contents("http://www.applejuicenet.cc/inprog/news.php?version=0.31.149.111",
+      $data = file_get_contents("https://api.github.com/repos/kddk22/phpgui/releases/latest",
     false,
     stream_context_create(
         [

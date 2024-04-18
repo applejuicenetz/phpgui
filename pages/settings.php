@@ -2,9 +2,13 @@
 session_start();
 require_once "_classes/subs.php";
 require_once "_classes/core.php";
+
 $core = new Core();
 $template = new template();
-$lang =& $_SESSION['language']['SETTINGS'];
+
+//Language
+$language = new language($_ENV['GUI_LANGUAGE']);
+$lang = $language->translate();
 
 //einstellungen aendern
 if(!empty($_POST['change'])){
@@ -13,11 +17,10 @@ if(!empty($_POST['change'])){
 			$_POST['incdir']=urlencode($_POST['incdir']);
 			$_POST['tempdir']=urlencode($_POST['tempdir']);
 			$_POST['nick']=urlencode($_POST['nick']);
-			$core->command("function","setsettings?Incomingdirectory="
-				.$_POST['incdir']."&Temporarydirectory=".$_POST['tempdir']
+			$core->command("function","setsettings?Incomingdirectory=".$_POST['incdir']."&Temporarydirectory=".$_POST['tempdir']
 				."&Port=".$_POST['c_port']."&XMLPort=".$_POST['c_xml_port']
 				."&Nickname=".$_POST['nick']);
-            $template->alert("success", "Gepeichert", "Einstellungen aktualliesiert!");
+            $template->alert("success", $lang->Settings->get_save."!", $lang->Settings->alert_save_1);
         break;
 		case 'connection':
 			if(empty($_POST['autoconnect'])) $_POST['autoconnect']='false';
@@ -29,7 +32,7 @@ if(!empty($_POST['change'])){
 					.$_POST['maxdl']."&MaxNewConnectionsPerTurn="
 					.$_POST['conturn']."&AutoConnect=".$_POST['autoconnect']
 					."&MaxSourcesPerFile=".$_POST['maxdlsrc']);
-            $template->alert("success", "Gepeichert", "Verbindungseinstellungen aktualliesiert!");
+            $template->alert("success", $lang->Settings->get_save."!", $lang->Settings->alert_save_2);
             break;
 	}
 }
@@ -46,27 +49,27 @@ echo'<div class="row clearfix">
                 <div class="panel-heading bg-success"><i class="fa fa-gear"></i> Standart Einstellungen</div>
                 <div class="panel-body">
                 	<div class="form-group">
-                        <label>'.$lang["TEMPDIR"].'</label>
+                        <label>'.$lang->Settings->tempdir.'</label>
                         <input type="text" class="form-control" id="tempdir" name="tempdir" value="'.htmlspecialchars($settings_xml["TEMPORARYDIRECTORY"]["VALUES"]["CDATA"]).'" />
                     </div>
                     <div class="form-group">
-                        <label>'.$lang["INCOMINGDIR"].'</label>
+                        <label>'.$lang->Settings->incomingdir.'</label>
                         <input type="text" class="form-control" id="incdir" name="incdir" value="'.htmlspecialchars($settings_xml["INCOMINGDIRECTORY"]["VALUES"]["CDATA"]).'" />
                     </div>
                     <div class="form-group">
-                        <label>'.$lang["PORT"].'</label>
+                        <label>'.$lang->Settings->port.'</label>
                         <input type="number" class="form-control" id="c_port" name="c_port" value="'.$settings_xml['PORT']['VALUES']['CDATA'].'" disabled />
                     </div>
                     <div class="form-group">
-                        <label>'.$lang["XML_PORT"].'</label>
+                        <label>'.$lang->Settings->xml_port.'</label>
                         <input type="number" class="form-control" id="c_xml_port" name="c_xml_port" value="'.$settings_xml['XMLPORT']['VALUES']['CDATA'].'" disabled />
                     </div>
                     <div class="form-group">
-                        <label>'.$lang["NICK"].'</label>
+                        <label>'.$lang->Settings->nick.'</label>
                         <input type="text" class="form-control" id="nick" name="nick" value="'.htmlspecialchars($settings_xml['NICK']['VALUES']['CDATA']).'" />
                     </div>
                     <input type="hidden" name="change" value="standard" />
-            		<button type="submit" class="btn btn-lg btn-success pull-right">Speichern</button>
+            		<button type="submit" class="btn btn-lg btn-success pull-right">'.$lang->Settings->save.'</button>
                                     
            
                 </div>
@@ -79,27 +82,27 @@ echo'<div class="row clearfix">
                 <div class="panel-body">
                 	<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection">
                 		<div class="form-group">
-                			<label>'.$lang["MAXCONNECTIONS"].'</label>
+                			<label>'.$lang->Settings->max_connections.'</label>
                 			<input type="text" class="form-control" id="maxcon" name="maxcon" value="'.$settings_xml["MAXCONNECTIONS"]["VALUES"]["CDATA"].'">
                 		</div>
                 		<div class="form-group">
-                			<label>'.$lang["MAXUL"].'</label>
+                			<label>'.$lang->Settings->max_ul.'</label>
                 			<input type="text" class="form-control" id="maxul" name="maxul" value="'.($settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"] / 1024).'">
                 		</div>
                 		<div class="form-group">
-                			<label>'.$lang["SPEEDPERSLOT"].'</label>
+                			<label>'.$lang->Settings->speed_per_slot.'</label>
                 			<input type="text" class="form-control" id="uls" name="uls" value="'.$settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"].'">
                 		</div>
                 		<div class="form-group">
-                			<label>'.$lang["MAXDL"].'</label>
+                			<label>'.$lang->Settings->max_dl.'</label>
                 			<input type="text" class="form-control" id="maxdl" name="maxdl" value="'.($settings_xml["MAXDOWNLOAD"]["VALUES"]["CDATA"] / 1024).'">
                 		</div>
                 		<div class="form-group">
-                			<label>'.$lang["MAXCONNECTIONSPERTURN"].'</label>
+                			<label>'.$lang->Settings->max_connections_per_turn.'</label>
                 			<input type="text" class="form-control" id="conturn" name="conturn" value="'.$settings_xml["MAXNEWCONNECTIONSPERTURN"]["VALUES"]["CDATA"].'">
                 		</div>
                 		<div class="form-group">
-                			<label>'.$lang["MAXDLSRC"].'</label>
+                			<label>'.$lang->Settings->max_dl_src.'</label>
                 			<input type="text" class="form-control" id="maxdlsrc" name="maxdlsrc" value="'.$settings_xml["MAXSOURCESPERFILE"]["VALUES"]["CDATA"].'">
                 		</div>
                 		<div class="form-group">';
@@ -107,10 +110,10 @@ echo'<div class="row clearfix">
                 		if($settings_xml['AUTOCONNECT']['VALUES']['CDATA']=='true') $checked = " checked=\"checked\"";
 
                            echo'<input type="checkbox" class="js-switch" id="aconnect" name="autoconnect" value="true" '.$checked.' />
-                           Automatisch verbinden
+                           '.$lang->Settings->autoconnect.'
                         </div>
                         <input type="hidden" name="change" value="connection" />
-                		<button type="submit" class="btn btn-lg btn-success pull-right">Speichern</button>
+                		<button type="submit" class="btn btn-lg btn-success pull-right">'.$lang->Settings->save.'</button>
                     
                 </div>
             </div>

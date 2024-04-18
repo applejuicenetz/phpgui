@@ -1,8 +1,7 @@
 <?php
-echo"2";
 require_once "_classes/subs.php";
 require_once "_classes/downloads.php";
-echo"2";
+
 $Downloadlist = new Downloads;
 $Downloadlist->refresh_cache();
 
@@ -14,28 +13,24 @@ function showparts(id){
 	ajpartinfo.focus();
 }
 </script>";
-echo"3";
+
 //default anzeige
 	if(empty($_GET['show_dls'])){$_GET['show_dls']=1;}
 	if(empty($_GET['show_queue'])){$_GET['show_queue']=-1;}
 	if(empty($_GET['show_rest'])){$_GET['show_rest']=-1;}
 
-echo $_SESSION['language']['GENERAL']['TIME'].": ".$Downloadlist->time();
-echo " (<a href='javascript: window.location.reload()'>"
-	.$_SESSION['language']['GENERAL']['REFRESH']."</a>)<br />\n";
-
 //tabelle + Ueberschriften
 echo "<table width=\"100%\">\n";
 echo "<tr>
 	<th width=\"10\">&nbsp;</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['SOURCES']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['FILENAME']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['STATUS']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['SPEED']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['POWERDOWNLOAD_SHORT']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['SIZE']."</th>
-	<th width=\"100\">".$_SESSION['language']['DOWNLOADS']['FINISHED']."</th>
-	<th>".$_SESSION['language']['DOWNLOADS']['CLIENTVERSION']."</th></tr>\n";
+	<th>".$lang->Downloads->source."</th>
+	<th>".$lang->Downloads->filename."</th>
+	<th>".$lang->Downloads->statuss."</th>
+	<th>".$lang->Downloads->speed."</th>
+	<th>".$lang->Downloads->pdl."</th>
+	<th>".$lang->Downloads->size."</th>
+	<th width=\"100\">".$lang->Downloads->finished."</th>
+	<th>".$lang->Downloads->clientversion."</th></tr>\n";
 
 //download zeigen
 if(!empty($Downloadlist->cache['DOWNLOAD'])){

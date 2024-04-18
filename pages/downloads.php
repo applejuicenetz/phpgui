@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 require_once "_classes/subs.php";
 require_once "_classes/downloads.php";
 require_once "_classes/icons.php";
@@ -48,12 +49,12 @@ function rename(id){
 function dorename(id){
 	var newname=encodeURIComponent(
 		eval('document.dl_form.newname_'+id+'.value'));
-	window.location.href='".$_SERVER['PHP_SELF']."?action=renamedownload&dl_id[0]='+
+	window.location.href='".$_SERVER['PHP_SELF']."?site=downloads&action=renamedownload&dl_id[0]='+
 		id+'&action_value=' + newname + '&';
 }
 
 function dlparts(id){
-	var ajpartinfo=window.open('dl_parts.php?dl_id='+id+'&"
+	var ajpartinfo=window.open('?site=dl_parts&dl_id='+id+'&"
 		.SID."','ajdlparts',
 		'width=540,height=300,left=10,top=10,dependent=yes,scrollbars=no');
 	ajpartinfo.focus();
@@ -64,10 +65,8 @@ function dlusers(id){
 		.SID."','ajdlinfo',
 		'width=1000,height=600,left=10,top=10,dependent=yes,scrollbars=yes');
 	ajdlinfo.focus();
-}";
+}
 
-
-echo"
 function inc_pdl(){
 	if(document.dl_form.pdl.value==1){
 		document.dl_form.pdl.value='2.2';
@@ -116,7 +115,7 @@ function change(id){
 }
 
 function dlaction(action){
-	var dlline='site=downloads&action='+action;
+	var dlline='?site=downloads&action='+action;
 	var counter=-1;
 	var fragetext='".addslashes("question")."';
 	for (var v in dl_ids){
@@ -126,7 +125,7 @@ function dlaction(action){
 		fragetext+='\\n'+dl_names[v];
 	}
 	if(action=='settargetdir'){
-		var newname=prompt('".$lang['TARGETDIR'].":','');
+		var newname=prompt('targetdir:','');
 		if(newname==null) return;
 		dlline+='&action_value='+encodeURIComponent(newname);
 	}
@@ -134,7 +133,7 @@ function dlaction(action){
 		dlline+='&action_value='+document.dl_form.pdl.value;
 	if(action=='canceldownload' && !confirm(fragetext))
 		return;
-	window.location.href='".$_SERVER['PHP_SELF']."?' + dlline+'&';
+	window.location.href='' + dlline+'&';
 }
 
 function select_all(moep){
@@ -221,12 +220,12 @@ echo'<div class="table-responsive">
                     <th scope="col">#</th>
                     <th scope="col">'.$lang->Downloads->source.'</th>
                     <th scope="col">'.$lang->Downloads->filename.'</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Geschwindigkeit</th>
-                    <th scope="col">PDL</th>
-                    <th scope="col">Gr&ouml;ße</th>
-                    <th scope="col">Rest</th>
-                    <th scope="col">Fortschritt</th>
+                    <th scope="col">'.$lang->Downloads->statuss.'</th>
+                    <th scope="col">'.$lang->Downloads->speed.'</th>
+                    <th scope="col">'.$lang->Downloads->pdl.'</th>
+                    <th scope="col">'.$lang->Downloads->size.'</th>
+                    <th scope="col">'.$lang->Downloads->rest.'</th>
+                    <th scope="col">'.$lang->Downloads->progress.'</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -247,16 +246,16 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 	if(!empty($subdir))
 		//Unterverzeichnis
 		echo "<tr><td colspan=\"$spaltenzahl\">"
-		."<a href=\"javascript:togglesubdir($subdircounter)\">"
+		."<a href=\"javascript:togglesubdir(".$subdircounter.")\">"
 		."<img id=\"img_$subdircounter\" "
 		."src=\"../style/".$_SESSION['minus_icon']."\" border=\"0\" alt=\"\" />"
 		."&nbsp;&nbsp;<b>".htmlspecialchars($subdir)."</b> (".count($downloadids).")</a>\n"
 		."<span style=\"margin-left:5px\">"
-		.$_SESSION['language']['GENERAL']['SELECT'].":</span> "
-		."<a href=\"javascript:select_sub($subdircounter, 0);\">"
-		.$_SESSION['language']['GENERAL']['ALL']."</a>, "
-		."<a href=\"javascript:select_sub($subdircounter, 1);\">"
-		.$_SESSION['language']['GENERAL']['NONE']."</a></td></tr>\n";
+		.$lang->System->select.":</span> "
+		."<a href=\"javascript:select_sub(".$subdircounter.", 0);\">"
+		.$lang->System->all."</a>, "
+		."<a href=\"javascript:select_sub(".$subdircounter.", 1);\">"
+		.$lang->System->none."</a></td></tr>\n";
 	foreach(array_keys($downloadids) as $a){
 			//sieht doch etwas uebersichtlicher aus :)
 			$current_download = $Downloadlist->download($a);
@@ -279,7 +278,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 					." (".$current_download['phpaj_quellen_dl'].")</a></td>\n";
 			//Dateiname
 			echo "<td id=\"nametd_$a\">"
-				."<a href=\"javascript:rename($a)\" title=\"".$lang['RENAME']."\">";
+				."<a href=\"javascript:rename($a)\" title=\"".$lang->Downloads->rename."\">";
 			echo htmlspecialchars($current_download['FILENAME'])."</a></td>\n";
 
            
@@ -325,11 +324,11 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 //alle/keine auswaehlen
 
 echo "<tr><th colspan=\"$spaltenzahl\">\n";
-echo $_SESSION['language']['GENERAL']['SELECT'].": ";
+echo $lang->System->select.": ";
 echo "<a href=\"javascript:select_all(0);\">"
-	.$_SESSION['language']['GENERAL']['ALL']."</a>, ";
+	.$lang->System->all."</a>, ";
 echo "<a href=\"javascript:select_all(1);\">"
-	.$_SESSION['language']['GENERAL']['NONE']."</a>"
+	.$lang->System->none."</a>"
 	."</th></tr></table></div>
                                 </div>
                             </div>
@@ -341,11 +340,11 @@ echo "<a href=\"javascript:select_all(1);\">"
 //pdl
 echo '<div class="panel panel-default">
             <div class="panel-body">
-              <h5 class="card-title">Powerdownload setzen</h5>';
+              <h5 class="card-title">'.$lang->Downloads->set_pdl_title.'</h5>';
 echo "<a href=\"javascript:dec_pdl()\"><i class=\"material-icons\">remove</i></a>&nbsp;"
 	."<input size=\"4\" id=\"pdl\" name=\"pdl\" value=\"1.0\" />"
 	."&nbsp;<a href=\"javascript:inc_pdl()\"><i class=\"material-icons\">add</i></a>&nbsp;"
-	."<input type=\"button\"  class='btn btn-primary' value='".$lang['SET_PDL']
+	."<input type=\"button\"  class='btn btn-primary' value='".$lang->Downloads->set_pdl
 	."' onclick=\"dlaction('setpowerdownload')\" />"
 	."\n";
 echo "</div></div>";

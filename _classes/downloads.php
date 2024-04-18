@@ -227,18 +227,20 @@ class Downloads{
 		return $info;
 	}
 	function message($wert){
+		$language = new language($_ENV['GUI_LANGUAGE']);
+		$lang = $language->translate();
 		if(strpos($wert, 'cleandownloadlist') !== false){
 			echo'<div class="alert icon-alert with-arrow alert-success" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <i class="fa fa-fw fa-check-circle"></i>
-                                	Fertige und Abgebrochene Downloads aus der Liste entfernt.
+                                	'.$lang->Downloads->cleardownloadlist.'
               </div>';
 		}
 		if(strpos($wert, 'canceldownload') !== false){
 			echo'<div class="alert icon-alert with-arrow alert-success" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <i class="fa fa-fw fa-check-circle"></i>
-                                	Ausgewählte Downloads erfolgreich abgebrochen.
+                                	'.$lang->Downloads->canceldownload.'
               </div>';
 		}
 		
