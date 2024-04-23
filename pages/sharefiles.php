@@ -162,9 +162,24 @@ echo'<div class="row clearfix">
                   <li class="page-item">
                     <a class="page-link" onclick="exportlinks();">'.$lang->Share->export.'</a>
                   </li>
+                  
                   <li class="page-item"><a class="page-link" onclick="reload();"><i class="fa fa-repeat"></i></a></li>
                 </ul>
               </nav>
+               <div class="form-group">
+               <div class="col-sm-10"></div>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                           
+               <select class="form-control" name="shareprio">';
+                                      for($i=1;$i<=250;$i++){
+										echo "<option value=\"$i\">".$i."</option>";
+									  }
+									  echo'</select>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="changeshareprio();">Set</button>
+                                        </span>
+                              </div></div></div></div>
        </div>   
 
 
