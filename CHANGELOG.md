@@ -7,7 +7,15 @@ All notable changes to this project will be documented in this file.
 - new Style for the GUI
 - Portaible Version
 - modern
-- Community Version 
+- Community Version
+- features add:
+	- Styleswitcher
+	- Versionchecker for phpGUI
+	- fix Search
+	- fix Uploads
+	- fix Downloads
+	- fix Dashboard
+	- fix Sharefiles
 
 ## 0.28.1
 
