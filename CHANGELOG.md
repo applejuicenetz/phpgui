@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.30.0
+## 0.29.0 Beta
 
 - new Style for the GUI
 - Portaible Version
