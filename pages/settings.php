@@ -16,10 +16,8 @@ if(!empty($_POST['change'])){
 		case 'standard':
 			$_POST['incdir']=urlencode($_POST['incdir']);
 			$_POST['tempdir']=urlencode($_POST['tempdir']);
-			$_POST['nick']=urlencode($_POST['nick']);
 			$core->command("function","setsettings?Incomingdirectory=".$_POST['incdir']."&Temporarydirectory=".$_POST['tempdir']
-				."&Port=".$_POST['c_port']."&XMLPort=".$_POST['c_xml_port']
-				."&Nickname=".$_POST['nick']);
+				."&Port=".$_POST['c_port']."&XMLPort=".$_POST['c_xml_port']);
             $template->alert("success", $lang->Settings->get_save."!", $lang->Settings->alert_save_1);
         break;
 		case 'connection':
@@ -64,10 +62,6 @@ echo'<div class="row clearfix">
                         <label>'.$lang->Settings->xml_port.'</label>
                         <input type="number" class="form-control" id="c_xml_port" name="c_xml_port" value="'.$settings_xml['XMLPORT']['VALUES']['CDATA'].'" disabled />
                     </div>
-                    <div class="form-group">
-                        <label>'.$lang->Settings->nick.'</label>
-                        <input type="text" class="form-control" id="nick" name="nick" value="'.htmlspecialchars($settings_xml['NICK']['VALUES']['CDATA']).'" />
-                    </div>
                     <input type="hidden" name="change" value="standard" />
             		<button type="submit" class="btn btn-lg btn-success pull-right">'.$lang->Settings->save.'</button>
                                     
@@ -107,7 +101,7 @@ echo'<div class="row clearfix">
                 		</div>
                 		<div class="form-group">';
                 		
-                		if($settings_xml['AUTOCONNECT']['VALUES']['CDATA']=='true') $checked = " checked=\"checked\"";
+                		if($settings_xml['AUTOCONNECT']['VALUES']['CDATA']=='true') $checked = "checked";
 
                            echo'<input type="checkbox" class="js-switch" id="aconnect" name="autoconnect" value="true" '.$checked.' />
                            '.$lang->Settings->autoconnect.'

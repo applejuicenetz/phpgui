@@ -19,6 +19,7 @@ $core = new Core;
 $icon_img = new Icons();
 $subs = new subs();
 $template = new template();
+$Uploadlist = new Uploads();
 
 //Info holen
 $statusbar_xml=$core->command("xml","modified.xml?filter=informations");
@@ -98,16 +99,8 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
                             <div class="content">
                                 <div class="text"><?php echo $lang->Start->active_uploads; ?></div>
                                 <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
-                    	$Downloadlist = new Downloads();
-                    	$counddown = $downloadids=$Downloadlist->ids("name",$subdir);
-                    	$Downloadlist->refresh_cache();
-						$subdircounter=0;
-						//alle downloads zeigen
-						foreach(array_keys($Downloadlist->subdirs) as $subdir){
-							$subdircounter++;
-							$downloadids=$Downloadlist->ids("",$subdir); //ids der downloads sortiert holen
-						}
-						echo count($downloadids); 
+                    	
+						echo $Uploadlist->cache['phpaj_ul']; 
 					?></div>
                             </div>
                         </div>
@@ -164,6 +157,8 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 			$info = $Servers->info();
 			//AJ News
 			$subs->appleJuiceNews(90,$coreinfo['VERSION']);
+			
+			
 	?>
                     
 	</div>
@@ -186,7 +181,7 @@ if(isset($information['MAXUPLOADPOSITIONS'])){
 								</td>
                 			<tr>
                     			<td>phpGUI Version</td>
-                    			<td><?php echo"".PHP_GUI_VERSION.versions_checker(PHP_GUI_VERSION).""; ?></td>
+                    			<td><?php echo $gui->versions_update($_SESSION['phpaj']['PHP_GUI_VERSION']); ?></td>
                 			</tr>
 							<tr>
                     			<td>Core Version</td>

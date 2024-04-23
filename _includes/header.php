@@ -1,9 +1,14 @@
 <?php
+error_reporting(E_ALL);
 //PLugins auslesen
 require_once "plugins/register.php";
 require_once "_classes/subs.php";
+require_once "_classes/gui.php";
+
 $Plugin =new Plugin();
 $Plugin->Find_Plugins();
+$gui = new gui();
+$settings_gui = $gui->output();
 
 //Core Settings auslesen
 $core = new core();
@@ -83,14 +88,14 @@ if (isset($_GET['site'])) {
     <link href="themen/BsbAdmin/assets/css/style.css" rel="stylesheet" />
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="themen/BsbAdmin/assets/css/themes/theme-default.min.css" rel="stylesheet" />
+    <link href="themen/BsbAdmin/assets/css/themes/allthemes.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div class="all-content-wrapper">
+    <div class="theme-<?php echo $settings_gui->GUI->theme; ?> all-content-wrapper">
         <!-- Top Bar -->
         <header>
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default navbar-fixed">
                 <!-- Search Bar -->
                 <div class="search-bar">
                     <div class="search-icon">
@@ -141,7 +146,7 @@ if (isset($_GET['site'])) {
                             <!-- #END# Call Search -->
                             <!-- Fullscreen Request -->
                             <li>
-                                <a href="javascript:void(0);" onClick="window.location.reload()" class="fullscreen js-fullscreen">
+                                <a href="javascript:void(0);" onClick="window.location.reload()">
                                     <i class="material-icons">refresh</i>
                                 </a>
                             </li>
@@ -271,75 +276,3 @@ if (isset($_GET['site'])) {
         <section class="content <?php echo $_GET["site"]; ?>">
             <!-- Dashboard Heading -->
             				<!-- Search Ausgabe -->
-<?php 
-$template = new template();
-$template->errors();
-
-if (!empty($_SESSION['ajfsp_link']) && empty($_REQUEST['ajfsp_link'])) {
-    $_REQUEST['ajfsp_link'] = $_SESSION['ajfsp_link'];
-    $_REQUEST['showlinkpage'] = 1;
-    unset($_SESSION['ajfsp_link']);
-}
-
-if (!empty($_REQUEST['ajfsp_link'])) {
-
-    $regexe = [
-        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164/
-        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)/#',
-
-        // ajfsp://server|knastbruder.applejuicenet.de|9855/
-        '#ajfsp://(server)\|([^|]*)\|([\d]{1,5})/#',
-
-        // ajfsp://file|ajcore-0.31.149.110.so|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850/
-        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}/#',
-
-        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850:knastbruder.applejuicenet.de:9855/
-        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}:[^:]*:[\d]{1,5}/#',
-    ];
-
-    $links = [];
-
-    foreach ($regexe as $regex) {
-        preg_match_all($regex, urldecode($_REQUEST['ajfsp_link']), $matches, PREG_SET_ORDER);
-        $links = array_merge($links, $matches);
-    }
-
-    echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle me-1"></i>
-';
-    foreach ($links as $link) {
-
-        //Infos fr Dateilink anzeigen + im hauptfenster die downloads zeigen
-        if ('file' === $link[1]) {
-            echo htmlspecialchars($link[2]) . ' (' . sizeformat($link[4]) . ') &rArr; ';
-            echo $core->command('function', 'processlink?link=' . urlencode($link[0])) . ' &middot; ';
-
-            if (!empty($_REQUEST['showlinkpage'])) {
-                echo "<script>parent.main.location.href='?site=downloads';</script>";
-            }
-        }
-        //Infos für Serverlink anzeigen + im hauptfenster die server zeigen
-        if ('server' === $link[1]) {
-            echo htmlspecialchars($link[2]) . ':' . htmlspecialchars($link[3]) . ' &rArr; ';
-            echo $core->command('function', 'processlink?link=' . urlencode($link[0]));
-            if (!empty($_REQUEST['showlinkpage'])) {
-                echo "<script>parent.main.location.href='server.php';</script>";
-            }
-        }
-
-
-    }
-    echo '
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>';
-}
-$currentUrl = sprintf(
-    '%s://%s%s',
-    isset($_SERVER['HTTPS']) ? 'https' : 'http',
-    $_SERVER['HTTP_HOST'],
-    str_replace('top.php', 'index.php', $_SERVER['REQUEST_URI'])
-);
-
-$permaLink = sprintf('%s|%s', $_SESSION['core_host'], $_SESSION['core_pass']);
-
-?>

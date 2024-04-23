@@ -1,7 +1,5 @@
 <?php
 //Neue Subs
-const PHP_GUI_VERSION = 'v0.28.1';
-
 require_once '_classes/env.php';
 
 class subs{
@@ -40,7 +38,45 @@ class subs{
 		return $lang->System->pagetitle->$site;
 	}
 
-	
+	function prozess($balken){
+		$balken = round($balken, 2);
+		return'<span class="pie">'.$balken.'/100</span><br>'.$balken.'%';
+	}
+	function dl_source($wert){
+		$language = new language($_ENV['GUI_LANGUAGE']);
+		$lang = $language->translate();
+		
+		if($wert == 1) $wert = $lang->Downloads->dl_source->src_1;
+		if($wert == 2) $wert = $lang->Downloads->dl_source->src_2;
+		if($wert == 3) $wert = $lang->Downloads->dl_source->src_3;
+		if($wert == 4) $wert = $lang->Downloads->dl_source->src_4;
+		if($wert == 5) $wert = $lang->Downloads->dl_source->src_5;
+		if($wert == 6) $wert = $lang->Downloads->dl_source->src_6;
+		
+		return $wert;
+	}
+	function dl_status($wert){
+		$language = new language($_ENV['GUI_LANGUAGE']);
+		$lang = $language->translate();
+		
+		if($wert == 1) $wert = $lang->Downloads->dl_status->status_1;
+		if($wert == 2) $wert = $lang->Downloads->dl_status->status_2;
+		if($wert == 3) $wert = $lang->Downloads->dl_status->status_3;
+		if($wert == 4) $wert = $lang->Downloads->dl_status->status_4;
+		if($wert == 5) $wert = $lang->Downloads->dl_status->status_5;
+		if($wert == 6) $wert = $lang->Downloads->dl_status->status_6;
+		if($wert == 7) $wert = $lang->Downloads->dl_status->status_7;
+		if($wert == 8) $wert = $lang->Downloads->dl_status->status_8;
+		if($wert == 9) $wert = $lang->Downloads->dl_status->status_9;
+		if($wert == 10) $wert = $lang->Downloads->dl_status->status_10;
+		if($wert == 11) $wert = $lang->Downloads->dl_status->status_11;
+		if($wert == 12) $wert = $lang->Downloads->dl_status->status_12;
+		if($wert == 13) $wert = $lang->Downloads->dl_status->status_13;
+		if($wert == 14) $wert = $lang->Downloads->dl_status->status_14;
+		if($wert == 15) $wert = $lang->Downloads->dl_status->status_15;
+		
+		return $wert;	
+	}
 }
 
 //Alte Subs

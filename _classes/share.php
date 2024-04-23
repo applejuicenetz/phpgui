@@ -15,7 +15,7 @@ class Share{
 		$this->cache =& $_SESSION['cache']['SHARE'];
 		$this->separator =& $_SESSION['SEPARATOR'];
 		//Um den checkbox-status beim share richtig zu zeigen
-		$this->sharemode = array("subdirectory" => "checked=\"checked\"",
+		$this->sharemode = array("subdirectory" => "checked",
 			"singledirectory" => "");
 	}
 

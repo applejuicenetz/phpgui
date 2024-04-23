@@ -22,13 +22,15 @@
 			"downloads": "Downloads",
 			"uploads": "Uploads",
 			"search": "Suche",
-			"shares": "geteile Ordner",
+			"shares": "geteilte Ordner",
 			"settings": "Einstellugen",
 			"server": "Serverliste",
 			"sharefiles": "geteilte Dateien",
 			"extras": "Addons",
 			"dl_users": "Downloaddetails"
-		}
+		},
+		"version_1": "Neue Version verf&uuml;gbar!",
+		"version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub gerunter und installiere das Update!"
    },
    
    "Start": {
@@ -83,9 +85,9 @@
 		"finished": "Fertig",
 		"clientversion": "Version",
 		"dl_status":{
-			"status_0": "Suchen/Laden",
-			"status_0_1": "Suchen",
-			"status_0_2": "&Uuml;bertrage",
+			"0": "Suchen/Laden",
+			"0_1": "Suchen",
+			"0_2": "&Uuml;bertrage",
 			"status_1": "Platte voll",
 			"status_12": "Fertigstellen...",
 			"status_13": "Fehler beim Fertigstellen",
@@ -93,8 +95,50 @@
 			"status_15": "Abbrechen...",
 			"status_16": "Erstelle .data",
 			"status_17": "Abgebrochen",
-			"status_18": "Pausiert"
-		}
+			"18": "Pausiert"
+		},
+		"dl_users":{
+			"status_7": "&Uuml;bertrage"
+		},
+		"dl_source":{
+			"src_1": "ajfsp-Link",
+			"src_2": "Quellentausch",
+			"src_3": "Uploadliste",
+			"src_4": "Gespeichert",
+			"src_5": "Suche",
+			"src_6": "Server"
+		}, 
+		"dl_status":{
+			"status_1": "Ungefragt",
+			"status_2": "Versuche zu verbinden",
+			"status_3": "Zu alte Version",
+			"status_4": "Kann Datei nicht &ouml;ffnen",
+			"status_5": "Position",
+			"status_6": "Keine brauchbaren Parts",
+			"status_7": "&amp;Uuml;bertrage",
+			"status_8": "Platte voll",
+			"status_9": "Fertiggestellt",
+			"status_10": "??? (Status: 10)",
+			"status_11": "Keine Verbindung m&ouml;glich",
+			"status_12": "Versuche indirekt",
+			"status_13": "Pausiert",
+			"status_14": "Warteschlange voll",
+			"status_15": "Eigenes Limit erreicht",
+			"status_16": "Server wies Indirectconnection ab"
+		},
+		"queue": "Warteschlange",
+		"transferring": "&Uuml;bertrage",
+		"user_source": "Quelle von",
+		"rest": "Rest",
+		"parts":{
+			"active_transfer": "Aktive &Uuml;bertragung",
+			"available": "Vorhanden",
+			"NA": "Nicht Vorhanden",
+			"received": "Geladen",
+			"checked": "Geladen & &Uuml;berpr&uuml;ft"
+		},
+		"get_start": "Wird gedownloaded:"
+
    },
    
    "Uploads":{
@@ -110,11 +154,11 @@
 		"clientversion": "Version",
 		"transferring": "&Uuml;bertragungen",
 		"ul_status":{
-			"1": "&Uuml;bertrage",
-			"2": "In Warteschlange",
-			"5": "Versuche zu verbinden",
-			"6": "Versuche indir. zu verbinden",
-			"7": "Kann nicht verbinden"
+			"status_1": "&Uuml;bertrage",
+			"status_2": "In Warteschlange",
+			"status_5": "Versuche zu verbinden",
+			"status_6": "Versuche indir. zu verbinden",
+			"status_7": "Kann nicht verbinden"
 		},
 		"queue": "Warteschlange"
    },
@@ -149,7 +193,9 @@
 		"save": "Speichern",
 		"get_save": "Gespeichert",
 		"alert_save_1": "Einstellungen aktualliesiert!",
-		"alert_save_2": "Verbindungseinstellungen aktualliesiert!"
+		"alert_save_2": "Verbindungseinstellungen aktualliesiert!",
+		"alert_save_theme": "GUI-Theme gespeichert!",
+		"password": "Passwort"
    },
    "Share": {
 		"shared_directories": "Freigegebene Verzeichnisse",
@@ -158,14 +204,21 @@
 		"prio": "Prio",
 		"check": "Share&uuml;berpr&uuml;fung starten",
 		"exportlist": "Link Export",
-		"new_share": "Shareverzichnisse werden neu eingelesen und an den Server weitergeleitet.",
-		"in_progress": "Anfrage verarbeiten",
+		"set_share": "Shareverzichnisse werden neu eingelesen und an den Server weitergeleitet.",
+		"new_share": "Neues VErzeichniss wird eingelesen.",
+		"inprogress": "Anfrage verarbeiten",
 		"success": "Erfolgreich!",
 		"link_export_alert": "Linkexport erfolgreich geleert!",
 		"link_export_title": "Link Export",
 		"delet_export": "Liste leeren",
 		"export": "Links exportieren",
-		"prio_spent": "Priorit&auml;t: %spent von 1000 Punkten vergeben"
+		"prio_spent": "Priorit&auml;t: %spent von 1000 Punkten vergeben",
+		"shared_directories_new": "Neues Verzeichniss",
+		"way": "Verzeihniss-Pfad",
+		"with_subs": "mit Unterverzeichnissen",
+		"directory_name": "Verzeichnissname",
+		"aktion": "Aktion",
+		"subs": "mit Unterverzeichnissen?"
 	
    },
    "Search": {

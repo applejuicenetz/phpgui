@@ -271,7 +271,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 				." onclick=\"change($a);\" /></td>\n";
 			//quellenzahl (link zu dl details)
 				echo "<td class=\"right\">"
-					."<a href=\"javascript:dlusers($a)\" title=\"Mehr Info\">"
+					."<a href=\"index.php?site=dl_users&dl_id=".$a."\" title=\"Mehr Info\">"
 					.($current_download['phpaj_quellen_queue']
 						+$current_download['phpaj_quellen_dl'])
 					."/".$current_download['phpaj_quellen_gesamt']

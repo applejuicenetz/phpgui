@@ -40,9 +40,7 @@
     <!-- Switchery Js -->
     <script src="themen/BsbAdmin/assets/plugins/switchery/dist/switchery.js"></script>
 
-    <!-- iCheck Js -->
-    <script src="themen/BsbAdmin/assets/plugins/iCheck/icheck.js"></script>
-
+    
     <!-- Jquery Sparkline Js -->
     <script src="themen/BsbAdmin/assets/plugins/jquery-sparkline/dist/jquery.sparkline.js"></script>
 
@@ -72,8 +70,7 @@
     <script src="themen/BsbAdmin/assets/js/admin.js"></script>
     <script src="themen/BsbAdmin/assets/js/pages/dashboard/dashboard.js"></script>
     <script src="themen/BsbAdmin/assets/js/pages/ui/tooltips-popovers.js"></script>
-    <script src="themen/BsbAdmin/assets/js/pages/forms/basic-form-elements.js"></script>
-	<script src="themen/BsbAdmin/assets/js/pages/widgets/infobox.js"></script>
+    	<script src="themen/BsbAdmin/assets/js/pages/widgets/infobox.js"></script>
 
 
 
