@@ -1,6 +1,9 @@
 <?php
 $language = new language($_ENV['GUI_LANGUAGE']);
 $lang = $language->translate();
+
+$template = new template();
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -36,7 +39,14 @@ $lang = $language->translate();
             <div class="col-sm-8 col-md-8 col-lg-4">
             	<?php
                 $core = new core();
-				$error = "";
+				if(!empty($_SESSION['login']['host'])){
+					$template->alert("danger","Warnung!","Kann zum Core nicht verbinden.");
+					$_SESSION['login']['host'] ="";
+				}
+				if(!empty($_SESSION['login']['wrong_pass'])){
+					$template->alert("danger","Warnung!","Falsches Passwort");
+					$_SESSION['login']['wrong_pass'] = "";
+				}
 				echo '
                 <form name="core" action="index.php?login=1" method="post" autocomplete="off">
     				<div class="form-group has-feedback">

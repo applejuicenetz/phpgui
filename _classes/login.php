@@ -4,20 +4,33 @@ class login{
 		if(isset($_GET['login'])) {
 			$core = new core();
     		$core_host = $_POST['chost'];
-    		$core_pass = $_POST['cpass'];
+    		$core_pass = 32 === strlen($_POST['cpass']) ? $_POST['cpass'] : md5($_POST['cpass']);
+    		$anfrage = "settings.xml";
+    		$type = "xml";
     		
-    		//Überprüfung des Passworts
-    		if ($core_pass !== false) {
-        		$_SESSION['core_pass'] = md5($core_pass);
+    		//Pruefe ob Passwort richtig
+    		$params['password'] = $core_pass;
+
+        if(strpos($anfrage,"?") === false) $anfrage.="?";
+
+        $url = $core_host . '/' . $type . '/' . $anfrage . '&' . http_build_query($params);
+
+        $xml_file = file_get_contents($url);
+
+			if(empty($xml_file)){
+				$_SESSION['login']['host'] = "Kann ncht zum Core verbinden";
+			}else{
+        	if(false !== strpos($xml_file, "wrong password. access denied.")) {
+        		$_SESSION['login']['wrong_pass'] = "Falsches passwort"; 
+            }
+            if(empty($_SESSION['login']['host']) && empty($_SESSION['login']['wrong_pass'])){
+            	$_SESSION['core_pass'] = $core_pass;
         		$_SESSION["core_host"] = $core_host;
-        		
-        		$core_info = $core->command("xml","settings.xml");				
-        	} else {
-    		
-    		}
-    
-		}
-		if(empty($_SESSION['core_host'])){
+        				
+            }
+			}
+			}
+    		if(empty($_SESSION['core_host'])){
 			$login = new login();
 			$login->login_form();
 		}elseif(!empty($_SESSION["core_host"])){
