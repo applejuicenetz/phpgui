@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.0 Beta
+
+- new Style for the GUI
+- Portaible Version
+- modern
+- Community Version
+- features add:
+	- Styleswitcher
+	- Versionchecker for phpGUI
+	- fix Search
+	- fix Uploads
+	- fix Downloads
+	- fix Dashboard
+	- fix Sharefiles
+
 ## 0.28.1
 
 - fix style switcher
