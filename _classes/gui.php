@@ -1,5 +1,5 @@
 <?php
-$_SESSION['phpaj']['PHP_GUI_VERSION'] = "0.29.0 Beta";
+$_SESSION['phpaj']['PHP_GUI_VERSION'] = "0.29.1 Beta";
 
 class gui {
 	public $data;
