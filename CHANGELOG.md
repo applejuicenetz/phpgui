@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.1 Beta
+- fix login
+- anpassung von style parametern
+
 ## 0.29.0 Beta
 
 - new Style for the GUI
