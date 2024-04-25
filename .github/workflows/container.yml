@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - beta
   release:
     types: [ released ]
 
@@ -15,11 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
+      - name: Login to docker.io
+        uses: docker/login-action@v3
         with:
-          images: ghcr.io/${{ github.repository }}
+          registry: docker.io
+          username: ${{ vars.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Login to ghcr.io
         uses: docker/login-action@v3
@@ -28,11 +30,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          username: ${{ vars.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          images: |
+            docker.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

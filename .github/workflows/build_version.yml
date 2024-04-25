@@ -22,9 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Login to DockerHub
+      - name: Login to docker.io
         uses: docker/login-action@v3
         with:
+          registry: docker.io
           username: ${{ vars.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
@@ -39,7 +40,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.repository }},ghcr.io/${{ github.repository }}
+          images: |
+            docker.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=${{ inputs.base_version }}
             type=raw,value=latest,enable=${{ inputs.is_latest == true }}

@@ -2,8 +2,8 @@
   <configuration default="false" name="phpgui" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="applejuicenet/phpaj:dev" />
-        <option name="containerName" value="phpaj" />
+        <option name="imageTag" value="applejuicenetz/phpaj:dev" />
+        <option name="containerName" value="phpgui" />
         <option name="portBindings">
           <list>
             <DockerPortBindingImpl>
@@ -13,6 +13,7 @@
           </list>
         </option>
         <option name="commandLineOptions" value="--env-file .env" />
+        <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="Dockerfile" />
         <option name="volumeBindings">
           <list>
