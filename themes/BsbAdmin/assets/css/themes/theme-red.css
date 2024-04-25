@@ -1,0 +1,8 @@
+﻿.theme-red .navbar.navbar-default {
+  background-color: #da4453; }
+  .theme-red .navbar.navbar-default .navbar-nav > .open > a {
+    background-color: #da4453; }
+
+.theme-red .sidebar .sidebar-nav .metismenu li.active a {
+  border-color: #da4453; }
+

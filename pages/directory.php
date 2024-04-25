@@ -1,11 +1,12 @@
 <?php
+
+use appleJuiceNETZ\appleJuice\Share;
+
 session_start();
-require_once "_classes/subs.php";
-require_once "_classes/share.php";
+
 $Share = new Share;
 
-echo "<script type=\"text/javascript\">
-<!--
+echo "<script>
 function ChangeDir(){
 	window.location.href='".$_SERVER['PHP_SELF']."?returninput="
 		.urlencode($_GET['returninput'])
@@ -18,7 +19,6 @@ function UseSelectedDir(){
 		."=document.forms[0].current_dir.value;
 	window.close();	
 }
-//-->
 </script>";
 
 echo "<div align=\"center\">";

@@ -1,0 +1,74 @@
+﻿.bootstrap-select {
+    &.open {
+        .dropdown-toggle,
+        .dropdown-toggle:hover,
+        .dropdown-toggle:active {
+            @include box-shadow(none);
+            background-color: transparent !important;
+            border: 1px solid $bootstrapselect_border-active-color;
+        }
+    }
+
+    .btn {
+        @include border-radius(0);
+        border: 1px solid #ddd;
+
+        &:active {
+            @include box-shadow(none);
+            background-color: transparent !important;
+            border: 1px solid $bootstrapselect_border-active-color;
+        }
+
+        .filter-option {
+            color: #666;
+            font-size: 13px;
+        }
+
+        &:focus,
+        &:hover,
+        &:active {
+            background-color: transparent;
+            outline: 0 !important;
+        }
+    }
+
+    .dropdown-menu {
+        @include border-radius(0);
+        border: 1px solid #ddd;
+
+        > li {
+            > a {
+                padding: 5px 16px;
+            }
+        }
+
+        .notify {
+            background-color: #F44336 !important;
+            color: #fff;
+            border: none !important;
+        }
+
+        li {
+            &.selected {
+                a {
+                    span {
+                        &.check-mark {
+                            margin-top: 9px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        .active {
+            a {
+                background-color: $color_success;
+
+                &:hover,
+                &:focus {
+                    background-color: $color_success;
+                }
+            }
+        }
+    }
+}

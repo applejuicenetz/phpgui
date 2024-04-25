@@ -1,0 +1,11 @@
+﻿.dropdown-menu {
+    @include border-radius(0);
+
+    li {
+        a {
+            font-size: 13px;
+            padding: 5px 14px;
+            color: #666;
+        }
+    }
+}

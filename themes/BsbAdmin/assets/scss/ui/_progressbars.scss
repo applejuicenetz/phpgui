@@ -1,0 +1,23 @@
+﻿.progress {
+    @include border-radius(3px);
+
+    .progress-bar {
+        background-color: $color-primary;
+    }
+
+    .progress-bar-success {
+        background-color: $color-success;
+    }
+
+    .progress-bar-danger {
+        background-color: $color-danger;
+    }
+
+    .progress-bar-info {
+        background-color: $color-info;
+    }
+
+    .progress-bar-warning {
+        background-color: $color-warning;
+    }
+}

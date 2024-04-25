@@ -1,0 +1,118 @@
+﻿textarea,
+input,
+button,
+a,
+.btn {
+    &:focus,
+    &:active,
+    &:hover {
+        outline: none !important;
+    }
+}
+
+blockquote {
+    footer {
+        margin-left: 0 !important;
+    }
+}
+
+.bg-danger {
+    background-color: $color-danger;
+}
+
+.bg-info {
+    background-color: $color-info;
+}
+
+.bg-success {
+    background-color: $color-success;
+}
+
+.bg-warning {
+    background-color: $color-warning;
+}
+
+.bg-primary {
+    background-color: $color-primary;
+}
+
+.bg-default {
+    background-color: $color-default;
+}
+
+.bg-danger-important {
+    background-color: $color-danger !important;
+}
+
+.bg-info-important {
+    background-color: $color-info !important;
+}
+
+.bg-success-important {
+    background-color: $color-success !important;
+}
+
+.bg-warning-important {
+    background-color: $color-warning !important;
+}
+
+.bg-primary-important {
+    background-color: $color-primary !important;
+}
+
+.bg-default-important {
+    background-color: $color-default !important;
+}
+
+.col-danger {
+    color: $color-danger;
+}
+
+.col-info {
+    color: $color-info;
+}
+
+.col-success {
+    color: $color-success;
+}
+
+.col-warning {
+    color: $color-warning;
+}
+
+.col-primary {
+    color: $color-primary;
+}
+
+.col-white {
+    color: $color-white;
+}
+
+ins {
+    background-color: #cbfccb;
+    text-decoration: none;
+}
+
+del {
+    background-color: #fbd6d6;
+}
+
+.panel-body-text {
+    color: #777;
+    font-size: 13px;
+}
+
+.col-888 {
+    color: #888;
+}
+
+.block-header {
+    margin-bottom: 15px;
+
+    h2 {
+        margin: 0;
+        color: #666;
+        font-weight: 600;
+        font-size: 16px;
+    }
+}

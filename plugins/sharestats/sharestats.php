@@ -1,10 +1,10 @@
 <?php
-require_once "_classes/core.php";
-$core = new Core;
-/*
-sharestats
-*/
-require_once "_classes/share.php";
+
+use appleJuiceNETZ\appleJuice\Core;
+use appleJuiceNETZ\appleJuice\Share;
+use appleJuiceNETZ\GUI\subs;
+
+$core = new Core();
 
 echo'
 <div class="row clearfix">
@@ -51,37 +51,37 @@ if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
 	switch($_GET['stats']){
 		case "most":
 			echo "<th>Requests</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'ASKCOUNT',SORT_NUMERIC,1);
 			$statsvalue='ASKCOUNT';
 			break;
 		case "-most":
 			echo "<th>Requests</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'ASKCOUNT',SORT_NUMERIC,0);
 			$statsvalue='ASKCOUNT';
 			break;
 		case "search":
 			echo "<th>Search Requests</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'SEARCHCOUNT',SORT_NUMERIC,1);
 			$statsvalue='SEARCHCOUNT';
 			break;
 		case "-search":
 			echo "<th>Search Requests</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'SEARCHCOUNT',SORT_NUMERIC,0);
 			$statsvalue='SEARCHCOUNT';
 			break;
 		case "-last":
 			echo "<th>Date</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'LASTASKED',SORT_NUMERIC,0);
 			$statsvalue='LASTASKED';
 			break;
 		default:
 			echo "<th>Date</th>";
-			$sfsort=ajsort($Sharelist->cache['SHARES']
+			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
 				['VALUES']['SHARE'],'LASTASKED',SORT_NUMERIC,1);
 			$statsvalue='LASTASKED';
 			break;
@@ -90,7 +90,7 @@ if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
 	echo "<th>Filename</th></tr>";
 	for($i=0;$i<50;$i++){
 		if(!empty($sfsort[$i])){
-			$cur_share=&$Sharelist->get_file($sfsort[$i]);
+			$cur_share=$Sharelist->get_file($sfsort[$i]);
 			echo "<tr><td style=\"font-weight:bold; text-align:center;\">"
 				.($i+1).".</td><td style=\"text-align:center;\">";
 			$wert=$cur_share[$statsvalue];

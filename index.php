@@ -1,23 +1,11 @@
 <?php
-session_start();
 
-include("_classes/env.php");
-include("_classes/core.php");
-include("_classes/lang.php");
-include("_classes/login.php");
-include("_classes/template.php");
-include("_classes/subs.php");
+use appleJuiceNETZ\GUI\Router;
 
+const GUI_ROOT = __DIR__;
 
-$core = new core();
-$login = new login();
-$template = new template();
-$subs = new subs();
+require_once GUI_ROOT . '/bootstrap.php';
 
-$language = new language($_ENV['GUI_LANGUAGE']);
-$lang = $language->translate();
+$main = new Router();
 
-$login->check_login();
-
-
-?>
+$main->handle();

@@ -1,13 +1,15 @@
 <?php
-session_start();
-require_once "_classes/subs.php";
-require_once "_classes/search.php";
+
+use appleJuiceNETZ\appleJuice\Search;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\GUI\template;
+use appleJuiceNETZ\Kernel;
 
 $Search = new Search();
 $template = new template();
 
 //Language
-$language = new language($_ENV['GUI_LANGUAGE']);
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 if(empty($_GET['searchid'])) $_GET['searchid']="alles";
@@ -106,7 +108,7 @@ echo'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                             
                             ';
 
-//Tabellenüberschrift
+//Tabellenï¿½berschrift
 $Search->refresh_cache();
 
 $Search->process_results();
@@ -201,14 +203,14 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 		echo "<a href=\"javascript:dllink('".$ajfsp_link
 			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
 		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
-		//dateigröße
+		//dateigrï¿½ï¿½e
 
         if (!empty($_ENV['REL_INFO'])) {
             echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
         }
 
 		echo "<td class=\"rigt\">"
-			.sizeformat($cur_search['SIZE'])
+			.subs::sizeformat($cur_search['SIZE'])
 			."</td>\n";
 		//anzahl der ergebnisse
 		echo "<td class=\"right\">"
@@ -303,14 +305,14 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 		echo "<a href=\"javascript:dllink('".$ajfsp_link
 			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
 		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
-		//dateigröße
+		//dateigrï¿½ï¿½e
 
         if (!empty($_ENV['REL_INFO'])) {
             echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
         }
 
 		echo "<td class=\"rigt\">"
-			.sizeformat($cur_search['SIZE'])
+			.subs::sizeformat($cur_search['SIZE'])
 			."</td>\n";
 		//anzahl der ergebnisse
 		echo "<td class=\"right\">"

@@ -1,14 +1,17 @@
 <?php
-require_once "_classes/subs.php";
-require_once "_classes/downloads.php";
-require_once "_classes/subs.php";
-require_once "_classes/icons.php";
+
+use appleJuiceNETZ\appleJuice\Downloads;
+use appleJuiceNETZ\GUI\Icons;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\Kernel;
 
 $Downloadlist = new Downloads;
 $Downloadlist->refresh_cache();
+
 $subs = new subs();
 $icon_img = new Icons();
-$anguage = new language($_ENV['GUI_LANGUAGE']);
+
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 //default anzeige
@@ -46,9 +49,9 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 						<td>'.($a['phpa_quellen_quee']+$a['phpaj_quellen_dl']).'/'.$a['phpaj_quellen_gesamt'].'('.$a['phpaj_quellen_dl'].')</td>
 						<td>'.htmlspecialchars($a['FILENAME']).'</td>
 						<td>'.$a['phpaj_STATUS'].'</td>
-						<td>'.sizeformat($a['phpaj_dl_speed']).'</td>
+						<td>'.subs::sizeformat($a['phpaj_dl_speed']).'</td>
 						<td>'.((($a['POWERDOWNLOAD'])+10)/10).'</td>
-						<td>'.sizeformat($a['SIZE']).'</td>
+						<td>'.subs::sizeformat($a['SIZE']).'</td>
 						<td>'.$subs->prozess($a['phpaj_DONE']).'</td>
 						<td></td>
 					</tr>';
@@ -83,13 +86,13 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 							'.$lang->Downoads->dl_status->status_7.'
 						</td>
 						<td>
-							'.sizeformat($current_user['SPEED']).'/s
+							'.subs::sizeformat($current_user['SPEED']).'/s
 						</td>
 						<td>
 							'.(($current_user['POWERDOWNLOAD'] +10)/10).'
 						</td>
 						<td>
-							'.sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'
+							'.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'
 						</td>
 						<td>
 							'.$subs->prozess($fortschritt).'
@@ -137,7 +140,7 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 								'.htmlspecialchars($current_user['NICKNAME']).'
 							</a>
 						</td>
-						<td>'.htmlspecialchars(cutstring($current_user['FILENAME'],30)).'</td>
+						<td>'.htmlspecialchars(subs::cutstring($current_user['FILENAME'],30)).'</td>
 						<td>'.$current_user['STATUS'].'</td>
 						<td>'.$current_user['SOURCE'].'</td>
 						<td>'.$subs->dl_status($current_user['QUEUEPOSITION']).'</td>
@@ -184,10 +187,10 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 						<td>'.$icon_img->directstate[$current_user['DIRECTSTATE']].'</td>
 						<td>
 							<a href="index.php?site=dl_parts&usr_id='.$b.'">
-								'.cutstring($current_user['NICKNAME'], 25).'
+								'.subs::cutstring($current_user['NICKNAME'], 25).'
 							</a>
 						</td>
-						<td>'.htmlspecialchars(cutstring($current_user['FILENAME'],30)).'</td>
+						<td>'.htmlspecialchars(subs::cutstring($current_user['FILENAME'],30)).'</td>
 						<td>'.$subs->dl_status($current_user['STATUS']).'</td>
 						<td>'.$subs->dl_source($current_user['SOURCE']).'</td>
 						<td>'.(($current_user['POWERDOWNLOAD'] +10)/10).'</td>

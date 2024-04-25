@@ -1,12 +1,11 @@
 <?php
-error_reporting(E_ALL);
-require_once "_classes/subs.php";
-require_once "_classes/downloads.php";
-require_once "_classes/icons.php";
 
-//Language switch
+use appleJuiceNETZ\appleJuice\Downloads;
+use appleJuiceNETZ\GUI\Icons;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\Kernel;
 
-$language = new language($_ENV['GUI_LANGUAGE']);
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 $icon_img =new Icons();
@@ -49,20 +48,18 @@ function rename(id){
 function dorename(id){
 	var newname=encodeURIComponent(
 		eval('document.dl_form.newname_'+id+'.value'));
-	window.location.href='".$_SERVER['PHP_SELF']."?site=downloads&action=renamedownload&dl_id[0]='+
+	window.location.href='/index.php?site=downloads&action=renamedownload&dl_id[0]='+
 		id+'&action_value=' + newname + '&';
 }
 
 function dlparts(id){
-	var ajpartinfo=window.open('?site=dl_parts&dl_id='+id+'&"
-		.SID."','ajdlparts',
+	var ajpartinfo=window.open('/index.php?site=dl_parts&dl_id='+id+'','ajdlparts',
 		'width=540,height=300,left=10,top=10,dependent=yes,scrollbars=no');
 	ajpartinfo.focus();
 }
 
 function dlusers(id){
-	var ajdlinfo=window.open('index.php?site=dl_users&dl_id='+id+'&"
-		.SID."','ajdlinfo',
+	var ajdlinfo=window.open('index.php?site=dl_users&dl_id='+id+'','ajdlinfo',
 		'width=1000,height=600,left=10,top=10,dependent=yes,scrollbars=yes');
 	ajdlinfo.focus();
 }
@@ -287,19 +284,19 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			echo "<td>".$Downloadlist->status($current_download['phpaj_STATUS'])."</td>\n";
 			//geschwindigkeit
             echo "<td class=\"right\">"
-				.sizeformat($current_download['phpaj_dl_speed'])
+				.subs::sizeformat($current_download['phpaj_dl_speed'])
 				."/s</td>\n";
 			//pdl wert
 			echo "<td class=\"right\">"
 				.((($current_download['POWERDOWNLOAD'])+10)/10)."</td>\n";
 			//groesse
-			echo "<td>".sizeformat($current_download['SIZE'])."</td>";
+			echo "<td>".subs::sizeformat($current_download['SIZE'])."</td>";
 			//Rest
 			
 			$fortschritt=&$current_download['phpaj_DONE'];
 			$balken = round($fortschritt, 2);
 			$rest= $current_download["phpaj_REST"];
-			$rest = sizeformat($rest);
+			$rest = subs::sizeformat($rest);
 			echo'<td>'.$rest;
 			if(!empty($current_download['phpaj_dl_speed'])){
 				$restzeit=$current_download['phpaj_REST']/$current_download['phpaj_dl_speed'];

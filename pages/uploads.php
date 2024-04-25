@@ -1,13 +1,12 @@
 <?php
-session_start();
-require_once "_classes/subs.php";
-require_once "_classes/share.php";
-require_once "_classes/uploads.php";
-require_once "_classes/icons.php";
 
-//Language switch
+use appleJuiceNETZ\appleJuice\Share;
+use appleJuiceNETZ\appleJuice\Uploads;
+use appleJuiceNETZ\GUI\Icons;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\Kernel;
 
-$language = new language($_ENV['GUI_LANGUAGE']);
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 //standardmaessig nur laufende uploads zeigen
@@ -37,7 +36,7 @@ echo'<div class="row clearfix">
                                 <div class="align-right">
                                 	'. strtr($lang->Uploads->limit, array("%percent"=>$uploaduserpercent)).'
                                 </div>';
-//Tabellenüberschrift
+//Tabellenï¿½berschrift
 echo'<div class="table-responsive">
 			  <table class="table table-striped">
 				<thead>
@@ -76,7 +75,7 @@ if($_GET['show_uplds']==1){
 
             //Nick des Users
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"
-				.htmlspecialchars(cutstring($current_upload['NICK'],30))."</td>\n";
+				.htmlspecialchars(subs::cutstring($current_upload['NICK'],30))."</td>\n";
 			
 			//RelInfo
 			if (!empty($_ENV['REL_INFO'])) {
@@ -88,7 +87,7 @@ if($_GET['show_uplds']==1){
 			
 			//Geschwindigkeit
 			echo "<td class=\"right\">"
-				.sizeformat($current_upload['SPEED'])
+				.subs::sizeformat($current_upload['SPEED'])
 				."/s</td>\n";
 			
 			//Groesse des parts + wieviel davon schon geladen ist
@@ -97,10 +96,10 @@ if($_GET['show_uplds']==1){
 					-($current_upload['UPLOADFROM']))/
 				(($current_upload['UPLOADTO'])
 					-($current_upload['UPLOADFROM'])))*100;
-			$geladen=sizeformat(
+			$geladen=subs::sizeformat(
 				($current_upload['ACTUALUPLOADPOSITION'])
 				-($current_upload['UPLOADFROM']));
-			echo "<td class=\"right\">".sizeformat(
+			echo "<td class=\"right\">".subs::sizeformat(
 				($current_upload['UPLOADTO'])
 				-($current_upload['UPLOADFROM']))."</td>";
 			echo "<td width=\"100\">";
@@ -158,7 +157,7 @@ if($_GET['show_queue']==1){
             }
 
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"
-				.htmlspecialchars(cutstring($current_upload['NICK'],30))."</td>\n";
+				.htmlspecialchars(subs::cutstring($current_upload['NICK'],30))."</td>\n";
 			if(isset($current_upload['LASTCONNECTION'])){
 				$ul_timediff=($Uploadlist->cache['TIME']['VALUES']['CDATA']
 					-$current_upload['LASTCONNECTION'])

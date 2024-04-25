@@ -1,15 +1,16 @@
 <?php
-session_start();
-require_once "_classes/subs.php";
-require_once "_classes/core.php";
-require_once "_classes/share.php";
+
+use appleJuiceNETZ\appleJuice\Core;
+use appleJuiceNETZ\appleJuice\Share;
+use appleJuiceNETZ\GUI\template;
+use appleJuiceNETZ\Kernel;
 
 $core = new Core();
 $share = new Share();
 $template = new template();
 
 //Language
-$language = new language($_ENV['GUI_LANGUAGE']);
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 echo "<script>

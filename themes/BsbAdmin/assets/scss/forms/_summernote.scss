@@ -1,0 +1,21 @@
+﻿.note-editor {
+    &.note-frame {
+        border: 1px solid #d1d1d1;
+        @include border-radius(0);
+
+        .note-statusbar {
+            background-color: #f8f8f8;
+            @include border-radius(0);
+        }
+
+        .note-editing-area {
+            border-top: 1px solid #d1d1d1;
+        }
+    }
+
+    &.note-toolbar {
+        &.panel-heading {
+            background-color: #f8f8f8;
+        }
+    }
+}

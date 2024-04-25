@@ -1,0 +1,66 @@
+﻿.form-group {
+    label {
+        font-size: 13px;
+        color: #666;
+        font-weight: 600;
+
+        &.error {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #DA4453;
+            font-weight: bold;
+        }
+    }
+
+    .help-info {
+        float: right;
+        font-size: 12px;
+        margin-top: 5px;
+        color: #999;
+    }
+
+    &.has-error {
+        &.with-label {
+            label {
+                &:first-child {
+                    color: #DA4453;
+                }
+            }
+        }
+
+        .form-control {
+            border-color: #DA4453;
+            @include box-shadow(none);
+        }
+    }
+
+    &.has-warning {
+        &.with-label {
+            label {
+                &:first-child {
+                    color: #f6b225;
+                }
+            }
+        }
+
+        .form-control {
+            border-color: #f6b225;
+            @include box-shadow(none);
+        }
+    }
+
+    &.has-success {
+        &.with-label {
+            label {
+                &:first-child {
+                    color: #16a085;
+                }
+            }
+        }
+
+        .form-control {
+            border-color: #16a085;
+            @include box-shadow(none);
+        }
+    }
+}

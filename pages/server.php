@@ -1,12 +1,14 @@
 <?php
-require_once "_classes/subs.php";
-require_once "_classes/server.php";
+
+use appleJuiceNETZ\appleJuice\Server;
+use appleJuiceNETZ\GUI\template;
+use appleJuiceNETZ\Kernel;
 
 $Servers = new Server();
 $template = new template();
 
 //Language
-$language = new language($_ENV['GUI_LANGUAGE']);
+$language = Kernel::getLanguage();
 $lang = $language->translate();
 
 //zum connecten + loeschen

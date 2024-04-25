@@ -1,5 +1,9 @@
-<script type="text/javascript">
-<!--
+<?php
+
+use appleJuiceNETZ\appleJuice\Core;
+
+?>
+<script>
 function layout(typ){
 	switch(typ){
 		case 'upload':
@@ -12,9 +16,9 @@ function layout(typ){
 			break;
 	}
 }
-//-->
 </script>
 <?php
+
 echo "<form name=\"conselect\" method=\"post\" action=\"$phpaj_ownurl\" "
 	."enctype=\"multipart/form-data\">";
 echo "<div style=\"float:left;\">";
@@ -49,8 +53,7 @@ if(!empty($_POST['source'])){
 	}else{
 		$ajl_file=explode("\n",$_POST['linktext']);
 	}
-	require_once "classes/class_core.php";
-	$core = new Core;
+	$core = new Core();
 	switch($_POST['filetype']){
 		case "ajl":
 			//anfang abschneiden
@@ -64,7 +67,7 @@ if(!empty($_POST['source'])){
 				if(empty($ajl_file[$i+2])) break;
 				$link="ajfsp://file|".$ajl_file[$i]."|".$ajl_file[$i+1]."|"
 					.$ajl_file[$i+2]."/";
-				echo htmlspecialchars($ajl_file[$i])." (".sizeformat($ajl_file[$i+2])
+				echo htmlspecialchars($ajl_file[$i])." (".subs::sizeformat($ajl_file[$i+2])
 					.") &rArr; ".$core->command("function","processlink?link="
 					.rawurlencode($link)."&subdir="
 					.rawurlencode($_POST['subdir']))."<br />";
@@ -77,7 +80,7 @@ if(!empty($_POST['source'])){
 				foreach($link_array[0] as $link){
 					$linkinfo=explode('|',$link);
 					echo htmlspecialchars($linkinfo[1])." ("
-						.sizeformat($linkinfo[3]).") &rArr; "
+						.subs::sizeformat($linkinfo[3]).") &rArr; "
 						.$core->command("function","processlink?link="
 						.rawurlencode($link)."&subdir="
 						.rawurlencode($_POST['subdir']));

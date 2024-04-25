@@ -1,0 +1,23 @@
+﻿@import '_themecolorvariables.scss';
+
+.theme-blue {
+    .navbar {
+        &.navbar-default {
+            background-color: $theme_blue;
+        }
+    }
+
+    .sidebar {
+        .sidebar-nav {
+            .metismenu {
+                li {
+                    &.active {
+                        a {
+                            border-color: $theme_blue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

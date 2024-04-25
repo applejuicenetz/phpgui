@@ -1,8 +1,7 @@
 <?php
-
 session_unset();
-echo'<script>
-location.reload();
-</script>
-';
 ?>
+
+<script>
+    window.location.href = "index.php";
+</script>

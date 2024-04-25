@@ -1,4 +1,7 @@
 <?php
+
+use appleJuiceNETZ\appleJuice\Downloads;
+
 session_start();
 require_once "_classes/subs.php";
 require_once "_classes/downloads.php";
@@ -38,10 +41,10 @@ echo "</table><br />\n";
 
 //user oder downloadbild
 if(!empty($_GET['dl_id'])){
-	echo "<img src=\"_includes/showparts.php?dl_id=".$_GET['dl_id']."&amp;"
+	echo "<img src=\"pages/showparts.php?dl_id=".$_GET['dl_id']."&amp;"
 		.SID."\" alt='download partlist' />\n";
 }elseif(!empty($_GET['usr_id'])){
-	echo "<img src=\"_includes/showparts.php?usr_id=".$_GET['usr_id']."&amp;"
+	echo "<img src=\"pages/showparts.php?usr_id=".$_GET['usr_id']."&amp;"
 		.SID."\" alt='user partlist' />\n";
 }else die("wtf");
 

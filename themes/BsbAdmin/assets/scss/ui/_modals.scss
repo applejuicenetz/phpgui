@@ -1,0 +1,191 @@
+﻿.modal {
+    .modal-header {
+        border: none;
+        padding: 20px 20px 16px 20px;
+        background-color: #F5F6F8;
+        border-bottom: 1px solid rgba(238, 238, 238, 0.6);
+
+        .modal-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #6E7483;
+        }
+    }
+
+    .modal-content {
+        @include border-radius(0);
+        box-shadow: 0 5px 20px rgba(0,0,0,.31) !important;
+        border: none;
+
+        .modal-body {
+            color: #777;
+            padding: 15px 20px;
+        }
+    }
+
+    .modal-footer {
+        border: none;
+        background-color: #F5F6F8;
+        border-top: 1px solid rgba(238, 238, 238, 0.6);
+
+        .btn-link {
+            font-weight: 600;
+
+            &:hover {
+                color: #555;
+                background-color: #ddd;
+            }
+        }
+    }
+}
+
+.modal-col-success {
+    background-color: $color-success !important;
+
+    .modal-header {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.12);
+        border-bottom: none;
+    }
+
+    .modal-body,
+    .modal-title {
+        color: #fff !important;
+    }
+
+    .modal-footer {
+        background-color: rgba(0,0,0,0.12);
+        border-top: none;
+
+        .btn-link {
+            color: #fff !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: rgba(0,0,0,0.12);
+            }
+        }
+    }
+}
+
+
+.modal-col-danger {
+    background-color: $color-danger !important;
+
+    .modal-header {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.12);
+        border-bottom: none;
+    }
+
+    .modal-body,
+    .modal-title {
+        color: #fff !important;
+    }
+
+    .modal-footer {
+        background-color: rgba(0,0,0,0.12);
+        border-top: none;
+
+        .btn-link {
+            color: #fff !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: rgba(0,0,0,0.12);
+            }
+        }
+    }
+}
+
+.modal-col-primary {
+    background-color: $color-primary !important;
+
+    .modal-header {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.12);
+        border-bottom: none;
+    }
+
+    .modal-body,
+    .modal-title {
+        color: #fff !important;
+    }
+
+    .modal-footer {
+        background-color: rgba(0,0,0,0.12);
+        border-top: none;
+
+        .btn-link {
+            color: #fff !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: rgba(0,0,0,0.12);
+            }
+        }
+    }
+}
+
+.modal-col-info {
+    background-color: $color-info !important;
+
+    .modal-header {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.12);
+        border-bottom: none;
+    }
+
+    .modal-body,
+    .modal-title {
+        color: #fff !important;
+    }
+
+    .modal-footer {
+        background-color: rgba(0,0,0,0.12);
+        border-top: none;
+
+        .btn-link {
+            color: #fff !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: rgba(0,0,0,0.12);
+            }
+        }
+    }
+}
+
+.modal-col-warning {
+    background-color: $color-warning !important;
+
+    .modal-header {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.12);
+        border-bottom: none;
+    }
+
+    .modal-body,
+    .modal-title {
+        color: #fff !important;
+    }
+
+    .modal-footer {
+        background-color: rgba(0,0,0,0.12);
+        border-top: none;
+
+        .btn-link {
+            color: #fff !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: rgba(0,0,0,0.12);
+            }
+        }
+    }
+}

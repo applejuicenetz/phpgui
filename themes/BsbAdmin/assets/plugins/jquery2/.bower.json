@@ -1,0 +1,21 @@
+{
+  "name": "jquery2",
+  "version": "2.0.0",
+  "description": "jQuery v2 component - if you need both v2 (ie9+) and v1 (ie8-)",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
+  "main": "jquery.js",
+  "license": "MIT",
+  "homepage": "https://github.com/iki/jquery2",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.0",
+    "commit": "11fb8ccd002bd16dd6b013605085d0cc066614b5"
+  },
+  "_source": "https://github.com/iki/jquery2.git",
+  "_target": "2.0.0",
+  "_originalSource": "jquery2"
+}

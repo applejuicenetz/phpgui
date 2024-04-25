@@ -1,17 +1,18 @@
 <?php
 
-use appleJuiceNETZ\GUI\Kernel;
+declare(strict_types=1);
 
-define('PHP_GUI_VERSION', '0.29.1'); // only semver, without BETA or something like that
+use appleJuiceNETZ\Kernel;
 
-# preparment for composer
+const PHP_GUI_VERSION = '0.29.2'; // only semver, without BETA or something like that
+
+# prepare for composer
 if (file_exists(GUI_ROOT . '/vendor/autoload.php')) {
     require_once GUI_ROOT . '/vendor/autoload.php';
 } else {
-    spl_autoload_register(function ($class) {
-        require_once GUI_ROOT . '/src/' . str_replace('\\', '/', $class . '.php');;
+    spl_autoload_register(function ($class): void {
+        require_once GUI_ROOT . '/src/' . str_replace(['appleJuiceNETZ\\', '\\'], ['', '/'], $class . '.php');
     });
 }
 
 Kernel::init();
-

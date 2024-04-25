@@ -1,0 +1,14 @@
+{
+  "name": "pretty-text-diff",
+  "homepage": "https://github.com/arnab/jQuery.PrettyTextDiff",
+  "version": "1.0.4",
+  "_release": "1.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.4",
+    "commit": "29e0e0fdd41aa0e90bc344da3ac8fa2fa0d407f2"
+  },
+  "_source": "https://github.com/arnab/jQuery.PrettyTextDiff.git",
+  "_target": "1.0.4",
+  "_originalSource": "pretty-text-diff"
+}

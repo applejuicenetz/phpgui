@@ -1,0 +1,96 @@
+﻿.agile-card {
+    background-color: #e7ebee;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 15px;
+    @include border-radius(3px);
+
+    &.ui-sortable-helper {
+        background-color: #e7ebee;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: #e0e3e5;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .preview {
+        img {
+            @include border-radius(3px 3px 0 0);
+        }
+    }
+
+    .card-detail {
+        padding: 10px 12px;
+
+        .title {
+            font-size: 13px;
+        }
+
+        .badges {
+            font-size: 12px;
+            margin-top: 5px;
+
+            span {
+                margin-right: 8px;
+
+                .fa {
+                    margin-right: 3px;
+                }
+            }
+        }
+
+        .tag-labels {
+            span {
+                width: 44px;
+                height: 9px;
+                display: inline-block;
+                margin-right: 3px;
+                @include border-radius(3px);
+
+                &.tag-success {
+                    background-color: $color-success;
+                }
+
+                &.tag-danger {
+                    background-color: $color-danger;
+                }
+
+                &.tag-warning {
+                    background-color: $color-warning;
+                }
+
+                &.tag-primary {
+                    background-color: $color-primary;
+                }
+
+                &.tag-info {
+                    background-color: $color-info;
+                }
+            }
+        }
+
+        .members {
+            text-align: right;
+            margin-top: 5px;
+
+            img {
+                max-width: 24px;
+                margin-left: 1px;
+                @include border-radius(3px);
+            }
+        }
+    }
+}
+
+.agile-card-placeholder {
+    border: 1px dashed #ccc;
+    min-height: 42px;
+    background: #f2f2f2;
+    margin-bottom: 15px;
+    @include border-radius(3px);
+}

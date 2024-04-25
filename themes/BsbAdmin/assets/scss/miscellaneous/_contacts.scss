@@ -1,0 +1,140 @@
+.contact-grid {
+  .panel-body {
+    position: relative;
+    a {
+      text-decoration: none;
+
+      img {
+        float: left;
+        width: 70px;
+        height: 70px;
+        margin-right: 15px;
+        margin-bottom: 12px;
+        @include border-radius(50%);
+      }
+
+      .name-surname {
+        font-size: 20px;
+        color: #777;
+      }
+
+      .place {
+        font-weight: bold;
+        font-size: 12px;
+        color: #666;
+      }
+    }
+
+    .social-accounts {
+      margin-top: 6px;
+
+      a {
+        color: #bbbbbb;
+        font-size: 16px;
+        margin-right: 2px;
+        @include transition(.5s);
+
+        &:hover {
+          color: #444;
+        }
+      }
+    }
+
+    .bio {
+      font-size: 12px;
+      color: #999;
+      clear: both;
+    }
+
+    .contact-option {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      .btn {
+        color: #999;
+      }
+    }
+  }
+}
+
+.contact-list {
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+
+        &:nth-child(1) {
+          width: 42px;
+          img {
+            width: 36px;
+            height: 36px;
+            @include border-radius(50%);
+          }
+        }
+
+        &:nth-child(2) {
+          width: 180px;
+        }
+
+        &:nth-child(3) {
+          font-weight: bold;
+          font-size: 13px;
+        }
+
+        &:nth-child(4) {
+          font-size: 12px;
+        }
+
+        &:nth-child(5) {
+          a {
+            color: #aaaaaa;
+            font-size: 16px;
+            margin-right: 2px;
+            text-decoration: none;
+            @include transition(.5s);
+
+            &:hover {
+              color: #444;
+            }
+          }
+        }
+
+        &:nth-child(6) {
+          text-align: right;
+          padding-right: 0;
+
+          .dropdown-toggle {
+            color: #999;
+          }
+        }
+      }
+    }
+  }
+}
+
+.latest-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-bottom: 10px;
+
+    a {
+      text-decoration: none;
+      img {
+        width: 40px;
+        height: 40px;
+        @include border-radius(50%);
+        margin-right: 8px;
+      }
+
+      span {
+        font-weight: bold;
+        font-size: 13px;
+        color: #666;
+      }
+    }
+  }
+}

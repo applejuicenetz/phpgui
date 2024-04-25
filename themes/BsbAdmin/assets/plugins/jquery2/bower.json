@@ -1,0 +1,11 @@
+{
+  "name": "jquery2",
+  "version": "2.0.0",
+  "description": "jQuery v2 component - if you need both v2 (ie9+) and v1 (ie8-)",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
+  "main": "jquery.js",
+  "license": "MIT"
+}

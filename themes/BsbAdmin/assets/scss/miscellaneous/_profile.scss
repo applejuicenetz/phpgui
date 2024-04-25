@@ -1,0 +1,204 @@
+﻿.profile-page {
+    padding: 0 !important;
+
+    .cover-holder {
+        position: relative;
+        height: 320px;
+
+        .cover-img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../../assets/images/cover-image.jpg');
+        }
+
+        .profile-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+
+            img {
+                width: 75px;
+                height: 75px;
+                margin-right: 15px;
+                border: 3px solid #ffffff;
+                float: left;
+                @include border-radius(50%);
+            }
+
+            .sub {
+                float: left;
+                margin-top: 7px;
+
+                .name {
+                    color: #ffffff;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+
+                .detail {
+                    color: #fff;
+                    font-size: 13px;
+                    margin-top: 3px;
+
+                    .fa {
+                        margin-left: -3px;
+                    }
+                }
+            }
+        }
+    }
+
+    .info-content {
+        .info-line {
+            color: #666;
+            font-size: 13px;
+
+            .info-title {
+                font-weight: bold;
+            }
+
+            .info-detail {
+                margin-bottom: 12px;
+                text-align: justify;
+            }
+
+            &:last-child {
+                .info-detail {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .post-box {
+        border: 1px solid #dedede;
+        @include border-radius(5px);
+
+        textarea {
+            border: none;
+            resize: none;
+            width: 100%;
+            font-size: 13px;
+            padding: 10px;
+            @include border-radius(3px 3px 0 0);
+        }
+
+        .footer {
+            border-top: 1px solid #dedede;
+            background-color: #f5f6f8;
+            padding: 10px;
+            margin-top: -5px;
+            @include border-radius(0 0 3px 3px);
+
+            .extra {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                position: relative;
+                top: 7px;
+
+                li {
+                    display: inline-block;
+                    margin-right: 1px;
+                    cursor: pointer;
+                    width: 25px;
+                    height: 25px;
+                    text-align: center;
+
+                    .fa {
+                        font-size: 16px;
+                        color: #777;
+                    }
+                }
+            }
+        }
+    }
+
+    .post-item {
+        border: 1px solid #e5e5e5;
+        color: #666;
+        background: #fff;
+        margin-top: 20px;
+        @include border-radius(5px);
+        @include box-shadow(none);
+
+        &:last-child {
+            margin-bottom: 15px;
+        }
+
+        .header {
+            padding: 15px;
+            font-size: 13px;
+            border-bottom: 1px solid #e5e5e5;
+            position: relative;
+
+            img {
+                width: 40px;
+                height: 40px;
+                float: left;
+                margin-right: 15px;
+                @include border-radius(50%);
+            }
+
+            .title {
+                font-weight: bold;
+                margin-top: 2px;
+            }
+
+            .time {
+                font-size: 12px;
+            }
+
+            .btn-group {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+
+                .btn {
+                    border: none;
+                }
+            }
+        }
+
+        .body {
+            padding: 15px;
+            text-align: justify;
+            font-size: 13px;
+            border-bottom: 1px solid #e5e5e5;
+
+            .image-post {
+                max-height: 250px;
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+
+        .footer {
+            background: #F5F6F8;
+            padding: 10px 15px;
+            @include border-radius(0 0 5px 5px);
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+
+                li {
+                    display: inline-block;
+                    margin-right: 10px;
+
+                    a {
+                        color: #666;
+                        font-size: 13px;
+                        font-weight: 600;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}

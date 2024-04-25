@@ -1,0 +1,82 @@
+﻿.content {
+    margin: 0 0 -20px 230px;
+    @include transition(.5s);
+
+    .page-heading {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+
+        h1 {
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-block;
+            color: #666;
+        }
+
+        .breadcrumb {
+            display: inline-block;
+            float: right;
+            margin-top: 10px;
+
+            li {
+                a {
+                    color: #888;
+                    text-decoration: none;
+                    font-size: 13px;
+
+                    i {
+                        &.fa {
+                            margin-right: 4px;
+                        }
+                    }
+                }
+
+                &.active {
+                    font-size: 13px;
+                    font-weight: 600;
+                    cursor: default;
+                }
+            }
+
+            > li {
+                + li {
+                    &:before {
+                        padding: 0 3px;
+                    }
+                }
+            }
+        }
+    }
+
+    .page-body {
+        padding: 20px;
+    }
+}
+
+body {
+    &.ls-toggled {
+        .content {
+            margin: 0 0 0 50px;
+        }
+    }
+
+    &.footer-fixed {
+        .content {
+            margin-bottom: 25px !important;
+        }
+    }
+
+    &.navbar-fixed {
+        .content {
+            margin-top: 50px !important;
+        }
+    }
+
+    &.ls-hidden {
+        .content {
+            margin: 0 !important;
+        }
+    }
+}
