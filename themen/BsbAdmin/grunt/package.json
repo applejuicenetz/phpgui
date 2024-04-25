@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "name": "admibsb-sensitive",
+  "private": true,
+  "devDependencies": {
+    "grunt": "1.0.1",
+    "grunt-contrib-sass": "1.0.0",
+    "grunt-contrib-cssmin": "2.0.0",
+    "grunt-contrib-watch": "1.0.0"
+  }
+}

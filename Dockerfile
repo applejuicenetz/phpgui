@@ -2,8 +2,7 @@ FROM php:7-apache
 
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
-    GUI_LANGUAGE="deutsch"  \
-    GUI_STYLE="tango"  \
+    GUI_LANGUAGE="de"  \
     GUI_REFRESH_STATUS=10 \
     GUI_REFRESH_DOWNLOADS=30 \
     GUI_REFRESH_UPLOADS=30 \

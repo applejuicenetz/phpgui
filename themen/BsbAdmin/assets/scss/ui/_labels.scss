@@ -1,0 +1,33 @@
+﻿.label {
+  @include border-radius(3px);
+
+  &.label-success {
+    background-color: $color-success;
+  }
+
+  &.label-default {
+    background-color: $color-default;
+  }
+
+  &.label-info {
+    background-color: $color-info;
+  }
+
+  &.label-primary {
+    background-color: $color-primary;
+  }
+
+  &.label-warning {
+    background-color: $color-warning;
+  }
+
+  &.label-danger {
+    background-color: $color-danger;
+  }
+}
+
+.table {
+  .label {
+    font-size: 10px;
+  }
+}

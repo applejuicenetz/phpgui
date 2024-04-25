@@ -1,0 +1,11 @@
+﻿#draggable {
+    .panel {
+        .panel-heading {
+            cursor: move;
+        }
+    }
+
+    > div {
+        border-top: 1px solid transparent;
+    }
+}

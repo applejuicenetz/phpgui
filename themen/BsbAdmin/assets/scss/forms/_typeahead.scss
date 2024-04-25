@@ -1,0 +1,17 @@
+﻿.typeahead {
+    width: calc(100% - 61px);
+
+    a {
+        padding: 10px 12px !important;
+    }
+
+    > .active {
+        > a {
+            background-color: #009688;
+
+            &:hover {
+                background-color: #009688;
+            }
+        }
+    }
+}

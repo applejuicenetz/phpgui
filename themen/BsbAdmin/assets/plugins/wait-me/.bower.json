@@ -1,0 +1,34 @@
+{
+  "name": "wait-me",
+  "homepage": "https://github.com/phpnetanel/waitMe",
+  "authors": [
+    "vadimsva"
+  ],
+  "description": "wait me jquery pack for loading animation",
+  "main": [
+    "dist/waitMe.min.js",
+    "dist/waitMe.min.css"
+  ],
+  "keywords": [
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "latest"
+  },
+  "_release": "d099edcef3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d099edcef3eda218ec1c240b8a641d87234442ce"
+  },
+  "_source": "https://github.com/phpnetanel/waitMe.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/phpnetanel/waitMe.git"
+}

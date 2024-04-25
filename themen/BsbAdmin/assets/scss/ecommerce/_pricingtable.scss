@@ -1,0 +1,82 @@
+.pricing-table {
+    border: 1px solid $color-success;
+    background-color: #fff;
+    margin-bottom: 20px;
+    @include border-radius(3px !important);
+
+    .heading {
+        background-color: $color-success;
+        text-align: center;
+        padding: 10px 15px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    .body {
+        text-align: center;
+
+        .price {
+            font-size: 60px;
+            background-color: lighten($color-success, 4%);
+            color: #fff;
+            padding-top: 12px;
+
+            sup, sub {
+                font-size: 13px;
+                position: relative;
+            }
+
+            sup {
+                top: -35px;
+            }
+
+            sub {
+                top: 0;
+            }
+        }
+
+        .price-desc {
+            font-size: 13px;
+            padding-bottom: 22px;
+            background-color: lighten($color-success, 4%);
+            color: #fff;
+        }
+
+        .info-list {
+            padding: 15px 0;
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    font-size: 14px;
+                    color: #666;
+                    line-height: 52px;
+                }
+            }
+        }
+    }
+
+    .footer {
+        text-align: center;
+        padding: 10px 10px 10px 10px;
+    }
+
+    &.pricing-table-danger {
+        border-color: $color-danger;
+
+        .heading {
+            background-color: $color-danger;
+        }
+
+        .body {
+            .price,
+            .price-desc {
+                background-color: lighten($color-danger, 4%);
+            }
+        }
+    }
+}

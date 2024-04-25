@@ -1,0 +1,252 @@
+﻿.email-menu {
+    .list-group {
+        .list-group-item {
+            padding: 8px 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #dedede;
+            font-size: 13px;
+            color: #555;
+
+            .fa {
+                font-size: 14px;
+                width: 19px;
+                position: relative;
+                top: 1px;
+
+                &.fa-inbox,
+                &.fa-exclamation-circle,
+                &.fa-ban {
+                    font-size: 16px;
+                }
+
+                &.fa-trash-o {
+                    font-size: 17px;
+                }
+            }
+
+            .badge {
+                font-size: 11px;
+            }
+        }
+    }
+
+    .menu-title {
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 30px;
+        margin-bottom: 2px;
+        color: #666;
+    }
+}
+
+.email-panel {
+    .panel-body {
+        padding: 0;
+    }
+
+    table {
+        width: calc(100% + 1px);
+        max-width: calc(100% + 1px);
+
+        tbody {
+            tr {
+                td {
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
+                    border-top: none;
+                    cursor: pointer;
+
+                    a {
+                        text-decoration: none;
+                        color: #666;
+                        display: inline-block;
+                        width: 100%;
+                    }
+
+                    label {
+                        cursor: pointer;
+                    }
+                }
+
+                td:nth-child(1) {
+                    width: 30px;
+
+                    div {
+                        &[class*="icheckbox"] {
+                            bottom: 1.5px;
+                        }
+                    }
+                }
+
+                td:nth-child(2) {
+                    width: 40px;
+
+                    .fa {
+                        font-size: 20px;
+                        color: #d5d5d5;
+
+                        &.important {
+                            color: $color-warning;
+                        }
+                    }
+                }
+
+                td:nth-child(5) {
+                    width: 20px;
+                    font-size: 16px;
+                    color: #999;
+                }
+
+                td:nth-child(6) {
+                    width: 80px;
+                    text-align: right;
+                }
+
+                &.unread {
+                    td:nth-child(3),
+                    td:nth-child(4),
+                    td:nth-child(6) {
+                        font-weight: bold;
+                    }
+                }
+
+                &.selected {
+                    td {
+                        background-color: #f5f6f8;
+                    }
+                }
+            }
+        }
+    }
+
+    .email-panel-heading {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+
+        h2 {
+            padding: 0;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #777;
+            display: inline-block;
+        }
+    }
+
+    .email-search {
+        .form-group {
+            margin-bottom: 0;
+
+            span {
+                color: #aaa;
+            }
+        }
+    }
+
+    .page-info {
+        font-size: 13px;
+        font-weight: bold;
+        margin-right: 5px;
+        color: #888;
+    }
+
+    .btn-default {
+        color: #666;
+    }
+
+    .free-space-info {
+        font-size: 12px;
+        font-weight: bold;
+        color: #888;
+    }
+
+    .from-email {
+        color: #888;
+        font-size: 12px;
+    }
+
+    .date-info {
+        color: #888;
+        font-size: 13px;
+        margin-top: 12px;
+    }
+
+    .email-body {
+        font-size: 13px;
+        color: #555;
+        padding: 15px;
+    }
+
+    .attachment-holder {
+        border: 1px solid #eee;
+        border-left: none;
+        border-right: none;
+        padding: 15px;
+        font-size: 12px;
+        color: #555;
+
+        ul {
+            list-style: none;
+            margin: 15px 0 0 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+                margin-right: 10px;
+
+                .file-box {
+                    min-width: 200px;
+                    border: 1px solid #eee;
+
+                    .heading {
+                        text-align: center;
+                        height: 110px;
+                        border-bottom: 1px solid #eee;
+
+                        .fa {
+                            margin-top: 15px;
+                            font-size: 72px;
+                            color: #ccc;
+                        }
+                    }
+
+                    .footer {
+                        background-color: #f5f5f5;
+                        padding: 10px;
+
+                        .title {
+                            font-size: 13px;
+                            font-weight: bold;
+                        }
+
+                        .size {
+                            font-size: 11px;
+                        }
+
+                        .link {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.email-template-show-file {
+    margin-bottom: 12px;
+
+    a {
+        color: #444;
+        font-size: 13px;
+        font-weight: 600;
+    }
+}
+
+.email-template {
+    iframe {
+        width: 100%;
+        border: none;
+    }
+}

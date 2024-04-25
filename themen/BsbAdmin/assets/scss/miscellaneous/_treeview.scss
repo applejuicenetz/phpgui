@@ -1,0 +1,29 @@
+﻿.jstree-open {
+    > .jstree-anchor {
+        .fa {
+            font-size: 15px;
+        }
+
+        > .fa-folder {
+            &:before {
+                content: "\f07c";
+            }
+        }
+    }
+}
+
+.jstree-anchor {
+    font-size: 13px;
+
+    .fa {
+        font-size: 14px;
+    }
+
+    color: #555;
+}
+
+.jstree-search {
+    font-style: initial !important;
+    color: $color-danger !important;
+    font-weight: bold !important;
+}

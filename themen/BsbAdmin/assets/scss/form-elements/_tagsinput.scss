@@ -1,0 +1,11 @@
+﻿.bootstrap-tagsinput {
+    width: 100%;
+    padding: 2px 5px 5px 5px;
+    border-color: #ddd;
+    @include border-radius(0);
+    @include box-shadow(none);
+
+    .tag {
+        @include border-radius(0);
+    }
+}

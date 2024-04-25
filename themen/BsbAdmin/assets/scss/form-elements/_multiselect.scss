@@ -1,0 +1,30 @@
+﻿.ms-container {
+    width: auto;
+
+    .ms-selectable,
+    .ms-selection {
+        .ms-list {
+            @include box-shadow(none);
+            @include border-radius(0);
+            border-color: #ddd;
+            min-height: 275px;
+
+            &:active,
+            &:focus {
+                @include box-shadow(none);
+                border-color: $color_success;
+            }
+        }
+
+        li {
+            &.ms-elem-selectable,
+            &.ms-elem-selection {
+                padding: 8px 10px;
+            }
+
+            &.ms-hover {
+                background-color: $color_success;
+            }
+        }
+    }
+}

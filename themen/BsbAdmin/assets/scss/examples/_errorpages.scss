@@ -1,0 +1,36 @@
+﻿.error-box {
+    text-align: center;
+    margin-top: 50px;
+
+    h1 {
+        font-size: 140px;
+        font-weight: 300;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: -10px;
+        color: #777;
+    }
+
+    h3 {
+        font-size: 26px;
+        color: #777;
+    }
+
+    .info {
+        color: #777;
+        font-size: 13px;
+        margin-top: 15px;
+
+        a {
+            font-weight: bold;
+            color: #555;
+        }
+    }
+
+    .form-inline {
+        margin-top: 40px;
+
+        .btn {
+            height: 32px;
+        }
+    }
+}

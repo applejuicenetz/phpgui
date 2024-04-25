@@ -1,0 +1,43 @@
+﻿.comment-box {
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin-bottom: 13px;
+            position: relative;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            img {
+                width: 48px;
+                margin-right: 8px;
+                @include border-radius(50%);
+            }
+
+            .username {
+                font-weight: 600;
+                color: #555;
+            }
+
+            .time {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 11px;
+                color: #999;
+
+                &:before {
+                    font-family: 'FontAwesome',sans-serif;
+                    content: '\f017';
+                    position: absolute;
+                    top: 1px;
+                    left: -12px;
+                }
+            }
+        }
+    }
+}

@@ -1,24 +1,42 @@
 <?php
-require_once "classes/class_core.php";
+require_once "_classes/core.php";
 $core = new Core;
 /*
 sharestats
 */
-require_once "classes/class_share.php";
-echo "<div class=\"tabs\" style=\"float:left;\">";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=last\">"
+require_once "_classes/share.php";
+
+echo'
+<div class="row clearfix">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 email-menu">
+                        <div class="list-group">';
+                        echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=last\">"
 	."Recently Requested</a><br /><br />";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=-last\">"
+echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-last\">"
 	."Not Recently Requested</a><br /><br />";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=most\">"
+echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=most\">"
 	."Most Requested</a><br /><br />";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=-most\">"
+echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-most\">"
 	."Least Requested</a><br /><br />";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=search\">"
+echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=search\">"
 	."Most Searched</a><br /><br />";
-echo "<a href=\"".$phpaj_ownurl."&amp;stats=-search\">"
-	."Least Searched</a><br /><br />";
-echo "</div>";
+echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-search\">"
+	."Least Searched</a>";
+                      echo'  </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-10">
+                        <div class="panel panel-default panel">
+                            
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            
+                                        ';
+                
+
+
 $coreinfo=$core->getcoreversion();
 $coresubversions=explode(".",$coreinfo['VERSION']);
 if($coresubversions[2]<146) die("<img src=\"../style/"
@@ -28,9 +46,6 @@ if(empty($_GET['stats'])) $_GET['stats']="last";
 $Sharelist = new Share;
 $Sharelist->refresh_cache(2);
 if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
-	echo "<div style=\"float:left; margin-left:1cm;\">";
-	echo "<table>";
-	echo "<tr>";
 	echo "<th>Position</th>";
 	$sfsort=array();
 	switch($_GET['stats']){
@@ -73,7 +88,7 @@ if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
 	}
 	$sfsort=array_keys($sfsort);
 	echo "<th>Filename</th></tr>";
-	for($i=0;$i<30;$i++){
+	for($i=0;$i<50;$i++){
 		if(!empty($sfsort[$i])){
 			$cur_share=&$Sharelist->get_file($sfsort[$i]);
 			echo "<tr><td style=\"font-weight:bold; text-align:center;\">"
@@ -90,6 +105,8 @@ if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
 			echo "</a></td></tr>";
 		}
 	}
-	echo "</table>";
+	echo "</tbody>
+                                    </table>
+                                </div>";
 	echo "</div>";
 }
