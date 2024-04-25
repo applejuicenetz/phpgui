@@ -17,6 +17,8 @@ RUN apt update && \
     ln -sf /dev/null /var/log/apache2/error.log && \
     ln -sf /dev/null /var/log/apache2/other_vhosts_access.log
 
+COPY --from=composer /usr/bin/composer /usr/local/bin/
+
 COPY . /var/www/html/
 
 EXPOSE 80

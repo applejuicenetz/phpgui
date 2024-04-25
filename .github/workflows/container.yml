@@ -7,6 +7,7 @@ on:
       - beta
   release:
     types: [ released ]
+  workflow_dispatch:
 
 jobs:
   container:
@@ -16,21 +17,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Login to docker.io
+      - name: Login to docker.io container registry
         uses: docker/login-action@v3
         with:
           registry: docker.io
           username: ${{ vars.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Login to ghcr.io
+      - name: Login to ghcr.io container registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker meta
+      - name: create container image meta data
         id: meta
         uses: docker/metadata-action@v5
         with:

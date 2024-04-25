@@ -12,7 +12,7 @@ appleJuice Client GUI geschrieben in PHP.
 
 ## Abhängigkeiten
 
-Es wird mindestens PHP `7.4.0` benötigt!
+Es wird mindestens PHP `8.2` benötigt!
 
 ## Konfiguration (nur bei selbst hosting ohne Docker)
 
@@ -27,7 +27,6 @@ Die Datei `.env.dist` kopieren, zu `.env` umbenennen und mit einem Texteditor di
 | `GUI_LANGUAGE`       | `de`                 | `de` or `en`                               |
 | `GUI_SHOW_NEWS`      | `1`                  | show news on `status page`                 |
 | `GUI_SHOW_SHARE`     | `1`                  | show share stats on `status page`          |
-| `TOP_SHOW_PERMALINK` | `1`                  | show `Perma Link` in Top Navbar            |
 | `NEWS_URL`           | `http://XY`          | url where to get news from                 |
 | `SERVERLIST_URL`     | `http://ABC`         | url where to find new servers              |
 | `REL_INFO`           | `http://MN/ajfps/%s` | set them to empty to disable rel info col  |
