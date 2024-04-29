@@ -159,7 +159,7 @@ class Downloads
                     break;
                 case "status":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_STATUS', SORT_STRING, 0);
+                        'phpaj_STATUS', SORT_STRING, 1);
                     break;
                 case "speed":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],

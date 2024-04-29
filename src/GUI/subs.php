@@ -48,7 +48,13 @@ class subs
         $balken = round($balken, 2);
         return '<span class="pie">' . $balken . '/100</span><br>' . $balken . '%';
     }
-
+	function prozess_bar($balken)
+	{
+		return '<div class="progress mt-3">
+                <div class="progress-bar progress-bar-success progress-bar-striped active col-black" style="width: ' . $balken . '%">
+                '  .$balken . ' %</div>
+              </div>';	
+	}
     function dl_source($wert)
     {
         $language = Kernel::getLanguage();
