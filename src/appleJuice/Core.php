@@ -101,8 +101,8 @@ class Core
 
         if ($type === "xml") {
             if (empty($xml_file)) {
-                echo "Der Core scheint zur Zeit offline zu sein.";
-                session_destroy();
+            	include_once("pages/500.php");
+            	session_destroy();
                 exit;
             }
 
