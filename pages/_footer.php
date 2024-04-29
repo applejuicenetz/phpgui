@@ -19,17 +19,20 @@
             </div>
 
         <!-- Footer -->
-        <footer>
+        <div class="footer-fixed">
+        <footer class="footer-fixed">
             <div class="container-fluid">
                 <div class="row clearfix">
                     <div class="col-sm-6">
+                    create with <i class="col-danger fa fa-heart"></i> by <b>red</b> & <b>kddk22</b>
                     </div>
                     <div class="col-sm-6 align-right">
-                        v<?php echo PHP_GUI_VERSION; ?>
+                        <b>v<?php echo PHP_GUI_VERSION; ?></b>
                     </div>
                 </div>
             </div>
         </footer>
+        </div>
         <!-- #END# Footer -->
     </div>
 
