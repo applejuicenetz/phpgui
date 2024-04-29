@@ -143,7 +143,7 @@ class subs
         print_r($data);
         die;
     }
-    function refresh_cache()
+    static function refresh_cache()
     {
     	$Uploadlist = new Uploads();
     	$Downloadlist = new Downloads();

@@ -23,7 +23,7 @@ $Uploadlist = new Uploads();
 $Sharelist = new Share();
 
 //Cache laden
-
+$subs::refresh_cache();
 //Info holen
 $modified = $core->command("xml", "modified.xml?filter=informations");
 $temp = array_keys($modified['INFORMATION']);
