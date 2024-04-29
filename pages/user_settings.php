@@ -41,25 +41,6 @@ $_SESSION['phpaj']['core_source_port'] = $settings_xml['PORT']['VALUES']['CDATA'
 
 //standardeinstellungen
 echo '<div class="row clearfix">
-		<form method="post" action="/index.php?site=user_settings" name="standard">
-		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading bg-success"><i class="fa fa-gear"></i> Standart Einstellungen</div>
-                <div class="panel-body">
-                	
-                	<div class="form-group">
-                        <label>' . $lang->Settings->nick . '</label>
-                        <input type="text" class="form-control" id="nick" name="nick" value="' . htmlspecialchars($settings_xml['NICK']['VALUES']['CDATA']) . '" />
-                    </div>
-                    
-                    <input type="hidden" name="change" value="standard" />
-            		<button type="submit" class="btn btn-lg btn-success pull-right">' . $lang->Settings->save . '</button>
-                                    
-           
-                </div>
-            </div>
-        </div>
-        </form>
 		<form method="post" action="' . $_SERVER["PHP_SELF"] . '?site=user_settings&' . SID . '\" name="theme">
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
