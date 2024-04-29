@@ -125,7 +125,7 @@ if (isset($_GET['site'])) {
                         </a>
                         <!-- #END# Logo -->
                     </div>
-                    <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <div class="navbar-collapse" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li>
                                 <a href="javascript:void(0);" class="toggle-left-sidebar js-toggle-left-sidebar">

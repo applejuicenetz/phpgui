@@ -158,12 +158,12 @@ function togglesubdir(dircounter){
 		while(z!=null){
 			z.style.display='none';
 			z=zeilen.shift();}
-		bild.setAttribute('src','../style/".$_SESSION['plus_icon']."');
+		bild.setAttribute('src','');
 	}else{
 		while(z!=null){
 			z.style.display='';
 			z=zeilen.shift();}
-		bild.setAttribute('src','../style/".$_SESSION['minus_icon']."');
+		bild.setAttribute('src','');
 	}
 }
 
@@ -276,7 +276,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			//Dateiname
 			echo "<td id=\"nametd_$a\">"
 				."<a href=\"javascript:rename($a)\" title=\"".$lang->Downloads->rename."\">";
-			echo htmlspecialchars($current_download['FILENAME'])."</a></td>\n";
+			echo $current_download['FILENAME'] . "</a></td>\n";
 
            
 
@@ -309,8 +309,8 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			}
 			echo'</td><td>';
 							echo '<div class="progress mt-3">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
-                '.$balken.' %</div>
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: ' . $balken . '%" aria-valuenow="' . $balken . '" aria-valuemin="0" aria-valuemax="100">
+                '  .$balken . ' %</div>
               </div></td><td>';
             
 			

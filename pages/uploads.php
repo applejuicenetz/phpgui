@@ -16,6 +16,7 @@ $lang = $language->translate();
 $Sharelist = new Share();
 $Uploadlist = new Uploads();
 $icon_img = new Icons();
+$subs = new subs();
 
 $Uploadlist->refresh_cache();
 

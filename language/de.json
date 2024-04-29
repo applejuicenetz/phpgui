@@ -163,7 +163,8 @@
     "last_connection": "letzte Verbindung",
     "not_yet": "noch nicht verbunden",
     "login": "Login",
-    "delet": "L&ouml;schen"
+    "delet": "L&ouml;schen",
+    "no_server": "Keine Server gefunden"
   },
   "Settings": {
     "zipped": "Daten komprimiert vom Core holen",

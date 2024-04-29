@@ -8,7 +8,7 @@ class Core
     var $lastname;
     var $lastsubname;
     var $xml_array;
-
+	var $lastcdata;
 
     // XML-Parser funktionen
     //-----------------------

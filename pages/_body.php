@@ -20,7 +20,7 @@ echo '<div class="page-heading">
                 <h1>' . $subs->get_title($_GET['site']) . '</h1>
                 <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php?site=start">Home</a></li>
-            <li class="breadcrumb-item">' . $subs->get_title($_GET['site']) . '</li>
+            <li class="breadcrumb-item">' . subs::get_title($_GET['site']) . '</li>
 
             ' . $template->bread($_GET["show"]) . '
 
