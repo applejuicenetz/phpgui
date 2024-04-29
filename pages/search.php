@@ -259,7 +259,7 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 			.$cur_search['phpaj_COUNT']
 			."\n</td>";
 		//ajfsp-link zu datei
-		echo "<td><a href=\"?site=search&link=".$ajfsp_link."\">ajfsp-link</a></td></tr>\n\n";
+		echo "<td><a class='btn btn-success' href=\"?site=search&link=".$ajfsp_link."\">download</a></td></tr>\n\n";
 	}
 }
 

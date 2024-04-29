@@ -92,7 +92,7 @@ if (isset($_GET['site'])) {
     <div class="theme-<?php echo $settings_gui->GUI->theme; ?> all-content-wrapper">
         <!-- Top Bar -->
         <header>
-            <nav class="navbar navbar-default navbar-fixed">
+            <nav class="navbar navbar-default">
                 <!-- Search Bar -->
                 <div class="search-bar">
                     <div class="search-icon">
@@ -112,6 +112,7 @@ if (isset($_GET['site'])) {
 
                 <div class="container-fluid">
                     <div class="navbar-header">
+                    	
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="material-icons">swap_vert</i>
                         </button>
@@ -125,7 +126,7 @@ if (isset($_GET['site'])) {
                         </a>
                         <!-- #END# Logo -->
                     </div>
-                    <div class="navbar-collapse" id="navbar-collapse">
+                    <div class="collapse navbar-collapse" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li>
                                 <a href="javascript:void(0);" class="toggle-left-sidebar js-toggle-left-sidebar">
@@ -214,7 +215,7 @@ if (isset($_GET['site'])) {
                     <li <?php active("uploads"); ?>>
                     	<a href="index.php?site=uploads">
                     		<i class="material-icons">upload</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
+                            <span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("search"); ?>>
