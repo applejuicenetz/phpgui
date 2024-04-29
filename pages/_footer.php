@@ -1,5 +1,23 @@
 </div>
         </section>
+        <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog bg-danger">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h4 class="modal-title" id="defaultModalLabel">Kill Core</h4>
+                        </div>
+                        <div class="modal-body">
+                        M&ouml;chtest du wirklich den Core beenden?
+                        S&auml;mtliche Punkte gehen verloren!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link" onclick="window.location.href ='index.php?site=kickcore'">Ja Core beenden</button>
+                            <button type="button" class="btn btn-link" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <!-- Footer -->
         <footer>
             <div class="container-fluid">

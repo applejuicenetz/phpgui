@@ -178,7 +178,7 @@ if (isset($_GET['site'])) {
                                             </div>
                                             <div class="col-xs-2"></div>
                                             <div class="col-xs-5">
-                                                <a href="index.php?site=kickcore" class="btn btn-default btn-sm btn-block"><?php echo $lang->Navigation->kick_core; ?></a>
+                                             <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#defaultModal"><?php echo $lang->Navigation->kick_core; ?></a>
                                             </div>
                                         </div>
                                     </li>
