@@ -266,13 +266,13 @@ class Downloads
             $icon = "bi-search";
         }
         if ($wert == "0_1") {
-            $icon = "<label class='label label-info'>Suchen..</label>";
+            $icon = "<span class='badge bg-primary'>Suchen..</span>";
         }
-        if ($wert == "0_2") $icon = "<label class='label label-info'>Lade..</label>";
+        if ($wert == "0_2") $icon = "<span class='badge bg-info'>Lade..</span>";
         if ($wert == "0") $icon = "bi-search";
-        if ($wert == "14") $icon = "<label class='label label-success'>Fertig</label>";
-        if ($wert == "18") $icon = "<label class='label label-warning'>pausiert</label>";
-        if ($wert == "17") $icon = "<label class='label label-danger'>Abbruch</label>";
+        if ($wert == "14") $icon = "<span class='badge bg-success'>Fertig</span>";
+        if ($wert == "18") $icon = "<span class='badge bg-warning'>pausiert</span>";
+        if ($wert == "17") $icon = "<span class='badge bg-danger'>Abbruch</span>";
         return $icon;
     }
 }

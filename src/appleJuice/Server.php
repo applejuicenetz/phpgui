@@ -2,6 +2,8 @@
 
 namespace appleJuiceNETZ\appleJuice;
 
+use appleJuiceNETZ\Kernel;
+
 class Server
 {
     var $server_xml;
@@ -10,6 +12,9 @@ class Server
 
     function __construct($noload = 0)
     {
+        $language = Kernel::getLanguage();
+        $lang = $language->translate();
+
         $this->core = new Core();
         if ($noload) return;
         $this->server_xml = $this->core->command("xml","modified.xml?filter=server;informations");

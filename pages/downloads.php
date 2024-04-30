@@ -187,33 +187,33 @@ echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\">";
 
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="align-right">
                                 	<nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">';
-                    echo"<a class=\"btn-warning page-link\" onclick=\"dlaction('pausedownload')\"><i class=\"text-warning material-icons\">pause_circle_outline</i></a>";
+                    echo"<a class=\"btn-warning page-link\" onclick=\"dlaction('pausedownload')\"><i class=\"text-warning fa fa-pause\"></i></a>";
                   echo'</li>
                   <li class="page-item">';
-                    echo"<a class=\"page-link\" onclick=\"dlaction('resumedownload')\"><i class=\"text-success material-icons\">play_circle_outline</i></a>";
+                    echo"<a class=\"page-link\" onclick=\"dlaction('resumedownload')\"><i class=\"text-success fa fa-play\"></i></a>";
                   echo'</li>
                   <li class="page-item">';
-                    echo"<a class=\"page-link\" onclick=\"dlaction('canceldownload')\"><i class=\"text-danger material-icons\">close</i></a>";
+                    echo"<a class=\"page-link\" onclick=\"dlaction('canceldownload')\"><i class=\"text-danger fa fa-times\"></i></a>";
                   echo'</li>
                   <li class="page-item">';
-                    echo"<a class=\"page-link\" onclick=\"dlaction('settargetdir')\"><i class=\"material-icons\">folder_open</i></a>";
+                    echo"<a class=\"page-link\" onclick=\"dlaction('settargetdir')\"><i class=\"fa fa-folder\"></i></a>";
                   echo'</li>
                   <li class="page-item">
-                    <a class="page-link" href="index.php?site=downloads&action=cleandownloadlist&dl_id=1"><i class="material-icons text-danger">delete_sweep</i></a>
+                    <a class="page-link" href="index.php?site=downloads&action=cleandownloadlist&dl_id=1"><i class="text-danger fa fa-trash"></i></a>
                   </li>
                 </ul>
               </nav>';
 //Tabellenüberschrift
 echo'<div class="table-responsive">
-			  <table class="table table-striped">
-				<thead>
-                  <tr>
+			  <table class="table border mb-0">
+                      <thead class="fw-semibold text-nowrap">
+                        <tr>
                     <th scope="col">#</th>
                     <th scope="col">'.$lang->Downloads->source.'</th>
                     <th scope="col">'.$lang->Downloads->filename.'</th>
@@ -221,7 +221,6 @@ echo'<div class="table-responsive">
                     <th scope="col">'.$lang->Downloads->speed.'</th>
                     <th scope="col">'.$lang->Downloads->pdl.'</th>
                     <th scope="col">'.$lang->Downloads->size.'</th>
-                    <th scope="col">'.$lang->Downloads->rest.'</th>
                     <th scope="col">'.$lang->Downloads->progress.'</th>
                   </tr>
                 </thead>
@@ -243,7 +242,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 	if(!empty($subdir))
 		//Unterverzeichnis
 		echo "<tr><td colspan=\"$spaltenzahl\">"
-		."<a href=\"javascript:togglesubdir(".$subdircounter.")\">"
+		."<a onclick=\"javascript:togglesubdir(".$subdircounter.")\">"
 		."<img id=\"img_$subdircounter\" "
 		."src=\"../style/".$_SESSION['minus_icon']."\" border=\"0\" alt=\"\" />"
 		."&nbsp;&nbsp;<b>".htmlspecialchars($subdir)."</b> (".count($downloadids).")</a>\n"
@@ -268,14 +267,14 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 				." onclick=\"change($a);\" /></td>\n";
 			//quellenzahl (link zu dl details)
 				echo "<td class=\"right\">"
-					."<a href=\"index.php?site=dl_users&dl_id=".$a."\" title=\"Mehr Info\">"
+					."<a onclick=\"location.href='index.php?site=dl_users&dl_id=".$a."'\" title=\"Mehr Info\">"
 					.($current_download['phpaj_quellen_queue']
 						+$current_download['phpaj_quellen_dl'])
 					."/".$current_download['phpaj_quellen_gesamt']
 					." (".$current_download['phpaj_quellen_dl'].")</a></td>\n";
 			//Dateiname
 			echo "<td id=\"nametd_$a\">"
-				."<a href=\"javascript:rename($a)\" title=\"".$lang->Downloads->rename."\">";
+				."<a onclick=\"javascript:rename($a)\" title=\"".$lang->Downloads->rename."\">";
 			echo $current_download['FILENAME'] . "</a></td>\n";
 
            
@@ -297,21 +296,26 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			$balken = round($fortschritt, 2);
 			$rest= $current_download["phpaj_REST"];
 			$rest = subs::sizeformat($rest);
-			echo'<td>'.$rest;
-			if(!empty($current_download['phpaj_dl_speed'])){
+			
+			echo'<td>  <div class="d-flex justify-content-between align-items-baseline">
+                              <div class="fw-semibold">' . $balken . '%</div>
+                              <div class="text-nowrap small text-body-secondary ms-3">' . $rest . ' - ';
+                              if(!empty($current_download['phpaj_dl_speed'])){
 				$restzeit=$current_download['phpaj_REST']/$current_download['phpaj_dl_speed'];
-				echo "<br>";
 				$stunden=$restzeit/3600;
 				if($stunden<24)
 					printf("%02d:%02d:%02d",$stunden,($restzeit%3600)/60,$restzeit%60);
 				else
 					printf("%.1fd",$stunden/24);
 			}
-			echo'</td><td>'
-				. $subs->prozess_bar($balken) . '</td><td>';
-            
+			echo'</div>
+                            </div>
+                            <div class="progress progress-thin">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: ' . $balken . '%" aria-valuenow="' . $balken . '" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          ';
 			
-			echo "</td>";
+			echo'</td>';
 			echo "</tr>\n";
 	}
 }

@@ -12,9 +12,11 @@ class subs
     {
         if (!empty($_ENV['GUI_SHOW_NEWS'])) {
             echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            		<div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                		<div class="panel-heading bg-success"><i class="fa fa-news"></i> appleJuice News</div>
-                		<div class="panel-body">
+            		<div class="card">
+                		<div class="card-header"><svg class="icon icon-l">
+                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-newspaper"></use>
+                        </svg> appleJuice News</div>
+                		<div class="card-body">
                 		' . $this->getnews($zeit, $version) . '
                 		</div>
     				</div>

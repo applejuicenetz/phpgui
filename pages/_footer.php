@@ -1,5 +1,77 @@
+<!-- Modals -->
+<div class="modal fade" id="search" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLiveLabel">Search</h5>
+                                <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                            	<form method="post" action="" name="linkform">
+									<div class="mb-3">
+										<label for="exampleFormControlTextarea1" class="form-label">AJ-Links</label>
+										<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="ajfsp_link" id="link"></textarea>
+									</div>
+                                <?php echo'
+<input name="showlinkpage" type="hidden" value="1" />
+<input name="'.session_name().'" type="hidden" value="'.session_id().'" />'; ?></div>
+                              <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Dateien Downloaden</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+<div class="modal fade" id="coreexit" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header bg-danger">
+                            <h4 class="modal-title" id="defaultModalLabel">Kill Core</h4>
+                        </div>
+                        <div class="modal-body">
+                        M&ouml;chtest du wirklich den Core beenden?
+                        S&auml;mtliche Punkte gehen verloren!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href ='index.php?site=kickcore'">Ja Core beenden</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">CLOSE</button>
+                        </div>
+                            </div>
+                          </div>
+                        </div>
+
+
 </div>
-        </section>
+      <footer class="footer px-4">
+        <div>create with <i class="col-danger fa fa-heart"></i> by <b>red</b> & <b>kddk22</b>
+                    </div>
+        <div class="ms-auto"><b>v<?php echo PHP_GUI_VERSION; ?></b></div>
+      </footer>
+    </div>
+    <!-- CoreUI and necessary plugins-->
+    <script src="themes/CoreUI/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+    <script src="themes/CoreUI/vendors/simplebar/js/simplebar.min.js"></script>
+    <script>
+      const header = document.querySelector('header.header');
+
+      document.addEventListener('scroll', () => {
+        if (header) {
+          header.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
+        }
+      });
+    </script>
+    <!-- Plugins and scripts required by this view-->
+    <script src="themes/CoreUI/vendors/chart.js/js/chart.umd.js"></script>
+    <script src="themes/CoreUI/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+    <script src="themes/CoreUI/vendors/@coreui/utils/js/index.js"></script>
+    <script src="themes/CoreUI/js/main.js"></script>
+    <script>
+    </script>
+
+  </body>
+</html>
+
         <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog bg-danger">
                     <div class="modal-content">
@@ -17,69 +89,3 @@
                     </div>
                 </div>
             </div>
-
-        <!-- Footer -->
-        <div class="footer-fixed">
-        <footer class="footer-fixed">
-            <div class="container-fluid">
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                    create with <i class="col-danger fa fa-heart"></i> by <b>red</b> & <b>kddk22</b>
-                    </div>
-                    <div class="col-sm-6 align-right">
-                        <b>v<?php echo PHP_GUI_VERSION; ?></b>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        </div>
-        <!-- #END# Footer -->
-    </div>
-
-    <!-- Jquery Core Js -->
-    <script src="themes/BsbAdmin/assets/plugins/jquery/dist/jquery.min.js"></script>
-
-    <!-- JQuery UI Js -->
-    <script src="themes/BsbAdmin/assets/plugins/jquery-ui/jquery-ui.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="themes/BsbAdmin/assets/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Js -->
-    <script src="themes/BsbAdmin/assets/plugins/metisMenu/dist/metisMenu.js"></script>
-
-    <!-- Jquery Slimscroll Js -->
-    <script src="themes/BsbAdmin/assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
-
-    <!-- Switchery Js -->
-    <script src="themes/BsbAdmin/assets/plugins/switchery/dist/switchery.js"></script>
-
-    
-    <!-- Jquery Sparkline Js -->
-    <script src="themes/BsbAdmin/assets/plugins/jquery-sparkline/dist/jquery.sparkline.js"></script>
-    <!-- JQuery Datatables Js -->
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/media/js/dataTables.bootstrap.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/dataTables.buttons.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/buttons.bootstrap.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/buttons.flash.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/jszip.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/pdfmake.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/vfs_fonts.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/buttons.html5.min.js"></script>
-    <script src="themes/BsbAdmin/assets/plugins/DataTables/extensions/export/buttons.print.min.js"></script>
-
-    <!-- Peity Js -->
-    <script src="themes/BsbAdmin/assets/plugins/peity/jquery.peity.js"></script>
-
-    <!-- Custom Js -->
-    <script src="themes/BsbAdmin/assets/js/admin.js"></script>
-    <script src="themes/BsbAdmin/assets/js/pages/dashboard/dashboard.js"></script>
-    <script src="themes/BsbAdmin/assets/js/pages/ui/tooltips-popovers.js"></script>
-    <script src="themes/BsbAdmin/assets/js/pages/widgets/infobox.js"></script>
-
-
-
-</body>
-
-</html>
