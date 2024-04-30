@@ -55,12 +55,34 @@ class template
     {
 
     }
+
     static function plugins()
     {
     	//PLugins auslesen
 		
     }
-    static function dashboard($var)
+
+static function plugins()
+    {
+    	//PLugins auslesen
+		
+
+    public static function plugins()
+    {
+    	//PLugins auslesen
+		$Plugin = new Plugin();
+		$Plugin->Find_Plugins();
+		
+		foreach($Plugin->liste as $a)
+		{
+            echo '<li class="nav-item">
+            		<a class="nav-link" href="index.php?site=extras&show=' . $a[2] . '">
+            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
+            		' . $a[0] . '</a></li>
+            ';
+        }
+ }
+static function dashboard($var)
     {
         $language = Kernel::getLanguage();
         $lang = $language->translate();
@@ -121,4 +143,7 @@ class template
 			echo"0";
 		}
 	}
+
+}
+
 }
