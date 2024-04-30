@@ -6,7 +6,7 @@ use appleJuiceNETZ\Kernel;
 
 const PHP_GUI_VERSION = '0.29.2'; // only semver, without BETA or something like that
 
-# prepare for composer
+// prepare for composer
 if (file_exists(GUI_ROOT . '/vendor/autoload.php')) {
     require_once GUI_ROOT . '/vendor/autoload.php';
 } else {

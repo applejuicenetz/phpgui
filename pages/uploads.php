@@ -16,6 +16,7 @@ $lang = $language->translate();
 $Sharelist = new Share();
 $Uploadlist = new Uploads();
 $icon_img = new Icons();
+$subs = new subs();
 
 $Uploadlist->refresh_cache();
 
@@ -103,10 +104,7 @@ if($_GET['show_uplds']==1){
 				($current_upload['UPLOADTO'])
 				-($current_upload['UPLOADFROM']))."</td>";
 			echo "<td width=\"100\">";
-			echo '
-			<div class="progress mt-3">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$fortschritt.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
-                '.$fortschritt.' %</div>';
+			echo $subs->prozess_bar($fortschritt);
 			echo "<td class=\"right\">";
 			if(isset($current_upload['LOADED']) && $current_upload['LOADED'] != -1){
 				echo number_format($current_upload['LOADED']*100,2)."%";

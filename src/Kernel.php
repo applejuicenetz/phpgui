@@ -41,8 +41,8 @@ class Kernel
 
         date_default_timezone_set($_ENV['TZ'] ?? 'Europe/Berlin');
 
-        ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '0');
-        ini_set('display_errors', $_ENV['PHP_INI_DISPLAY_ERRORS'] ?? 'Off');
+        ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '1');
+        ini_set('display_errors', $_ENV['PHP_INI_DISPLAY_ERRORS'] ?? 'On');
     }
 
     public static function getLanguage(): Language
