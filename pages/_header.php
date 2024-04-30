@@ -134,9 +134,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             		' . $a[0] . '</a></li>
             ';
         }
- ?>
-         
-          </ul>
+  </ul>
         </li>
         
       </ul>
