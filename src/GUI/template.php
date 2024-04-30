@@ -112,6 +112,7 @@ class template
                 
     	}
     }
+    
     static function active($a)
     {
      if($a == $_GET['site'])
@@ -119,5 +120,16 @@ class template
     	echo ' active';
      }else{}
     }
-
+	
+	static function uploads()
+	{
+		$Uploadlist = new Uploads();
+		
+		if( $Uploadlist->cache['phpaj_ul'] > 0 )
+		{
+			echo'<span class="badge badge-sm bg-info ms-auto">' . $Uploadlist->cache['phpaj_ul'] . '</span>';
+		}else{
+			echo"0";
+		}
+	}
 }

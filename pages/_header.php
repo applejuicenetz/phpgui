@@ -86,7 +86,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
           <a class="nav-link<?php template::active("uploads"); ?>" href="index.php?site=uploads">
             <svg class="nav-icon">
               <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-            </svg> <?php echo $lang->Navigation->uploads; ?><span class="badge badge-sm bg-info ms-auto">NEW</span>
+            </svg> <?php echo $lang->Navigation->uploads; template::uploads(); ?>
            </a>
          </li>
          <li class="nav-item">
