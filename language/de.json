@@ -26,7 +26,8 @@
       "server": "Serverliste",
       "sharefiles": "geteilte Dateien",
       "extras": "Addons",
-      "dl_users": "Downloaddetails"
+      "dl_users": "Downloaddetails",
+      "404": "Error 404"
     },
     "version_1": "Neue Version verf&uuml;gbar!",
     "version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub gerunter und installiere das Update!"
@@ -35,20 +36,20 @@
     "current_server": "aktueller Server",
     "active_downloads": "aktive Downloads",
     "active_uploads": "aktive Uploads",
-    "share_dat": "geteilte Dateien",
+    "share_dat": "Dateien",
     "credits": "Punkte",
     "core_info": "Core Informationen",
     "server_time": "Server Zeit",
     "op_system": "Betriebssystem",
     "connected_since": "verbunden seit",
-    "open_connections": "offene Verbindungen",
-    "shared_users": "Anzahl Shared User",
+    "open_connections": "Verbindungen",
+    "shared_users": "Shared User",
     "all_data": "gesamte Dateien",
     "network_info": "Netzwerk Informationen",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
-    "download_speed": "Downloadgeschwindigkeit",
-    "upload_speed": "Uploadgeschwindigkeit"
+    "download_speed": "Download",
+    "upload_speed": "Upload"
   },
   "Navigation": {
     "dashboard": "Dashboard",
@@ -163,7 +164,8 @@
     "last_connection": "letzte Verbindung",
     "not_yet": "noch nicht verbunden",
     "login": "Login",
-    "delet": "L&ouml;schen"
+    "delet": "L&ouml;schen",
+    "no_server": "Keine Server gefunden"
   },
   "Settings": {
     "zipped": "Daten komprimiert vom Core holen",

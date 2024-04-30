@@ -2,16 +2,17 @@
 
 use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\GUI\GUI;
+use appleJuiceNETZ\GUI\template;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\GUI\Plugins;
 use appleJuiceNETZ\Kernel;
 
-//PLugins auslesen
-require_once GUI_ROOT . "/plugins/register.php";
-
-$Plugin =new Plugin();
-$Plugin->Find_Plugins();
 $gui = new GUI();
 $settings_gui = $gui->getDeviceConfig();
 
+//Templatedaten lesen
+$template= new template();
+$subs = new subs();
 //Core Settings auslesen
 $core = new Core();
 $settings_xml=$core->command("xml","settings.xml");
@@ -20,259 +21,198 @@ $settings_xml=$core->command("xml","settings.xml");
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
-function active($a){
-    if($a == $_GET["site"]){
-        $action = "class='active' ";
-        echo $action;
-    }else{
-
-    }
-}
-function activee($a){
-    if($a != $_GET["site"]){
-        $action = "collapse";
-        echo $action;
-    }
-}
-if (isset($_GET['site'])) {
-    $tab = ucfirst($_GET['site']);
-    $active ='';
-}else{
-    $active ='collapsed';
-}
-
+if( empty( $_GET['site'] ) ) $_GET['site'] = "start";                  
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html><!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v5.0.0
+* @link https://coreui.io/product/free-bootstrap-admin-template/
+* Copyright (c) 2024 creativeLabs ukasz Holeczek
+* Licensed under MIT (https://github.com/coreui/coreui-free-bootstrap-admin-template/blob/main/LICENSE)
+-->
 <html lang="de">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>appleJuice - phpGUI</title>
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CoreUI Free Bootstrap Admin Template</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendors styles-->
+    <link rel="stylesheet" href="themes/CoreUI/vendors/simplebar/css/simplebar.css">
+    <link rel="stylesheet" href="themes/CoreUI/css/vendors/simplebar.css">
+	<!-- Font Awesome Css -->
+    <link href="themes/CoreUI/assets/icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-
-    <!-- Animate.css Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/animate-css/animate.css" rel="stylesheet" />
-
-    <!-- Font Awesome Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-
-    <!-- iCheck Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/minimal/_all.css" rel="stylesheet" />
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet" />
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/flat/_all.css" rel="stylesheet" />
-
-
-    <!-- Switchery Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/switchery/dist/switchery.css" rel="stylesheet" />
-
-    <!-- Metis Menu Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/metisMenu/dist/metisMenu.css" rel="stylesheet" />
-
-    <!-- Jquery Datatables Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/DataTables/media/css/dataTables.bootstrap.css" rel="stylesheet" />
-
-    <!-- Pace Loader Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/pace/themes/white/pace-theme-flash.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="/themes/BsbAdmin/assets/css/style.css" rel="stylesheet" />
-
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="/themes/BsbAdmin/assets/css/themes/allthemes.css" rel="stylesheet" />
-</head>
-
-<body>
-    <div class="theme-<?php echo $settings_gui->GUI->theme; ?> all-content-wrapper">
-        <!-- Top Bar -->
-        <header>
-            <nav class="navbar navbar-default navbar-fixed">
-                <!-- Search Bar -->
-                <div class="search-bar">
-                    <div class="search-icon">
-                        <i class="material-icons">search</i>
-                    </div>
-                      <?php echo'
-<form method="post" action="" name="linkform">
-<input name="showlinkpage" type="hidden" value="1" />
-<input name="'.session_name().'" type="hidden" value="'.session_id().'" />
-        <input type="text" id="link"  name="ajfsp_link" placeholder="Link einfuegen" title="Enter search keyword">
-      </form>'; ?>
-                    <div class="close-search js-close-search">
-                        <i class="material-icons">close</i>
-                    </div>
-                </div>
-                <!-- #END# Search Bar -->
-
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                            <i class="material-icons">swap_vert</i>
-                        </button>
-                        <a href="javascript:void(0);" class="left-toggle-left-sidebar js-left-toggle-left-sidebar">
-                            <i class="material-icons">menu</i>
-                        </a>
-                        <!-- Logo -->
-                        <a class="navbar-brand" href="index.html">
-                            <span class="logo-minimized">AJ</span>
-                            <span class="logo">appleJuice - phpGUI</span>
-                        </a>
-                        <!-- #END# Logo -->
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a href="javascript:void(0);" class="toggle-left-sidebar js-toggle-left-sidebar">
-                                    <i class="material-icons">menu</i>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <!-- Call Search -->
-                            <li>
-                                <a href="javascript:void(0);" class="js-search" data-close="true">
-                                    <i class="material-icons">search</i>
-                                </a>
-                            </li>
-                            <!-- #END# Call Search -->
-                            <!-- Fullscreen Request -->
-                            <li>
-                                <a href="javascript:void(0);" onClick="window.location.reload()">
-                                    <i class="material-icons">refresh</i>
-                                </a>
-                            </li>
-                            <!-- #END# Fullscreen Request -->
-                            <!-- User Menu -->
-                            <li class="dropdown user-menu">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="https://cdn.pixabay.com/photo/2021/05/20/19/59/apple-6269548_1280.png" alt="Profile">
-            						<span class="hidden-xs"><?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?></span>
-        						</a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">
-                                        <img src="https://cdn.pixabay.com/photo/2021/05/20/19/59/apple-6269548_1280.png" alt="User Avatar" />
-                                        <div class="user">
-                                            <?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?>
-                                            
-                                        </div>
-                                    </li>
-                                    <li class="body">
-                                        <ul>
-                                            <li>
-                                                <a href="index.php?site=user_settings">
-                                                    <i class="material-icons">settings</i> <?php echo $lang->Navigation->user_settings; ?>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="footer">
-                                        <div class="row clearfix">
-                                            <div class="col-xs-5">
-                                                <a href="index.php?site=logout" class="btn btn-default btn-sm btn-block">Logout</a>
-                                            </div>
-                                            <div class="col-xs-2"></div>
-                                            <div class="col-xs-5">
-                                                <a href="index.php?site=kickcore" class="btn btn-default btn-sm btn-block"><?php echo $lang->Navigation->kick_core; ?></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- #END# User Menu -->
-                            
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <!-- #END# Top Bar -->
-        <!-- Left Menu -->
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <ul class="metismenu">
-                    <li class="title">
-                        
-                    </li>
-                    <li <?php active("start"); ?>>
-                    	<a href="index.php?site=start">
-                    		<i class="material-icons">dashboard</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->dashboard; ?></span>
-                    	</a>
-                    </li>
-                    <li <?php active("downloads"); ?>>
-                    	<a href="index.php?site=downloads">
-                    		<i class="material-icons">download</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->downloads; ?></span>
-                    	</a>
-                    </li>
-                    <li <?php active("uploads"); ?>>
-                    	<a href="index.php?site=uploads">
-                    		<i class="material-icons">upload</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
-                    	</a>
-                    </li>
-                    <li  <?php active("search"); ?>>
-                    	<a href="index.php?site=search">
-                    		<i class="material-icons">search</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->search; ?></span>
-                    	</a>
-                    </li>
-                    <li  <?php active("shares"); ?>>
-                    	<a href="index.php?site=shares">
-                    		<i class="material-icons">share</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->shares; ?></span>
-                    	</a>
-                    </li>
-                    <li  <?php active("server"); ?>>
-                    	<a href="index.php?site=server">
-                    		<i class="material-icons">dns</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->server_list; ?></span>
-                    	</a>
-                    </li>
-                    <li  <?php active("settings"); ?>>
-                    	<a href="index.php?site=settings">
-                    		<i class="material-icons">settings</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->settings; ?></span>
-                    	</a>
-                    </li>
-                    <li  <?php active("extras"); ?>>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">extension</i>
-                            <span class="nav-label"><?php echo $lang->Navigation->addons; ?></span>
-                        </a>
-                        <ul>
-                        <?php
-                    $phpaj_pluginurllist=array();
-
-                    // Links zu den plugins zeigen
-
-                  // Links zu den plugins zeigen
-
-                    foreach($Plugin->liste as $a){
-                        echo '<li>
-                        <a href="index.php?site=extras&show='.$a[2].'">
-                           '.$a[0].'
-                        </a>
-                    </li>';
-                    }
-
-                    ?>
-                        </ul>
-                    </li>
+    <!-- Main styles for this application-->
+    <link href="themes/CoreUI/css/style.css" rel="stylesheet">
+    <script src="themes/CoreUI/js/config.js"></script>
+    <script src="themes/CoreUI/js/color-modes.js"></script>
+  </head>
+  <body>
+    <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
+      <div class="sidebar-header border-bottom">
+        <div class="sidebar-brand">
+          <svg class="sidebar-brand-full" width="88" height="32" alt="CoreUI Logo">
+            <use xlink:href="assets/brand/coreui.svg#full"></use>
+          </svg>
+          <svg class="sidebar-brand-narrow" width="32" height="32" alt="CoreUI Logo">
+            <use xlink:href="assets/brand/coreui.svg#signet"></use>
+          </svg>
+        </div>
+        <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
+      </div>
+      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+        <li class="nav-item">
+          <a class="nav-link<?php template::active("start"); ?>" href="index.php?site=start">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->dashboard; ?>
+           </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link<?php template::active("downloads"); ?>" href="index.php?site=downloads">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->downloads; ?>
+           </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link<?php template::active("uploads"); ?>" href="index.php?site=uploads">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->uploads; template::uploads(); ?>
+           </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link<?php template::active("search"); ?>" href="index.php?site=search">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->search; ?>
+           </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link<?php template::active("shares"); ?>" href="index.php?site=shares">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->shares; ?>
+           </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link <?php template::active("server"); ?>" href="index.php?site=server">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->server_list; ?>
+           </a>
+         </li>
+         <li class="nav-item active">
+          <a class="nav-link<?php template::active("settings"); ?>" href="index.php?site=settings">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> <?php echo $lang->Navigation->settings; ?>
+           </a>
+         </li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
+            </svg> <?php echo $lang->Navigation->addons; ?></a>
+          <ul class="nav-group-items compact">
+         <?php $Plugin = new Plugins();
+		$Plugin->Find_Plugins();
+		
+		foreach($Plugin->liste as $a)
+		{
+            echo '<li class="nav-item">
+            		<a class="nav-link" href="index.php?site=extras&show=' . $a[2] . '">
+            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
+            		' . $a[0] . '</a></li>
+            ';
+        }
+ ?>
+         
+          </ul>
+        </li>
+        
+      </ul>
+      <div class="sidebar-footer border-top d-none d-md-flex">
+        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+      </div>
+    </div>
+    <div class="wrapper d-flex flex-column min-vh-100">
+      <header class="header header-sticky p-0 mb-4">
+        <div class="container-fluid border-bottom px-4">
+          <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()" style="margin-inline-start: -14px;">
+            <svg class="icon icon-lg">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+            </svg>
+          </button>
+          <ul class="header-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" onClick="window.location.reload()">
+                <svg class="icon icon-lg">
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>
+                </svg></a></li>
+            <li class="nav-item"><a class="nav-link" href="" data-coreui-toggle="modal" data-coreui-target="#search">
+                <svg class="icon icon-lg">
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
+                </svg></a></li>
+           </ul>
+          <ul class="header-nav">
+            <li class="nav-item py-1">
+              <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
+           </li>
+            <li class="nav-item dropdown">
+              <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
+                <svg class="icon icon-lg theme-icon-active">
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-contrast"></use>
+                </svg>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
+                <li>
+                  <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="light">
+                    <svg class="icon icon-lg me-3">
+                      <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-sun"></use>
+                    </svg>Light
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="dark">
+                    <svg class="icon icon-lg me-3">
+                      <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-moon"></use>
+                    </svg>Dark
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item d-flex align-items-center active" type="button" data-coreui-theme-value="auto">
+                    <svg class="icon icon-lg me-3">
+                      <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-contrast"></use>
+                    </svg>Auto
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item py-1">
+              <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
+            </li>
+            <li class="nav-item dropdown"><a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-md"><img class="avatar-img" src="themes/CoreUI/assets/img/avatars/8.jpg"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end pt-0">
+                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"><?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?></div>
+                <a href="index.php?site=logout" class="dropdown-item">Logout</a>  <a class="dropdown-item" href="#">
+                <a class="dropdown-item"  data-coreui-toggle="modal" data-coreui-target="#coreexit"><?php echo $lang->Navigation->kick_core; ?></a>
                     
-                </ul>
-            </nav>
-        </aside>
-        <!-- #END# Left Menu -->
-        <section class="content <?php echo $_GET["site"]; ?>">
-            <!-- Dashboard Heading -->
-            				<!-- Search Ausgabe -->
+                   </li>
+                   </ul>
+        </div>
+        <div class="container-fluid px-4">
+        <?php template::bread($_GET['site'], subs::get_title($_GET['site'])); ?>
+        </div>
+      </header>
+      <div class="body flex-grow-1">
+        <div class="container-lg px-4">

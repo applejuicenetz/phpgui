@@ -2,6 +2,9 @@
 
 namespace appleJuiceNETZ\appleJuice;
 
+use appleJuiceNETZ\GUI\subs;
+
+
 class Uploads
 {
     var $cache;
@@ -14,59 +17,58 @@ class Uploads
     }
 
     //stand der daten
-    function time()
+    function time(): string
     {
         return date("j.n.y - H:i:s",
             ($this->cache['TIME']['VALUES']['CDATA']) / 1000);
     }
 
     //neue infos vom core holen
-    function refresh_cache()
+    function refresh_cache(): void
     {
         //liste mit alten ids l�schen
         if (!empty($this->cache['IDS']))
             unset($this->cache['IDS']);
         if (empty($this->cache['LASTTIMESTAMP']))
             $this->cache['LASTTIMESTAMP'] = 0;
-        $this->cache =
-            $this->core->command("xml", "modified.xml?timestamp="
-                . $this->cache['LASTTIMESTAMP'] . "&filter=uploads;ids", $this->cache);
+        
+        $this->cache = $this->core->command("xml", "modified.xml?timestamp=" . $this->cache['LASTTIMESTAMP'] . "&filter=uploads;ids", $this->cache);
         //timestamp f�r n�chste abfrage
         $this->cache['LASTTIMESTAMP'] = $this->cache['TIME']['VALUES']['CDATA'];
         $this->process_uploads();
     }
 
-    function process_uploads()
+    function process_uploads(): void
     {
-        //listen zuruecksetzen
-        $this->cache['phpaj_ul'] = 0;
-        $this->cache['phpaj_ids_ul'] = array();
-        $this->cache['phpaj_queue'] = 0;
-        $this->cache['phpaj_ids_queue'] = array();
-        if (!empty($this->cache['UPLOAD'])) {
-            foreach (array_keys($this->ids()) as $a) {
-                //ueberprfen, ob ids noch existieren, wenn nicht -> loeschen
-                if (empty($this->cache['IDS']['VALUES']['UPLOADID'][$a])) {
-                    unset($this->cache['UPLOAD'][$a]);
-                    continue;
-                }
-                $current_upload = $this->get_upload($a);
-                if ($current_upload['STATUS'] === "1") {
-                    //laufende uploads
-                    $this->cache['phpaj_ul']++;
-                    array_push($this->cache['phpaj_ids_ul'],
-                        $current_upload['ID']);
-                } else {
-                    //warteschlange
-                    $this->cache['phpaj_queue']++;
-                    array_push($this->cache['phpaj_ids_queue'],
-                        $current_upload['ID']);
-                }
-            }
-        }
-    }
+		//listen zuruecksetzen
+			$this->cache['phpaj_ul']=0;
+			$this->cache['phpaj_ids_ul']=array();
+			$this->cache['phpaj_queue']=0;
+			$this->cache['phpaj_ids_queue']=array();
+		if(!empty($this->cache['UPLOAD'])){
+			foreach(array_keys($this->ids()) as $a){
+				//ueberprfen, ob ids noch existieren, wenn nicht -> loeschen
+				if(empty($this->cache['IDS']['VALUES']['UPLOADID'][$a])){
+					unset($this->cache['UPLOAD'][$a]);
+					continue;
+				}
+				$current_upload=$this->get_upload($a);
+				if($current_upload['STATUS']==="1"){
+					//laufende uploads
+					$this->cache['phpaj_ul']++;
+					array_push($this->cache['phpaj_ids_ul'],
+						$current_upload['ID']);
+				}else{
+					//warteschlange
+					$this->cache['phpaj_queue']++;
+					array_push($this->cache['phpaj_ids_queue'],
+						$current_upload['ID']);
+				}
+			}
+		}
+	}
 
-    function ids()
+    function ids(): array
     {
         $liste = array();
         if (!empty($this->cache['UPLOAD']))

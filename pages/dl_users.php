@@ -123,8 +123,8 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3"></td>
-				<td colspan="6">
+				<td colspan="4"></td>
+				<td colspan="5">
 					'.$lang->Downloads->user_source.'
 				</td>
 			</tr>';
@@ -173,8 +173,8 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3"></td>
-				<td colspan="6">
+				<td colspan="4"></td>
+				<td colspan="5">
 					'.$lang->Downloads->user_source.'
 				</td>
 			</tr>';
