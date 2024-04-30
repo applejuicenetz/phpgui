@@ -1,11 +1,14 @@
 <?php
 
+use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\appleJuice\Search;
 use appleJuiceNETZ\GUI\subs;
 use appleJuiceNETZ\GUI\template;
 use appleJuiceNETZ\Kernel;
 
+$core = new Core();
 $Search = new Search();
+$subs = new subs;
 $template = new template();
 
 //Language
@@ -78,6 +81,45 @@ if(!empty($_GET['deleteall'])){
 
 if($_GET['searchid'] == "alles"){
 	$active_all = "active";
+}
+// Datei download
+if( !empty( $_GET['link'] ) )
+{
+	$linkss = $_GET['link'];
+
+	$regexe = [
+        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)/#',
+
+        // ajfsp://server|knastbruder.applejuicenet.de|9855/
+        '#ajfsp://(server)\|([^|]*)\|([\d]{1,5})/#',
+
+        // ajfsp://file|ajcore-0.31.149.110.so|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}/#',
+
+        // ajfsp://file|ajcore-0.31.149.110.jar|653f4d793595e65bbbe58c0c55620589|313164|123.123.123.123:9850:knastbruder.applejuicenet.de:9855/
+        '#ajfsp://(file)\|([^|]*)\|([a-z0-9]{32})\|([\d]*)\|[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}:[\d]{1,5}:[^:]*:[\d]{1,5}/#',
+    ];
+
+	$links = [];
+	foreach ($regexe as $regex) {
+        preg_match_all($regex, urldecode($linkss), $matches, PREG_SET_ORDER);
+        $links = array_merge($links, $matches);
+    }
+
+foreach ($links as $link) {
+
+        //Infos fr Dateilink anzeigen + im hauptfenster die downloads zeigen
+        if ('file' === $link[1]) {
+
+            $text = htmlspecialchars($link[2]) . ' (' . subs::sizeformat($link[4]) . ')';
+
+            if ($core->command('function', 'processlink?link=' . urlencode($link[0])) == "ok") {
+                $template->alert("success", $lang->Downloads->get_start, $text);
+            }
+
+        }
+}    
 }
 //Searchcontent
 	//Suchformular
@@ -217,7 +259,7 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 			.$cur_search['phpaj_COUNT']
 			."\n</td>";
 		//ajfsp-link zu datei
-		echo "<td><a href=\"".$ajfsp_link."\">ajfsp-link</a></td></tr>\n\n";
+		echo "<td><a class='btn btn-success' href=\"?site=search&link=".$ajfsp_link."\">download</a></td></tr>\n\n";
 	}
 }
 

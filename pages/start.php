@@ -22,21 +22,15 @@ $template = new template();
 $Uploadlist = new Uploads();
 $Sharelist = new Share();
 
+//Cache laden
+$subs::refresh_cache();
 //Info holen
-$statusbar_xml = $core->command("xml", "modified.xml?filter=informations");
-$temp = array_keys($statusbar_xml['INFORMATION']);
-$information =& $statusbar_xml['INFORMATION'][$temp[0]];
-$temp2 = array_keys($statusbar_xml['NETWORKINFO']);
-$netinfo =& $statusbar_xml['NETWORKINFO'][$temp2[0]];
+$modified = $core->command("xml", "modified.xml?filter=informations");
+$temp = array_keys($modified['INFORMATION']);
+$information =& $modified['INFORMATION'][$temp[0]];
+$temp2 = array_keys($modified['NETWORKINFO']);
+$netinfo =& $modified['NETWORKINFO'][$temp2[0]];
 
-//Serververbindung?
-$serverconnection = $_SESSION['language']['SERVER']['STATUS_NOT_CONNECTED'];
-if ($netinfo['CONNECTEDWITHSERVERID'] >= 0) {
-    $serverconnection = $_SESSION['language']['SERVER']['STATUS_CONNECTED'];
-} else {
-    if ($netinfo['TRYCONNECTTOSERVER'] >= 0)
-        $serverconnection = $_SESSION['language']['SERVER']['STATUS_CONNECTING'];
-}
 
 $_SESSION['phpaj']['core_source_ip'] = $netinfo['IP'];
 if (empty($_SESSION['phpaj']['core_source_port'])) {
@@ -50,7 +44,6 @@ if (isset($information['MAXUPLOADPOSITIONS'])) {
 }
 
 //Warnungen
-$warnungen = array();
 if ($Servers->netstats['firewalled'] === 'true') {
     $template->alert("danger", $lang->System->warnung, $lang->System->firewall);
 }
@@ -100,7 +93,9 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 <div class="content">
                     <div class="text"><?php echo $lang->Start->active_uploads; ?></div>
                     <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20">
-                        <?php echo $Uploadlist->cache['phpaj_ul']; ?>
+                        <?php 
+                        	 
+                        echo $Uploadlist->cache['phpaj_ul']; ?>
                     </div>
                 </div>
             </div>

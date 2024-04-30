@@ -11,7 +11,7 @@ $lang = $language->translate();
 $icon_img =new Icons();
 $Downloadlist = new Downloads();
 
-if(empty($_GET['sort'])) $_GET['sort']="name";
+if(empty($_GET['sort'])) $_GET['sort']="status";
 
 echo "<script>
 var dl_ids = [];		//download ausgewaehlt?
@@ -158,12 +158,12 @@ function togglesubdir(dircounter){
 		while(z!=null){
 			z.style.display='none';
 			z=zeilen.shift();}
-		bild.setAttribute('src','../style/".$_SESSION['plus_icon']."');
+		bild.setAttribute('src','');
 	}else{
 		while(z!=null){
 			z.style.display='';
 			z=zeilen.shift();}
-		bild.setAttribute('src','../style/".$_SESSION['minus_icon']."');
+		bild.setAttribute('src','');
 	}
 }
 
@@ -276,7 +276,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 			//Dateiname
 			echo "<td id=\"nametd_$a\">"
 				."<a href=\"javascript:rename($a)\" title=\"".$lang->Downloads->rename."\">";
-			echo htmlspecialchars($current_download['FILENAME'])."</a></td>\n";
+			echo $current_download['FILENAME'] . "</a></td>\n";
 
            
 
@@ -307,11 +307,8 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 				else
 					printf("%.1fd",$stunden/24);
 			}
-			echo'</td><td>';
-							echo '<div class="progress mt-3">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
-                '.$balken.' %</div>
-              </div></td><td>';
+			echo'</td><td>'
+				. $subs->prozess_bar($balken) . '</td><td>';
             
 			
 			echo "</td>";

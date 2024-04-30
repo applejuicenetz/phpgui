@@ -58,44 +58,41 @@ if (isset($_GET['site'])) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
     <!-- Animate.css Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Font Awesome Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- iCheck Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/minimal/_all.css" rel="stylesheet" />
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet" />
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/flat/_all.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/iCheck/skins/minimal/_all.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/iCheck/skins/flat/_all.css" rel="stylesheet" />
 
 
     <!-- Switchery Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/switchery/dist/switchery.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/switchery/dist/switchery.css" rel="stylesheet" />
 
     <!-- Metis Menu Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/metisMenu/dist/metisMenu.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/metisMenu/dist/metisMenu.css" rel="stylesheet" />
 
     <!-- Jquery Datatables Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/DataTables/media/css/dataTables.bootstrap.css" rel="stylesheet" />
-
-    <!-- Pace Loader Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/pace/themes/white/pace-theme-flash.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/plugins/DataTables/media/css/dataTables.bootstrap.css" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="/themes/BsbAdmin/assets/css/style.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/css/style.css" rel="stylesheet" />
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="/themes/BsbAdmin/assets/css/themes/allthemes.css" rel="stylesheet" />
+    <link href="themes/BsbAdmin/assets/css/themes/allthemes.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="theme-<?php echo $settings_gui->GUI->theme; ?> all-content-wrapper">
         <!-- Top Bar -->
         <header>
-            <nav class="navbar navbar-default navbar-fixed">
+            <nav class="navbar navbar-default">
                 <!-- Search Bar -->
                 <div class="search-bar">
                     <div class="search-icon">
@@ -115,6 +112,7 @@ if (isset($_GET['site'])) {
 
                 <div class="container-fluid">
                     <div class="navbar-header">
+                    	
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="material-icons">swap_vert</i>
                         </button>
@@ -181,7 +179,7 @@ if (isset($_GET['site'])) {
                                             </div>
                                             <div class="col-xs-2"></div>
                                             <div class="col-xs-5">
-                                                <a href="index.php?site=kickcore" class="btn btn-default btn-sm btn-block"><?php echo $lang->Navigation->kick_core; ?></a>
+                                             <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#defaultModal"><?php echo $lang->Navigation->kick_core; ?></a>
                                             </div>
                                         </div>
                                     </li>
@@ -217,7 +215,7 @@ if (isset($_GET['site'])) {
                     <li <?php active("uploads"); ?>>
                     	<a href="index.php?site=uploads">
                     		<i class="material-icons">upload</i>
-                    		<span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
+                            <span class="nav-label"><?php echo $lang->Navigation->uploads; ?></span>
                     	</a>
                     </li>
                     <li  <?php active("search"); ?>>

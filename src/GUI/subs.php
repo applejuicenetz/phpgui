@@ -3,6 +3,8 @@
 namespace appleJuiceNETZ\GUI;
 
 use appleJuiceNETZ\Kernel;
+use appleJuiceNETZ\appleJuice\Uploads;
+use appleJuiceNETZ\appleJuice\Downloads;
 
 class subs
 {
@@ -33,7 +35,7 @@ class subs
         return $news_file;
     }
 
-    function get_title($site)
+    static function get_title($site)
     {
         $language = Kernel::getLanguage();
         $lang = $language->translate();
@@ -46,10 +48,16 @@ class subs
         $balken = round($balken, 2);
         return '<span class="pie">' . $balken . '/100</span><br>' . $balken . '%';
     }
-
+	function prozess_bar($balken)
+	{
+		return '<div class="progress mt-3">
+                <div class="progress-bar progress-bar-success progress-bar-striped active col-black" style="width: ' . $balken . '%">
+                '  .$balken . ' %</div>
+              </div>';	
+	}
     function dl_source($wert)
     {
-        $language = new Language($_ENV['GUI_LANGUAGE']);
+        $language = Kernel::getLanguage();
         $lang = $language->translate();
 
         if ($wert == 1) $wert = $lang->Downloads->dl_source->src_1;
@@ -103,15 +111,16 @@ class subs
 
 
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
-    public static function sizeformat($bytesize)
+	public static function sizeformat($bytes, $precision = 2)
     {
-        $i = 0;
-        while (abs($bytesize) >= 1024 && $i < 6) {
-            $bytesize /= 1024;
+    	$i = 0;
+        while (abs($bytes) >= 1024 && $i < 6) {
+            $bytes /= 1024;
             $i++;
         }
-        $bezeichnung = ['Bytes', "KB", "MB", "GB", "TB", "PB", "EB"];
-        $newsize = ($i > 0) ? number_format($bytesize, 2) : (int)$bytesize;
+
+        $bezeichnung = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
+        $newsize = ($i > 0) ? number_format($bytes, $precision) : (int)$bytes;
         return ("$newsize $bezeichnung[$i]");
     }
 
@@ -139,6 +148,14 @@ class subs
         echo '<pre>';
         print_r($data);
         die;
+    }
+    static function refresh_cache()
+    {
+    	$Uploadlist = new Uploads();
+    	$Downloadlist = new Downloads();
+    	
+    	$Uploadlist->refresh_cache();
+    	$Downloadlist->refresh_cache();
     }
 }
 

@@ -24,16 +24,12 @@ $template = new template();
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet"/>
 
     <!-- Bootstrap Core Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="themes/BsbAdmin/assets/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 
     <!-- Font Awesome Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
-
-    <!-- iCheck Css -->
-    <link href="/themes/BsbAdmin/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet"/>
-
-    <!-- Custom Css -->
-    <link href="/themes/BsbAdmin/assets/css/style.css" rel="stylesheet"/>
+    <link href="themes/BsbAdmin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+<!-- Custom Css -->
+    <link href="themes/BsbAdmin/assets/css/style.css" rel="stylesheet"/>
 </head>
 <body class="sign-in-page">
     <div class="signin-form-area">
@@ -87,18 +83,18 @@ $template = new template();
     </div>
 
     <!-- Jquery Core Js -->
-    <script src="/themes/BsbAdmin/assets/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="themes/BsbAdmin/assets/plugins/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="/themes/BsbAdmin/assets/plugins/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="themes/BsbAdmin/assets/plugins/bootstrap/dist/js/bootstrap.js"></script>
 
     <!-- iCheck Js -->
-    <script src="/themes/BsbAdmin/assets/plugins/iCheck/icheck.js"></script>
+    <script src="themes/BsbAdmin/assets/plugins/iCheck/icheck.js"></script>
 
     <!-- Jquery Validation Js -->
-    <script src="/themes/BsbAdmin/assets/plugins/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="themes/BsbAdmin/assets/plugins/jquery-validation/dist/jquery.validate.js"></script>
 
     <!-- Custom Js -->
-    <script src="/themes/BsbAdmin/assets/js/pages/examples/signin.js"></script>
+    <script src="themes/BsbAdmin/assets/js/pages/examples/signin.js"></script>
 </body>
 </html>
