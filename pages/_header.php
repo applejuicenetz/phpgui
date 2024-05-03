@@ -37,7 +37,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>CoreUI Free Bootstrap Admin Template</title>
+    <title>appleJuice - phpGUI</title>
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
@@ -61,11 +61,14 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
-          appleJuice <br>
-Flux 
-          <svg class="sidebar-brand-narrow" width="32" height="32" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#signet"></use>
-          </svg>
+        	<div class="sidebar-brand-full">
+    		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/Apple_Icon.svg" width="88" height="32">
+    		<br>
+    		<span class="sidebar-brand-full">Flux</span>
+    		</div>
+    		<img class="sidebar-brand-narrow" src="themes/CoreUI/assets/brand/Apple_Icon.svg" width="32" height="32">
+    		<br>
+    		<span class="sidebar-brand-narrow">Flux</span>
         </div>
         <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
       </div>
