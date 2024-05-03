@@ -45,11 +45,7 @@ class subs
         return $lang->System->pagetitle->$site;
     }
 
-    function prozess($balken)
-    {
-        $balken = round($balken, 2);
-        return '<span class="pie">' . $balken . '/100</span><br>' . $balken . '%';
-    }
+    
 	function prozess_bar($balken)
 	{
 		return '<div class="progress mt-3">

@@ -42,84 +42,103 @@ $settings_xml=$core->command("xml","settings.xml");
 
 $_SESSION['phpaj']['core_source_port']=$settings_xml['PORT']['VALUES']['CDATA'];
 
-//standardeinstellungen
-echo'<div class="row clearfix">
-		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="standard">
-		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading bg-success"><i class="fa fa-gear"></i> Standart Einstellungen</div>
-                <div class="panel-body">
-                	<div class="form-group">
-                        <label>'.$lang->Settings->tempdir.'</label>
-                        <input type="text" class="form-control" id="tempdir" name="tempdir" value="'.htmlspecialchars($settings_xml["TEMPORARYDIRECTORY"]["VALUES"]["CDATA"]).'" />
-                    </div>
-                    <div class="form-group">
-                        <label>'.$lang->Settings->incomingdir.'</label>
-                        <input type="text" class="form-control" id="incdir" name="incdir" value="'.htmlspecialchars($settings_xml["INCOMINGDIRECTORY"]["VALUES"]["CDATA"]).'" />
-                    </div>
-                    <div class="form-group">
-                        <label>'.$lang->Settings->port.'</label>
-                        <input type="number" class="form-control" id="c_port" name="c_port" value="'.$settings_xml['PORT']['VALUES']['CDATA'].'" disabled />
-                    </div>
-                    <div class="form-group">
-                        <label>'.$lang->Settings->xml_port.'</label>
-                        <input type="number" class="form-control" id="c_xml_port" name="c_xml_port" value="'.$settings_xml['XMLPORT']['VALUES']['CDATA'].'" disabled />
-                    </div>
-                    <div class="form-group">
-                        <label>' . $lang->Settings->nick . '</label>
-                        <input type="text" class="form-control" id="nick" name="nick" value="' . htmlspecialchars($settings_xml['NICK']['VALUES']['CDATA']) . '" />
-                    </div>
-                    
-                    <input type="hidden" name="change" value="standard" />
-            		<button type="submit" class="btn btn-lg btn-success pull-right">'.$lang->Settings->save.'</button>
-                                    
-           
-                </div>
-            </div>
-        </div>
-        </form>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                <div class="panel-heading bg-success"><i class="fa fa-gear"></i> Verbindungs Einstellungen</div>
-                <div class="panel-body">
-                	<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection">
-                		<div class="form-group">
-                			<label>'.$lang->Settings->max_connections.'</label>
-                			<input type="text" class="form-control" id="maxcon" name="maxcon" value="'.$settings_xml["MAXCONNECTIONS"]["VALUES"]["CDATA"].'">
-                		</div>
-                		<div class="form-group">
-                			<label>'.$lang->Settings->max_ul.'</label>
-                			<input type="text" class="form-control" id="maxul" name="maxul" value="'.($settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"] / 1024).'">
-                		</div>
-                		<div class="form-group">
-                			<label>'.$lang->Settings->speed_per_slot.'</label>
-                			<input type="text" class="form-control" id="uls" name="uls" value="'.$settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"].'">
-                		</div>
-                		<div class="form-group">
-                			<label>'.$lang->Settings->max_dl.'</label>
-                			<input type="text" class="form-control" id="maxdl" name="maxdl" value="'.($settings_xml["MAXDOWNLOAD"]["VALUES"]["CDATA"] / 1024).'">
-                		</div>
-                		<div class="form-group">
-                			<label>'.$lang->Settings->max_connections_per_turn.'</label>
-                			<input type="text" class="form-control" id="conturn" name="conturn" value="'.$settings_xml["MAXNEWCONNECTIONSPERTURN"]["VALUES"]["CDATA"].'">
-                		</div>
-                		<div class="form-group">
-                			<label>'.$lang->Settings->max_dl_src.'</label>
-                			<input type="text" class="form-control" id="maxdlsrc" name="maxdlsrc" value="'.$settings_xml["MAXSOURCESPERFILE"]["VALUES"]["CDATA"].'">
-                		</div>
-                		<div class="form-group">';
-                		
-                		if($settings_xml['AUTOCONNECT']['VALUES']['CDATA']=='true') $checked = "checked";
+//Variablen kuerzen
+$tempdir = htmlspecialchars($settings_xml["TEMPORARYDIRECTORY"]["VALUES"]["CDATA"]);
+$incdir = htmlspecialchars($settings_xml["INCOMINGDIRECTORY"]["VALUES"]["CDATA"]);
+$port = $settings_xml['PORT']['VALUES']['CDATA'];
+$xml_port = $settings_xml['XMLPORT']['VALUES']['CDATA'];
+$nick = htmlspecialchars($settings_xml["NICK"]["VALUES"]["CDATA"]);
 
-                           echo'<input type="checkbox" class="js-switch" id="aconnect" name="autoconnect" value="true" '.$checked.' />
-                           '.$lang->Settings->autoconnect.'
-                        </div>
-                        <input type="hidden" name="change" value="connection" />
-                		<button type="submit" class="btn btn-lg btn-success pull-right">'.$lang->Settings->save.'</button>
-                    
+$maxcon = $settings_xml["MAXCONNECTIONS"]["VALUES"]["CDATA"];
+$maxul = $settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"] / 1024;
+$uls = $settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"];
+$maxdl = $settings_xml["MAXDOWNLOAD"]["VALUES"]["CDATA"] / 1024;
+$conturn = $settings_xml["MAXNEWCONNECTIONSPERTURN"]["VALUES"]["CDATA"];
+$maxdlsrc = $settings_xml["MAXSOURCESPERFILE"]["VALUES"]["CDATA"];
+
+if($settings_xml['AUTOCONNECT']['VALUES']['CDATA']=='true') $checked = "checked";
+
+//standardeinstellungen
+echo'<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-sx-12">
+		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="standard"  class="form-floating">
+			<div class="card mb-4">
+				<div class="card-header">
+				' . $lang->Settings->head_all . '
+				</div>
+				<div class="card-body">
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="tempdir" name="tempdir" value="' . $tempdir . '">
+						<label for="floatingInput">' . $lang->Settings->tempdir . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="incdir" name="incdir" value="' . $incdir . '">
+						<label for="floatingInput">' . $lang->Settings->incomingdir . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="number" class="form-control" id="c_port" name="c_port" value="' . $port . '">
+						<label for="floatingInput">' . $lang->Settings->port . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="number" class="form-control" id="c_xml_port" name="c_xml_port" value="' . $xml_port . '">
+						<label for="floatingInput">' . $lang->Settings->xml_port . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="nick" name="nick" value="' . $nick . '">
+						<label for="floatingInput">' . $lang->Settings->nick . '</label>
+					</div>
+					
+				</div>
+				<div class="card-footer">
+					<input type="hidden" name="change" value="standard" />
+            		<button type="submit" class="btn btn-sm btn-primary pull-right">'.$lang->Settings->save.'</button>
                 </div>
-            </div>
-        </div>
+			</div>
+		</div>
         </form>
-	</div>';
+        <div class="col-lg-6 col-md-6 col-sm-12 col-sx-12">
+		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection"  class="form-floating">
+			<div class="card">
+				<div class="card-header">
+				' . $lang->Settings->head_con . '
+				</div>
+				<div class="card-body">
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="maxcon" name="maxcon" value="' . $maxcon . '">
+						<label for="floatingInput">' . $lang->Settings->max_connections . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="maxul" name="maxul" value="' . $maxul . '">
+						<label for="floatingInput">' . $lang->Settings->max_ul . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="number" class="form-control" id="uls" name="uls" value="' . $uls . '">
+						<label for="floatingInput">' . $lang->Settings->speed_per_slot . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="number" class="form-control" id="maxdl" name="maxdl" value="' . $maxdl . '">
+						<label for="floatingInput">' . $lang->Settings->max_dl . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="conturn" name="conturn" value="' . $conturn . '">
+						<label for="floatingInput">' . $lang->Settings->max_connections_per_turn . '</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="maxdlsrc" name="maxdlsrc" value="' . $maxdlsrc . '">
+						<label for="floatingInput">' . $lang->Settings->max_dl_src . '</label>
+					</div>
+					<div class="form mb-3">
+							<input type="checkbox" class="switch" id="aconnect" name="autoconnect" value="true" '.$checked.' />
+							<label class="align-middle">' . $lang->Settings->autoconnect . '</label>
+						
+					</div>
+				</div>
+				<div class="card-footer">
+					<input type="hidden" name="change" value="connection" />
+            		<button type="submit" class="btn btn-sm btn-primary pull-right">'.$lang->Settings->save.'</button>
+                </div>
+			</div>
+        </form>
+    </div>
+</div>';
 

@@ -26,63 +26,27 @@ class template
         ';
     }
 
-    function bread2($a)
-    {
-        $tab = ucfirst($a);
-        foreach ($_GET as $key => $value) {
-            $sub = substr($_GET["$key"], 0, strpos($_GET["$key"], '/'));
-            return '<li class="breadcrumb-item active">' . ucfirst($sub) . '</li>';
-        }
-    }
-
-    function alert($alert, $strong, $text)
+    public static function alert($alert, $strong, $text)
     {
         // $alert = success, warning, danger, info
         if ($alert == "success") $icon = "check-circle";
         if ($alert == "info") $icon = "info-circle";
         if ($alert == "warning") $icon = "exclamation-triangle";
         if ($alert == "danger") $icon = "exclamation-triangle";
-
-        echo ' <div class="alert alert-' . $alert . '" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <i class="fa fa-fw fa-' . $icon . '"></i>
-                                    <strong>' . $strong . '</strong> ' . $text . '
-                                </div>
-                               ';
+		
+		echo '<div class="alert alert-' . $alert . ' alert-dismissible fade show" role="alert">
+				<i class="fa fa-fw fa-' . $icon . '"></i>
+				<strong>' . $strong . '</strong> ' . $text . '
+				<button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+			  </div>';
     }
 
     function errors()
     {
 
     }
-
-    static function plugins()
-    {
-    	//PLugins auslesen
-		
-    }
-
-static function plugins()
-    {
-    	//PLugins auslesen
-		
-
-    public static function plugins()
-    {
-    	//PLugins auslesen
-		$Plugin = new Plugin();
-		$Plugin->Find_Plugins();
-		
-		foreach($Plugin->liste as $a)
-		{
-            echo '<li class="nav-item">
-            		<a class="nav-link" href="index.php?site=extras&show=' . $a[2] . '">
-            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
-            		' . $a[0] . '</a></li>
-            ';
-        }
- }
-static function dashboard($var)
+    
+    static function dashboard($var)
     {
         $language = Kernel::getLanguage();
         $lang = $language->translate();
@@ -93,11 +57,42 @@ static function dashboard($var)
             $Downloadlist->refresh_cache();
             $subdircounter = 0;
             //alle downloads zeigen
-            foreach (array_keys($Downloadlist->subdirs) as $subdir) {
+            foreach (array_keys($Downloadlist->subdirs) as $a) {
                 $subdircounter++;
-                $downloadids = $Downloadlist->ids("", $subdir); //ids der downloads sortiert holen
+                $downloadids = $Downloadlist->ids("status", $a); //ids der downloads sortiert holen
+            			    
             }
-            echo count($downloadids);
+            $str = array("0", "0_1", "1", "12", "13", "15", "16", "17");
+            $str2 = array("14");
+            
+            $all = count (array_diff($downloadids, $str2)); //laufen
+            $load = count (array_diff($downloadids, $str));
+            
+            echo $load . '/' .$all;
+           
+                        	
+    	}
+    	if($var == "download_finish")
+    	{
+    	    $Downloadlist = new Downloads();
+            $Downloadlist->refresh_cache();
+            $subdircounter = 0;
+            //alle downloads zeigen
+            foreach (array_keys($Downloadlist->subdirs) as $a) {
+                $subdircounter++;
+                $downloadids = $Downloadlist->ids("status", $a); //ids der downloads sortiert holen
+            			    
+            }
+            $str = array("0", "0_1", "0_2", "1", "12", "13", "15", "16", "17");
+             $str2 = array("14");
+            
+            $all = count (array_diff($downloadids, $str2)); //laufen;
+            $finish = count (array_diff($downloadids, $str)); // fertig
+            
+            $count = $finish / $all * 100;
+            
+            echo $count;
+            
                         	
     	}
     	if($var == "share")
@@ -140,10 +135,14 @@ static function dashboard($var)
 		{
 			echo'<span class="badge badge-sm bg-info ms-auto">' . $Uploadlist->cache['phpaj_ul'] . '</span>';
 		}else{
-			echo"0";
+		
 		}
 	}
-
-}
-
+	public static function js_file($site)
+	{
+		if (file_exists(GUI_ROOT . "/vendor/js/" . $site . ".js"))
+		{
+    		echo'<script src="vendor/js/' . $site . '.js"></script>';
+    	}	
+	}
 }

@@ -68,16 +68,16 @@ if(!empty($_GET['new_share'])){
 echo "<form action=\"\" name=\"mainform\">";
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                        	<div class="panel-heading bg-success"><i class="fa fa-folder"></i> '.$lang->Share->shared_directories.'</div>
-                            <div class="panel-body">
+                        <div class="card">
+                        	<div class="card-body">
+                        	<div class="mb-2"><button class="btn"><i class="fa fa-refresh"></i> Refresh</button></div>
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
                 							<tr>
                     							<th></th>
                 								<th width="70%">'.$lang->Share->directory_name.'</th>
-                    							<th>'.$lang->Share->subs.'</th>
+                    							<th nowrap>'.$lang->Share->subs.'</th>
                     							<th width="10">'.$lang->Share->aktion.'</th>
                     						</tr>
             							</thead>
@@ -111,42 +111,22 @@ foreach($sharedirs as $a){
         <td><a href="javascript:delshare(\''.addslashes(htmlspecialchars($cur_share['NAME'])).'\');"><i class="fa fa-trash class="text-danger"></a></td>
     </tr>';
 }
+echo'<tr>
+		<td colspan="4">' . $lang->Share->shared_directories_new . '</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="text" name="new_share" class="form-control input-sm" placeholder="' . $lang->Share->way . '"/></td>
+		<td><input type="checkbox" name="new_subs" value="1" checked/></td>
+		<td><button type="button" onclick="newshare()" class="btn btn-primary btn-sm pull-middle"><i class="fa fa-save"></i></button></td>
+	</tr>';
 echo'
     </tbody>
     </table>
     </div></div>
           </div>
-          <div class="row clearfix">
-                    <div class="col-sm-12">
-                        <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                        	<div class="panel-heading bg-success"><i class="fa fa-folder"></i> '.$lang->Share->shared_directories_new.'</div>
-                            <div class="panel-body">
-                            	<div class="form-group">
-                                        <label>'.$lang->Share->way.'</label>
-                                        <input type="text" name="new_share" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                     <input type="checkbox" name="new_subs" value="1" checked/>
-                                        <label for="remember_me">'.$lang->Share->with_subs.'</label>
-                                       
-                                    
-                                    </div>
-                                    <div class="form-group clearfix">
-                                        <input type="button" onclick="newshare()" class="btn btn-sm btn-success pull-right">
-                                    </div>
-                                
-							</div>
-						</div>
-					</div>
-				</div>';
-//Neues verzeichnis freigeben
-//echo "\n<tr><td>NEW: <input name=\"new_share\" size=\"60\" />";
-//echo " <input type=\"button\" value=\"...\" onclick=\"select_dir();\" /></td>";
-//echo "<td><input type=\"checkbox\" name=\"new_subs\" value=\"1\" "
-//	."checked=\"checked\" /></td><td><input type=\"button\" value=\"ADSS\" "
-//	."onclick=\"newshare()\"/></td></tr>\n";
-//echo "</table>";
-//
+          ';
+
 //echo "<br />\n";
 //echo "<div align=\"center\"><table><tr>\n";
 //echo "<td><input type=\"button\" onclick=\"do_setsubs('*sharecheck',0);\" value=\""

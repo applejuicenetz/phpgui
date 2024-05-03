@@ -21,8 +21,8 @@ $lang = $language->translate();
 
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="table-responsive">
 			  <table class="table table-striped">
 				<thead>
@@ -44,16 +44,27 @@ echo'<div class="row clearfix">
 if(!empty($Downloadlist->cache['DOWNLOAD'])){
 	$a = $Downloadlist->download($_GET['dl_id']);
 	$astatus = $a['phpaj_STATUS'];
+	$balken = round($a['phpaj_DONE'], 2);
+        
 	echo'<tr>
 						<td width="10">&nbsp;</th>
 						<td>'.($a['phpa_quellen_quee']+$a['phpaj_quellen_dl']).'/'.$a['phpaj_quellen_gesamt'].'('.$a['phpaj_quellen_dl'].')</td>
 						<td>'.htmlspecialchars($a['FILENAME']).'</td>
-						<td>'.$a['phpaj_STATUS'].'</td>
+						<td>'.$Downloadlist->status($a['phpaj_STATUS']).'</td>
 						<td>'.subs::sizeformat($a['phpaj_dl_speed']).'</td>
 						<td>'.((($a['POWERDOWNLOAD'])+10)/10).'</td>
-						<td>'.subs::sizeformat($a['SIZE']).'</td>
-						<td>'.$subs->prozess($a['phpaj_DONE']).'</td>
-						<td></td>
+						<td nowrap>'.subs::sizeformat($a['SIZE']).'</td>
+						<td colspan="2">  <div class="d-flex justify-content-between align-items-baseline">
+                              <div class="fw-semibold">' . $balken . '%</div>
+                              <div class="text-nowrap small text-body-secondary ms-3">Rest: ' . subs::sizeformat($a['phpaj_REST']);
+             
+			echo'</div>
+                            </div>
+                            <div class="progress progress-thin">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: ' . $balken . '%" aria-valuenow="' . $balken . '" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+						
 					</tr>';
 
 //Einzelne Quellen
@@ -95,9 +106,9 @@ if(!empty($Downloadlist->cache['DOWNLOAD'])){
 							'.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'
 						</td>
 						<td>
-							'.$subs->prozess($fortschritt).'
+							'.subs::sizeformat($fortschritt).'
 						</td>
-						<td>
+						<td nowrap>
 							'.$icon_img->os[$current_user['OPERATINGSYSTEM']].$current_user['VERSION'].'
 						</td>
 					</tr>';

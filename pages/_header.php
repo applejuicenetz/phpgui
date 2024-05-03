@@ -8,7 +8,7 @@ use appleJuiceNETZ\GUI\Plugins;
 use appleJuiceNETZ\Kernel;
 
 $gui = new GUI();
-$settings_gui = $gui->getDeviceConfig();
+$gui::refresh();
 
 //Templatedaten lesen
 $template= new template();
@@ -21,7 +21,8 @@ $settings_xml=$core->command("xml","settings.xml");
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
-if( empty( $_GET['site'] ) ) $_GET['site'] = "start";                  
+if( empty( $_GET['site'] ) ) $_GET['site'] = "start";   
+
 ?>
 <!DOCTYPE html><!--
 * CoreUI - Free Bootstrap Admin Template
@@ -54,14 +55,14 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <link href="themes/CoreUI/css/style.css" rel="stylesheet">
     <script src="themes/CoreUI/js/config.js"></script>
     <script src="themes/CoreUI/js/color-modes.js"></script>
+    <?php template::js_file($_GET['site']); ?>
   </head>
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
-          <svg class="sidebar-brand-full" width="88" height="32" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#full"></use>
-          </svg>
+          appleJuice <br>
+Flux 
           <svg class="sidebar-brand-narrow" width="32" height="32" alt="CoreUI Logo">
             <use xlink:href="assets/brand/coreui.svg#signet"></use>
           </svg>
@@ -72,55 +73,55 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
         <li class="nav-item">
           <a class="nav-link<?php template::active("start"); ?>" href="index.php?site=start">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg> <?php echo $lang->Navigation->dashboard; ?>
            </a>
          </li>
          <li class="nav-item">
           <a class="nav-link<?php template::active("downloads"); ?>" href="index.php?site=downloads">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
             </svg> <?php echo $lang->Navigation->downloads; ?>
            </a>
          </li>
          <li class="nav-item">
           <a class="nav-link<?php template::active("uploads"); ?>" href="index.php?site=uploads">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-upload"></use>
             </svg> <?php echo $lang->Navigation->uploads; template::uploads(); ?>
            </a>
          </li>
          <li class="nav-item">
           <a class="nav-link<?php template::active("search"); ?>" href="index.php?site=search">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
             </svg> <?php echo $lang->Navigation->search; ?>
            </a>
          </li>
          <li class="nav-item">
           <a class="nav-link<?php template::active("shares"); ?>" href="index.php?site=shares">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-share-alt"></use>
             </svg> <?php echo $lang->Navigation->shares; ?>
            </a>
          </li>
          <li class="nav-item">
           <a class="nav-link <?php template::active("server"); ?>" href="index.php?site=server">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
             </svg> <?php echo $lang->Navigation->server_list; ?>
            </a>
          </li>
          <li class="nav-item active">
           <a class="nav-link<?php template::active("settings"); ?>" href="index.php?site=settings">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
             </svg> <?php echo $lang->Navigation->settings; ?>
            </a>
          </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
             </svg> <?php echo $lang->Navigation->addons; ?></a>
           <ul class="nav-group-items compact">
          <?php $Plugin = new Plugins();
@@ -137,11 +138,14 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
  ?>
          
           </ul>
-
-  </ul>
-
         </li>
-        
+        <li class="nav-item active">
+          <a class="nav-link<?php template::active("help"); ?>" href="index.php?site=help">
+            <svg class="nav-icon">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-info"></use>
+            </svg> <?php echo $lang->Navigation->help; ?>
+           </a>
+         </li>
       </ul>
       <div class="sidebar-footer border-top d-none d-md-flex">
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

@@ -78,7 +78,12 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 	<div>
                 		<div class="fs-4 fw-semibold"><?php template::dashboard("download"); ?></div>
                 		<div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_downloads; ?></div>
+                		<div class="progress progress-thin mt-3">
+                              <div class="progress-bar" role="progressbar" style="width: <?php template::dashboard("download_finish"); ?>%" aria-valuenow="<?php template::dashboard("download_finish"); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                		
                 	</div>
+                	
                 </div>
         	</div>
         </div>
@@ -139,7 +144,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
         </div>
         <!-- end -->
         </div>
-      <div class="row mt-4">        
+      <div class="row mt-4 mb-4">        
     <?php
     $coreinfo = $Servers->core->getcoreversion();
     $coresubversions = explode(".", $_SESSION['cache']['STATUSBAR']['VERSION']);
@@ -153,7 +158,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
 
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-	<div class="card">
+	<div class="card mb-4">
             <div class="card-header"><svg class="icon icon-l">
                         	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-globe-alt"></use>
                         </svg> <?php echo $lang->Start->core_info; ?></div>

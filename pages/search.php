@@ -124,9 +124,9 @@ foreach ($links as $link) {
 //Searchcontent
 	//Suchformular
 	echo'<div class="row clearfix">
-                    <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="align-left">
                                 	<form action="?site=search&'.SID.'" method="post">
                                 		<input type="text" size="40" name="searchstring">
@@ -138,17 +138,13 @@ foreach ($links as $link) {
                     </div>';
 
 echo'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <ul class="nav nav-tabs">
-                            <li role="presentation" class="'.$active_all.'">
-                                <a href="#searchid_all" data-toggle="tab">
-                                    '.$lang->Search->all.' ('.$Search->cache['SEARCHENTRY_count'].')
-                                    <button type="reset" class="btn btn-danger btn-xs" onclick="location.href=\'?site=search&deleteall=1\'">
-                                    	<i class="fa fa-trash"></i>
-                                    </button>
-                                </a>
-                            </li>
-                            
-                            ';
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li role="presentation" class="nav-item ">
+                              <button class="nav-link ' . $active_all . '" id="home-tab" data-coreui-toggle="tab" data-coreui-target="#searchid_all" type="button" role="tab" aria-controls="home" aria-selected="true">
+                              '.$lang->Search->all.' ('.$Search->cache['SEARCHENTRY_count'].')
+                              <span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteall=1\'"><i class="fa fa-trash"></i></span>
+                              </button>
+                            </li>';
 
 //Tabellen�berschrift
 $Search->refresh_cache();
@@ -169,27 +165,28 @@ if(!empty($Search->cache['SEARCH'])){
 		
 		// Suche aktiv oder inaktiv
 		if($Search->cache['SEARCH'][$b]['RUNNING']==="true"){
-			$button = '<button type="reset" class="btn btn-warning btn-xs" onclick="location.href=\'?site=search&cancelid='.$b.'\'">
-                                    	<i class="fa fa-close"></i>
-                                    </button>';	
+			$button = '<span class="badge text-bg-warning" onclick="location.href=\'?site=search&cancelid='.$b.'\'">
+						<i class="fa fa-close"></i>
+					  </span>';	
 		}else{
-			$button = '<button type="reset" class="btn btn-danger btn-xs" onclick="location.href=\'?site=search&deleteid='.$b.'\'">
-                                    	<i class="fa fa-trash"></i>
-                                    </button>';
+			$button = '<span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteid='.$b.'\'">
+						<i class="fa fa-trash"></i>
+					  </span>';
 		}
 		//name der suche + zahl der ergebnisse
-		echo'<li role="presentation" class="'.$active.'">
-                <a href="#searchid_'.$b.'" data-toggle="tab">
-                    '.$Search->cache['SEARCH'][$b]['SEARCHTEXT'].' ('.$Search->cache['SEARCH'][$b]['phpaj_FOUNDFILES'].')
-                    '.$button.'
-                </a>
-            </li>';
+		echo '<li role="presentation" class="nav-item '.$active.'">
+                              <button class="nav-link active" id="home-tab" data-coreui-toggle="tab" data-coreui-target="#searchid_' . $b . '" type="button" role="tab" aria-controls="home" aria-selected="true">
+                              '.$Search->cache['SEARCH'][$b]['SEARCHTEXT'].' ('.$Search->cache['SEARCH'][$b]['phpaj_FOUNDFILES'].')
+                              ' . $button . '
+                              </button>
+                            </li>';
+		
 		}
 }
 echo'</ul>
-        <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="searchid_all">';echo'<div class="table-responsive">
-			  <table class="table table-striped">';
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="hsearchid_all" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+ <table class="table table-striped">';
 
 //Sortieren
 if(!empty($Search->cache['SEARCHENTRY'])){
@@ -208,7 +205,7 @@ if(!empty($_ENV['REL_INFO'])) {
     	  </th>';
 }
 
-echo "<th>".$lang->Search->size."</th>
+echo "<th nowrap>".$lang->Search->size."</th>
 <th>".$lang->Search->counter."</th>
 <th>&nbsp;</th></tr>";
 
@@ -251,7 +248,7 @@ if(!empty($Search->cache['SEARCHENTRY'])){
             echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
         }
 
-		echo "<td class=\"rigt\">"
+		echo "<td nowrap class=\"rigt\">"
 			.subs::sizeformat($cur_search['SIZE'])
 			."</td>\n";
 		//anzahl der ergebnisse
@@ -269,7 +266,7 @@ echo "</table></div></div>";
 if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $searchid){
-		echo'<div role="tabpanel" class="tab-pane fade in" id="searchid_'.$searchid.'">';
+		echo' <div class="tab-pane fade show active" id="hsearchid_' . $searchid . '" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
 			if($searchid !=="alles"){
 	
 	$current_search=&$Search->cache['SEARCH'][$searchid];

@@ -45,7 +45,7 @@ create and run `phpgui` container with the following command
 docker run -d \
         -p 8080:80 \
         --name phpgui \
-        ghcr.io/applejuicenetz/phpgui:beta
+        ghcr.io/applejuicenetz/phpgui:latest
 ```
 
 optional: add `CORE_HOST` and/or `CORE_PORT` with your environment
@@ -58,7 +58,7 @@ docker run -d \
         -e "CORE_HOST=http://192.168.1.2" \
         -e "CORE_PORT=9851" \
         --name phpgui \
-        ghcr.io/applejuicenetz/phpgui:beta
+        ghcr.io/applejuicenetz/phpgui:latest
 ```
 
 ### docker-compose.yml
@@ -66,7 +66,7 @@ docker run -d \
 ```yaml
 services:
   php-gui:
-    image: ghcr.io/applejuicenetz/phpgui:beta
+    image: ghcr.io/applejuicenetz/phpgui:latest
     restart: always
     container_name: phpgui
     network_mode: bridge

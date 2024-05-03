@@ -27,7 +27,8 @@
       "sharefiles": "geteilte Dateien",
       "extras": "Addons",
       "dl_users": "Downloaddetails",
-      "404": "Error 404"
+      "404": "Error 404",
+      "help": "Hilfe"
     },
     "version_1": "Neue Version verf&uuml;gbar!",
     "version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub gerunter und installiere das Update!"
@@ -62,7 +63,8 @@
     "server_list": "Serverliste",
     "logout": "Logout",
     "kick_core": "Core beenden",
-    "user_settings": "Benutzereinstellungen"
+    "user_settings": "Benutzereinstellungen",
+    "help": "Hilfe"
   },
   "Downloads": {
     "source": "Quellen",
@@ -190,7 +192,9 @@
     "alert_save_1": "Einstellungen aktualliesiert!",
     "alert_save_2": "Verbindungseinstellungen aktualliesiert!",
     "alert_save_theme": "GUI-Theme gespeichert!",
-    "password": "Passwort"
+    "password": "Passwort",
+    "head_con": "Verbindungseinstellungen",
+    "head_all": "Standarteinstellungen"
   },
   "Share": {
     "shared_directories": "Freigegebene Verzeichnisse",

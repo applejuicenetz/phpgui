@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.3
+
+- Bug fix
+- simple Theme 
+
 ## 0.29.2
 
 - code structure improvements (eg. PSR4)
