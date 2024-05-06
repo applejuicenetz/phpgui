@@ -160,34 +160,20 @@ $Sharelist->refresh_cache(60);
 echo "<form name=\"shareprioform\" action=\"\">\n";
 echo '<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
-                        	<div class="panel-heading bg-success"></div>
-                            <div class="panel-body">
-                            <div class="align-right"><nav aria-label="Page navigation">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" onclick="exportlinks();">' . $lang->Share->export . '</a>
-                  </li>
-                  
-                  <li class="page-item"><a class="page-link" onclick="reload();"><i class="fa fa-repeat"></i></a></li>
-                </ul>
-              </nav>
-               <div class="form-group">
-               <div class="col-sm-10"></div>
-                                <div class="col-sm-2">
-                                    <div class="input-group">
-                           
-               <select class="form-control" name="shareprio">';
-for ($i = 1; $i <= 250; $i++) {
-    echo "<option value=\"$i\">" . $i . "</option>";
-}
-echo '</select>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" onclick="changeshareprio();">Set</button>
-                                        </span>
-                              </div></div></div></div>
-       </div>   
-
+                        <div class="card">
+                            <div class="card-body">
+                            	<div class="input-group mb-2">
+                            		<button class="btn btn-outline-secondary" type="button" onclick="exportlinks()">' . $lang->Share->export . '</button>
+									<button class="btn btn-outline-secondary" type="button" onclick="javascript:dec_pdl()"><i class="fa fa-repeat"></i></button>
+									<select class="form-control" name="shareprio">';
+										for ($i = 1; $i <= 250; $i++)
+										{
+    										echo "<option value=\"$i\">" . $i . "</option>";
+										}
+							  echo '</select>
+									<button class="btn btn-outline-secondary" type="button" onclick="changeshareprio()">' . $lang->Downloads->set_pdl . '</button>
+									<button class="btn btn-outline-secondary" onklick="" disabled>' . $Sharelist->spentprio .'</button>
+								</div>
 
                             	<div class="table-responsive">
 									<table class="table table-striped">
@@ -256,7 +242,7 @@ foreach ($list as $shareentry) {
 		<td>';
     echo "<a href='" . sprintf($_ENV['REL_INFO'], $shareentry['LINK']) . "'><i class='fa fa-info-circle'></i></a>";
     echo '</td>
-		<td>' . subs::sizeformat($shareentry["SIZE"]) . '</td>
+		<td nowrap>' . subs::sizeformat($shareentry["SIZE"]) . '</td>
 		<td>' . $prio . '</td>
     </tr>';
 }

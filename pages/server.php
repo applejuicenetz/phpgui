@@ -41,20 +41,21 @@ foreach($Servers->ids() as $a){
 	}
 	//passendes bildchen raussuchen
 	if($Servers->netstats['connectedwith'] == $serverinfo['ID']){
-        $status = $lang->Server->connectet.' <i class="material-icons col-success">network_wifi</i>';
+        $status = $lang->Server->connectet.' <i class="fa fa-wifi text-success"></i>';
+        
 	}elseif($Servers->netstats['trytoconnectto'] == $serverinfo['ID']){
-        $status = $lang->Server->try_connect.' <i class="material-icons col-danger">network_wifi</i>';
+        $status = $lang->Server->try_connect.' <i class="fa fa-wifi text-danger">network_wifi</i>';
 	}elseif((($Servers->server_xml['TIME']['VALUES']['CDATA']
 			-$serverinfo['LASTSEEN'])/1000) <= 86400){
-        $status = '<24h '.$lang->Server->been_connected.' <i class="material-icons col-warning">network_wifi</i>';
+        $status = $lang->Server->been_connected.' <i class="fa fa-wifi col-warning"></i>';
 	}else{
-        $status = $lang->Server->no_con.' <i class="material-icons">signal_wifi_off</i>';
+        $status = $lang->Server->no_con.' <i class="fa fa-wifi"></i>';
 	}
     if(empty($serverinfo["NAME"])) $serverinfo["NAME"] = "N/A";
     echo'           <div class="col-sm-4">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="align-right">'.$status.'</div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="text-end">'.$status.'</div>
 <h5 class="bs-bold">'.htmlspecialchars($serverinfo["NAME"]).'</h5>
               <table>
               <tr>
@@ -77,7 +78,8 @@ foreach($Servers->ids() as $a){
         date("d.m.y - H:i:s",($serverinfo['LASTSEEN'])/1000) : $lang->Server->not_yet; echo'</td>
               </tr>
               </table>
-              '.$server_delete_link.'   '.$server_connect_link.' ('.$serverinfo["CONNECTIONTRY"].')<br>
+              </div>
+            <div class="card-footer">'.$server_delete_link.'   '.$server_connect_link.' ('.$serverinfo["CONNECTIONTRY"].')<br>
             </div>
           </div></div>';
 }

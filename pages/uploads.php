@@ -16,6 +16,7 @@ $lang = $language->translate();
 $Sharelist = new Share();
 $Uploadlist = new Uploads();
 $icon_img = new Icons();
+$subs = new subs();
 
 $Uploadlist->refresh_cache();
 
@@ -31,8 +32,8 @@ if(isset($Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS'])){
 //
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="align-right">
                                 	'. strtr($lang->Uploads->limit, array("%percent"=>$uploaduserpercent)).'
                                 </div>';
@@ -41,9 +42,9 @@ echo'<div class="table-responsive">
 			  <table class="table table-striped">
 				<thead>
                   <tr>
-                    <th scope="col">'.$lang->Uploads->files.'</th>
+                    <th scope="col" colspan="2">'.$lang->Uploads->files.'</th>
 					<th scope="col">'.$lang->Uploads->username.'</th>
-					<th><i class="text-warning material-icons">info</i></th>
+					<th><i class="text-warning fa fa-info-circle"></i></th>
 					<th scope="col">'.$lang->Uploads->statuss.'</th>
                     <th scope="col">'.$lang->Uploads->speed.'</th>
                     <th scope="col">'.$lang->Uploads->size.'</th>
@@ -57,8 +58,8 @@ echo'<div class="table-responsive">
 // Uebertrage
 if($_GET['show_uplds']==1){
 	echo "<tr>
-			<td colspan=\"10\">
-				<a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=-1&show_queue=".$_GET['show_queue']."&amp;".SID."\">
+			<td colspan=\"11\">
+				<a onclick=\"location.href='".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=-1&show_queue=".$_GET['show_queue']."'\">
 					<i class='fa fa-minus'></i>&nbsp;&nbsp;<b>".$lang->Uploads->transferring."</b> (".$Uploadlist->cache['phpaj_ul'].")</a>
 			</td>
 		 </tr>";
@@ -71,7 +72,7 @@ if($_GET['show_uplds']==1){
 			echo "<td>".$icon_img->directstate[$current_upload['DIRECTSTATE']];
 			
 			//dateiname
-			echo '<a href="'.$current_share['LINK'].'">' . htmlspecialchars($current_share['SHORTFILENAME']).'</a></td>';
+			echo '</td><td><a onclick="location.href=\''.$current_share['LINK'].'\'">' . htmlspecialchars($current_share['SHORTFILENAME']).'</a></td>';
 
             //Nick des Users
 			echo "<td title=\"".htmlspecialchars($current_upload['NICK'])."\">"
@@ -96,18 +97,16 @@ if($_GET['show_uplds']==1){
 					-($current_upload['UPLOADFROM']))/
 				(($current_upload['UPLOADTO'])
 					-($current_upload['UPLOADFROM'])))*100;
+			$fortschritt = number_format($fortschritt,2);
 			$geladen=subs::sizeformat(
 				($current_upload['ACTUALUPLOADPOSITION'])
 				-($current_upload['UPLOADFROM']));
-			echo "<td class=\"right\">".subs::sizeformat(
+			echo "<td class=\"right\" nowrap>".subs::sizeformat(
 				($current_upload['UPLOADTO'])
 				-($current_upload['UPLOADFROM']))."</td>";
-			echo "<td width=\"100\">";
-			echo '
-			<div class="progress mt-3">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$fortschritt.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
-                '.$fortschritt.' %</div>';
-			echo "<td class=\"right\">";
+			echo "<td width=\"100\" nowrap>";
+			echo $subs->prozess_bar($fortschritt);
+			echo "<td class=\"right\" nowrap>";
 			if(isset($current_upload['LOADED']) && $current_upload['LOADED'] != -1){
 				echo number_format($current_upload['LOADED']*100,2)."%";
 			}else{
@@ -123,23 +122,23 @@ if($_GET['show_uplds']==1){
 			//Upload prio
 			echo "<td class=\"right\">".$pdlwert.$current_upload['PRIORITY']."</td>\n";
 			//Betriebssystem + aj-version
-			echo "<td>".$icon_img->os[$current_upload['OPERATINGSYSTEM']]." ".$current_upload['VERSION']."</td>";
+			echo "<td nowrap>".$icon_img->os[$current_upload['OPERATINGSYSTEM']]." ".$current_upload['VERSION']."</td>";
 			echo "</tr>\n";
 		}
 	}
 }else{
-	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=1&amp;"
+	echo "<tr><td colspan=\"11\"><a onclick=\"location.href='".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=1&amp;"
 		."show_queue=".$_GET['show_queue']."&amp;"
-		.SID."\"><i class='fa fa-plus'></i>&nbsp;&nbsp;<b>"
+		.SID."'\"><i class='fa fa-plus'></i>&nbsp;&nbsp;<b>"
 		.$lang->Uploads->transferring."</b> ("
 		.$Uploadlist->cache['phpaj_ul'].")</a></td></tr>";
 }
 
 //Warteschlange
 if($_GET['show_queue']==1){
-	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
+	echo "<tr><td colspan=\"11\"><a onclick=\"location.href='".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
 		.$_GET['show_uplds']."&amp;show_queue=-1"."&amp;"
-		.SID."\"><i class='fa fa-minus'></i>&nbsp;&nbsp;<b>"
+		.SID."'\"><i class='fa fa-minus'></i>&nbsp;&nbsp;<b>"
 		.$lang->Uploads->queue."</b> ("
 		.$Uploadlist->cache['phpaj_queue'].")</a></td></tr>";
 	if(!empty($Uploadlist->cache['UPLOAD'])){
@@ -188,13 +187,13 @@ if($_GET['show_queue']==1){
 			echo "<td class=\"right\">"
 				.$pdlwert.$current_upload['PRIORITY']
 				."</td>\n";
-			echo "<td>".$icon_img->os[$current_upload['OPERATINGSYSTEM']]." ".$current_upload['OPERATINGSYSTEM'].$current_upload['VERSION']."</td>";
+			echo "<td nowrap>".$icon_img->os[$current_upload['OPERATINGSYSTEM']]." ".$current_upload['OPERATINGSYSTEM'].$current_upload['VERSION']."</td>";
 			echo "</tr>\n";
 		}
 	}
 }else{
-	echo "<tr><td colspan=\"10\"><a href=\"".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
-		.$_GET['show_uplds']."&amp;show_queue=1"."&amp;".SID."\">"
+	echo "<tr><td colspan=\"11\"><a onclick=\"location.href='".$_SERVER['PHP_SELF']."?site=uploads&show_uplds="
+		.$_GET['show_uplds']."&amp;show_queue=1"."&amp;".SID."'\">"
 		."<i class='fa fa-plus'></i>&nbsp;&nbsp;<b>"
 		.$lang->Uploads->queue."</b> ("
 		.$Uploadlist->cache['phpaj_queue'].")</a></td></tr>";
