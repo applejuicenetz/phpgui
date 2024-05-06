@@ -62,7 +62,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
         	<div class="sidebar-brand-full">
-    		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/Apple_Icon.svg" width="88" height="32">
+    		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/applejuice.svg" width="176" height="64">
     		<br>
     		<span class="sidebar-brand-full">Flux</span>
     		</div>

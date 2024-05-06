@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 0.29.3
 
 - Bug fix
-- simple Theme 
+-simple Theme
 
 ## 0.29.2
 
