@@ -37,9 +37,6 @@ echo'<div class="row clearfix">
                         	<div class="card-body">
                         	<div class="mb-2">
                         	<button type="button" class="btn btn-primary" onclick="do_setsubs(\'*sharecheck\', 0);"><i class="fa fa-refresh"></i> ' . $lang->Share->check . '</button></div>
-
-                        	<div class="mb-2"><button class="btn"><i class="fa fa-refresh"></i> Refresh</button></div>
->>>>>>> 8721dc55d96a4cf43268a7b32854e1e4a4c7c686
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
