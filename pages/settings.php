@@ -104,11 +104,11 @@ echo'<div class="row">
 				</div>
 				<div class="card-body">
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="maxcon" name="maxcon" value="' . $maxcon . '">
+						<input type="number" class="form-control" id="maxcon" name="maxcon" value="' . $maxcon . '">
 						<label for="floatingInput">' . $lang->Settings->max_connections . '</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="maxul" name="maxul" value="' . $maxul . '">
+						<input type="number" class="form-control" id="maxul" name="maxul" value="' . $maxul . '">
 						<label for="floatingInput">' . $lang->Settings->max_ul . '</label>
 					</div>
 					<div class="form-floating mb-3">
@@ -120,11 +120,11 @@ echo'<div class="row">
 						<label for="floatingInput">' . $lang->Settings->max_dl . '</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="conturn" name="conturn" value="' . $conturn . '">
+						<input type="number" class="form-control" id="conturn" name="conturn" value="' . $conturn . '">
 						<label for="floatingInput">' . $lang->Settings->max_connections_per_turn . '</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="maxdlsrc" name="maxdlsrc" value="' . $maxdlsrc . '">
+						<input type="number" class="form-control" id="maxdlsrc" name="maxdlsrc" value="' . $maxdlsrc . '">
 						<label for="floatingInput">' . $lang->Settings->max_dl_src . '</label>
 					</div>
 					<div class="form mb-3">
