@@ -2,6 +2,8 @@
 
 namespace appleJuiceNETZ\appleJuice;
 
+use appleJuiceNETZ\Kernel;
+
 class Server
 {
     var $server_xml;
@@ -10,14 +12,14 @@ class Server
 
     function __construct($noload = 0)
     {
+        $language = Kernel::getLanguage();
+        $lang = $language->translate();
+
         $this->core = new Core();
         if ($noload) return;
-        $this->server_xml = $this->core->command("xml",
-            "modified.xml?filter=server;informations");
+        $this->server_xml = $this->core->command("xml","modified.xml?filter=server;informations");
         // -1 ist serverid wenn keine serververbindung besteht
-        $this->server_xml['SERVER']['-1']['NAME'] =
-            strtr($_SESSION['language']['START']['NOSERVER'],
-                array_flip(get_html_translation_table(HTML_ENTITIES)));
+        $this->server_xml['SERVER']['-1']['NAME'] = strtr($lang->Server->no_server, array_flip(get_html_translation_table(HTML_ENTITIES)));
         $this->netstats = $this->netstats();
     }
 

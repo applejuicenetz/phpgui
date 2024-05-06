@@ -3,36 +3,18 @@
 namespace appleJuiceNETZ\GUI;
 
 use appleJuiceNETZ\Kernel;
+use appleJuiceNETZ\appleJuice\Downloads;
+use appleJuiceNETZ\appleJuice\Uploads;
 
 class GUI
 {
-    public function getDeviceConfig(): array
-    {
-        $cfg = $_COOKIE['cfg'] ?? null;
-
-        if ($cfg) {
-            try {
-                $cfg = json_decode($cfg, true, 512, JSON_THROW_ON_ERROR);
-            } catch (\JsonException $e) {
-                $cfg = null;
-            }
-        }
-
-        return $cfg ?? [];
-    }
-
-    public function setDeviceConfig(array $cfg): bool
-    {
-        return setcookie('cfg', json_encode($cfg), time() + 60 * 60 * 24 * 365, '/');
-    }
-
     function check_version($var): void
     {
         $language = Kernel::getLanguage();
         $lang = $language->translate();
         $template = new template();
 
-        $akt_ver = file($_ENV['CHANGELOG_URL']);
+        $akt_ver = file_get_contents($_ENV['CHANGELOG_URL']);
 
         foreach ($akt_ver as $line_num => $line) {
             if ($line_num == 4) {
@@ -41,6 +23,7 @@ class GUI
                 $version = trim($version);
 
                 $_SESSION['phpaj']['akt_version'] = $version;
+echo $version;
             }
 
         }
@@ -70,6 +53,15 @@ class GUI
         } else {
             return PHP_GUI_VERSION;
         }
+    }
+    
+    public static function refresh()
+    {
+    	$Downloadlist = new Downloads();
+    	$Uploadlist = new Uploads();
+    	
+    	$Downloadlist->refresh_cache();
+    	$Uploadlist->refresh_cache();
     }
 
 

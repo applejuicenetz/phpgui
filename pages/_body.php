@@ -16,19 +16,6 @@ require(GUI_ROOT . "/pages/_header.php");
 
 if (!isset($_GET["show"])) $_GET["show"] = "";
 if (empty($_GET["site"])) $_GET["site"] = "start";
-echo '<div class="page-heading">
-                <h1>' . $subs->get_title($_GET['site']) . '</h1>
-                <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php?site=start">Home</a></li>
-            <li class="breadcrumb-item">' . $subs->get_title($_GET['site']) . '</li>
-
-            ' . $template->bread($_GET["show"]) . '
-
-
-        </ol>
-            </div>
-
-            <div class="page-body">';
 // Wichtige Fehlermeldungen auf allen Seiten anzeigen
 //Firewall aktiv
 if ($Servers->netstats['firewalled'] === 'true') {
@@ -110,6 +97,7 @@ if (file_exists(GUI_ROOT . "/pages/" . $page . ".php")) {
     require_once(GUI_ROOT . "/pages/" . $page . ".php");
 } else {
     require_once(GUI_ROOT . "/pages/404.php");
+    $_GET['site'] = "404";
 }
 
 require(GUI_ROOT . "/pages/_footer.php");

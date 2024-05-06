@@ -27,7 +27,7 @@ class Kernel
 
         $_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
 
-        $_ENV['CHANGELOG_URL'] = $_ENV['CHANGELOG_URL'] ?? 'https://raw.githubusercontent.com/applejuicenetz/phpgui/main/CHANGELOG.md';
+        $_ENV['CHANGELOG_URL'] = $_ENV['CHANGELOG_URL'] ?? 'https://raw.githubusercontent.com/applejuicenetz/phpgui/beta/CHANGELOG.md';
 
         $_ENV['SERVERLIST_URL'] = $_ENV['SERVERLIST_URL'] ?? 'http://www.applejuicenet.cc/serverlist/xmllist.php';
 
@@ -41,8 +41,8 @@ class Kernel
 
         date_default_timezone_set($_ENV['TZ'] ?? 'Europe/Berlin');
 
-        ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '0');
-        ini_set('display_errors', $_ENV['PHP_INI_DISPLAY_ERRORS'] ?? 'Off');
+        ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '1');
+        ini_set('display_errors', $_ENV['PHP_INI_DISPLAY_ERRORS'] ?? 'On');
     }
 
     public static function getLanguage(): Language
