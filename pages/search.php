@@ -16,46 +16,7 @@ $language = Kernel::getLanguage();
 $lang = $language->translate();
 
 if(empty($_GET['searchid'])) $_GET['searchid']="alles";
-	
-echo "<script type=\"text/javascript\">
-<!--
-function dllink(ajfsplink){
-	parent.oben.document.linkform.ajfsp_link.value=ajfsplink;
-	parent.oben.document.linkform.showlinkpage.value=0;
-	parent.oben.document.linkform.submit();
-}
 
-function toggleinfo(id,items){
-	var infobox=document.getElementById('infobox_'+id);
-	if(infobox.style.display=='block'){
-		infobox.style.display='none';
-	}else{
-		if(infobox.firstChild==null){
-			var zeilen=items.split('|');
-			var linkinfo=zeilen.pop().split('/');
-			infobox.appendChild(document.createTextNode('"
-				.addslashes($lang->Search->know_filename)
-				.":'));
-			infobox.appendChild(document.createElement('br'));
-			while(zeilen.length>0){
-				var nameinfo=zeilen.shift().split('/');
-				infobox.appendChild(
-					document.createTextNode('['+nameinfo[0]+'x] '));
-				var ajlink=document.createElement('a');
-				ajlink.setAttribute('href',
-					\"javascript:dllink('ajfsp://file|\"
-					+nameinfo[1].replace(/\'/g,\"\\\\'\")+\"|\"
-					+linkinfo.join('|')+\"/\\')\");
-				ajlink.appendChild(document.createTextNode(nameinfo[1]));
-				infobox.appendChild(ajlink);
-				infobox.appendChild(document.createElement('br'));
-			}
-		}
-		infobox.style.display='block';
-	}
-}
-//-->
-</script>";
 $action_echo='';
 //suchanfrage an core uebergeben
 if(!empty($_POST['searchstring'])){
@@ -137,15 +98,13 @@ foreach ($links as $link) {
                         </div>
                     </div>';
 
-echo'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li role="presentation" class="nav-item ">
-                              <button class="nav-link ' . $active_all . '" id="home-tab" data-coreui-toggle="tab" data-coreui-target="#searchid_all" type="button" role="tab" aria-controls="home" aria-selected="true">
-                              '.$lang->Search->all.' ('.$Search->cache['SEARCHENTRY_count'].')
-                              <span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteall=1\'"><i class="fa fa-trash"></i></span>
-                              </button>
-                            </li>';
-
+echo'<div class="row">
+  <div class="col-3">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" id="list-search-all" data-coreui-toggle="list" href="#search-all" role="tab" aria-controls="search-all">
+    	' . $lang->Search->all . '
+    	<span class="badge text-bg-primary rounded-pill">' . $Search->cache['SEARCHENTRY_count'] . '</span>
+		</a>';
 //Tabellen�berschrift
 $Search->refresh_cache();
 
@@ -174,19 +133,23 @@ if(!empty($Search->cache['SEARCH'])){
 					  </span>';
 		}
 		//name der suche + zahl der ergebnisse
-		echo '<li role="presentation" class="nav-item '.$active.'">
-                              <button class="nav-link active" id="home-tab" data-coreui-toggle="tab" data-coreui-target="#searchid_' . $b . '" type="button" role="tab" aria-controls="home" aria-selected="true">
-                              '.$Search->cache['SEARCH'][$b]['SEARCHTEXT'].' ('.$Search->cache['SEARCH'][$b]['phpaj_FOUNDFILES'].')
-                              ' . $button . '
-                              </button>
-                            </li>';
-		
+		echo'<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" id="list-search-' . $b . '" data-coreui-toggle="list" href="#search-' . $b . '" role="tab" aria-controls="search-' . $b . '">
+    	' . $Search->cache['SEARCH'][$b]['SEARCHTEXT'] . '
+    	<span class="badge text-bg-primary rounded-pill">' . $Search->cache['SEARCH'][$b]['phpaj_FOUNDFILES'] . '</span>
+		</a>
+      ';
 		}
 }
-echo'</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="hsearchid_all" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
- <table class="table table-striped">';
+echo'
+      </div>
+  </div>
+  <div class="col-9">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="search-all" role="tabpanel" aria-labelledby="search-all">
+      <span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteall=1\'"><i class="fa fa-trash"></i></span>
+      <div class="table-responsive">
+			 
+      <table class="table table-striped">';
 
 //Sortieren
 if(!empty($Search->cache['SEARCHENTRY'])){
@@ -266,7 +229,8 @@ echo "</table></div></div>";
 if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $searchid){
-		echo' <div class="tab-pane fade show active" id="hsearchid_' . $searchid . '" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
+		echo'<div class="tab-pane fade" id="search-' . $searchid . '" role="tabpanel" aria-labelledby="search-' . $searchid . '">';
+      
 			if($searchid !=="alles"){
 	
 	$current_search=&$Search->cache['SEARCH'][$searchid];
@@ -274,8 +238,9 @@ if(!empty($Search->cache['SEARCH'])){
 		$current_search_percent=(($current_search['SUMSEARCHES']*100)/
 			($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']));
 			$balken = round($current_search_percent,2);
+			
 			$details = $current_search['SUMSEARCHES']."/".($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']);
-		echo'<div class="progress mt-3">
+		echo'<div class="progress mb-3">
                 <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
                 	'.$balken.' %
                 </div>
@@ -365,4 +330,4 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 echo "</table></div></div>";
         
 }}
-echo'</div>';
+echo'</div></div></div>';

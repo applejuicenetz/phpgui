@@ -53,6 +53,19 @@ class template
 
     	if($var == "download")
     	{
+			$Downloadlist = new Downloads();
+            $Downloadlist->refresh_cache();
+            $subdircounter = 0;
+            //alle downloads zeigen
+            foreach (array_keys($Downloadlist->subdirs) as $a) {
+                $subdircounter++;
+                $downloadids = $Downloadlist->ids("", $a); //ids der downloads sortiert holen
+            			    
+            }
+            if($downloadids == NULL){
+            	echo"0";
+            }else{
+        
     	    $Downloadlist = new Downloads();
             $Downloadlist->refresh_cache();
             $subdircounter = 0;
@@ -62,18 +75,30 @@ class template
                 $downloadids = $Downloadlist->ids("status", $a); //ids der downloads sortiert holen
             			    
             }
-            $str = array("0", "0_1", "1", "12", "13", "15", "16", "17");
+            $str = array("0", "0_1", "1", "12", "13", "15", "16", "17", "14");
             $str2 = array("14");
             
             $all = count (array_diff($downloadids, $str2)); //laufen
             $load = count (array_diff($downloadids, $str));
-            
+            $load_all = count (array_diff($downloadids, $str2)); //laufen
             echo $load . '/' . $all;
-           
+            
                         	
-    	}
+    	}}
     	if($var == "download_finish")
-    	{
+    	{	$Downloadlist = new Downloads();
+            $Downloadlist->refresh_cache();
+            $subdircounter = 0;
+            //alle downloads zeigen
+            foreach (array_keys($Downloadlist->subdirs) as $a) {
+                $subdircounter++;
+                $downloadids = $Downloadlist->ids("", $a); //ids der downloads sortiert holen
+            			    
+            }
+            if($downloadids == NULL){
+            	echo"0";
+            }else{
+        
     	    $Downloadlist = new Downloads();
             $Downloadlist->refresh_cache();
             $subdircounter = 0;
@@ -83,7 +108,7 @@ class template
                 $downloadids = $Downloadlist->ids("status", $a); //ids der downloads sortiert holen
             			    
             }
-            $str = array("0", "0_1", "0_2", "1", "12", "13", "15", "16", "17");
+            $str = array("0", "0_1", "0_2", "1", "12", "13", "15", "16", "17", "14");
              $str2 = array("14");
             
             $all = count (array_diff($downloadids, $str2)); //laufen;
@@ -93,7 +118,7 @@ class template
             
             echo $count;
             
-                        	
+            }             	
     	}
     	if($var == "share")
     	{
