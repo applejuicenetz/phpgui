@@ -68,7 +68,7 @@ class template
             $all = count (array_diff($downloadids, $str2)); //laufen
             $load = count (array_diff($downloadids, $str));
             
-            echo $load . '/' .$all;
+            echo $load . '/' . $all;
            
                         	
     	}
@@ -140,9 +140,9 @@ class template
 	}
 	public static function js_file($site)
 	{
-		if (file_exists(GUI_ROOT . "/vendor/js/" . $site . ".js"))
+		if (file_exists(GUI_ROOT . "/themes/js/" . $site . ".js"))
 		{
-    		echo'<script src="vendor/js/' . $site . '.js"></script>';
+    		echo'<script src="themes/js/' . $site . '.js"></script>';
     	}	
 	}
 }
