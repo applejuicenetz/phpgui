@@ -1,0 +1,34 @@
+﻿footer {
+    background-color: #fff;
+    border-top: 1px solid #e5e5e5;
+    padding: 12px 0;
+    color: #666;
+    font-size: 13px;
+    margin-left: 230px;
+    @include transition(.5s);
+}
+
+.ls-toggled {
+    footer {
+        margin-left: 50px;
+        width: calc(100% - 50px) !important;
+    }
+}
+
+.ls-hidden {
+    footer {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+.footer-fixed {
+    footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: calc(100% - 230px);
+        margin-top: 25px;
+        z-index: 999999;
+    }
+}

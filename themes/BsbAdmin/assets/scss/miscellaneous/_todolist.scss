@@ -1,0 +1,72 @@
+﻿.todo-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        cursor: pointer;
+        padding: 8px 10px 10px 10px;
+        @include border-radius(3px);
+
+        span {
+            margin-left: 3px;
+            position: relative;
+            top: 1px;
+            font-size: 13px;
+            color: #666;
+
+            a {
+            }
+        }
+
+        &.closed {
+            span:not(.controls) {
+                text-decoration: line-through;
+                font-style: italic;
+                color: #888;
+            }
+        }
+
+        &:hover {
+            background-color: #f5f6f8;
+
+            .controls {
+                opacity: 1;
+            }
+        }
+
+        .controls {
+            float: right;
+            opacity: 0;
+            @include transition(.5s);
+
+            a {
+                color: #aaa;
+                font-size: 15px;
+                margin-left: 5px;
+                @include transition(.5s);
+
+                &:hover {
+                    color: #666;
+                }
+
+                .fa-arrows {
+                    cursor: move;
+                }
+            }
+        }
+
+        .move-handle {
+            color: #aaa;
+            font-size: 15px;
+            margin-right: 5px;
+            top: 1px;
+            position: relative;
+
+            &:hover {
+                color: #666;
+                cursor: move;
+            }
+        }
+    }
+}

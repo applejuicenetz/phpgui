@@ -1,0 +1,21 @@
+﻿body {
+    background-color: $body_background-color;
+    font-size: 14px;
+    font-family: $body_font-family;
+    width: 100%;
+
+    &.boxed-layout {
+        background: url('../images/bg-pattern.png') repeat;
+
+        .all-content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            @include box-shadow(0 0 15px #999);
+        }
+    }
+}
+
+.content {
+    background-color: $body_background-color;
+}

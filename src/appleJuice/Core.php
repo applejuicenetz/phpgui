@@ -8,7 +8,7 @@ class Core
     var $lastname;
     var $lastsubname;
     var $xml_array;
-	var $lastcdata;
+
 
     // XML-Parser funktionen
     //-----------------------
@@ -101,8 +101,8 @@ class Core
 
         if ($type === "xml") {
             if (empty($xml_file)) {
-            	include_once("pages/500.php");
-            	session_destroy();
+                echo "Der Core scheint zur Zeit offline zu sein.";
+                session_destroy();
                 exit;
             }
 

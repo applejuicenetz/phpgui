@@ -1,0 +1,12 @@
+﻿#toast-container {
+    > div {
+        opacity: 1;
+        @include box-shadow(none);
+
+        &:hover,
+        &:active,
+        &:focus {
+            @include box-shadow(none);
+        }
+    }
+}

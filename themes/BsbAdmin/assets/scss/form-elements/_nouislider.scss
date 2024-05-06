@@ -1,0 +1,19 @@
+﻿.noUi-target {
+    border-color: #ddd;
+    @include box-shadow(none);
+    @include border-radius(0);
+
+    &.noUi-vertical {
+        height: 200px;
+    }
+
+    .noUi-tooltip {
+        font-size: 13px;
+        @include border-radius(0);
+    }
+
+    .noUi-connect {
+        @include box-shadow(none);
+        background: $color_success;
+    }
+}

@@ -1,0 +1,124 @@
+.owl-carousel {
+  &.thumbnails {
+    padding: 7px 18px;
+
+    .owl-item {
+      img {
+        border: 3px solid transparent;
+        cursor: pointer;
+        @include border-radius(3px);
+      }
+
+      &.img-active {
+        img {
+          border-color: $color-danger;
+        }
+      }
+    }
+
+    .owl-nav {
+      .owl-prev {
+        background-color: #fff;
+        padding: 5px;
+        position: absolute;
+        top: calc(50% - 16px);
+        left: 0;
+      }
+
+      .owl-next {
+        background-color: #fff;
+        padding: 5px;
+        position: absolute;
+        top: calc(50% - 16px);
+        right: 0;
+      }
+    }
+  }
+
+  &.main-image {
+    .owl-nav {
+      color: #fff;
+      font-size: 32px;
+
+      .owl-prev {
+        position: absolute;
+        top: calc(50% - 16px);
+        left: 8px;
+      }
+
+      .owl-next {
+        position: absolute;
+        top: calc(50% - 16px);
+        right: 8px;
+      }
+
+      .fa {
+        text-shadow: 0 0 5px #555;
+      }
+    }
+
+    .owl-item {
+      img {
+        cursor: zoom-in;
+      }
+    }
+  }
+}
+
+.product-base-info {
+  h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #666;
+  }
+
+  .price-info {
+    border-top: 1px solid #e9e9e9;
+    margin-top: 12px;
+    padding-top: 15px;
+    color: #666;
+    font-size: 32px;
+
+    .old-price {
+      font-size: 16px;
+      color: #999;
+      text-decoration: line-through;
+    }
+  }
+
+  .selection-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #777;
+    margin-top: 32px;
+  }
+
+  .selection {
+    margin-top: 5px;
+  }
+
+  .product-opt-selection {
+    background-color: #EEEEEE;
+    border: none;
+    padding-left: 8px;
+  }
+
+  .add-to-card-area {
+    border-top: 1px solid #e9e9e9;
+    margin: 40px 0;
+    padding-top: 25px;
+  }
+
+  .main-description {
+    font-size: 12px;
+    text-align: justify;
+    color: #888;
+  }
+}
+
+.production-description {
+  font-size: 13px;
+  color: #777;
+  border-color: #e5e5e5;
+}

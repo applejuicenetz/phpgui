@@ -1,0 +1,205 @@
+﻿.table {
+    thead,
+    tfoot {
+        tr {
+            th {
+                color: #777;
+                font-size: 13px;
+                border-bottom: 1px solid #ccc;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                font-size: 13px;
+                color: #777;
+                border-color: #e5e5e5;
+            }
+
+            &.primary {
+                td {
+                    background-color: $color-primary;
+                    color: #fff;
+                }
+            }
+
+            &.success {
+                td {
+                    background-color: $color-success;
+                    color: #fff;
+                }
+            }
+
+            &.warning {
+                td {
+                    background-color: $color-warning;
+                    color: #fff;
+                }
+            }
+
+            &.info {
+                td {
+                    background-color: $color-info;
+                    color: #fff;
+                }
+            }
+
+            &.danger {
+                td {
+                    background-color: $color-danger;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &.table-column-vertical-middle {
+        tr {
+            td {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &.table-bordered {
+        thead {
+            tr {
+                th {
+                    background-color: #F5F6F8;
+                    border-color: #ddd;
+                }
+            }
+        }
+    }
+
+    &.table-hover {
+        > tbody {
+            > tr {
+                &:hover {
+                    background-color: #f5f6f8;
+                }
+            }
+        }
+    }
+
+    &.table-striped {
+        > tbody {
+            > tr {
+                &:nth-of-type(odd) {
+                    background-color: #f5f6f8;
+                }
+            }
+        }
+    }
+}
+
+/* JQuery Datatable */
+.dt-bootstrap {
+    .dataTables_length {
+        font-size: 13px;
+        color: #777;
+        float: left;
+
+        select {
+            padding: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    }
+
+    .dataTables_filter {
+        font-size: 13px;
+        color: #777;
+
+        input {
+            padding: 5px 7px;
+        }
+    }
+
+    .dataTables_info {
+        font-size: 13px;
+        color: #777;
+        float: left;
+    }
+
+    .dataTables_paginate {
+        .pagination {
+            font-size: 12px;
+        }
+    }
+
+    .html5buttons {
+        float: right;
+        margin-left: 6px;
+
+        .btn {
+            font-size: 11.25px;
+            color: #777;
+        }
+    }
+}
+
+.dt-button-info {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 400px;
+    text-align: center;
+    background-color: #fff;
+    border: 2px solid #999;
+    @include border-radius(3px);
+    margin-top: -100px;
+    margin-left: -200px;
+    z-index: 21;
+
+    h2 {
+        color: #777;
+    }
+
+    div {
+        color: #777;
+        margin-bottom: 20px;
+    }
+}
+
+
+.footable {
+    margin-bottom: 0;
+
+    .footable-toggle {
+        color: #999;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .fooicon-plus {
+        &:before {
+            font-family: 'FontAwesome' !important;
+            font-size: 16px;
+            content: '\f105';
+        }
+    }
+
+    .fooicon-minus {
+        &:before {
+            font-family: 'FontAwesome' !important;
+            font-size: 16px;
+            content: '\f107';
+        }
+    }
+
+    .footable-paging {
+        td {
+            padding-right: 0;
+        }
+    }
+
+    .footable-filtering {
+        th {
+            padding-right: 0;
+            border-color: transparent !important;
+        }
+    }
+}

@@ -26,9 +26,7 @@
       "server": "Serverliste",
       "sharefiles": "geteilte Dateien",
       "extras": "Addons",
-      "dl_users": "Downloaddetails",
-      "404": "Error 404",
-      "help": "Hilfe"
+      "dl_users": "Downloaddetails"
     },
     "version_1": "Neue Version verf&uuml;gbar!",
     "version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub gerunter und installiere das Update!"
@@ -37,20 +35,20 @@
     "current_server": "aktueller Server",
     "active_downloads": "aktive Downloads",
     "active_uploads": "aktive Uploads",
-    "share_dat": "Dateien",
+    "share_dat": "geteilte Dateien",
     "credits": "Punkte",
     "core_info": "Core Informationen",
     "server_time": "Server Zeit",
     "op_system": "Betriebssystem",
     "connected_since": "verbunden seit",
-    "open_connections": "Verbindungen",
-    "shared_users": "Shared User",
+    "open_connections": "offene Verbindungen",
+    "shared_users": "Anzahl Shared User",
     "all_data": "gesamte Dateien",
     "network_info": "Netzwerk Informationen",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
-    "download_speed": "Download",
-    "upload_speed": "Upload"
+    "download_speed": "Downloadgeschwindigkeit",
+    "upload_speed": "Uploadgeschwindigkeit"
   },
   "Navigation": {
     "dashboard": "Dashboard",
@@ -63,8 +61,7 @@
     "server_list": "Serverliste",
     "logout": "Logout",
     "kick_core": "Core beenden",
-    "user_settings": "Benutzereinstellungen",
-    "help": "Hilfe"
+    "user_settings": "Benutzereinstellungen"
   },
   "Downloads": {
     "source": "Quellen",
@@ -166,8 +163,7 @@
     "last_connection": "letzte Verbindung",
     "not_yet": "noch nicht verbunden",
     "login": "Login",
-    "delet": "L&ouml;schen",
-    "no_server": "Keine Server gefunden"
+    "delet": "L&ouml;schen"
   },
   "Settings": {
     "zipped": "Daten komprimiert vom Core holen",
@@ -192,9 +188,7 @@
     "alert_save_1": "Einstellungen aktualliesiert!",
     "alert_save_2": "Verbindungseinstellungen aktualliesiert!",
     "alert_save_theme": "GUI-Theme gespeichert!",
-    "password": "Passwort",
-    "head_con": "Verbindungseinstellungen",
-    "head_all": "Standarteinstellungen"
+    "password": "Passwort"
   },
   "Share": {
     "shared_directories": "Freigegebene Verzeichnisse",

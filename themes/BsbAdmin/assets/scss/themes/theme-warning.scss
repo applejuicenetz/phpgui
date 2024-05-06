@@ -1,0 +1,23 @@
+﻿@import '_themecolorvariables.scss';
+
+.theme-warning {
+    .navbar {
+        &.navbar-default {
+            background-color: $theme_warning;
+        }
+    }
+
+    .sidebar {
+        .sidebar-nav {
+            .metismenu {
+                li {
+                    &.active {
+                        a {
+                            border-color: $theme_warning;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

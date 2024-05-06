@@ -22,15 +22,21 @@ $template = new template();
 $Uploadlist = new Uploads();
 $Sharelist = new Share();
 
-//Cache laden
-$subs::refresh_cache();
 //Info holen
-$modified = $core->command("xml", "modified.xml?filter=informations");
-$temp = array_keys($modified['INFORMATION']);
-$information =& $modified['INFORMATION'][$temp[0]];
-$temp2 = array_keys($modified['NETWORKINFO']);
-$netinfo =& $modified['NETWORKINFO'][$temp2[0]];
+$statusbar_xml = $core->command("xml", "modified.xml?filter=informations");
+$temp = array_keys($statusbar_xml['INFORMATION']);
+$information =& $statusbar_xml['INFORMATION'][$temp[0]];
+$temp2 = array_keys($statusbar_xml['NETWORKINFO']);
+$netinfo =& $statusbar_xml['NETWORKINFO'][$temp2[0]];
 
+//Serververbindung?
+$serverconnection = $_SESSION['language']['SERVER']['STATUS_NOT_CONNECTED'];
+if ($netinfo['CONNECTEDWITHSERVERID'] >= 0) {
+    $serverconnection = $_SESSION['language']['SERVER']['STATUS_CONNECTED'];
+} else {
+    if ($netinfo['TRYCONNECTTOSERVER'] >= 0)
+        $serverconnection = $_SESSION['language']['SERVER']['STATUS_CONNECTING'];
+}
 
 $_SESSION['phpaj']['core_source_ip'] = $netinfo['IP'];
 if (empty($_SESSION['phpaj']['core_source_port'])) {
@@ -44,91 +50,95 @@ if (isset($information['MAXUPLOADPOSITIONS'])) {
 }
 
 //Warnungen
+$warnungen = array();
 if ($Servers->netstats['firewalled'] === 'true') {
     $template->alert("danger", $lang->System->warnung, $lang->System->firewall);
 }
 ?>
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-	<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 g-4 mb-4">
-		<div class="card-header"><svg width="16" height="16">
-              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
-            </svg> <?php echo $lang->Start->current_server; ?></div>
-			<div class="card-body">
-    			<h4></h4>
-    			<h3><?php echo $Servers->netstats['servername']; ?></h3>
+
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <!-- aktueller Server -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                <div class="panel-heading bg-success"><i class="fa fa-server"></i> <?php echo $lang->Start->current_server; ?></div>
+                <div class="panel-body">
+                    <h3><?php echo $Servers->netstats['servername']; ?></h3>
                     <?php
                     //server welcome msg
                     if (!empty($Servers->netstats['welcome'])) {
                         echo $Servers->netstats['welcome'];
                     }
                     ?>
-			</div>
-		</div>
-		<!-- Statistik -->
-		<div class="row g-4">
-        	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
-            	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-warning text-white p-4 me-2">
-                    	<svg class="icon icon-xxl">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
-                        </svg>
-                    </div>
-                	<div>
-                		<div class="fs-4 fw-semibold"><?php template::dashboard("download"); ?></div>
-                		<div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_downloads; ?></div>
-                		<div class="progress progress-thin mt-3">
-                              <div class="progress-bar" role="progressbar" style="width: <?php template::dashboard("download_finish"); ?>%" aria-valuenow="<?php template::dashboard("download_finish"); ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                		
-                	</div>
-                	
                 </div>
-        	</div>
+            </div>
         </div>
-        <!-- end-->
-        	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
-            	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-primary text-white p-4 me-2">
-                    	<svg class="icon icon-xxl">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-upload"></use>
-                        </svg>
-                    </div>
-                <div>
-                <div class="fs-4 fw-semibold"><?php echo $Uploadlist->cache['phpaj_ul']; ?></div>
-                <div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_uploads; ?></div>
+        <!-- DOWNLOADS UND UPLOADS COUNTER -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="info-box infobox-type-1">
+                <div class="icon bg-primary"><i class="material-icons">cloud_download</i></div>
+                <div class="content">
+                    <div class="text"><?php echo $lang->Start->active_downloads; ?></div>
+                    <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
+                        $Downloadlist = new Downloads();
+                        $counddown = $downloadids = $Downloadlist->ids("name", $subdir);
+                        $Downloadlist->refresh_cache();
+                        $subdircounter = 0;
+                        //alle downloads zeigen
+                        foreach (array_keys($Downloadlist->subdirs) as $subdir) {
+                            $subdircounter++;
+                            $downloadids = $Downloadlist->ids("", $subdir); //ids der downloads sortiert holen
+                        }
+                        echo count($downloadids);
+                        ?></div>
                 </div>
-                </div>
-        	</div>
+            </div>
         </div>
-        <!-- end -->
-        	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
-            	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-warning text-white p-4 me-2">
-                    	<svg class="icon icon-xxl">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-folder-open"></use>
-                        </svg>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="info-box infobox-type-1">
+                <div class="icon bg-warning"><i class="material-icons">cloud_upload</i></div>
+                <div class="content">
+                    <div class="text"><?php echo $lang->Start->active_uploads; ?></div>
+                    <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20">
+                        <?php echo $Uploadlist->cache['phpaj_ul']; ?>
                     </div>
-                	<div>
-                		<?php template::dashboard("share"); ?>
-                	</div>
                 </div>
-        	</div>
+            </div>
         </div>
-        <!-- end-->
-        	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
-            	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-primary text-white p-4 me-2">
-                    	<svg class="icon icon-xxl">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-diamond"></use>
-                        </svg>
-                    </div>
-                <div>
-                <div class="fs-4 fw-semibold"><?php
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="info-box infobox-type-1">
+                <div class="icon bg-success"><i class="material-icons">folder_open</i></div>
+                <?php
+
+
+                if ($_ENV['GUI_SHOW_SHARE']) {
+                    $Sharelist->refresh_cache(30);
+                }
+
+                if (!empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])) {
+                    $share_anzahl = 0;
+                    $share_groesse = 0;
+                    foreach (array_keys($Sharelist->cache['SHARES']['VALUES']['SHARE']) as $a) {
+                        $share_anzahl++;
+                        $share_groesse += $Sharelist->cache['SHARES']['VALUES']['SHARE'][$a]['SIZE'];
+                    }
+                    echo '<div class="content">
+                    		<div class="text">' . number_format($share_anzahl) . ' ' . $lang->Start->share_dat . '</div>
+                    		<div class="number">
+                    			' . subs::sizeformat($share_groesse) . '
+						 </div>';
+                } else {
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box infobox-type-1">
+            <div class="icon bg-primary"><i class="material-icons">star</i></div>
+            <div class="content">
+                <div class="text"><?php echo $lang->Start->credits; ?></div>
+                <div class="number count-to" data-from="0" data-to="245" data-speed="1000" data-fresh-interval="20"><?php
 
                     if ($information['CREDITS'] <= 0) {
                         $creditcolor = " class='text-danger'";
@@ -136,15 +146,12 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         $creditcolor = " class='ext-success'";
                     }
                     echo "<span" . $creditcolor . " >" . subs::sizeformat($information['CREDITS']) . "</span>";
-                    ?></div>
-                <div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->credits; ?></div>
+                    ?>
                 </div>
-                </div>
-        	</div>
+            </div>
         </div>
-        <!-- end -->
-        </div>
-      <div class="row mt-4 mb-4">        
+    </div>
+
     <?php
     $coreinfo = $Servers->core->getcoreversion();
     $coresubversions = explode(".", $_SESSION['cache']['STATUSBAR']['VERSION']);
@@ -154,22 +161,23 @@ if ($Servers->netstats['firewalled'] === 'true') {
 
 
     ?>
-	</div>
 
-	</div>
-	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-	<div class="card mb-4">
-            <div class="card-header"><svg class="icon icon-l">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-globe-alt"></use>
-                        </svg> <?php echo $lang->Start->core_info; ?></div>
-            <div class="card-body p-0">
+</div>
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+    <!--INFOS EINHOLEN -->
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+            <div class="panel-heading bg-success"><i class="material-icons">public</i> <?php echo $lang->Start->core_info; ?></div>
+            <div class="panel-body">
                 <table class="table">
                     <tbody>
                     <tr>
                         <td><?php echo $lang->Start->server_time; ?></td>
-                        <td>
+                        <td nowrap>
                             <?php
                             echo $Servers->time();
+                            echo "<a href=\"javascript: window.location.href='" . $_SERVER['PHP_SELF'] . "\"><i class=\"bi bi-arrow-clockwise\"></i></a>";
                             ?>
                         </td>
                     <tr>
@@ -204,17 +212,15 @@ if ($Servers->netstats['firewalled'] === 'true') {
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->all_data; ?></td>
-                        <td nowrap><?php echo number_format($Servers->netstats['filecount']) . "<br>" . subs::sizeformat($Servers->netstats['filesize']); ?></td>
+                        <td nowrap><?php echo number_format($Servers->netstats['filecount']) . " - " . subs::sizeformat($Servers->netstats['filesize']); ?></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="card mt-4">
-            <div class="card-header"><svg class="icon icon-l">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-fork"></use>
-                        </svg> <?php echo $lang->Start->network_info; ?></div>
-            <div class="card-body p-0">
+        <div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+            <div class="panel-heading"><i class="material-icons">compare_arrows</i> <?php echo $lang->Start->network_info; ?></div>
+            <div class="panel-body">
                 <table class="table">
                     <tbody>
                     <tr>
@@ -237,8 +243,6 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 </table>
             </div>
         </div>
-
-	</div>
-	<!-- Satistik -->	
-	</div>
-	
+    </div>
+</div>
+</div>	

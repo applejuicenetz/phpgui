@@ -1,0 +1,42 @@
+﻿.daterangepicker {
+    td {
+        &.active {
+            background-color: $color_success;
+
+            &:hover {
+                background-color: $color_success;
+            }
+        }
+    }
+
+    .range_inputs {
+        button {
+            @include border-radius(0);
+        }
+    }
+
+    .input-mini {
+        &.active {
+            border-color: $color_success;
+        }
+    }
+
+    .ranges {
+        ul {
+            li {
+                padding: 3px 8px;
+                background: #f5f5f5;
+                border: 1px solid #dedede;
+                color: #777;
+                @include border-radius(0);
+
+                &.active,
+                &:hover {
+                    border: 1px solid $color_success;
+                    background-color: $color_success;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

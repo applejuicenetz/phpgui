@@ -2,6 +2,9 @@
 
 use appleJuiceNETZ\appleJuice\Downloads;
 
+session_start();
+require_once "_classes/subs.php";
+require_once "_classes/downloads.php";
 $Downloadlist = new Downloads;
 
 if(!empty($_GET['dl_id'])){

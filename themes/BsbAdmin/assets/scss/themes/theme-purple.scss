@@ -1,0 +1,23 @@
+﻿@import '_themecolorvariables.scss';
+
+.theme-purple {
+    .navbar {
+        &.navbar-default {
+            background-color: $theme_purple;
+        }
+    }
+
+    .sidebar {
+        .sidebar-nav {
+            .metismenu {
+                li {
+                    &.active {
+                        a {
+                            border-color: $theme_purple;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

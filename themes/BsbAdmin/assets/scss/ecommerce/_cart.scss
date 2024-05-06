@@ -1,0 +1,161 @@
+﻿.cart-panel {
+
+    .cart {
+        thead {
+            tr {
+                th {
+                    &:nth-child(2),
+                    &:nth-child(3),
+                    &:nth-child(4),
+                    &:nth-child(5) {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    vertical-align: middle;
+
+                    &:nth-child(2),
+                    &:nth-child(3),
+                    &:nth-child(4),
+                    &:nth-child(5) {
+                        text-align: right;
+
+                        input[type="number"] {
+                            max-width: 75px;
+                            float: right;
+                        }
+                    }
+
+                    &:nth-child(5) {
+                        a {
+                            text-decoration: none;
+                            font-size: 18px;
+                            color: $color-danger;
+
+                            &:nth-child(1) {
+                                .fa {
+                                    color: #D5D5D5;
+                                    margin-right: 3px;
+
+                                    &.active {
+                                        color: #f6b225;
+                                    }
+                                }
+                            }
+
+                            &:nth-child(2) {
+                                .fa {
+                                    color: $color-danger !important;
+                                }
+                            }
+                        }
+                    }
+
+                    &:nth-child(1) {
+                        small {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .cart-total-table {
+        tbody {
+            tr {
+                td {
+                    &:nth-child(1) {
+                        width: 50%;
+                        text-align: right;
+                        font-weight: bold;
+                        border: none;
+                    }
+
+                    &:nth-child(2) {
+                        width: 50%;
+                        text-align: right;
+                        border-bottom: 1px solid #e9e9e9;
+                        border-top: none;
+                    }
+                }
+            }
+
+            .amount {
+                font-weight: bold;
+                font-size: 16px;
+            }
+        }
+    }
+
+    .payment-methods {
+        h2 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #777;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                display: inline-block;
+
+                .fa {
+                    font-size: 25px;
+                    color: #666;
+                }
+            }
+        }
+    }
+
+    .well {
+        font-size: 13px;
+        color: #555;
+        padding: 10px 12px;
+        margin-top: 20px;
+        @include border-radius(3px);
+    }
+}
+
+.invoice-print-preview {
+    background-color: #fff;
+
+    .panel {
+        border: none;
+    }
+}
+
+.order-table {
+    thead {
+        tr {
+            th {
+                &:nth-child(1),
+                &:nth-child(2),
+                &:nth-child(5) {
+                    width: 120px;
+                }
+
+                &:nth-child(4) {
+                    width: 80px;
+                }
+
+                &:nth-child(6) {
+                    width: 90px;
+                }
+
+                &:nth-child(7) {
+                    width: 75px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+﻿.list-group-item {
+    @include transition(.5s);
+
+    &:first-child {
+        @include border-radius(3px 3px 0 0);
+    }
+
+    &.active {
+        background-color: $color-primary;
+    }
+
+    &.list-group-item-success {
+        background-color: $color-success;
+        color: #fff;
+        border: none;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($color-success, 5%);
+            color: #fff;
+        }
+    }
+
+    &.list-group-item-danger {
+        background-color: $color-danger;
+        color: #fff;
+        border: none;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($color-danger, 5%);
+            color: #fff;
+        }
+    }
+
+    &.list-group-item-warning {
+        background-color: $color-warning;
+        color: #fff;
+        border: none;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($color-warning, 5%);
+            color: #fff;
+        }
+    }
+
+    &.list-group-item-info {
+        background-color: $color-info;
+        color: #fff;
+        border: none;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($color-info, 5%);
+            color: #fff;
+        }
+    }
+
+    &.list-group-item-primary {
+        background-color: $color-primary;
+        border: none;
+        color: #fff;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($color-primary, 5%);
+            color: #fff;
+        }
+    }
+
+    h4 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,107 @@
+﻿.right-sidebar {
+    position: fixed;
+    background-color: #fff;
+    height: 100%;
+    bottom: 0;
+    top: 0;
+    right: -280px;
+    max-width: 275px;
+    z-index: 99999999;
+    @include box-shadow(0 0 9px rgba(191,191,191,0.36));
+    @include transition(.32s);
+
+    &.open {
+        top: 0;
+        right: 0;
+    }
+
+    .nav-tabs {
+        border: none;
+        background-color: #252d3a;
+        margin-right: 30px;
+
+        > li {
+            &.active {
+                > a {
+                    color: #fff;
+                    cursor: default;
+                    background-color: transparent;
+                    border: none;
+                    border-bottom-color: transparent;
+
+                    &:hover,
+                    &:focus {
+                        color: #fff;
+                        cursor: default;
+                        background-color: transparent;
+                        border: none;
+                        border-bottom-color: transparent;
+                    }
+                }
+            }
+        }
+
+        li {
+            a {
+                border: none;
+                font-size: 12px;
+                color: #aaa;
+                padding-top: 17px;
+                padding-bottom: 17px;
+                @include transition(.5s);
+            }
+        }
+    }
+
+    .tab-content {
+        color: #666;
+
+        .right-sidebar-close {
+            background-color: #252d3a;
+            color: #7e8185;
+            width: 30px;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+            @include transition(.5s);
+
+            &:hover {
+                color: #ddd;
+            }
+        }
+
+        .tab-pane {
+            padding: 0;
+            min-width: 275px;
+            border: none !important;
+            background-color: transparent !important;
+
+            label {
+                display: block;
+                text-align: center;
+                margin: 20px 15px 15px 15px;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+
+                li {
+                    font-size: 13px;
+                    padding: 15px;
+                    position: relative;
+                    border-top: 1px solid #eee;
+
+                    .switch {
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+}

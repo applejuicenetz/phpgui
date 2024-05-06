@@ -3,8 +3,6 @@
 namespace appleJuiceNETZ\GUI;
 
 use appleJuiceNETZ\Kernel;
-use appleJuiceNETZ\appleJuice\Uploads;
-use appleJuiceNETZ\appleJuice\Downloads;
 
 class subs
 {
@@ -12,11 +10,9 @@ class subs
     {
         if (!empty($_ENV['GUI_SHOW_NEWS'])) {
             echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            		<div class="card">
-                		<div class="card-header"><svg class="icon icon-l">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-newspaper"></use>
-                        </svg> appleJuice News</div>
-                		<div class="card-body">
+            		<div class="panel panel-default" data-panel-collapsable="false" data-panel-fullscreen="false" data-panel-close="false">
+                		<div class="panel-heading bg-success"><i class="fa fa-news"></i> appleJuice News</div>
+                		<div class="panel-body">
                 		' . $this->getnews($zeit, $version) . '
                 		</div>
     				</div>
@@ -37,7 +33,7 @@ class subs
         return $news_file;
     }
 
-    static function get_title($site)
+    function get_title($site)
     {
         $language = Kernel::getLanguage();
         $lang = $language->translate();
@@ -45,17 +41,15 @@ class subs
         return $lang->System->pagetitle->$site;
     }
 
-    
-	function prozess_bar($balken)
-	{
-		return '<div class="progress mt-3">
-                <div class="progress-bar progress-bar-success progress-bar-striped active col-black" style="width: ' . $balken . '%">
-                '  .$balken . ' %</div>
-              </div>';	
-	}
+    function prozess($balken)
+    {
+        $balken = round($balken, 2);
+        return '<span class="pie">' . $balken . '/100</span><br>' . $balken . '%';
+    }
+
     function dl_source($wert)
     {
-        $language = Kernel::getLanguage();
+        $language = new Language($_ENV['GUI_LANGUAGE']);
         $lang = $language->translate();
 
         if ($wert == 1) $wert = $lang->Downloads->dl_source->src_1;
@@ -109,16 +103,15 @@ class subs
 
 
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
-	public static function sizeformat($bytes, $precision = 2)
+    public static function sizeformat($bytesize)
     {
-    	$i = 0;
-        while (abs($bytes) >= 1024 && $i < 6) {
-            $bytes /= 1024;
+        $i = 0;
+        while (abs($bytesize) >= 1024 && $i < 6) {
+            $bytesize /= 1024;
             $i++;
         }
-
-        $bezeichnung = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
-        $newsize = ($i > 0) ? number_format($bytes, $precision) : (int)$bytes;
+        $bezeichnung = ['Bytes', "KB", "MB", "GB", "TB", "PB", "EB"];
+        $newsize = ($i > 0) ? number_format($bytesize, 2) : (int)$bytesize;
         return ("$newsize $bezeichnung[$i]");
     }
 
@@ -146,14 +139,6 @@ class subs
         echo '<pre>';
         print_r($data);
         die;
-    }
-    static function refresh_cache()
-    {
-    	$Uploadlist = new Uploads();
-    	$Downloadlist = new Downloads();
-    	
-    	$Uploadlist->refresh_cache();
-    	$Downloadlist->refresh_cache();
     }
 }
 

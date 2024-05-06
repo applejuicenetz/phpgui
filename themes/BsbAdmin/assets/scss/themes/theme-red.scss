@@ -1,0 +1,31 @@
+﻿@import '_themecolorvariables.scss';
+
+.theme-red {
+    .navbar {
+        &.navbar-default {
+            background-color: $theme_red;
+
+            .navbar-nav {
+                > .open {
+                    > a {
+                        background-color: $theme_red;
+                    }
+                }
+            }
+        }
+    }
+
+    .sidebar {
+        .sidebar-nav {
+            .metismenu {
+                li {
+                    &.active {
+                        a {
+                            border-color: $theme_red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

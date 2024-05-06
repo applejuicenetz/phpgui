@@ -1,0 +1,94 @@
+﻿.maintenance-page {
+    background: url('../../assets/images/maintenance-bg.jpg') no-repeat center center fixed;
+    @include background-size(cover);
+
+    .background-layer {
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdISfAAAAAElFTkSuQmCC) rgba(0,0,0, 0.1) repeat;
+        /*background-color: rgba(0,0,0,0.32);*/
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        position: fixed;
+    }
+
+    .container-fluid {
+        position: relative;
+        z-index: 100;
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 42px;
+        margin-top: 100px;
+        color: #fff;
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.18);
+    }
+
+    .countdown {
+        margin-top: 72px;
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+
+        div {
+            font-size: 72px;
+            font-weight: 500;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.24);
+
+            &.text {
+                font-weight: normal;
+                font-size: 14px;
+                margin-top: -5px;
+            }
+        }
+    }
+
+    .info {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.24);
+    }
+
+    .subscribe-form {
+        margin-top: 100px;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+
+        input, button {
+            border: 1px solid #fff;
+            @include border-radius(0 !important);
+        }
+
+        input[type="email"] {
+            opacity: 0.8;
+        }
+    }
+
+    ul {
+        &.social-icons {
+            list-style: none;
+            margin: 25px 0 0 0;
+            padding: 0;
+            width: 100%;
+            text-align: center;
+
+            li {
+                display: inline-block;
+                margin-right: 10px;
+
+                a {
+                    color: #fff;
+                    text-decoration: none;
+                    font-size: 24px;
+                    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.24);
+                }
+            }
+        }
+    }
+}
