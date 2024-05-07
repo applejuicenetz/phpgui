@@ -87,9 +87,6 @@ if (!empty($_GET['sharefile'])) {
 if (!empty($_GET['forcereload'])) {
     $Sharelist->refresh_cache(0);
 }
-<<<<<<< Updated upstream
-
-=======
 echo"<script>
 share_ids = [];
 
@@ -152,7 +149,6 @@ function selectnone(){
 }
 </script>
 ";
->>>>>>> Stashed changes
 //sharecache neu laden, falls aelter als 60min
 $Sharelist->refresh_cache(60);
 
@@ -163,12 +159,8 @@ echo '<div class="row clearfix">
                             <div class="card-body">
                             	<div class="input-group mb-2">
                             		<button class="btn btn-outline-secondary" type="button" onclick="exportlinks()">' . $lang->Share->export . '</button>
-<<<<<<< Updated upstream
-									<button class="btn btn-outline-secondary" type="button" onclick="javascript:dec_pdl()"><i class="fa fa-repeat"></i></button>
-=======
 									<button class="btn btn-outline-secondary" type="button" onclick="location.href=\'index.php?site=sharefiles&dir=' . urlencode($_GET['dir']) . '&forcereload=1\';
 "><i class="fa fa-repeat"></i></button>
->>>>>>> Stashed changes
 									<select class="form-control" name="shareprio">';
 										for ($i = 1; $i <= 250; $i++)
 										{

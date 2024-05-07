@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.4
+
+- fix dashboard
+- fix search
+- fix download ->buttons now with function
+- features remove:
+	- style switcher
+- fix share
+
 ## 0.29.3
 
 - Bug fix

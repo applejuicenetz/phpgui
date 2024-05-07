@@ -36,11 +36,7 @@ echo'<div class="row clearfix">
                         <div class="card">
                         	<div class="card-body">
                         	<div class="mb-2">
-<<<<<<< Updated upstream
-                        	<button type="button" class="btn btn-primary" onclick="do_setsubs(\'*sharecheck\', 0);"><i class="fa fa-refresh"></i> ' . $lang->Share->check . '</button></div>
-=======
                         	<a href="?site=shares&setsubs=*sharecheck&newsub=0" class="btn btn-primary"><i class="fa fa-refresh"></i> ' . $lang->Share->check . '</a></div>
->>>>>>> Stashed changes
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>

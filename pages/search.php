@@ -85,24 +85,6 @@ foreach ($links as $link) {
 //Searchcontent
 	//Suchformular
 	echo'<div class="row clearfix">
-<<<<<<< Updated upstream
-                    <div class="col-sm-12 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="align-left">
-                                	<form action="?site=search&'.SID.'" method="post">
-                                		<input type="text" size="40" name="searchstring">
-                                		<button type="submit" class="btn btn-primary">'.$lang->Search->button.'</button>
-                                	</form><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-
-echo'<div class="row">
-  <div class="col-3">
-    <div class="list-group" id="list-tab" role="tablist">
-=======
                     <div class="col-12 mb-3">
                         <div class="card">
                             <div class="card-body">
@@ -121,7 +103,6 @@ echo'<div class="row">
   <div class="col-sm-3 col-lg-3">
     <div class="list-group" id="list-tab" role="tablist">
     
->>>>>>> Stashed changes
       <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" id="list-search-all" data-coreui-toggle="list" href="#search-all" role="tab" aria-controls="search-all">
     	' . $lang->Search->all . '
     	<span class="badge text-bg-primary rounded-pill">' . $Search->cache['SEARCHENTRY_count'] . '</span>
@@ -139,15 +120,6 @@ if(!empty($Search->cache['SEARCH'])){
 		
 		// Suche aktiv oder inaktiv
 		if($Search->cache['SEARCH'][$b]['RUNNING']==="true"){
-<<<<<<< Updated upstream
-			$button = '<span class="badge text-bg-warning" onclick="location.href=\'?site=search&cancelid='.$b.'\'">
-						<i class="fa fa-close"></i>
-					  </span>';	
-		}else{
-			$button = '<span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteid='.$b.'\'">
-						<i class="fa fa-trash"></i>
-					  </span>';
-=======
 			$button = '<div class="mb-4">
     		<a class="btn btn-warning" href="?site=search&cancelid=' . $b . '"><i class="fa fa-cross"></i> ' . $lang->Search->cancle_search . '</a>
 		</div>';	
@@ -155,7 +127,6 @@ if(!empty($Search->cache['SEARCH'])){
 			$button = '<div class="mb-4">
     		<a class="btn btn-danger" href="?site=search&deleteid=' . $b . '"><i class="fa fa-trash"></i> ' . $lang->Search->delet_search . '</a>
 		</div>';
->>>>>>> Stashed changes
 		}
 		//name der suche + zahl der ergebnisse
 		echo'<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" id="list-search-' . $b . '" data-coreui-toggle="list" href="#search-' . $b . '" role="tab" aria-controls="search-' . $b . '">
@@ -168,22 +139,12 @@ if(!empty($Search->cache['SEARCH'])){
 echo'
       </div>
   </div>
-<<<<<<< Updated upstream
-  <div class="col-9">
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="search-all" role="tabpanel" aria-labelledby="search-all">
-      <span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteall=1\'"><i class="fa fa-trash"></i></span>
-      <div class="table-responsive">
-			 
-      <table class="table table-striped">';
-=======
   <div class="col-sm-9 col-lg-9">
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="search-all" role="tabpanel" aria-labelledby="search-all">
     	<div class="mb-4">
     		<a class="btn btn-danger" href="?site=search&deleteall=1"><i class="fa fa-trash"></i> ' . $lang->Search->delet . '</a>
 		</div>';
->>>>>>> Stashed changes
 
 //Sortieren
 if(!empty($Search->cache['SEARCHENTRY'])){
@@ -192,18 +153,6 @@ $searchsort=$Search->sortieren($_GET['sort']);
 }
 
 
-<<<<<<< Updated upstream
-if(!empty($_ENV['REL_INFO'])) {
-    echo '<th width="16" align="center">
-    		<i class="fa fa-info-circle"></i>
-    	  </th>';
-}
-
-echo "<th nowrap>".$lang->Search->size."</th>
-<th>".$lang->Search->counter."</th>
-<th>&nbsp;</th></tr>";
-=======
->>>>>>> Stashed changes
 
 //suchergebnisse anzeigen
 if(!empty($Search->cache['SEARCHENTRY'])){
@@ -245,23 +194,6 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 		}
 		echo "</table></div>";
 
-<<<<<<< Updated upstream
-        if (!empty($_ENV['REL_INFO'])) {
-            echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
-        }
-
-		echo "<td nowrap class=\"rigt\">"
-			.subs::sizeformat($cur_search['SIZE'])
-			."</td>\n";
-		//anzahl der ergebnisse
-		echo "<td class=\"right\">"
-			.$cur_search['phpaj_COUNT']
-			."\n</td>";
-		//ajfsp-link zu datei
-		echo "<td><a class='btn btn-success' href=\"?site=search&link=".$ajfsp_link."\">download</a></td></tr>\n\n";
-	}
-=======
->>>>>>> Stashed changes
 }
 echo"</div>";
         
@@ -269,15 +201,9 @@ echo"</div>";
 if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $searchid){
-<<<<<<< Updated upstream
-		echo'<div class="tab-pane fade" id="search-' . $searchid . '" role="tabpanel" aria-labelledby="search-' . $searchid . '">';
-      
-			if($searchid !=="alles"){
-=======
 		echo'<div class="tab-pane fade" id="search-' . $searchid . '" role="tabpanel" aria-labelledby="search-' . $searchid . '">'.$button;
       
 		if($searchid !=="alles"){
->>>>>>> Stashed changes
 	
 		$current_search=&$Search->cache['SEARCH'][$searchid];
 		if(($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES'])>0)
@@ -286,13 +212,6 @@ if(!empty($Search->cache['SEARCH'])){
 			$balken = round($current_search_percent,2);
 			
 			$details = $current_search['SUMSEARCHES']."/".($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']);
-<<<<<<< Updated upstream
-		echo'<div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
-                	'.$balken.' %
-                </div>
-              </div>';
-=======
 			if($balken != 100)
 			{
 				echo'<div class="progress mb-3">
@@ -301,7 +220,6 @@ if(!empty($Search->cache['SEARCH'])){
                 		</div>
             		</div>';
 			}
->>>>>>> Stashed changes
 		
 	}
 }
@@ -363,10 +281,5 @@ echo "</table></div></div>";
 
 }
         
-<<<<<<< Updated upstream
-}}
-echo'</div></div></div>';
-=======
 }
 echo"</div></div></div>";
->>>>>>> Stashed changes

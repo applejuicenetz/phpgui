@@ -34,7 +34,9 @@ class template
         if ($alert == "warning") $icon = "exclamation-triangle";
         if ($alert == "danger") $icon = "exclamation-triangle";
 		
-		echo '<div class="alert alert-' . $alert . ' alert-dismissible fade show" role="alert">
+		echo '
+		
+		<div class="alert alert-' . $alert . ' alert-dismissible fade show" role="alert">
 				<i class="fa fa-fw fa-' . $icon . '"></i>
 				<strong>' . $strong . '</strong> ' . $text . '
 				<button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
@@ -170,8 +172,6 @@ class template
     		echo'<script src="themes/js/' . $site . '.js"></script>';
     	}	
 	}
-<<<<<<< Updated upstream
-=======
 	public static function toast($site, $action, $alert)
 	{
 		if($action = "resumedownload") $text = "Download wurde fortgesetzt.";
@@ -184,5 +184,4 @@ class template
                       </div>
                     </div>';	
 	}
->>>>>>> Stashed changes
 }

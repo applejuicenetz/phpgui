@@ -5,10 +5,7 @@ namespace appleJuiceNETZ\GUI;
 use appleJuiceNETZ\Kernel;
 use appleJuiceNETZ\appleJuice\Uploads;
 use appleJuiceNETZ\appleJuice\Downloads;
-<<<<<<< Updated upstream
-=======
 use appleJuiceNETZ\appleJuice\Core;
->>>>>>> Stashed changes
 
 class subs
 {

@@ -62,11 +62,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
         	<div class="sidebar-brand-full">
-<<<<<<< Updated upstream
-    		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/applejuice.svg" width="176" height="64">
-=======
     		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/applejuice.svg" width="250" height="90">
->>>>>>> Stashed changes
     		<br>
     		<span class="sidebar-brand-full">Flux</span>
     		</div>
