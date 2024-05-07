@@ -5,6 +5,10 @@ namespace appleJuiceNETZ\GUI;
 use appleJuiceNETZ\Kernel;
 use appleJuiceNETZ\appleJuice\Uploads;
 use appleJuiceNETZ\appleJuice\Downloads;
+<<<<<<< Updated upstream
+=======
+use appleJuiceNETZ\appleJuice\Core;
+>>>>>>> Stashed changes
 
 class subs
 {
@@ -91,7 +95,20 @@ class subs
 
         return $wert;
     }
-
+    public static function ccts()
+    {
+        $core = new Core();
+        //Info holen
+        $statusbar_xml=$core->command("xml","modified.xml?filter=informations");
+        $temp2=array_keys($statusbar_xml['NETWORKINFO']);
+        $netinfo=&$statusbar_xml['NETWORKINFO'][$temp2[0]];
+        
+        if($netinfo['CONNECTEDWITHSERVERID'] < 0)
+        {
+	        include_once("pages/_ccts.php");
+	        exit;
+        }
+    }
 
 //sortiert alle keys von $srcarray nach den werten von $sortkey eine ebene tiefer
     public static function ajsort($srcarray, $sortkey, $type, $reverse)

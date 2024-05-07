@@ -226,6 +226,9 @@
     "name": "Dateienname",
     "size": "Gr&ouml;&szlig;e",
     "counter": "Anzahl",
-    "know_filename": "Datei bekannt als"
+    "know_filename": "Datei bekannt als",
+    "delet": "alle l&ouml;schen",
+    "cancle_search": "Suche abbrechen",
+    "delet_search": "Suche l&ouml;schen"
   }
 }

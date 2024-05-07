@@ -36,7 +36,11 @@ echo'<div class="row clearfix">
                         <div class="card">
                         	<div class="card-body">
                         	<div class="mb-2">
+<<<<<<< Updated upstream
                         	<button type="button" class="btn btn-primary" onclick="do_setsubs(\'*sharecheck\', 0);"><i class="fa fa-refresh"></i> ' . $lang->Share->check . '</button></div>
+=======
+                        	<a href="?site=shares&setsubs=*sharecheck&newsub=0" class="btn btn-primary"><i class="fa fa-refresh"></i> ' . $lang->Share->check . '</a></div>
+>>>>>>> Stashed changes
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
@@ -63,7 +67,7 @@ $sharedirs=$share->get_shared_dirs(1);
 foreach($sharedirs as $a){
 	$cur_share=$share->get_shared_dir($a);
 	//verzeichnisname -> link zu den einzelnen dateien
-	$checked = "onclick=\"do_setsubs('".addslashes(htmlspecialchars($cur_share['NAME']))."','".(($cur_share['SHAREMODE'] == 'subdirectory') ? "0" : "1")."');\"";
+	$checked = "onclick=\"location.href='?site=shares&setsubs=" . htmlspecialchars($cur_share['NAME']) . "&newsub=" . (($cur_share['SHAREMODE'] == 'subdirectory') ? "0" : "1") . "'\"";
 	echo'<tr>
 		<td width="1"><i class="fa fa-folder"></i></td>
 		<td>
@@ -71,10 +75,9 @@ foreach($sharedirs as $a){
             '.htmlspecialchars($cur_share["NAME"]).'
             </a>
         </td>
-        <td><input type="checkbox" '.$checked.' value="1"
-		'.$share->sharemode[$cur_share['SHAREMODE']].'/>
+        <td><input type="checkbox" '.$checked.' value="1" '.$share->sharemode[$cur_share['SHAREMODE']].'/>
                                 </td>
-        <td><a href="javascript:delshare(\''.addslashes(htmlspecialchars($cur_share['NAME'])).'\');"><i class="fa fa-trash class="text-danger"></a></td>
+        <td><a href="javascript:delshare(\''.addslashes(htmlspecialchars($cur_share['NAME'])).'\');" class="btn btn-sm btn-danger"><i class="fa fa-trash class="text-danger"></a></td>
     </tr>';
 }
 echo'<tr>

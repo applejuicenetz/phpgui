@@ -4,24 +4,36 @@ use appleJuiceNETZ\appleJuice\Downloads;
 use appleJuiceNETZ\GUI\Icons;
 use appleJuiceNETZ\GUI\subs;
 use appleJuiceNETZ\Kernel;
+use appleJuiceNETZ\GUI\template;
 
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
 $icon_img =new Icons();
 $Downloadlist = new Downloads();
+$template = new template();
 
 if(empty($_GET['sort'])) $_GET['sort']="status";
 
 //pause, fortsetzen, abbrechen, pdl setzen...
 	$action_echo='';
-	if(!empty($_GET['action'])){
-		if(!empty($_GET['dl_id'])){
+	if(!empty($_GET['action']))
+	{
+		if(!empty($_GET['dl_id']))
+		{
 			if(empty($_GET['action_value'])) $_GET['action_value']="";
-		$action_echo = $Downloadlist->action($_GET['action'],
-			$_GET['dl_id'],$_GET['action_value']);
+			$action_echo = $Downloadlist->action($_GET['action'],$_GET['dl_id'],$_GET['action_value']);
 			$Downloadlist->message($action_echo);
 	}
+	echo $_GET['action'];
+	echo'
+	<div style="position: fixed;
+  top: 120px;
+  right: 5px;
+  z-index: 300;
+  opacity: 0.7;">' . template::toast($_GET['site'], $_GET['action'], "info") . '</div>
+';
+	
 }
 
 $Downloadlist->refresh_cache();

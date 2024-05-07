@@ -85,6 +85,7 @@ foreach ($links as $link) {
 //Searchcontent
 	//Suchformular
 	echo'<div class="row clearfix">
+<<<<<<< Updated upstream
                     <div class="col-sm-12 mb-3">
                         <div class="card">
                             <div class="card-body">
@@ -101,6 +102,26 @@ foreach ($links as $link) {
 echo'<div class="row">
   <div class="col-3">
     <div class="list-group" id="list-tab" role="tablist">
+=======
+                    <div class="col-12 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                            	<form action="?site=search&'.SID.'" method="post">
+                                	<div class="input-group mb-3">
+                                		<input type="text" class="form-control" name="searchstring" aria-describedby="button-addon2">
+                                		<button class="btn btn-outline-primary" type="submit">' . $lang->Search->button . '</button>
+									</div>
+								</form>
+								
+                            </div>
+                        </div>
+                    </div></div>';
+
+echo'<div class="row">
+  <div class="col-sm-3 col-lg-3">
+    <div class="list-group" id="list-tab" role="tablist">
+    
+>>>>>>> Stashed changes
       <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" id="list-search-all" data-coreui-toggle="list" href="#search-all" role="tab" aria-controls="search-all">
     	' . $lang->Search->all . '
     	<span class="badge text-bg-primary rounded-pill">' . $Search->cache['SEARCHENTRY_count'] . '</span>
@@ -115,15 +136,10 @@ if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $b){
 		
-		//suche ausgewaehlt, oder nicht?
-		if(!empty($_GET['searchid']) && $b==$_GET['searchid']){
-			$active = "active";
-		}else{
-			$active = "";
-		}
 		
 		// Suche aktiv oder inaktiv
 		if($Search->cache['SEARCH'][$b]['RUNNING']==="true"){
+<<<<<<< Updated upstream
 			$button = '<span class="badge text-bg-warning" onclick="location.href=\'?site=search&cancelid='.$b.'\'">
 						<i class="fa fa-close"></i>
 					  </span>';	
@@ -131,6 +147,15 @@ if(!empty($Search->cache['SEARCH'])){
 			$button = '<span class="badge text-bg-danger" onclick="location.href=\'?site=search&deleteid='.$b.'\'">
 						<i class="fa fa-trash"></i>
 					  </span>';
+=======
+			$button = '<div class="mb-4">
+    		<a class="btn btn-warning" href="?site=search&cancelid=' . $b . '"><i class="fa fa-cross"></i> ' . $lang->Search->cancle_search . '</a>
+		</div>';	
+		}else{
+			$button = '<div class="mb-4">
+    		<a class="btn btn-danger" href="?site=search&deleteid=' . $b . '"><i class="fa fa-trash"></i> ' . $lang->Search->delet_search . '</a>
+		</div>';
+>>>>>>> Stashed changes
 		}
 		//name der suche + zahl der ergebnisse
 		echo'<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" id="list-search-' . $b . '" data-coreui-toggle="list" href="#search-' . $b . '" role="tab" aria-controls="search-' . $b . '">
@@ -143,6 +168,7 @@ if(!empty($Search->cache['SEARCH'])){
 echo'
       </div>
   </div>
+<<<<<<< Updated upstream
   <div class="col-9">
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="search-all" role="tabpanel" aria-labelledby="search-all">
@@ -150,6 +176,14 @@ echo'
       <div class="table-responsive">
 			 
       <table class="table table-striped">';
+=======
+  <div class="col-sm-9 col-lg-9">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="search-all" role="tabpanel" aria-labelledby="search-all">
+    	<div class="mb-4">
+    		<a class="btn btn-danger" href="?site=search&deleteall=1"><i class="fa fa-trash"></i> ' . $lang->Search->delet . '</a>
+		</div>';
+>>>>>>> Stashed changes
 
 //Sortieren
 if(!empty($Search->cache['SEARCHENTRY'])){
@@ -157,11 +191,8 @@ if(empty($_GET['sort'])) $_GET['sort']="count";
 $searchsort=$Search->sortieren($_GET['sort']);
 }
 
-//tabellenueberschriften
-echo "<tr>
-		<th>".$lang->Search->name."
-		</th>";
 
+<<<<<<< Updated upstream
 if(!empty($_ENV['REL_INFO'])) {
     echo '<th width="16" align="center">
     		<i class="fa fa-info-circle"></i>
@@ -171,21 +202,26 @@ if(!empty($_ENV['REL_INFO'])) {
 echo "<th nowrap>".$lang->Search->size."</th>
 <th>".$lang->Search->counter."</th>
 <th>&nbsp;</th></tr>";
+=======
+>>>>>>> Stashed changes
 
 //suchergebnisse anzeigen
 if(!empty($Search->cache['SEARCHENTRY'])){
+	echo'<div class="table-responsive">
+			  <table class="table table-striped">
+				<tr>
+					<th>#</th>
+					<th>' . $lang->Search->name . '</th>
+					<th>' . $lang->Search->size . '</th>
+					<th></th>
+	';
 	$result_counter=500;
 	foreach(array_keys($searchsort) as $a ){
+		$i++;
 		$cur_search =& $Search->cache['SEARCHENTRY'][$a];
 		//pruefen, ob ergebnis zu suche gehrt
 		$result_counter--;
-		if($result_counter<0 && empty($_GET['nolimit'])){
-			//nach 500 ergebnissen den rest weglassen, wenn nicht anders gewuenscht
-			echo "<tr><th colspan=\"4\"><a href=\"".$_SERVER['PHP_SELF']."?site=search&searchid="
-				.$_GET['searchid']."&amp;nolimit=1&amp;".SID."\">"
-				.$lan['NO_LIMIT']."</a></th></tr>";
-			break;
-		}
+		
 		//anzeige aller namen + anzahl
 		$sort_names=array();
 			foreach(array_keys($cur_search['FILENAME']) as $b){
@@ -193,20 +229,23 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 			}
 		arsort($sort_names,SORT_NUMERIC);
 		$names=array_keys($sort_names);
-		echo "<tr><td>\n<a href=\"javascript:toggleinfo($a,'";
-		foreach($names as $c){
-			echo $sort_names["$c"]."/".addslashes(htmlspecialchars($c))."|";
+		$ajfsp_link = "ajfsp://file|" . addslashes(htmlspecialchars($names[0])). "|" . $cur_search['CHECKSUM'] . "|" . $cur_search['SIZE'] . "/";
+		if(!empty($_ENV['REL_INFO']))
+		{
+        	$rel_info_file = '<a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-primary"></i></a>';
 		}
-		echo $cur_search['CHECKSUM']."/".$cur_search['SIZE'];
-		echo "')\"><i class='fa fa-angle-down text-primary'></i></a>\n";
-		//download starten
-		$ajfsp_link="ajfsp://file|".addslashes(htmlspecialchars($names[0]))."|"
-			.$cur_search['CHECKSUM']."|".$cur_search['SIZE']."/";
-		echo "<a href=\"javascript:dllink('".$ajfsp_link
-			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
-		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
-		//dateigr��e
+		echo'<tr>
+				<td>' . $i . '<br>' . $rel_info_file . '</td>
+				<td><b>' . substr($names[0], 0, 40) . '</b><br>
+					<span>Format: ' . substr($names[0], -3, 3) . '<br>
+						  Quellen: ' . $cur_search['phpaj_COUNT'] . '</span></td>
+				<td>' . subs::sizeformat($cur_search['SIZE']) . '</td>
+				<td><a href="?site=search&link=' . $ajfsp_link . '" class="btn btn-success"><i class="fa fa-download"></i></a></td>
+			</tr>';
+		}
+		echo "</table></div>";
 
+<<<<<<< Updated upstream
         if (!empty($_ENV['REL_INFO'])) {
             echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
         }
@@ -221,113 +260,113 @@ if(!empty($Search->cache['SEARCHENTRY'])){
 		//ajfsp-link zu datei
 		echo "<td><a class='btn btn-success' href=\"?site=search&link=".$ajfsp_link."\">download</a></td></tr>\n\n";
 	}
+=======
+>>>>>>> Stashed changes
 }
-
-echo "</table></div></div>";
+echo"</div>";
         
 //link fuer alle ergebnisse
 if(!empty($Search->cache['SEARCH'])){
 	//links fuer die einzelnen suchen
 	foreach(array_keys($Search->cache['SEARCH']) as $searchid){
+<<<<<<< Updated upstream
 		echo'<div class="tab-pane fade" id="search-' . $searchid . '" role="tabpanel" aria-labelledby="search-' . $searchid . '">';
       
 			if($searchid !=="alles"){
+=======
+		echo'<div class="tab-pane fade" id="search-' . $searchid . '" role="tabpanel" aria-labelledby="search-' . $searchid . '">'.$button;
+      
+		if($searchid !=="alles"){
+>>>>>>> Stashed changes
 	
-	$current_search=&$Search->cache['SEARCH'][$searchid];
-	if(($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES'])>0){
-		$current_search_percent=(($current_search['SUMSEARCHES']*100)/
-			($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']));
+		$current_search=&$Search->cache['SEARCH'][$searchid];
+		if(($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES'])>0)
+		{
+			$current_search_percent=(($current_search['SUMSEARCHES']*100) / ($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']));
 			$balken = round($current_search_percent,2);
 			
 			$details = $current_search['SUMSEARCHES']."/".($current_search['SUMSEARCHES']+$current_search['OPENSEARCHES']);
+<<<<<<< Updated upstream
 		echo'<div class="progress mb-3">
                 <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
                 	'.$balken.' %
                 </div>
               </div>';
+=======
+			if($balken != 100)
+			{
+				echo'<div class="progress mb-3">
+                		<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: '.$balken.'%" aria-valuenow="'.$fortstritt.'" aria-valuemin="0" aria-valuemax="100">
+                			'.$balken.' %
+                		</div>
+            		</div>';
+			}
+>>>>>>> Stashed changes
 		
 	}
 }
 
+//Sortieren
+if(!empty($Search->cache['SEARCHENTRY']))
+{
+	if(empty($_GET['sort'])) $_GET['sort'] = "count";
+	
+	$searchsort=$Search->sortieren($_GET['sort']);
+}
 
 echo'<div class="table-responsive">
-			  <table class="table table-striped">';
-
-//Sortieren
-if(!empty($Search->cache['SEARCHENTRY'])){
-if(empty($_GET['sort'])) $_GET['sort']="count";
-$searchsort=$Search->sortieren($_GET['sort']);
-}
-
-//tabellenueberschriften
-echo "<tr>
-		<th>".$lang->Search->name."
-		</th>";
-
-if(!empty($_ENV['REL_INFO'])) {
-    echo '<th width="16" align="center">
-    		<i class="fa fa-info-circle"></i>
-    	  </th>';
-}
-
-echo "<th>".$lang->Search->size."</th>
-<th>".$lang->Search->counter."</th>
-<th>&nbsp;</th></tr>";
-
+			  <table class="table table-striped">
+				<tr>
+					<th>#</th>
+					<th>' . $lang->Search->name . '</th>
+					<th>' . $lang->Search->size . '</th>
+					<th></th>
+	';
 //suchergebnisse anzeigen
 if(!empty($Search->cache['SEARCHENTRY'])){
 	$result_counter=500;
+	$i = 0;
 	foreach(array_keys($searchsort) as $a ){
+		$i++;
 		$cur_search =& $Search->cache['SEARCHENTRY'][$a];
+		
 		//pruefen, ob ergebnis zu suche gehrt
 		if($searchid!=="alles"
 			&& $cur_search['SEARCHID'] != $searchid) continue;
 		$result_counter--;
-		if($result_counter<0 && empty($_GET['nolimit'])){
-			//nach 500 ergebnissen den rest weglassen, wenn nicht anders gewuenscht
-			echo "<tr><th colspan=\"4\"><a href=\"".$_SERVER['PHP_SELF']."?site=search&searchid="
-				.$_GET['searchid']."&amp;nolimit=1&amp;".SID."\">"
-				.$lan['NO_LIMIT']."</a></th></tr>";
-			break;
-		}
+		
 		//anzeige aller namen + anzahl
 		$sort_names=array();
-			foreach(array_keys($cur_search['FILENAME']) as $b){
+			foreach(array_keys($cur_search['FILENAME']) as $b)
+			{
 				$sort_names["$b"]=$cur_search['FILENAME'][$b]['USER'];
 			}
 		arsort($sort_names,SORT_NUMERIC);
 		$names=array_keys($sort_names);
-		echo "<tr><td>\n<a href=\"javascript:toggleinfo($a,'";
-		foreach($names as $c){
-			echo $sort_names["$c"]."/".addslashes(htmlspecialchars($c))."|";
+		$ajfsp_link = "ajfsp://file|" . addslashes(htmlspecialchars($names[0])). "|" . $cur_search['CHECKSUM'] . "|" . $cur_search['SIZE'] . "/";
+		if(!empty($_ENV['REL_INFO']))
+		{
+        	$rel_info_file = '<a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-primary"></i></a>';
 		}
-		echo $cur_search['CHECKSUM']."/".$cur_search['SIZE'];
-		echo "')\"><i class='fa fa-angle-down text-primary'></i></a>\n";
-		//download starten
-		$ajfsp_link="ajfsp://file|".addslashes(htmlspecialchars($names[0]))."|"
-			.$cur_search['CHECKSUM']."|".$cur_search['SIZE']."/";
-		echo "<a href=\"javascript:dllink('".$ajfsp_link
-			."');\" title=\"Download\">\n".htmlspecialchars($names[0])."</a>";
-		echo "<br /><div id=\"infobox_$a\" class=\"infobox\"></div></td>\n";
-		//dateigr��e
+		echo'<tr>
+				<td>' . $i . '<br>' . $rel_info_file . '</td>
+				<td><b>' . substr($names[0], 0, 40) . '</b><br>
+					<span>Format: ' . substr($names[0], -3, 3) . '<br>
+						  Quellen: ' . $cur_search['phpaj_COUNT'] . '</span></td>
+				<td>' . subs::sizeformat($cur_search['SIZE']) . '</td>
+				<td><a href="?site=search&link=' . $ajfsp_link . '" class="btn btn-success"><i class="fa fa-download"></i></a></td>
+			</tr>';
+		}
 
-        if (!empty($_ENV['REL_INFO'])) {
-            echo '<td align="center"><a target="_blank" href="' . sprintf($_ENV['REL_INFO'], $ajfsp_link) . '"><i class="fa fa-info-circle text-rimary"></i></a></td>';
-        }
-
-		echo "<td class=\"rigt\">"
-			.subs::sizeformat($cur_search['SIZE'])
-			."</td>\n";
-		//anzahl der ergebnisse
-		echo "<td class=\"right\">"
-			.$cur_search['phpaj_COUNT']
-			."\n</td>";
-		//ajfsp-link zu datei
-		echo "<td><a href=\"".$ajfsp_link."\">ajfsp-link</a></td></tr>\n\n";
 	}
-}
-
 echo "</table></div></div>";
+
+}
         
+<<<<<<< Updated upstream
 }}
 echo'</div></div></div>';
+=======
+}
+echo"</div></div></div>";
+>>>>>>> Stashed changes

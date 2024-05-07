@@ -12,6 +12,8 @@ $subs = new subs();
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
+
+subs::ccts();
 require(GUI_ROOT . "/pages/_header.php");
 
 if (!isset($_GET["show"])) $_GET["show"] = "";

@@ -170,4 +170,19 @@ class template
     		echo'<script src="themes/js/' . $site . '.js"></script>';
     	}	
 	}
+<<<<<<< Updated upstream
+=======
+	public static function toast($site, $action, $alert)
+	{
+		if($action = "resumedownload") $text = "Download wurde fortgesetzt.";
+		if($action = "pausedownload") $text = "Download wurde pausiert.";
+		
+		return '<div class="toast align-items-center text-white bg-' . $alert . ' border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="d-flex">
+                        <div class="toast-body">' . $text . '</div>
+                        <button class="btn-close btn-close-white me-2 m-auto" type="button" data-coreui-dismiss="toast" aria-label="Close"></button>
+                      </div>
+                    </div>';	
+	}
+>>>>>>> Stashed changes
 }
