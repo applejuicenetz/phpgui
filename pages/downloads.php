@@ -23,15 +23,14 @@ if(empty($_GET['sort'])) $_GET['sort']="status";
 		{
 			if(empty($_GET['action_value'])) $_GET['action_value']="";
 			$action_echo = $Downloadlist->action($_GET['action'],$_GET['dl_id'],$_GET['action_value']);
-			$Downloadlist->message($action_echo);
+			
 	}
-	echo $_GET['action'];
 	echo'
 	<div style="position: fixed;
   top: 120px;
   right: 5px;
   z-index: 300;
-  opacity: 0.7;">' . template::toast($_GET['site'], $_GET['action'], "info") . '</div>
+  opacity: 0.9;">' . template::toast($_GET['site'], $_GET['action'], "info") . '</div>
 ';
 	
 }
@@ -43,7 +42,7 @@ echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\">";
 
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="card">
+                        <div class="card mb-4">
                             <div class="card-body">';
           
 
@@ -56,7 +55,7 @@ echo'<div class="row clearfix">
   </div>
   <div class="input-group align-right mb-4">
   
-  <button class="btn btn-outline-secondary text-warning" type="button" onclick="javascript:dlaction(\'pausedownload\')"><i class="fa fa-pause"></i></button>
+  <button class="btn btn-outline-secondary text-warning" id="liveToastBtn" type="button" onclick="javascript:dlaction(\'pausedownload\')"><i class="fa fa-pause"></i></button>
   <button class="btn btn-outline-secondary text-success" type="button" onclick="javascript:dlaction(\'resumedownload\')"><i class="fa fa-play"></i></button>
   <button class="btn btn-outline-secondary text-danger" type="button" onclick="javascript:dlaction(\'canceldownload\')"><i class="fa fa-times"></i></button>
   <button class="btn btn-outline-secondary" type="button" onclick="javascript:dlaction(\'settargetdir\')"><i class="fa fa-folder"></i></button>

@@ -38,10 +38,10 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>appleJuice - phpGUI</title>
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="themes/icons/favicon/favicon_128.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="themes/icons/favicon/favicon_32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="themes/icons/favicon/favicon_64.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="themes/icons/favicon/favicon_16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -50,9 +50,10 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <link rel="stylesheet" href="themes/CoreUI/css/vendors/simplebar.css">
 	<!-- Font Awesome Css -->
     <link href="themes/CoreUI/assets/icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-
-    <!-- Main styles for this application-->
+	<!-- Main styles for this application-->
     <link href="themes/CoreUI/css/style.css" rel="stylesheet">
+    <link href="themes/CoreUI/css/ads.css" rel="stylesheet">
+    
     <script src="themes/CoreUI/js/config.js"></script>
     <script src="themes/CoreUI/js/color-modes.js"></script>
     <?php template::js_file($_GET['site']); ?>
@@ -64,13 +65,13 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
         	<div class="sidebar-brand-full">
     		<img class="sidebar-brand-full" src="themes/CoreUI/assets/brand/applejuice.svg" width="250" height="90">
     		<br>
-    		<span class="sidebar-brand-full">Flux</span>
+    		<span class="sidebar-brand-full"></span>
     		</div>
     		<img class="sidebar-brand-narrow" src="themes/CoreUI/assets/brand/Apple_Icon.svg" width="32" height="32">
     		<br>
-    		<span class="sidebar-brand-narrow">Flux</span>
+    		<span class="sidebar-brand-narrow"></span>
         </div>
-        <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
+        
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item">
@@ -115,7 +116,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             </svg> <?php echo $lang->Navigation->server_list; ?>
            </a>
          </li>
-         <li class="nav-item active">
+         <li class="nav-item">
           <a class="nav-link<?php template::active("settings"); ?>" href="index.php?site=settings">
             <svg class="nav-icon">
               <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
@@ -142,7 +143,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
          
           </ul>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link<?php template::active("help"); ?>" href="index.php?site=help">
             <svg class="nav-icon">
               <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-info"></use>
@@ -167,7 +168,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
                 <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>
                 </svg></a></li>
-            <li class="nav-item"><a class="nav-link" href="" data-coreui-toggle="modal" data-coreui-target="#search">
+            <li class="nav-item"><a class="nav-link" data-coreui-toggle="modal" data-coreui-target="#search">
                 <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
                 </svg></a></li>
@@ -209,8 +210,12 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             <li class="nav-item py-1">
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
-            <li class="nav-item dropdown"><a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="themes/CoreUI/assets/img/avatars/3.jpg"></div>
+            <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                
+                	<svg class="icon icon-lg">
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                </svg>
+                
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"><?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?></div>

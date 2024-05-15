@@ -43,7 +43,7 @@ if (!empty($_GET['shareexpfile'])) {
          // TODO wtf?
     }
 
-    echo '<div class="card">
+    echo '<div class="card mb-4">
             <div class="card-body">
               <h5 class="card-title">' . $lang->Share->Link_export_title . '</h5>';
 
@@ -154,7 +154,7 @@ $Sharelist->refresh_cache(60);
 
 echo "<form name=\"shareprioform\" action=\"\">\n";
 echo '<div class="row clearfix">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 mb-4">
                         <div class="card">
                             <div class="card-body">
                             	<div class="input-group mb-2">
@@ -168,7 +168,7 @@ echo '<div class="row clearfix">
 										}
 							  echo '</select>
 									<button class="btn btn-outline-secondary" type="button" onclick="changeshareprio()">' . $lang->Downloads->set_pdl . '</button>
-									<button class="btn btn-outline-secondary" onklick="" disabled>' . strtr($lang->Share->prio_spent ,array("%spent"=>$Sharelist->spentprio)) . '</button>
+									<button class="btn btn-outline-secondary" onklick="" disabled>123' .$Sharelist->get_prio() . strtr($lang->Share->prio_spent ,array("%spent"=>$Sharelist->get_prio())) . '</button>
 								</div>
 
                             	<div class="table-responsive">

@@ -239,27 +239,7 @@ class Downloads
         return $info;
     }
 
-    function message($wert)
-    {
-        $language = Kernel::getLanguage();
-        $lang = $language->translate();
-        if (str_contains($wert, 'cleandownloadlist')) {
-            echo '<div class="alert icon-alert with-arrow alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <i class="fa fa-fw fa-check-circle"></i>
-                                	' . $lang->Downloads->cleardownloadlist . '
-              </div>';
-        }
-        if (str_contains($wert, 'canceldownload')) {
-            echo '<div class="alert icon-alert with-arrow alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <i class="fa fa-fw fa-check-circle"></i>
-                                	' . $lang->Downloads->canceldownload . '
-              </div>';
-        }
-
-    }
-
+    
     function status($wert)
     {
         if ($wert == "0") {

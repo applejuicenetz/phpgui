@@ -150,3 +150,4 @@ function togglesubdir(dircounter){
 		bild.setAttribute('src','');
 	}
 }
+

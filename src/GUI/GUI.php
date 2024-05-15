@@ -29,7 +29,17 @@ echo $version;
         }
 
         if (version_compare($_SESSION['phpaj']['akt_version'], PHP_GUI_VERSION, '>')) {
-            $template->alert("warning", $lang->System->version_1, $lang->System->version_akt . $_SESSION['phpaj']['akt_version']);
+        	$vnew_version = str_replace("%version%", $_SESSION['phpaj']['akt_version'], $lang->System->version);
+        	echo'<div class="row mb-4">
+            <div class="col-xl-7 col-xxl-8"><a class="banner-coreui-pro" href="https://github.com/applejuicenetz/phpgui/tree/beta">
+                <svg class="banner-coreui-pro-logo d-xl-none d-xxl-block" width="100" height="100" alt="CoreUI Logo">
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-history"></use>
+                </svg>
+                <h4 class="fw-bolder">' . $vnew_version . '</h4>
+                <p>' . $lang->System->version_akt . '</p>
+              </a></div>
+          </div>
+          ';
         }
     }
 

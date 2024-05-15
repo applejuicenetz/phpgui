@@ -85,7 +85,7 @@ foreach ($links as $link) {
 //Searchcontent
 	//Suchformular
 	echo'<div class="row clearfix">
-                    <div class="col-12 mb-3">
+                    <div class="col-12 mb-4">
                         <div class="card">
                             <div class="card-body">
                             	<form action="?site=search&'.SID.'" method="post">

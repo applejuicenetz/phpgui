@@ -58,14 +58,14 @@ $template = new template();
 				}
 				echo '
                 <form name="core" action="index.php?login=1" method="post" autocomplete="off">
-    				<div class="input-group mb-3">
+    				<div class="form-floating mb-3">
                         <input type="url" class="form-control" placeholder="Core-URL" name="chost" id="chost" value="'.($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']).':'.$_ENV["CORE_PORT"].'" required/>
-                        <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                        <label for="floatingInput">Core-URL</label>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="'.$lang->Login->password.'" name="cpass" id="cpass"
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="cpass" id="cpass"
                                required/>
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                               <label for="floatingInput">'.$lang->Login->password.'</label>
                     </div>
                     <div class="row">
                         <div class="col-">
@@ -88,7 +88,7 @@ $template = new template();
                   </div>
                 </div>
               </div>
-              <div class="card col-md-5 text-white bg-danger py-5">
+              <div class="card col-md-5 text-white bg-danger py-5" style="background-image: url(themes/CoreUI/assets/img/signin-bg.jpeg); backgound-position: center;">
                 <div class="card-body text-center">
                   <div>
                     </div>

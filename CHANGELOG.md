@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.5
+- add languagepack english
+- fix bugs on all pages
+- add serverconnection page
+- add mobile Navbar on bottom of screen
+
 ## 0.29.4
 
 - fix dashboard

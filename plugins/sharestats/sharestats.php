@@ -6,30 +6,41 @@ use appleJuiceNETZ\GUI\subs;
 
 $core = new Core();
 
-echo'
-<div class="row clearfix">
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 email-menu">
-                        <div class="list-group">';
-                        echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=last\">"
-	."Recently Requested</a><br /><br />";
-echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-last\">"
-	."Not Recently Requested</a><br /><br />";
-echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=most\">"
-	."Most Requested</a><br /><br />";
-echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-most\">"
-	."Least Requested</a><br /><br />";
-echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=search\">"
-	."Most Searched</a><br /><br />";
-echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-search\">"
-	."Least Searched</a>";
-                      echo'  </div>
-
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-10">
-                        <div class="panel panel-default panel">
-                            
-                            <div class="panel-body">
-                                <div class="table-responsive">
+echo'<div class="card mb-4">
+		<div class="card-body">
+			<ul class="nav">
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=last">
+    					k&uuml;rzlich angefordert
+    				</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-last">
+    					nicht k&uuml;rzlich angefordert
+    				</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=most">
+    					h&auml;ufig angefrgat
+    				</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-most">
+    					amwenigsten nachgefragt
+    				</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=search">
+    					h&auml;ufig gesucht
+    				</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-search">
+    					amwenigsten gesucht
+    				</a>
+				</li>
+			</ul>
+		<div class="table-responsive">
                                     <table class="table table-hover">
                                         <tbody>
                                             
@@ -37,16 +48,11 @@ echo "<a href=\"?site=extras&show=sharestats/sharestats.php&amp;stats=-search\">
                 
 
 
-$coreinfo=$core->getcoreversion();
-$coresubversions=explode(".",$coreinfo['VERSION']);
-if($coresubversions[2]<146) die("<img src=\"../style/"
-	.$_SESSION['server_warning_icon']."\" alt=\"[!]\" />"
-	."Core 0.30.146.1203 or newer required");
 if(empty($_GET['stats'])) $_GET['stats']="last";
 $Sharelist = new Share;
 $Sharelist->refresh_cache(2);
 if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
-	echo "<th>Position</th>";
+	echo "<th>#</th>";
 	$sfsort=array();
 	switch($_GET['stats']){
 		case "most":

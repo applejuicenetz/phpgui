@@ -1,3 +1,27 @@
+<?php
+
+use appleJuiceNETZ\appleJuice\Core;
+use appleJuiceNETZ\GUI\GUI;
+use appleJuiceNETZ\GUI\template;
+use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\GUI\Plugins;
+use appleJuiceNETZ\Kernel;
+
+$gui = new GUI();
+$gui::refresh();
+
+//Templatedaten lesen
+$template= new template();
+$subs = new subs();
+//Core Settings auslesen
+$core = new Core();
+$settings_xml=$core->command("xml","settings.xml");
+
+//Language
+$language = Kernel::getLanguage();
+$lang = $language->translate();
+
+?>
 <!-- Modals -->
 <div class="modal fade" id="search" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
                           <div class="modal-dialog">
@@ -42,6 +66,63 @@
                         </div>
 
 
+</div>
+<div class="d-block d-sm-none">
+	<footer class="header fixed-bottom pt-3">
+	
+	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link<?php template::active("start"); ?>" href="index.php?site=start">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg>
+           </a>
+         </li></div>
+  	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link<?php template::active("downloads"); ?>" href="index.php?site=downloads">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
+            </svg>
+           </a>
+         </li></div>
+  	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link<?php template::active("uploads"); ?> position-relativ" href="index.php?site=uploads">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-upload"></use>
+            </svg><?php template::upload_sm(); ?>
+            
+           </a>
+         </li>
+         </div>
+  	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link<?php template::active("search"); ?>" href="index.php?site=search">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
+            </svg>
+           </a>
+         </li>
+         </div>
+  	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link<?php template::active("shares"); ?>" href="index.php?site=shares">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-share-alt"></use>
+            </svg>
+           </a>
+         </li>
+         </div>
+  	<div class="d-flex justify-content-between"><li class="nav-item d-flex justify-content-between">
+          <a class="nav-link <?php template::active("server"); ?>" href="index.php?site=server">
+            <svg class="icon icon-xl">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+            </svg>
+           </a>
+         </li></div>
+      	
+         
+         
+            
+        </ul>
+		
+    </footer>
 </div>
       <footer class="footer px-4">
         <div>create with <i class="col-danger fa fa-heart"></i> by <b>red</b> & <b>kddk22</b>

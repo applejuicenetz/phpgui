@@ -98,7 +98,7 @@ echo'<div class="row">
         </form>
         <div class="col-lg-6 col-md-6 col-sm-12 col-sx-12">
 		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection"  class="form-floating">
-			<div class="card">
+			<div class="card mb-4">
 				<div class="card-header">
 				' . $lang->Settings->head_con . '
 				</div>

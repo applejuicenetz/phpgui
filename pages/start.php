@@ -68,7 +68,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
 		<!-- Statistik -->
 		<div class="row g-4">
         	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
+            <div class="card overflow-hidden" onclick="location.href='index.php?site=downloads'">
             	<div class="card-body p-0 d-flex align-items-center">
                 	<div class="bg-warning text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
@@ -89,7 +89,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
         </div>
         <!-- end-->
         	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
+            <div class="card overflow-hidden" onclick="location.href='index.php?site=uploads'">
             	<div class="card-body p-0 d-flex align-items-center">
                 	<div class="bg-primary text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
@@ -105,7 +105,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
         </div>
         <!-- end -->
         	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
+            <div class="card overflow-hidden" onclick="location.href='index.php?site=shares'">
             	<div class="card-body p-0 d-flex align-items-center">
                 	<div class="bg-warning text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
@@ -120,7 +120,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
         </div>
         <!-- end-->
         	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden">
+            <div class="card overflow-hidden" onclick="location.href='index.php?site=extras&show=credits/credits.php'">
             	<div class="card-body p-0 d-flex align-items-center">
                 	<div class="bg-primary text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
@@ -210,7 +210,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 </table>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card mb-4">
             <div class="card-header"><svg class="icon icon-l">
                         	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-fork"></use>
                         </svg> <?php echo $lang->Start->network_info; ?></div>

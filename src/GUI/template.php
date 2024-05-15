@@ -165,6 +165,19 @@ class template
 		
 		}
 	}
+	static function upload_sm()
+	{
+		$Uploadlist = new Uploads();
+		
+		if( $Uploadlist->cache['phpaj_ul'] > 0 )
+		{
+			echo'<span class="position-absolute top-5 start-20 translate-middle badge rounded-pill bg-danger">
+    			' . $Uploadlist->cache['phpaj_ul'] . '</span>';
+		}else{
+		
+		}
+  
+	}
 	public static function js_file($site)
 	{
 		if (file_exists(GUI_ROOT . "/themes/js/" . $site . ".js"))
@@ -174,8 +187,14 @@ class template
 	}
 	public static function toast($site, $action, $alert)
 	{
-		if($action = "resumedownload") $text = "Download wurde fortgesetzt.";
-		if($action = "pausedownload") $text = "Download wurde pausiert.";
+        $language = Kernel::getLanguage();
+        $lang = $language->translate();
+
+		if($action == "resumedownload") $text = "Download wurde fortgesetzt.";
+		if($action == "pausedownload") $text = "Download wurde pausiert.";
+		if($action == "cleandownloadlist") $text = $lang->Downloads->cleardownloadlist;
+		if($action == "canceldownload") $text = $lang->Downloads->canceldownload;
+		
 		
 		return '<div class="toast align-items-center text-white bg-' . $alert . ' border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
                       <div class="d-flex">

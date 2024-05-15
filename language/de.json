@@ -31,7 +31,8 @@
       "help": "Hilfe"
     },
     "version_1": "Neue Version verf&uuml;gbar!",
-    "version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub gerunter und installiere das Update!"
+    "version": "Version %version% ist verf&uuml;gbar!",
+    "version_akt": "Eine neue Version der phpGUI steht zur verf&uuml;gung! Um Fehler zu vermeiden lade sie dir bitte &uuml;ber GitHub herunter und installiere das Update!"
   },
   "Start": {
     "current_server": "aktueller Server",

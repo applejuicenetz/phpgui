@@ -139,6 +139,17 @@ class Share
         return array_keys($sfsort);
     }
 
+	function get_prio()
+    {
+        $prio = 0;
+        foreach (array_keys($this->cache['SHARES']['VALUES']['SHARE']) as $a) {
+            $file = $this->get_file($a);
+            return $a;
+            }
+            
+       
+    }
+
     function get_file($id)
     {
         if (empty($this->cache['SHARES']['VALUES']['SHARE'][$id])) {
