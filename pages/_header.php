@@ -164,6 +164,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             </svg>
           </button>
           <ul class="header-nav ms-auto">
+          <?php template::lang(); ?>
             <li class="nav-item"><a class="nav-link" onClick="window.location.reload()">
                 <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>

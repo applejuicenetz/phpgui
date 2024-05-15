@@ -203,4 +203,8 @@ class template
                       </div>
                     </div>';	
 	}
+	public static function lang()
+	{
+		echo'';	
+	}
 }

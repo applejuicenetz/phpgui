@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.6
+- select language and safe for fututre
+
 ## 0.29.5
 - add languagepack english
 - fix bugs on all pages
