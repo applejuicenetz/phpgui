@@ -110,7 +110,7 @@ class template
                 $downloadids = $Downloadlist->ids("status", $a); //ids der downloads sortiert holen
             			    
             }
-            $str = array("0", "0_1", "0_2", "1", "12", "13", "15", "16", "17", "14");
+            $str = array("0", "0_1", "0_2", "1", "12", "13", "15", "16", "17");
              $str2 = array("14");
             
             $all = count (array_diff($downloadids, $str2)); //laufen;

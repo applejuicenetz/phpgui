@@ -169,5 +169,23 @@ class subs
     	$Uploadlist->refresh_cache();
     	$Downloadlist->refresh_cache();
     }
+    static function parts($part)
+    {
+    	$str1 = "part1";
+    	$str2 = "part2";
+    	$str3 = "part3";
+    	
+    	if (strpos($part, $str1) !== false) {
+    		return " | Part: 1";
+		}
+		if (strpos($part, $str2) !== false) {
+    		return " | Part: 2";
+		}
+		if (strpos($part, $str3) !== false) {
+    		return " | Part: 3";
+		} else {
+    	}
+    }
+    
 }
 
