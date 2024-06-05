@@ -23,9 +23,9 @@ class Icons
 
         //OS Sstem Icons
         $this->os_system = array(
-        	"N/A" => '<img width="16" height="16" src="themes/icons/os_unknow.svg"/>',
+        	"N-A" => '<img width="16" height="16" src="themes/icons/os_unknow.svg"/>',
             "Windows" => '<img width="16" height="16" src="themes/icons/os_windows.svg" alt="windows-10"/>',
-            "Lunix" => '<img width="16" height="16" src="themes/icons/os_linux.svg" alt="linux--v1"/>',
+            "Linux" => '<img width="16" height="16" src="themes/icons/os_linux.svg" alt="linux--v1"/>',
             "Mac" => '<img width="16" height="16" src="themes/icons/os_mac.svg" alt="mac-logo"/>',
             "4" => "solaris",
             "5" => "os2",

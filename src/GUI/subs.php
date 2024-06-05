@@ -169,5 +169,50 @@ class subs
     	$Uploadlist->refresh_cache();
     	$Downloadlist->refresh_cache();
     }
+    static function parts($part)
+    {
+<<<<<<< HEAD
+    	$str1 = "part";
+    	$str2 = "part2";
+    	$str3 = "part3";
+    	$Part2 = substr($part, -5, -4);
+
+    if (strpos($part, $str1) !== false) {
+    		return " | Part: $Part2";
+=======
+    	$str1 = "part1";
+    	$str2 = "part2";
+    	$str3 = "part3";
+    	
+    	if (strpos($part, $str1) !== false) {
+    		return " | Part: 1";
+>>>>>>> aeb83efb9eb3b2fe8c7e1c3822fa0e7a9312c127
+		}
+		if (strpos($part, $str2) !== false) {
+    		return " | Part: 2";
+		}
+		if (strpos($part, $str3) !== false) {
+    		return " | Part: 3";
+		} else {
+    	}
+    }
+<<<<<<< HEAD
+    static function UploadStatus($wert)
+    {
+        $language = new Language($_ENV['GUI_LANGUAGE']);
+        $lang = $language->translate();
+  
+        if ($wert == 1) $wert = $lang->Uploads->ul_status->status_1;
+        if ($wert == 2) $wert = $lang->Uploads->ul_status->status_2;
+        if ($wert == 5) $wert = $lang->Uploads->ul_status->status_5;
+        if ($wert == 6) $wert = $lang->Uploads->ul_status->status_6;
+        if ($wert == 7) $wert = $lang->Uploads->ul_status->status_7;
+        
+
+        return $wert;
+    }
+=======
+>>>>>>> aeb83efb9eb3b2fe8c7e1c3822fa0e7a9312c127
+    
 }
 
