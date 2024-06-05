@@ -53,8 +53,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
 	<!-- Main styles for this application-->
     <link href="themes/CoreUI/css/style.css" rel="stylesheet">
     <link href="themes/CoreUI/css/ads.css" rel="stylesheet">
-    <link href="themes/CoreUI/vendors/@coreui/icons/css/free.min.css" rel="stylesheet">
-  
+    
     <script src="themes/CoreUI/js/config.js"></script>
     <script src="themes/CoreUI/js/color-modes.js"></script>
     <?php template::js_file($_GET['site']); ?>
@@ -153,7 +152,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
          </li>
       </ul>
       <div class="sidebar-footer border-top d-none d-md-flex">
-      0.29.5
+        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
       </div>
     </div>
     <div class="wrapper d-flex flex-column min-vh-100">
@@ -165,7 +164,6 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             </svg>
           </button>
           <ul class="header-nav ms-auto">
-          <?php template::lang(); ?>
             <li class="nav-item"><a class="nav-link" onClick="window.location.reload()">
                 <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>

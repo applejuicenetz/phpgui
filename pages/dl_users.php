@@ -14,142 +14,116 @@ $icon_img = new Icons();
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
+//default anzeige
+	if(empty($_GET['show_dls'])){$_GET['show_dls']=1;}
+	if(empty($_GET['show_queue'])){$_GET['show_queue']=-1;}
+	if(empty($_GET['show_rest'])){$_GET['show_rest']=-1;}
+
 echo'<div class="row clearfix">
                     <div class="col-sm-12">
-                        <div class="card mb-4">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-					<table class="table border mb-0">
-                      <thead class="fw-semibold text-nowrap">
-                        <tr class="align-middle">
-                          <th class="bg-body-secondary">'.$lang->Downloads->filename.'</th>
-                          <th class="bg-body-secondary">'.$lang->Downloads->statuss.'</th>
-                          <th class="bg-body-secondary">'.$lang->Downloads->progress.'</th>
-                          <th class="bg-body-secondary text-center">' . $lang->Downloads->pdl . '</th>
-                          <th class="bg-body-secondary">'.$lang->Downloads->speed.'</th>
-                          <th class="bg-body-secondary"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                       ';	
-
+			  <table class="table table-striped">
+				<thead>
+					<tr>
+						<th width="10">&nbsp;</th>
+						<th>'.$lang->Downloads->source.'</th>
+						<th>'.$lang->Downloads->filename.'</th>
+						<th>'.$lang->Downloads->statuss.'</th>
+						<th>'.$lang->Downloads->speed.'</th>
+						<th>'.$lang->Downloads->pdl.'</th>
+						<th>'.$lang->Downloads->size.'</th>
+						<th width="100">'.$lang->Downloads->finished.'</th>
+						<th>'.$lang->Downloads->clientversion.'</th>
+					</tr>
+				<thead>
+				<tbody>';
 
 //download zeigen
 if(!empty($Downloadlist->cache['DOWNLOAD'])){
 	$a = $Downloadlist->download($_GET['dl_id']);
 	$astatus = $a['phpaj_STATUS'];
 	$balken = round($a['phpaj_DONE'], 2);
-    echo'           <tr>
-    
-                          <td>
-                            <div class="text-nowrap">
-                            		' . substr($a['FILENAME'], 0, 40) . '...
-                            </div>
-                            <div class="small text-body-secondary text-nowrap">
-                            <span>
-					' . ($a['phpaj_quellen_queue'] + $a['phpaj_quellen_dl']) . '/' . $a['phpaj_quellen_gesamt']
-					.'</span> | ' . subs::sizeformat($a['SIZE']) . '' .subs::parts($a['FILENAME']) . '</div>
-                          </td>
-                          <td class="text-center">
-                            ' . $Downloadlist->status($a['phpaj_STATUS']) . '
-                          </td>
-                          <td>
-                            <div class="d-flex justify-content-between align-items-baseline">
+        
+	echo'<tr>
+						<td width="10">&nbsp;</th>
+						<td>'.($a['phpa_quellen_quee']+$a['phpaj_quellen_dl']).'/'.$a['phpaj_quellen_gesamt'].'('.$a['phpaj_quellen_dl'].')</td>
+						<td>'.htmlspecialchars($a['FILENAME']).'</td>
+						<td>'.$Downloadlist->status($a['phpaj_STATUS']).'</td>
+						<td>'.subs::sizeformat($a['phpaj_dl_speed']).'</td>
+						<td>'.((($a['POWERDOWNLOAD'])+10)/10).'</td>
+						<td nowrap>'.subs::sizeformat($a['SIZE']).'</td>
+						<td colspan="2">  <div class="d-flex justify-content-between align-items-baseline">
                               <div class="fw-semibold">' . $balken . '%</div>
-                              <div class="text-nowrap small text-body-secondary ms-3">' . $rest . '- ';
-                              if(!empty($a['phpaj_dl_speed'])){
-								$restzeit=$a['phpaj_REST']/$a['phpaj_dl_speed'];
-								$stunden=$restzeit/3600;
-								if($stunden<24){
-									printf("%02d:%02d:%02d",$stunden,($restzeit%3600)/60,$restzeit%60);
-								}else{
-									printf("%.1fd",$stunden/24);
-								}}
+                              <div class="text-nowrap small text-body-secondary ms-3">Rest: ' . subs::sizeformat($a['phpaj_REST']);
+             
 			echo'</div>
                             </div>
                             <div class="progress progress-thin">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: ' . $balken . '%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-success" role="progressbar" style="width: ' . $balken . '%" aria-valuenow="' . $balken . '" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </td>
-                          <td class="text-center">
-                          
-                            ' . ((($a['POWERDOWNLOAD'])+10)/10) . '
-                          </td>
-                          <td>
-                            ' . subs::sizeformat($a['phpaj_dl_speed']) . '
-                          </td>
-                          <td>
-                            <div class="dropdown">
-                              <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                </svg>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
-                            </div>
-                          </td>
-                        </tr>
-                        ';
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-if(!empty($Downloadlist->cache['USER'])){
-		foreach($a['phpaj_ids_quellen_dl'] as $b){
+						
+					</tr>';
+
+//Einzelne Quellen
+	//Uebertrage
+	if($_GET['show_dl'] == "1"){
+		echo'<tr>
+				<td colspan="9">
+					<a href="?site=dl_users&dl_id='.$a['ID'].'&show_dl=0&show_queue='.$_GET['show_queue'].'&show_rest='.$_GET['show_rest'].'">
+						<i class="fa fa-minus"></i> <b>'.$lang->Downloads->transferring.'</b> ('.$a['phpaj_quellen_dl'].')
+					</a>
+				</td>
+			</tr>';
+		if(!empty($Downloadlist->cache['USER'])){
+			foreach($a['phpaj_ids_quellen_dl'] as $b){
 				$current_user = $Downloadlist->user($b);		
 				$fortschritt = (($current_user['ACTUALDOWNLOADPOSITION'] - $current_user['DOWNLOADFROM']) / ($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM'])) *100;
-				$fortschritt = round($fortschritt, 2);
+		
 				$current_user = $Downloadlist->user($b);
 		
-				echo'           <tr>
-				
-                          <td>
-                            <div class="text-nowrap">
-                            	<i class="icon icon-l cil-arrow-thick-from-left"></i>	'.$icon_img->directstate[$current_user['DIRECTSTATE']].' ' . substr($current_user['FILENAME'], 0, 40) . '...
-                            </div>
-                            <div class="small text-body-secondary text-nowrap ms-5">
-                            <span>User: <a href="index.php?site=dl_parts&usr_id='.$b.'">
+				echo'<tr><td>'.$icon_img->directstate[$current_user['DIRECTSTATE']].'</td>
+						<td>
+							<a href="index.php?site=dl_parts&usr_id='.$b.'">
 								'.htmlspecialchars($current_user['NICKNAME']).'
-							</a></span> | '.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'</div>
-                          </td>
-                          <td class="text-center">
-                            '.$lang->Downloads->dl_users->status_7.'
-                          </td>
-                          <td>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                              <div class="fw-semibold">' . $fortschritt . '%</div>
-                              <div class="text-nowrap small text-body-secondary ms-3">';
-                              
-			echo'</div>
-                            </div>
-                            <div class="progress progress-thin">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: ' . $fortschritt . '%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                          <td class="text-center">
-                          
-                            ' . ((($current_user['POWERDOWNLOAD'])+10)/10) . '
-                          </td>
-                          <td>
-                            '.subs::sizeformat($current_user['SPEED']).'/s
-                          </td>
-                          <td>
-                            <div class="dropdown">
-                              <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                </svg>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
-                            </div>
-                          </td>
-                        </tr>';
+							</a>
+						</td>
+						<td>
+							'.htmlspecialchars($current_user['FILENAME']).'
+						</td>
+						<td>
+							'.$lang->Downoads->dl_status->status_7.'
+						</td>
+						<td>
+							'.subs::sizeformat($current_user['SPEED']).'/s
+						</td>
+						<td>
+							'.(($current_user['POWERDOWNLOAD'] +10)/10).'
+						</td>
+						<td>
+							'.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'
+						</td>
+						<td>
+							'.subs::sizeformat($fortschritt).'
+						</td>
+						<td nowrap>
+							'.$icon_img->os[$current_user['OPERATINGSYSTEM']].$current_user['VERSION'].'
+						</td>
+					</tr>';
 			}
 		}
+	}else{
+	echo'<tr>
+				<td colspan="9">
+					<a href="?site=dl_users&dl_id='.$a['ID'].'&show_dl=1&show_queue='.$_GET['show_queue'].'&show_rest='.$_GET['show_rest'].'">
+						<i class="fa fa-plus"></i> <b>'.$lang->Downloads->transferring.'</b> ('.$a['phpaj_quellen_dl'].')
+					</a>
+				</td>
+			</tr>';
+		}
+
 	//Warteschlange
 	if($_GET['show_queue']==1){
 		echo'<tr>
@@ -247,6 +221,5 @@ if(!empty($Downloadlist->cache['USER'])){
 				</td>
 			</tr>';
 	}
-                        
 }
-echo "</tbody></table></div></div></div>";
+echo "</tbody></table>";

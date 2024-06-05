@@ -1,6 +1,6 @@
 # appleJuice phpGUI
 
-![](https://img.shields.io/badge/release-v0.29.5Beta-blue)
+![](https://img.shields.io/github/release/applejuicenetz/phpgui.svg)
 ![](https://img.shields.io/github/downloads/applejuicenetz/phpgui/total)
 ![](https://img.shields.io/github/license/applejuicenetz/phpgui.svg)
 

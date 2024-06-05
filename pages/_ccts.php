@@ -29,25 +29,25 @@
     </script>
    </head>
   <body>
-   <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+    <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <div class="card mb-4 mx-4">
-              <div class="card-body p-4">
-                <h1>Verbinde</h1>
-                <p class="text-body-secondary">Stelle verbindung zum Server her!</p>
-                <div class="text-center">
-                	<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-						<span class="visually-hidden">Loading...</span>
-					</div>
-				</div>
+            <div class="clearfix">
+              <h1 class="float-start display-3 me-4"><svg class="nav-icon">
+              <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+            </svg></h1>
+              <h4><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden">Loading..</span>
+</div></h4>
+              <p class="text-body-secondary">Verbindung zum Server wird hergestellt...</p>
             </div>
+            
           </div>
         </div>
       </div>
     </div>
-     <!-- CoreUI and necessary plugins-->
+    <!-- CoreUI and necessary plugins-->
     <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
     <script src="vendors/simplebar/js/simplebar.min.js"></script>
     <script>

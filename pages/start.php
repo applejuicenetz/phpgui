@@ -173,6 +173,10 @@ if ($Servers->netstats['firewalled'] === 'true') {
                             ?>
                         </td>
                     <tr>
+                        <td nowrap>phpGUI Version</td>
+                        <td><?php echo $gui->versions_update(PHP_GUI_VERSION); ?></td>
+                    </tr>
+                    <tr>
                         <td nowrap>Core Version</td>
                         <td><?php echo $coreinfo['VERSION']; ?></td>
                     </tr>
@@ -185,7 +189,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         <td nowrap>
                             <?php
                             $srv_timediff = $Servers->netstats['timeconnected'];
-                            $srv_timediff = sprintf("%dh %dmin", $srv_timediff / 3600, ($srv_timediff % 3600) / 60, $srv_timediff % 60);
+                            $srv_timediff = sprintf("%dh %dmin %ds", $srv_timediff / 3600, ($srv_timediff % 3600) / 60, $srv_timediff % 60);
                             echo $srv_timediff;
                             ?>
                         </td>
@@ -195,14 +199,13 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         <td nowrap><?php echo $info['OPENCONNECTIONS']; ?></td>
                     </tr>
                     <tr>
-                        <td nowrap><?php echo $lang->Start->bytes_in; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['SESSIONDOWNLOAD']); ?></td>
+                        <td nowrap><?php echo $lang->Start->shared_users; ?></td>
+                        <td nowrap><?php echo $Servers->netstats['users']; ?></td>
                     </tr>
                     <tr>
-                        <td nowrap><?php echo $lang->Start->bytes_out; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['SESSIONUPLOAD']); ?></td>
+                        <td nowrap><?php echo $lang->Start->all_data; ?></td>
+                        <td nowrap><?php echo number_format($Servers->netstats['filecount']) . "<br>" . subs::sizeformat($Servers->netstats['filesize']); ?></td>
                     </tr>
-                    
                     </tbody>
                 </table>
             </div>
@@ -215,6 +218,14 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 <table class="table">
                     <tbody>
                     <tr>
+                        <td nowrap><?php echo $lang->Start->bytes_in; ?></td>
+                        <td nowrap><?php echo subs::sizeformat($information['SESSIONDOWNLOAD']); ?></td>
+                    </tr>
+                    <tr>
+                        <td nowrap><?php echo $lang->Start->bytes_out; ?></td>
+                        <td nowrap><?php echo subs::sizeformat($information['SESSIONUPLOAD']); ?></td>
+                    </tr>
+                    <tr>
                         <td nowrap><?php echo $lang->Start->download_speed; ?></td>
                         <td nowrap><?php echo subs::sizeformat($information['DOWNLOADSPEED']); ?></td>
                     </tr>
@@ -222,15 +233,6 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         <td nowrap><?php echo $lang->Start->upload_speed; ?></td>
                         <td nowrap><?php echo subs::sizeformat($information['UPLOADSPEED']); ?></td>
                     </tr>
-                    <tr>
-                        <td nowrap><?php echo $lang->Start->shared_users; ?></td>
-                        <td nowrap><?php echo $Servers->netstats['users']; ?></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><?php echo $lang->Start->all_data; ?></td>
-                        <td nowrap><?php echo number_format($Servers->netstats['filecount']) . "<br>" . subs::sizeformat($Servers->netstats['filesize']); ?></td>
-                    </tr>
-                    
                     </tbody>
                 </table>
             </div>

@@ -48,7 +48,7 @@ echo'<div class="card mb-4">
                 
 
 
-if(empty($_GET['stats'])) $_GET['stats']="most";
+if(empty($_GET['stats'])) $_GET['stats']="last";
 $Sharelist = new Share;
 $Sharelist->refresh_cache(2);
 if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
