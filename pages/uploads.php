@@ -62,31 +62,20 @@ echo'<div class="table-responsive">
                       <thead class="fw-semibold text-nowrap">
                         <tr class="align-middle">
                         <th class="bg-body-secondary"></th>
-                          <th class="bg-body-secondary">'.$lang->Uploads->files.'</th>                          
+                          <th class="bg-body-secondary">'.$lang->Uploads->files.'</th>
+                          
                           <th class="bg-body-secondary">'.$lang->Uploads->statuss.'</th>
                           <th class="bg-body-secondary">'.$lang->Uploads->progres.'</th>
-                          <th class="bg-body-secondary">'.$lang->Uploads->username.'</th>
-                          <th class="bg-body-secondary">'.$lang->Uploads->statuss.'</th>
-                          <th class="bg-body-secondary">'.$lang->Uploads->progress.'</th>
-                          <th class="bg-body-secondary text-center">' . $lang->Uploads->pdl . '</th>
-			  <th class="bg-body-secondary">'.$lang->Uploads->speed.'</th>
+                      
+                          <th class="bg-body-secondary">'.$lang->Uploads->speed.'</th>
                           <th class="bg-body-secondary"></th>
                         </tr>
                       </thead>
                       <tbody>
-';			  
+
+			  ';
+			  
 if(!empty($Uploadlist->cache['UPLOAD'])){
-=======
-			  ';	
-// Uebertrage
-if($_GET['show_uplds']==1){
-	echo "<tr>
-			<td colspan=\"11\">
-				<a onclick=\"location.href='".$_SERVER['PHP_SELF']."?site=uploads&show_uplds=-1&show_queue=".$_GET['show_queue']."'\">
-					<i class='fa fa-minus'></i>&nbsp;&nbsp;<b>".$lang->Uploads->transferring."</b> (".$Uploadlist->cache['phpaj_ul'].")</a>
-			</td>
-		 </tr>";
-	if(!empty($Uploadlist->cache['UPLOAD'])){
 		foreach($Uploadlist->cache['phpaj_ids_ul'] as $a){
 			$current_upload=$Uploadlist->get_upload($a);
 			$current_shareid=&$current_upload['SHAREID'];
@@ -118,50 +107,27 @@ if($_GET['show_uplds']==1){
                             	' . htmlspecialchars($current_share['SHORTFILENAME']) . '
                             </div>
                             <div class="small text-body-secondary text-nowrap">
-<<<<<<< HEAD
                             <span>'.$lang->Uploads->username.': ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '</span>
                              | ' . $lang->Uploads->pdl . ': ' . $pdlwert . $current_upload['PRIORITY'] . '</div>
                           </td>
 
                           <td>
                           ' . subs::UploadStatus($current_upload['STATUS']) . '
-
-                            <span><a onclick="location.href=\'index.php?site=dl_users&dl_id=' . $a . ' \'" title="Mehr Info">
-					' . ($current_download['phpaj_quellen_queue'] + $current_download['phpaj_quellen_dl']) . '/' . $current_download['phpaj_quellen_gesamt']
-					.'</a></span> | ' . subs::sizeformat($current_download['SIZE']) . '' .subs::parts($current_download['FILENAME']) . '</div>
-                          </td>
-                          <td class="text-center">
-                            ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '
-                          </td>
-                          <td>
-                          ' . $lang->Uploads->dl_status->$current_upload['STATUS'] . '
                           </td>
                           <td>
                             <div class="d-flex justify-content-between align-items-baseline">
                               <div class="fw-semibold">' . $fortschritt . '%</div>
-div class="text-nowrap small text-body-secondary ms-3">' . $geladen . '- 
+                              <div class="text-nowrap small text-body-secondary ms-3">' . $geladen . '- 
                               ' . subs::sizeformat(
 				($current_upload['UPLOADTO'])
 				-($current_upload['UPLOADFROM'])) .'
 			</div>
-                              <div class="text-nowrap small text-body-secondary ms-3">' . $rest . '- ';
-                              if(!empty($current_download['phpaj_dl_speed'])){
-								$restzeit=$current_download['phpaj_REST']/$current_download['phpaj_dl_speed'];
-								$stunden=$restzeit/3600;
-								if($stunden<24){
-									printf("%02d:%02d:%02d",$stunden,($restzeit%3600)/60,$restzeit%60);
-								}else{
-									printf("%.1fd",$stunden/24);
-								}}
-			echo'</div></div>
+                            </div>
                             <div class="progress progress-thin">
                               <div class="progress-bar bg-success" role="progressbar" style="width: ' . $fortschritt . '%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </td>
-                          <td class="text-center">
-                          
-                            ' . $pdlwert . $current_upload['PRIORITY'] . '
-                          </td>
+ 
                           <td>
                             ' . subs::sizeformat($current_upload['SPEED']) . '
                           </td>
@@ -176,19 +142,9 @@ div class="text-nowrap small text-body-secondary ms-3">' . $geladen . '-
                             </div>
                           </td>
                         </tr>';
-		echo "<td class=\"right\" nowrap>".subs::sizeformat(
-				($current_upload['UPLOADTO'])
-				-($current_upload['UPLOADFROM']))."</td>";
-			echo "<td width=\"100\" nowrap>";
-			echo $subs->prozess_bar($fortschritt);
-			echo "<td class=\"right\" nowrap>";
-			if(isset($current_upload['LOADED']) && $current_upload['LOADED'] != -1){
-				echo number_format($current_upload['LOADED']*100,2)."%";
-			}else{
-				echo "N/A";
-			}
-			echo "</td>\n";
-}
+		
+			
+		}
 	}
 if(!empty($Uploadlist->cache['UPLOAD'])){
 		foreach($Uploadlist->cache['phpaj_ids_queue'] as $a){

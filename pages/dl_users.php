@@ -160,8 +160,8 @@ if(!empty($Downloadlist->cache['USER'])){
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4"></td>
-				<td colspan="5">
+				<td colspan="2"></td>
+				<td colspan="3">
 					'.$lang->Downloads->user_source.'
 				</td>
 			</tr>';
@@ -170,22 +170,41 @@ if(!empty($Downloadlist->cache['USER'])){
 			foreach($a['phpaj_ids_quellen_queue'] as $b){
 				$current_user = $Downloadlist->user($b);
 				
-				echo'<tr>
-						<td>'.$icon_img->directstate[$current_user['DIRECTSTATE']].'</td>
-						<td>
-							<a href="index.php?site=dl_parts&usr_id='.$b.'">
+				echo'           <tr>
+				
+                          <td>
+                            <div class="text-nowrap">
+                            	<i class="icon icon-l cil-arrow-thick-from-left"></i>	'.$icon_img->directstate[$current_user['DIRECTSTATE']].' ' . substr($current_user['FILENAME'], 0, 40) . '...
+                            </div>
+                            <div class="small text-body-secondary text-nowrap ms-5">
+                            <span>User: <a href="index.php?site=dl_parts&usr_id='.$b.'">
 								'.htmlspecialchars($current_user['NICKNAME']).'
-							</a>
-						</td>
-						<td>'.htmlspecialchars(subs::cutstring($current_user['FILENAME'],30)).'</td>
-						<td>'.$current_user['STATUS'].'</td>
-						<td>'.$current_user['SOURCE'].'</td>
-						<td>'.$subs->dl_status($current_user['QUEUEPOSITION']).'</td>
-						<td>'.(($current_user['POWERDOWNLOAD'] +10)/10).'</td>
-						<td></td>
+							</a></span> | '.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'</div>
+                          </td>
+                          <td class="text-center">
+                            '.$subs->dl_status($current_user['STATUS']).'
+                          </td>
+                          <td>
+                            '.$subs->dl_source($current_user['SOURCE']).'</td>
+                          <td class="text-center">
+                          
+                            ' . ((($current_user['POWERDOWNLOAD'])+10)/10) . '
+                          </td>
+                          <td>
+                            '.subs::sizeformat($current_user['SPEED']).'/s
+                          </td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
+                                </svg>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            </div>
+                          </td>
+                        </tr>';
 						
-						<td>'.$icon_img->os[$current_user['OPERATINGSYSTEM']].$current_user['VERSION'].'</td>
-					 </tr>';		
 		}
 	}
 	}else{
@@ -201,6 +220,7 @@ if(!empty($Downloadlist->cache['USER'])){
 
 	//Rest
 	if($_GET['show_rest']==1){
+		
 				echo'<tr>
 				<td colspan="9">
 					<a href="?site=dl_users&dl_id='.$a['ID'].'&show_dl=1&show_queue='.$_GET['show_queue'].'">
@@ -210,8 +230,8 @@ if(!empty($Downloadlist->cache['USER'])){
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4"></td>
-				<td colspan="5">
+				<td colspan="2"></td>
+				<td colspan="3">
 					'.$lang->Downloads->user_source.'
 				</td>
 			</tr>';
@@ -219,22 +239,41 @@ if(!empty($Downloadlist->cache['USER'])){
 		if(!empty($Downloadlist->cache['USER'])){
 			foreach($a['phpaj_ids_quellen_rest'] as $b){
 				$current_user = $Downloadlist->user($b);
+				echo'           <tr>
 				
-				echo'<tr>
-						<td>'.$icon_img->directstate[$current_user['DIRECTSTATE']].'</td>
-						<td>
-							<a href="index.php?site=dl_parts&usr_id='.$b.'">
-								'.subs::cutstring($current_user['NICKNAME'], 25).'
-							</a>
-						</td>
-						<td>'.htmlspecialchars(subs::cutstring($current_user['FILENAME'],30)).'</td>
-						<td>'.$subs->dl_status($current_user['STATUS']).'</td>
-						<td>'.$subs->dl_source($current_user['SOURCE']).'</td>
-						<td>'.(($current_user['POWERDOWNLOAD'] +10)/10).'</td>
-						<td></td>
-						<td></td>
-						<td>'.$icon_img->os[$current_user['OPERATINGSYSTEM']].$current_user['VERSION'].'</td>
-					 </tr>';		
+                          <td>
+                            <div class="text-nowrap">
+                            	<i class="icon icon-l cil-arrow-thick-from-left"></i>	'.$icon_img->directstate[$current_user['DIRECTSTATE']].' ' . substr($current_user['FILENAME'], 0, 40) . '...
+                            </div>
+                            <div class="small text-body-secondary text-nowrap ms-5">
+                            <span>User: <a href="index.php?site=dl_parts&usr_id='.$b.'">
+								'.htmlspecialchars($current_user['NICKNAME']).'
+							</a></span> | '.subs::sizeformat($current_user['DOWNLOADTO'] - $current_user['DOWNLOADFROM']).'</div>
+                          </td>
+                          <td class="text-center">
+                            '.$subs->dl_status($current_user['STATUS']).'
+                          </td>
+                          <td>
+                            '.$subs->dl_source($current_user['SOURCE']).'</td>
+                          <td class="text-center">
+                          
+                            ' . ((($current_user['POWERDOWNLOAD'])+10)/10) . '
+                          </td>
+                          <td>
+                            '.subs::sizeformat($current_user['SPEED']).'/s
+                          </td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
+                                </svg>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            </div>
+                          </td>
+                        </tr>';
+						
 		}
 	}
 		}else{

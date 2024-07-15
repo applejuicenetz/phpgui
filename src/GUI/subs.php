@@ -171,7 +171,6 @@ class subs
     }
     static function parts($part)
     {
-<<<<<<< HEAD
     	$str1 = "part";
     	$str2 = "part2";
     	$str3 = "part3";
@@ -179,14 +178,6 @@ class subs
 
     if (strpos($part, $str1) !== false) {
     		return " | Part: $Part2";
-=======
-    	$str1 = "part1";
-    	$str2 = "part2";
-    	$str3 = "part3";
-    	
-    	if (strpos($part, $str1) !== false) {
-    		return " | Part: 1";
->>>>>>> aeb83efb9eb3b2fe8c7e1c3822fa0e7a9312c127
 		}
 		if (strpos($part, $str2) !== false) {
     		return " | Part: 2";
@@ -196,7 +187,6 @@ class subs
 		} else {
     	}
     }
-<<<<<<< HEAD
     static function UploadStatus($wert)
     {
         $language = new Language($_ENV['GUI_LANGUAGE']);
@@ -211,8 +201,6 @@ class subs
 
         return $wert;
     }
-=======
->>>>>>> aeb83efb9eb3b2fe8c7e1c3822fa0e7a9312c127
     
 }
 
