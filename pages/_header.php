@@ -153,7 +153,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
          </li>
       </ul>
       <div class="sidebar-footer border-top d-none d-md-flex">
-      0.29.5
+      
       </div>
     </div>
     <div class="wrapper d-flex flex-column min-vh-100">
