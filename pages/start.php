@@ -78,9 +78,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 	<div>
                 		<div class="fs-4 fw-semibold"><?php template::dashboard("download"); ?></div>
                 		<div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_downloads; ?></div>
-                		<div class="progress progress-thin mt-3">
-                              <div class="progress-bar" role="progressbar" style="width: <?php template::dashboard("download_finish"); ?>%" aria-valuenow="<?php template::dashboard("download_finish"); ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                		
                 		
                 	</div>
                 	
