@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## 0.29.7
+- fix Bugs in Dashboard
+- delet at first progressbar for downloads
 ## 0.29.6
 - Style fixed
 ## 0.29.5
