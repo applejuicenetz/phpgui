@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## 0.29.7
+- fix Bugs in Dashboard
+- delet at first progressbar for downloads
+## 0.29.6
+- Style fixed
+## 0.29.5
+- add languagepack english
+- fix bugs on all pages
+- add serverconnection page
+- add mobile Navbar on bottom of screen
+
+## 0.29.4
+
+- fix dashboard
+- fix search
+- fix download ->buttons now with function
+- features remove:
+	- style switcher
+- fix share
+
+## 0.29.3
+
+- Bug fix
+-simple Theme
+
+## 0.29.2
+
+- code structure improvements (eg. PSR4)
+
+## 0.29.1
+
+- fix login
+- fix style switcher
+
+## 0.29.0
+
+- new modern Style
+- Community Version
+- features add:
+    - style switcher
+    - version checker
+    - fix Search
+    - fix Uploads
+    - fix Downloads
+    - fix Dashboard
+    - fix Sharefiles
+
 ## 0.28.1
 
 - fix style switcher
