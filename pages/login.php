@@ -59,7 +59,7 @@ $template = new template();
 				echo '
                 <form name="core" action="index.php?login=1" method="post" autocomplete="off">
     				<div class="form-floating mb-3">
-                        <input type="url" class="form-control" placeholder="Core-URL" name="chost" id="chost" value="'.($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']).':'.$_ENV["CORE_PORT"].'" required/>
+                        <input type="url" class="form-control" placeholder="Core-URL" name="host" id="chost" value="'.($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']).':'.$_ENV["CORE_PORT"].'" required/>
                         <label for="floatingInput">Core-URL</label>
                     </div>
                     <div class="form-floating mb-3">

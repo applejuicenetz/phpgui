@@ -145,7 +145,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link<?php template::active("help"); ?>" href="index.php?site=help">
+          <a class="nav-link<?php template::active("help"); ?>" href="<?php echo $_ENV['FAQ_URL']; ?>" target="_blank">
             <svg class="nav-icon">
               <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-info"></use>
             </svg> <?php echo $lang->Navigation->help; ?>

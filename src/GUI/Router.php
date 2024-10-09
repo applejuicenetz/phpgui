@@ -8,9 +8,9 @@ class Router
 {
     function handle(): void
     {
-        if (isset($_GET['login'])) {
+        if (isset($_POST['host'])) {
             $core = new Core();
-            $core_host = $_POST['chost'];
+            $core_host = $_POST['host'];
             $core_pass = 32 === strlen($_POST['cpass']) ? $_POST['cpass'] : md5($_POST['cpass']);
             $anfrage = "settings.xml";
             $type = "xml";
@@ -18,7 +18,9 @@ class Router
             // prüfe ob Passwort richtig
             $params['password'] = $core_pass;
 
-            if (strpos($anfrage, "?") === false) $anfrage .= "?";
+            if (!str_contains($anfrage, "?")) {
+                $anfrage .= "?";
+            }
 
             $url = $core_host . '/' . $type . '/' . $anfrage . '&' . http_build_query($params);
 

@@ -51,7 +51,7 @@ function dlusers(id){
 function inc_pdl(){
 	if(document.dl_form.pdl.value==1){
 		document.dl_form.pdl.value='2.2';
-	}else if(document.dl_form.pdl.value<=49.9 
+	}else if(document.dl_form.pdl.value<=49.9
 			&& document.dl_form.pdl.value>1){
 			var neuer_pdlwert=(document.dl_form.pdl.value*1)+0.1;
 			document.dl_form.pdl.value=neuer_pdlwert.toFixed(1);
@@ -59,7 +59,7 @@ function inc_pdl(){
 			document.dl_form.pdl.value='1.0';
 	}
 }
-	
+
 function dec_pdl(){
 	if(document.dl_form.pdl.value<2.3){
 		document.dl_form.pdl.value='1.0';
@@ -98,12 +98,12 @@ function change(id){
 function dlaction(action){
 	var dlline='?site=downloads&action='+action;
 	var counter=-1;
-	var fragetext='".addslashes("question")."';
+	var fragetext="cancel?\n";
 	for (var v in dl_ids){
 		if(dl_ids[v]==0) continue;
 		counter++;
 		dlline+='&dl_id['+counter+']=' + v;
-		fragetext+='\\n'+dl_names[v];
+		fragetext+="\n"+dl_names[v];
 	}
 	if(action=='settargetdir'){
 		var newname=prompt('targetdir:','');

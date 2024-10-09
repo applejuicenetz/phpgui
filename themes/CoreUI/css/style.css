@@ -635,7 +635,7 @@ progress {
   vertical-align: baseline;
 }
 
-[hidden] {
+[hidden], .hidden {
   display: none !important;
 }
 

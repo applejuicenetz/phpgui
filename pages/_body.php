@@ -62,6 +62,7 @@ if (!empty($_REQUEST['ajfsp_link'])) {
         if ('file' === $link[1]) {
 
             $text = htmlspecialchars($link[2]) . ' (' . subs::sizeformat($link[4]) . ')';
+            $text .= '<span class="hidden">newlinkinfo ' . $link[0] . ' ok</span>'; // for browser extension matching
 
             if ($core->command('function', 'processlink?link=' . urlencode($link[0])) == "ok") {
                 $template->alert("success", $lang->Downloads->get_start, $text);

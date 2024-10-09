@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.8
+
+- backward compatibility fixes for browser extension
 
 ## 0.29.7
+
 - fix Bugs in Dashboard
 - delet at first progressbar for downloads
+
 ## 0.29.6
+
 - Style fixed
+
 ## 0.29.5
+
 - add languagepack english
 - fix bugs on all pages
 - add serverconnection page
@@ -20,13 +28,13 @@ All notable changes to this project will be documented in this file.
 - fix search
 - fix download ->buttons now with function
 - features remove:
-	- style switcher
+    - style switcher
 - fix share
 
 ## 0.29.3
 
 - Bug fix
--simple Theme
+  -simple Theme
 
 ## 0.29.2
 
