@@ -21,18 +21,13 @@ jobs:
 
   remove_package_versions:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
-      - uses: dylanratcliffe/delete-untagged-containers@main
+      - name: purge untagged container images
+        uses: dylanratcliffe/delete-untagged-containers@main
         with:
           package_name: ${{ github.event.repository.name }}
           org: ${{ github.repository_owner }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: quartx-analytics/ghcr-cleaner@v1
-        with:
-          owner-type: org
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository-owner: ${{ github.repository_owner }}
-          package-name: ${{ github.event.repository.name }}
-          delete-untagged: true
-
+          token: ${{ secrets.GHCR_TOKEN }}
