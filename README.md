@@ -14,6 +14,12 @@ appleJuice Client GUI geschrieben in PHP.
 
 Es wird mindestens PHP `8.2` benötigt!
 
+## Hosted instances
+
+- Current: https://phpgui.applejuicenet.cc
+- Beta: https://phpgui-beta.applejuicenet.cc
+- Old: https://phpgui-old.applejuicenet.cc
+
 ## Konfiguration (nur bei selbst hosting ohne Docker)
 
 Die Datei `.env.dist` kopieren, zu `.env` umbenennen und mit einem Texteditor die gewünschte Konfiguration vornehmen.
