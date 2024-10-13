@@ -202,5 +202,20 @@ class subs
         return $wert;
     }
     
+    static function find_children($array, $var, $parent) {
+        if($var == "month")
+        {
+        return count(array_filter($array, function ($e) use ($parent) {
+          return $e['month'] === $parent;
+        }));
+        }
+        if($var == "date")
+        {
+        return count(array_filter($array, function ($e) use ($parent) {
+          return $e['date'] === $parent;
+        }));
+        }
+        
+      }
 }
 
