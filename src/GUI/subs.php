@@ -46,14 +46,6 @@ class subs
         return $lang->System->pagetitle->$site;
     }
 
-    
-	function prozess_bar($balken)
-	{
-		return '<div class="progress mt-3">
-                <div class="progress-bar progress-bar-success progress-bar-striped active col-black" style="width: ' . $balken . '%">
-                '  .$balken . ' %</div>
-              </div>';	
-	}
     function dl_source($wert)
     {
         $language = Kernel::getLanguage();
@@ -177,13 +169,13 @@ class subs
     	$Part2 = substr($part, -5, -4);
 
     if (strpos($part, $str1) !== false) {
-    		return " | Part: $Part2";
+    		return "Part: $Part2";
 		}
 		if (strpos($part, $str2) !== false) {
-    		return " | Part: 2";
+    		return "Part: 2";
 		}
 		if (strpos($part, $str3) !== false) {
-    		return " | Part: 3";
+    		return "Part: 3";
 		} else {
     	}
     }
