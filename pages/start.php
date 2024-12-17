@@ -42,21 +42,23 @@ $info = $Servers->info();
 
 
 $_SESSION['phpaj']['core_source_ip'] = $netinfo['IP'];
-if (empty($_SESSION['phpaj']['core_source_port'])) {
+if (empty($_SESSION['phpaj']['core_source_port']))
+{
     $settings = $core->command("xml", "settings.xml");
     $_SESSION['phpaj']['core_source_port'] = $settings['PORT']['VALUES']['CDATA'];
 }
 
-if (isset($information['MAXUPLOADPOSITIONS'])) {
+if (isset($information['MAXUPLOADPOSITIONS']))
+{
     $_SESSION['cache']['UPLOADS']['phpaj_MAXUPLOADPOSITIONS'] =
         $information['MAXUPLOADPOSITIONS'];
 }
 
 //Warnungen
-if ($Servers->netstats['firewalled'] === 'true') {
+if ($Servers->netstats['firewalled'] === 'true')
+{
     $Alert->Notification("danger", $lang->System->warnung, $lang->System->firewall);
 }
-echo"hallo";
 if($_GET['add_credits'])
 {
     $credit_add = $core->command("function","setinformations?credits=991671594");
@@ -64,15 +66,7 @@ if($_GET['add_credits'])
 }
 
 ?>
-<div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="d-flex">
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-coreui-dismiss="toast" aria-label="Close"></button>
-  </div>
-</div>
-<?php echo rand(1,100); ?>
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="tab-content rounded-bottom mb-3">
@@ -108,17 +102,6 @@ if($_GET['add_credits'])
 
             </div>
         </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                ToDo
-            </div>
-            <div class="card-body">
-                jj
-            </div>
-        </div>
-        
     </div>
     </div>    </div>
     <!-- Rightside -->
