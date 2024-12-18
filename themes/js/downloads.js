@@ -15,29 +15,30 @@ function rename(id){
 		zelle_alt.appendChild(renamelink);
 	}
 	var zelle=document.getElementById('nametd_'+id);
-	renamelink=zelle.firstChild.cloneNode(true);
+	renamelink=zelle.firstChild.cloneNode(false);
 	var nameinput=document.createElement('input');
 		nameinput.setAttribute('id', 'newname_'+id);
+		nameinput.setAttribute('class', 'form-control');
 		nameinput.setAttribute('value', dl_names[id]);
 		nameinput.setAttribute('size', dl_names[id].length);
 	zelle.replaceChild(nameinput, zelle.firstChild);
 	var okbutton=document.createElement('input');
 		okbutton.setAttribute('type', 'button');
+		okbutton.setAttribute('class', 'btn btn-outline-secondary');
 		okbutton.setAttribute('value', 'OK');
 		okbutton.onclick=new Function('dorename('+id+');'); //scheiss ie
 	zelle.appendChild(okbutton);
 	renameopen=id;
 }
-
 function dorename(id){
 	var newname=encodeURIComponent(
 		eval('document.dl_form.newname_'+id+'.value'));
-	window.location.href='/index.php?site=downloads&action=renamedownload&dl_id[0]='+
-		id+'&action_value=' + newname + '&';
+	window.location.href='index.php?site=downloads&action=renamedownload&dl_id='+
+		id+'&action_value=' + newname;
 }
 
 function dlparts(id){
-	var ajpartinfo=window.open('/index.php?site=dl_parts&dl_id='+id+'','ajdlparts',
+	var ajpartinfo=window.open('index.php?site=dl_parts&dl_id='+id+'','ajdlparts',
 		'width=540,height=300,left=10,top=10,dependent=yes,scrollbars=no');
 	ajpartinfo.focus();
 }
@@ -56,13 +57,13 @@ function inc_pdl(){
 			var neuer_pdlwert=(document.dl_form.pdl.value*1)+0.1;
 			document.dl_form.pdl.value=neuer_pdlwert.toFixed(1);
 	}else{
-			document.dl_form.pdl.value='1.0';
+			document.dl_form.pdl.value='1';
 	}
 }
 
 function dec_pdl(){
 	if(document.dl_form.pdl.value<2.3){
-		document.dl_form.pdl.value='1.0';
+		document.dl_form.pdl.value='1';
 	}else if(document.dl_form.pdl.value>50){
 			document.dl_form.pdl.value='50.0';
 	}else{
@@ -76,7 +77,7 @@ function change(id){
 	var zelle=dl_zeile.firstChild;
 	if(dl_ids[id]==1){
 		dl_ids[id]=0;
-		document.dl_form.pdl.value='1.0';
+		document.dl_form.pdl.value='1';
 		while(zelle!=null){
 			if(zelle.nodeName=='TD')
 				zelle.style.backgroundColor='';

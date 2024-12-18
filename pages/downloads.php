@@ -55,8 +55,16 @@ echo'<div class="row clearfix">
   </div></div>
   <div class="col-sm-8 d-flex justify-content-end">
 								
-  <div class="input-group d-flex justify-content-end">
-  
+  <div class="btn-group d-flex justify-content-end">
+  <div class="btn-group btm-group" role="group">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
+    ' . $lang->System->select . '
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="javascript:select_all(0);">' . $lang->System->all . '</a></li>
+    <li><a class="dropdown-item" href="javascript:select_all(1);">' . $lang->System->none . '</a></li>
+  </ul>
+</div>
   <button class="btn btn-outline-secondary text-warning" id="liveToastBtn" type="button" onclick="javascript:dlaction(\'pausedownload\')"><i class="fa fa-pause"></i></button>
   <button class="btn btn-outline-secondary text-success" type="button" onclick="javascript:dlaction(\'resumedownload\')"><i class="fa fa-play"></i></button>
   <button class="btn btn-outline-secondary text-danger" type="button" onclick="javascript:dlaction(\'canceldownload\')"><i class="fa fa-times"></i></button>
@@ -97,7 +105,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 		$sources = ($current_download['phpaj_quellen_queue'] + $current_download['phpaj_quellen_dl']) . '/' . $current_download['phpaj_quellen_gesamt'];
     $size = subs::sizeformat($current_download['SIZE']);
     $parts = subs::parts($current_download['FILENAME']);
-
+    $pdl = ((($current_download['POWERDOWNLOAD'])+10)/10);
     if($current_download['phpaj_dl_speed'] != "0")
     {
       $speed = subs::sizeformat($current_download['phpaj_dl_speed']) . ' - ';
@@ -121,7 +129,9 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 	    $time = $restzeit/3600;
 		  
     }
-    Downloadpage::list_group($status, $title, $balken, $sources, $size, $parts, $rest, $speed, $time, $restzeit, $a);
+    $b = $current_download['FILENAME'];
+    $c = $current_download['POWERDOWNLOAD'];
+    Downloadpage::list_group($status, $title, $balken, $sources, $size, $parts, $rest, $speed, $time, $restzeit, $a, $b, $c, $subdircounter, $pdl);
   }
 echo'</div>';
 }else{
@@ -139,7 +149,7 @@ echo'</div>';
 		$sources = ($current_download['phpaj_quellen_queue'] + $current_download['phpaj_quellen_dl']) . '/' . $current_download['phpaj_quellen_gesamt'];
     $size = subs::sizeformat($current_download['SIZE']);
     $parts = subs::parts($current_download['FILENAME']);
-
+    $pdl = ((($current_download['POWERDOWNLOAD'])+10)/10);
     if($current_download['phpaj_dl_speed'] != "0")
     {
       $speed = subs::sizeformat($current_download['phpaj_dl_speed']) . ' - ';
@@ -163,7 +173,9 @@ echo'</div>';
 	    $time = $restzeit/3600;
 		  
     }
-    Downloadpage::list_once($status, $title, $balken, $sources, $size, $parts, $rest, $speed, $time, $restzeit, $a);
+    $b = $current_download['FILENAME'];
+    $c = $current_download['POWERDOWNLOAD'];
+    Downloadpage::list_once($status, $title, $balken, $sources, $size, $parts, $rest, $speed, $time, $restzeit, $a, $b, $c, $subdircounter, $pdl);
     #echo'
 # <div class="card-body" id="zeile_' . $a . '" onclick="change(' . $a . ');">
  ##       <a onclick="javascript:rename(' . $a . ')" title="' . $lang->Downloads->rename . '">
@@ -173,21 +185,8 @@ echo'</div>';
 
 }
 }
-echo'</div>';
-
-//alle/keine auswaehlen
-
-echo "<tr><th colspan=\"$spaltenzahl\">\n";
-echo $lang->System->select.": ";
-echo "<a href=\"javascript:select_all(0);\">"
-	.$lang->System->all."</a>, ";
-echo "<a href=\"javascript:select_all(1);\">"
-	.$lang->System->none."</a>"
-	."</th></tr></table></div>
-                                </div>
-                            </div>
-                        </div>
+echo'</div>
                     </div>
-                </div>";
+                </div>';
 
 echo "</form>";

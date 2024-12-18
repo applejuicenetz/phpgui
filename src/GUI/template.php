@@ -209,25 +209,43 @@ class template
 	}
     function status($wert)
     {
+        if($wert != "0_2"){
         if ($wert == "0") {
             $icon = "cil-search";
         }
         if ($wert == "0_1") {
             $icon = "cil-search";
         }
-        if ($wert == "0_2") $icon = '<div class="col-xs-4 col-sm-4 col-md-1 col-lg-1">
-        <div class="spinner-border text-danger" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>';
-        if ($wert == "0") $icon = "cil-search";
-        if ($wert == "14") $icon = 'cil-check'; $color = 'success';
-        if ($wert == "18") $icon = "cil-media-pause"; $color = 'warning';
-        if ($wert == "17") $icon = "cil-ban"; $color = 'danger';
+        if ($wert == "0"){
+            $icon = "cil-search";
+        }
+        if ($wert == "14")
+        {
+            $icon = 'cil-check'; 
+            $color = 'success';
+        }
+        if ($wert == "18")
+        {
+            $icon = 'cil-media-pause'; 
+            $color = 'warning';
+        }
+        if ($wert == "17")
+        {
+            $icon = 'cil-ban'; 
+            $color = 'danger';
+        }
         return '<div class=" col-6 text-end text-' . $color . '">
                               <svg class="icon icon-xxl">
                                 <use xlink:href="' . GUI_THEME . '/vendors/@coreui/icons/svg/free.svg#' . $icon . '"></use>
                               </svg>
                             </div>';
+    }
+    else{
+        return '<div class="col-xs-4 col-sm-4 col-md-1 col-lg-1">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>';    
+    }
     }
 }
