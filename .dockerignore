@@ -1,0 +1,8 @@
+.github
+.idea
+.run
+.env
+.gitignore
+README.md
+CHANGELOG.md
+Dockerfile

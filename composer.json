@@ -1,0 +1,24 @@
+{
+  "name": "applejuicenetz/phpgui",
+  "type": "project",
+  "description": "appleJuice P2P Client Core GUI",
+  "license": "MIT",
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^8.2",
+    "ext-curl": "*",
+    "ext-gd": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-xml": "*",
+    "ext-zip": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "appleJuiceNETZ\\": "src/"
+    }
+  }
+}
