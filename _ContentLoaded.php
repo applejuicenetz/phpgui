@@ -12,4 +12,6 @@ header('Access-Control-Allow-Origin: *');
 
 $Build = new Build();
 
-$Build->App();
+$page = $_GET['site'];
+
+$Build->AppLoaded($page);

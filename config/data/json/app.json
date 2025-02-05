@@ -1,0 +1,9 @@
+{
+"WebUI" :
+{
+"VERSION" : "1.0.0",
+"VERSION_NAME" : " Red Apple",
+"TITLE" : "XJuiceWebUI",
+"THEME" : "public/theme/CoreUI/"
+}
+}

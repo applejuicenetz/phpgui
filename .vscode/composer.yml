@@ -1,0 +1,10 @@
+version: "2.4"
+ 
+services:
+    apache:
+        image: php:8-apache
+        restart: always
+        ports:
+            - 80:80
+        volumes:
+            - mnt/volume1/www:/var/www/html
