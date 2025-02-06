@@ -2,8 +2,6 @@
 
 namespace appleJuiceNETZ;
 
-use appleJuiceNETZ\UI\Language;
-
 class Kernel
 {
     private static array $instances = [];

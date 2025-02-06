@@ -54,11 +54,7 @@ echo'<div class="row clearfix">
                         <div class="card">
                             <div class="card-body">
                                 <div class="align-right">
-<<<<<<< Updated upstream
-                                	'. strtr($lang->Uploads->limit, array("%percent"=>$uploaduserpercent)).'
-=======
                                 	'. strtr($language->translate('Uploads->limit'), array("%percent"=>$uploaduserpercent)).'
->>>>>>> Stashed changes
                                 </div>';
 //Tabellen�berschrift
 echo'<div class="table-responsive">
@@ -66,21 +62,12 @@ echo'<div class="table-responsive">
                       <thead class="fw-semibold text-nowrap">
                         <tr class="align-middle">
                         <th class="bg-body-secondary"></th>
-<<<<<<< Updated upstream
-                          <th class="bg-body-secondary">'.$lang->Uploads->files.'</th>
-                          
-                          <th class="bg-body-secondary">'.$lang->Uploads->statuss.'</th>
-                          <th class="bg-body-secondary">'.$lang->Uploads->progres.'</th>
-                      
-                          <th class="bg-body-secondary">'.$lang->Uploads->speed.'</th>
-=======
                           <th class="bg-body-secondary">'.$language->translate('Uploads.files').'</th>
                           
                           <th class="bg-body-secondary">'.$language->translate('Uploads.statuss').'</th>
                           <th class="bg-body-secondary">'.$language->translate('Uploads.progres').'</th>
                       
                           <th class="bg-body-secondary">'.$language->translate('Uploads.speed').'</th>
->>>>>>> Stashed changes
                           <th class="bg-body-secondary"></th>
                         </tr>
                       </thead>

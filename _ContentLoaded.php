@@ -12,6 +12,6 @@ header('Access-Control-Allow-Origin: *');
 
 $Build = new Build();
 
-$page = $_GET['site'];
+if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard";
 
-$Build->AppLoaded($page);
+$Build->AppLoaded($_GET['site']);

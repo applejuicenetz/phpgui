@@ -1,5 +1,4 @@
 <?php
-use appleJuiceNETZ\Kernel;
 use appleJuiceNETZ\UI\Language;
 
 $lang = Language::getLanguage();

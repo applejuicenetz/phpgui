@@ -2,9 +2,15 @@
 session_start();
 
 // Eingabe validieren
-$anfrage = filter_input(INPUT_GET, 'anfrage', FILTER_SANITIZE_STRING);
+$anfrage = filter_input(INPUT_GET, 'anfrage', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $core_host = filter_input(INPUT_POST, 'core_host', FILTER_SANITIZE_URL);
 $core_pass = filter_input(INPUT_POST, 'core_pass', FILTER_SANITIZE_STRING);
+
+if (isset($_POST['core_pass'])) {
+    $core_pass = filter_input(INPUT_POST, 'core_pass', FILTER_SANITIZE_STRING);
+} else {
+    echo "Das Passwort wurde nicht übermittelt.";
+}
 
 if ($core_pass && $core_host) {
     // URL aufbauen

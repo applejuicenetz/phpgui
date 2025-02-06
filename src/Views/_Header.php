@@ -1,28 +1,15 @@
 <?php
 
-use appleJuiceNETZ\appleJuice\Core;
-use appleJuiceNETZ\GUI\GUI;
 use appleJuiceNETZ\GUI\template;
-use appleJuiceNETZ\GUI\subs;
 use appleJuiceNETZ\UI\Language;
-use appleJuiceNETZ\Kernel;
-
-$gui = new GUI();
-$gui::refresh();
 
 //Templatedaten lesen
 $template= new template();
-$subs = new subs();
-//Core Settings auslesen
-$core = new Core();
-$settings_xml=$core->command("xml","settings.xml");
 
 //Language
 $lang = Language::getLanguage();
 
-
-if( empty( $_GET['site'] ) ) $_GET['site'] = "start";  
-
+if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard"; 
 ?>
 <!DOCTYPE html><!--
 * CoreUI - Free Bootstrap Admin Template
