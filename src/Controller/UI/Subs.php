@@ -1,54 +1,56 @@
 <?php
 
-namespace applejuiceWebUi\UI;
+namespace appleJuiceNETZ\UI;
 
-use appleJuiceWebUi\Kernel;
-use appleJuiceWebUi\Core\aj\Uploads;
-use appleJuiceWebUi\Core\aj\Downloads;
-use appleJuiceWebUi\Core\aj\Core;
+use appleJuiceNETZ\Kernel;
+use appleJuiceNETZ\appleJuice\Uploads;
+use appleJuiceNETZ\appleJuice\Downloads;
+use appleJuiceNETZ\appleJuice\Core;
+use appleJuiceNETZ\UI\Language;
 
-class Subs
+class subs
 {
+
     static function get_title($site)
     {
-        $language = Kernel::getLanguage();
+        $language = Language::getLanguage();
 
-        return $language('System.pagetitle.'.$site);
+        return $language->translate('System.pagetitle.'.$site.'');
     }
 
     function dl_source($wert)
     {
-        $lang = Kernel::getLanguage();
+        $language = Language::getLanguage();
 
-        if ($wert == 1) $wert = $lang('Downloads.dl_source.src_1');
-        if ($wert == 2) $wert = $lang('Downloads.dl_source.src_2');
-        if ($wert == 3) $wert = $lang('Downloads.dl_source.src_3');
-        if ($wert == 4) $wert = $lang('Downloads.dl_source.src_4');
-        if ($wert == 5) $wert = $lang('Downloads.dl_source.src_5');
-        if ($wert == 6) $wert = $lang('Downloads.dl_source.src_6');
+        if ($wert == 1) $wert = $language->translate('Downloads.dl_source.src_1');
+        if ($wert == 2) $wert = $language->translate('Downloads.dl_source.src_2');
+        if ($wert == 3) $wert = $language->translate('Downloads.dl_source.src_3');
+        if ($wert == 4) $wert = $language->translate('Downloads.dl_source.src_4');
+        if ($wert == 5) $wert = $language->translate('Downloads.dl_source.src_5');
+        if ($wert == 6) $wert = $language->translate('Downloads.dl_source.src_6');
 
         return $wert;
     }
 
     function dl_status($wert)
     {
-        $lang = Kernel::getLanguage();
+        $language = Language::getLanguage();
 
-        if ($wert == 1) $wert = $lang('Downloads->dl_status->status_1');
-        if ($wert == 2) $wert = $lang('Downloads->dl_status->status_2');
-        if ($wert == 3) $wert = $lang('Downloads->dl_status->status_3');
-        if ($wert == 4) $wert = $lang('Downloads->dl_status->status_4');
-        if ($wert == 5) $wert = $lang('Downloads->dl_status->status_5');
-        if ($wert == 6) $wert = $lang('Downloads->dl_status->status_6');
-        if ($wert == 7) $wert = $lang('Downloads->dl_status->status_7');
-        if ($wert == 8) $wert = $lang('Downloads->dl_status->status_8');
-        if ($wert == 9) $wert = $lang('Downloads->dl_status->status_9');
-        if ($wert == 10) $wert = $lang('Downloads->dl_status->status_10');
-        if ($wert == 11) $wert = $lang('Downloads->dl_status->status_11');
-        if ($wert == 12) $wert = $lang('Downloads->dl_status->status_12');
-        if ($wert == 13) $wert = $lang('Downloads->dl_status->status_13');
-        if ($wert == 14) $wert = $lang('Downloads->dl_status->status_14');
-        if ($wert == 15) $wert = $lang('Downloads->dl_status->status_15');
+        if ($wert == 1) $wert = $language->translate('Downloads.dl_status.status_1');
+        if ($wert == 2) $wert = $language->translate('Downloads.dl_status.status_2');
+        if ($wert == 3) $wert = $language->translate('Downloads.dl_status.status_3');
+        if ($wert == 4) $wert = $language->translate('Downloads.dl_status.status_4');
+        if ($wert == 5) $wert = $language->translate('Downloads.dl_status.status_5');
+        if ($wert == 6) $wert = $language->translate('Downloads.dl_status.status_6');
+        if ($wert == 7) $wert = $language->translate('Downloads.dl_status.status_7');
+        if ($wert == 8) $wert = $language->translate('Downloads.dl_status.status_8');
+        if ($wert == 9) $wert = $language->translate('Downloads.dl_status.status_9');
+        if ($wert == 10) $wert = $language->translate('Downloads.dl_status.status_10');
+        if ($wert == 11) $wert = $language->translate('Downloads.dl_status.status_11');
+        if ($wert == 12) $wert = $language->translate('Downloads.dl_status.status_12');
+        if ($wert == 13) $wert = $language->translate('Downloads.dl_status.status_13');
+        if ($wert == 14) $wert = $language->translate('Downloads.dl_status.status_14');
+        if ($wert == 15) $wert = $language->translate('Downloads.dl_status.status_15');
 
         return $wert;
     }
@@ -74,9 +76,9 @@ class Subs
             $sortarray["$a"] =& $srcarray[$a][$sortkey];
         }
         if (empty($reverse)) {
-            asort($sortarray, $type);
-        } else {
             arsort($sortarray, $type);
+        } else {
+            asort($sortarray, $type);
         }
         return ($sortarray);
     }
@@ -128,34 +130,30 @@ class Subs
     	
     	$Uploadlist->refresh_cache();
     	$Downloadlist->refresh_cache();
+
+        $_SESSION['aj']['notification']['uploads'] = $Uploadlist->cache['phpaj_ul'];
     }
     static function parts($part)
     {
-    	$str1 = "part";
-    	$str2 = "part2";
-    	$str3 = "part3";
-    	$Part2 = substr($part, -5, -4);
-
-    if (strpos($part, $str1) !== false) {
-    		return "Part: $Part2";
-		}
-		if (strpos($part, $str2) !== false) {
-    		return "Part: 2";
-		}
-		if (strpos($part, $str3) !== false) {
-    		return "Part: 3";
-		} else {
-    	}
+        // Überprüfen, ob der String mit "part" beginnt
+        if (preg_match('/part(\d*)/', $part, $matches)) {
+            // Wenn es eine Zahl nach "part" gibt, gebe diese Zahl zurück
+            $partNumber = $matches[1] ? $matches[1] : substr($part, -5, -4); // Wenn keine Zahl nach "part" ist, benutze das 'Part2'
+            return " | Part: $partNumber";
+        }
+    
+        // Falls kein "part" gefunden wird, gebe ein Standard zurück
+        return "";
     }
     static function UploadStatus($wert)
     {
-        $lang = Kernel::getLanguage();
+        $language = Language::getLanguage();
   
-        if ($wert == 1) $wert = $lang('Uploads.ul_status.status_1');
-        if ($wert == 2) $wert = $lang('Uploads.ul_status.status_2');
-        if ($wert == 5) $wert = $lang('Uploads.ul_status.status_5');
-        if ($wert == 6) $wert = $lang('Uploads.ul_status.status_6');
-        if ($wert == 7) $wert = $lang('Uploads.ul_status.status_7');
+        if ($wert == 1) $wert = $language->translate('Uploads.ul_status.status_1');
+        if ($wert == 2) $wert = $language->translate('Uploads.ul_status.status_2');
+        if ($wert == 5) $wert = $language->translate('Uploads.ul_status.status_5');
+        if ($wert == 6) $wert = $language->translate('Uploads.ul_status.status_6');
+        if ($wert == 7) $wert = $language->translate('Uploads.ul_status.status_7');
         
 
         return $wert;
@@ -176,5 +174,6 @@ class Subs
         }
         
       }
+
 }
 

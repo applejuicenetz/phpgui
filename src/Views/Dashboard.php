@@ -50,6 +50,7 @@ if (isset($information['MAXUPLOADPOSITIONS']))
         $information['MAXUPLOADPOSITIONS'];
 }
 
+
 ?>
 
 <div class="row">

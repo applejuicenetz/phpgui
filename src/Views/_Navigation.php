@@ -1,3 +1,8 @@
+<?php
+
+use appleJuiceNETZ\GUI\template;
+
+?>
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
@@ -12,66 +17,54 @@
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item">
-          <a class="nav-link active" href="index.php?site=Dashboard">
+          <a class="nav-link <?php template::active("Dashboard"); ?>" href="index.php?site=Dashboard">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg> Dashboard           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="index.php?site=Downloads">
+          <a class="nav-link <?php template::active("Downloads"); ?>" href="index.php?site=Downloads">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
             </svg> Downloads           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="index.php?site=Uploads">
+          <a class="nav-link <?php template::active("Uploads"); ?>" href="index.php?site=Uploads">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-cloud-upload"></use>
-            </svg> Uploads           </a>
+            </svg> Uploads <span class="badge badge-sm bg-info ms-auto" style="display: none;" id="newUploadBadge">0</span></a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="index.php?site=Search">
+          <a class="nav-link <?php template::active("Search"); ?>" href="index.php?site=Search">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-search"></use>
             </svg> Suche           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="index.php?site=Shares">
+          <a class="nav-link <?php template::active("Shares"); ?>" href="index.php?site=Shares">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-share-alt"></use>
             </svg> geteilte Ordner           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link " href="index.php?site=Server">
+          <a class="nav-link <?php template::active("Server"); ?>" href="index.php?site=Server">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
             </svg> Serverliste           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="index.php?site=Settings">
+          <a class="nav-link <?php template::active("Settings"); ?>" href="index.php?site=Settings">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
             </svg> Einstellungen           </a>
          </li>
-        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+         <li class="nav-item">
+          <a class="nav-link <?php template::active("Settings"); ?>" href="index.php?site=Extras">
             <svg class="nav-icon">
               <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
             </svg> Plugins</a>
-          <ul class="nav-group-items compact">
-         <li class="nav-item">
-            		<a class="nav-link" href="index.php?site=extras&show=ajl/ajl.php">
-            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
-            		Link Import</a></li>
-            <li class="nav-item">
-            		<a class="nav-link" href="index.php?site=extras&show=phpinfo/phpinfo.php">
-            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
-            		phpinfo</a></li>
-            <li class="nav-item">
-            		<a class="nav-link" href="index.php?site=extras&show=sharestats/sharestats.php">
-            		<span class="nav-icon"><span class="nav-icon-bullet"></span></span> 
-            		Share Stats</a></li>
-                     
-          </ul>
+         </li>
+        
       <div class="sidebar-footer border-top d-none d-md-flex">
       </div>
     </div>
@@ -138,30 +131,17 @@
                 <div class="avatar avatar-md"><img class="avatar-img" src="<?php echo WEBUI_THEME; ?>assets/img/avatars/8.jpg" alt="user@email.com"></div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
-                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Account</div><a class="dropdown-item" href="#">
+                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Core beenden</div><a class="dropdown-item" href="?serv=Kick-Core">
                   <svg class="icon me-2">
                     <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                  </svg> Updates<span class="badge badge-sm bg-info ms-2">42</span></a><a class="dropdown-item" href="#">
+                  </svg> Updates<span class="badge badge-sm bg-info ms-2">42</span></a><a class="dropdown-item" href="?serv=Logout">
                   <svg class="icon me-2">
-                    <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
-                  </svg> Messages<span class="badge badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-task"></use>
-                  </svg> Tasks<span class="badge badge-sm bg-danger ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#cil-comment-square"></use>
-                  </svg> Comments<span class="badge badge-sm bg-warning ms-2">42</span></a>
+                    <use xlink:href="<?php echo WEBUI_THEME; ?>vendors/@coreui/icons/svg/free.svg#log_out"></use>
+                  </svg> Logout</span></a>
             </li>
           </ul>
         </div>
         <div class="container-fluid px-4">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="#">Home</a>
-              </li>
-              <li class="breadcrumb-item active"><span>Dashboard</span>
-              </li>
-            </ol>
-          </nav>
+          <?php template::bread($_GET['site'],$_GET['site']);  ?>
         </div>
       </header>

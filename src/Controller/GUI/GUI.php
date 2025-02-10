@@ -2,17 +2,15 @@
 
 namespace appleJuiceNETZ\GUI;
 
-use appleJuiceNETZ\Kernel;
 use appleJuiceNETZ\appleJuice\Downloads;
 use appleJuiceNETZ\appleJuice\Uploads;
+use appleJuiceNETZ\UI\Language;
 
 class GUI
 {
     function check_version($var): void
     {
-        $language = Kernel::getLanguage();
-        $lang = $language->translate();
-        $template = new template();
+        $language = Language::getLanguage();
 
         $akt_ver = file_get_contents($_ENV['CHANGELOG_URL']);
 
@@ -28,15 +26,15 @@ echo $version;
 
         }
 
-        if (version_compare($_SESSION['phpaj']['akt_version'], PHP_GUI_VERSION, '>')) {
-        	$vnew_version = str_replace("%version%", $_SESSION['phpaj']['akt_version'], $lang->System->version);
+        if (version_compare($_SESSION['phpaj']['akt_version'], WEBUI_VERSION, '>')) {
+        	$vnew_version = str_replace("%version%", $_SESSION['phpaj']['akt_version'], $language->translate('System->version'));
         	echo'<div class="row mb-4">
-            <div class="col-xl-12 col-xxl-12"><a class="banner-coreui-pro" href="https://github.com/applejuicenetz/phpgui/tree/beta">
+            <div class="col-xl-12 col-xxl-12"><a class="banner-coreui-pro" href="https://github.com/applejuicenetz/phpgui/tree/main">
                 <svg class="banner-coreui-pro-logo d-xl-none d-xxl-block" width="100" height="100" alt="CoreUI Logo">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-history"></use>
                 </svg>
                 <h4 class="fw-bolder">' . $vnew_version . '</h4>
-                <p>' . $lang->System->version_akt . '</p>
+                <p>' . $language->translate('System->version_akt') . '</p>
               </a></div>
           </div>
           ';
@@ -58,10 +56,10 @@ echo $version;
 
         }
 
-        if (version_compare($_SESSION['phpaj']['akt_version'], PHP_GUI_VERSION, '>')) {
-            return '<span class="col-danger font-bold">' . PHP_GUI_VERSION . '</span>';
+        if (version_compare($_SESSION['phpaj']['akt_version'], WEBUI_VERSION, '>')) {
+            return '<span class="col-danger font-bold">' . WEBUI_VERSION . '</span>';
         } else {
-            return PHP_GUI_VERSION;
+            return WEBUI_VERSION;
         }
     }
     

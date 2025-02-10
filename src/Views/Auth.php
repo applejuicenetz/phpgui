@@ -1,7 +1,7 @@
 <?php
 use appleJuiceNETZ\UI\Language;
 
-$lang = Language::getLanguage();
+$language = Language::getLanguage();
 
 ?>
 <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -12,7 +12,7 @@ $lang = Language::getLanguage();
               <div class="card col-md-7 p-4 mb-0">
                 <div class="card-body">
                   <h1>Login</h1>
-                  <p class="text-body-secondary"><?php echo $lang->translate('Login.headline'); ?></p>
+                  <p class="text-body-secondary"><?php echo $language->translate('Login.headline'); ?></p>
                   <?php
                
 				if(!empty(['core_host'])){
@@ -34,18 +34,18 @@ $lang = Language::getLanguage();
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" name="cpass" id="cpass"
                                required/>
-                               <label for="floatingInput">'.$lang->translate('Login.password') . '</label>
+                               <label for="floatingInput">'.$language->translate('Login.password') . '</label>
                     </div>
                     <div class="row">
                         <div class="col-">
                             <div class="checkbox icheck m-l--20">
-                                <label><input type="checkbox"> '.$lang->translate('Login.remember') .'</label>
+                                <label><input type="checkbox"> '.$language->translate('Login.remember') .'</label>
                             </div>
                         </div>
                         
                             <div class="row">
                     <div class="col-6">
-                      <button class="btn btn-primary px-4" type="submit">'.$lang->translate('Login.login').'</button>
+                      <button class="btn btn-primary px-4" type="submit">'.$language->translate('Login.login').'</button>
                         </div>
                     
                 </form>'; 

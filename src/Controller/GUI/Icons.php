@@ -34,9 +34,10 @@ class Icons
 
         //direkte/indirekte verbindung
         $this->directstate = array(
-            "0" => "<img src='themes/icons/unknow.svg' width='16' alt='?' />",
-            "1" => "<img src='themes/icons/direct.svg' width='16' alt='direct' />",
-            "2" => "<img src='themes/icons/indirect.svg' width='16' alt='indirect' />",
-            "3" => "<img src='themes/icons/indirect.svg' width='16' alt='indirect' />");
+            "0" => "<img src='public/assets/images/icons/unknow.svg' width='16' alt='?' />",
+            "1" => "<img src='public/assets/images/icons/direct.svg' width='16' alt='direct' />",
+            "2" => "<img src='public/assets/images/icons/indirect.svg' width='16' alt='indirect' />",
+            "3" => "<img src='public/assets/images/icons/indirect.svg' width='16' alt='indirect' />",
+            "WAIT" => "<img src='public/assets/images/icons/wait.png' width='16' alt='wait' />",);
     }
 }

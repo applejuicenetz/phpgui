@@ -1,0 +1,7 @@
+{
+    "name": "PHP Info", 
+    "shortname": "phpinfo", 
+    "version": "1.0.0", 
+    "description": "Das Plugin zeigt die installierte PHP-Version an", 
+    "image": "logo.jpg" 
+  }

@@ -13,17 +13,29 @@ $language = Language::getLanguage();
 
 //zum connecten + loeschen
 $action_echo='';
-if(!empty($_GET['action'])){
-	if(!empty($_GET['serv_id']) && $_GET['serv_id'] > 0)
-		$action_echo = $Servers->action($_GET['action'], $_GET['serv_id']);
-	//mehr server von applejuicenet.cc holen
-	if($_GET['action']=='getservers'){
-		$Servers->getmore();
-	}
+if (!empty($_GET['action'])) {
+  // Prüfen, ob 'serv_id' gesetzt und größer als 0 ist
+  if (!empty($_GET['serv_id']) && $_GET['serv_id'] > 0) {
+      template::toast($_GET['action'], "info");
+      // Die Aktion für den Server ausführen
+      $action_echo = $Servers->action($_GET['action'], $_GET['serv_id']);
+  }
+
+  // Wenn die Aktion 'getservers' ist, mehr Server holen
+  if ($_GET['action'] == 'getservers') {
+      $Servers->getmore();
+  }
 }
 
 	echo'<div class="row g-4">';
-$srv_timediff= (int)($Servers->netstats['timeconnected'] / 60);
+  // Überprüfen, ob 'timeconnected' gesetzt ist und ob der Wert gleich '?' ist
+if (isset($Servers->netstats['timeconnected']) && $Servers->netstats['timeconnected'] === '?') {
+
+} else {
+  // Der Inhalt von 'timeconnected' ist nicht gleich '?'
+  $srv_timediff = (int)($Servers->netstats['timeconnected'] / 60);
+}
+
 
 //server auflisten
 foreach($Servers->ids() as $a){
@@ -32,10 +44,10 @@ foreach($Servers->ids() as $a){
 		."?site=Server&action=removeserver&amp;serv_id=".$serverinfo['ID'];
 
 	if($Servers->netstats['connectedwith']<0 || $srv_timediff>=30){
-		$server_connect_link = '<button type="button" onclick="location.href=\'' . $_SERVER['PHP_SELF'] . '?site=Server&action=serverlogin&amp;serv_id=' . $serverinfo['ID'] . '\'" class="btn btn-success">
+		$server_connect_link = '<button type="button" onclick="location.href=\'?site=Server&action=serverlogin&amp;serv_id=' . $serverinfo['ID'] . '\'" class="btn btn-success">
                 ' . $language->translate('Server.login') . '</button>';
 	}else{
-		$server_connect_link = '<button type="button" onclick="location.href=\'' . $_SERVER['PHP_SELF'] . '?site=Server&action=serverlogin&amp;serv_id=' . $serverinfo['ID'] . '\'" class="btn btn-primary" disable>
+		$server_connect_link = '<button type="button" onclick="location.href=\'site=Server&action=serverlogin&amp;serv_id=' . $serverinfo['ID'] . '\'" class="btn btn-primary" disable>
                 ' . $language->translate('Server.login') . '</button>';
 	}
 	//passendes bildchen raussuchen

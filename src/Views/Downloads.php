@@ -8,7 +8,7 @@ use appleJuiceNETZ\GUI\template;
 use appleJuiceNETZ\Template\Downloadpage;
 use appleJuiceNETZ\UI\Language;
 
-$lang = Language::getLanguage();
+$language = Language::getLanguage();
 
 
 $icon_img =new Icons();
@@ -25,13 +25,7 @@ if(empty($_GET['sort'])) $_GET['sort']="status";
 		{
 			if(empty($_GET['action_value'])) $_GET['action_value']="";
 			$action_echo = $Downloadlist->action($_GET['action'],$_GET['dl_id'],$_GET['action_value']);
-			echo'
-	<div style="position: fixed;
-  top: 120px;
-  right: 5px;
-  z-index: 300;
-  opacity: 0.9;">' . template::toast($_GET['site'], $_GET['action'], "info") . '</div>
-';
+			template::toast($_GET['action'], "info");
 	}
 	
 	
@@ -39,7 +33,7 @@ if(empty($_GET['sort'])) $_GET['sort']="status";
 
 $Downloadlist->refresh_cache();
 
-echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\">";
+echo "<form action=\"\" name=\"dl_form\" onsubmit=\"return false\" method=\"post\">";
 
 
 echo'<div class="row clearfix">
@@ -52,22 +46,22 @@ echo'<div class="row clearfix">
   <button class="btn btn-outline-secondary" type="button" onclick="javascript:dec_pdl()"><i class="fa fa-minus"></i></button>
   <input type="text" size="1" style="width: 10px;" class="form-control" id="pdl" name="pdl" value="1.0">
   <button class="btn btn-outline-secondary" type="button" onclick="javascript:inc_pdl()"><i class="fa fa-plus"></i></button>
-  <button class="btn btn-outline-secondary" type="button" onclick="dlaction(\'setpowerdownload\')">' . $lang->translate('Downloads.set_pdl') . '</button>
+  <button class="btn btn-outline-secondary" type="button" onclick="dlaction(\'setpowerdownload\')">' . $language->translate('Downloads.set_pdl') . '</button>
   </div></div>
   <div class="col-sm-8 d-flex justify-content-end">
 								
   <div class="btn-group d-flex justify-content-end">
   <div class="btn-group btm-group" role="group">
   <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
-    ' . $lang->translate('System.select') . '
+    ' . $language->translate('System.select') . '
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="javascript:select_all(0);">' . $lang->translate('System.all') . '</a></li>
-    <li><a class="dropdown-item" href="javascript:select_all(1);">' . $lang->translate('System.none') . '</a></li>
+    <li><a class="dropdown-item" href="javascript:select_all(0);">' . $language->translate('System.all') . '</a></li>
+    <li><a class="dropdown-item" href="javascript:select_all(1);">' . $language->translate('System.none') . '</a></li>
   </ul>
 </div>
   <button class="btn btn-outline-secondary text-warning" id="liveToastBtn" type="button" onclick="javascript:dlaction(\'pausedownload\')"><i class="fa fa-pause"></i></button>
-  <button class="btn btn-outline-secondary text-success" type="button" onclick="javascript:dlaction(\'resumedownload\')"><i class="fa fa-play"></i></button>
+  <button class="btn btn-outline-secondary text-success" type="button" onclick="location.href=\'?site=Downloads&act=startdownload\'"><i class="fa fa-play"></i></button>
   <button class="btn btn-outline-secondary text-danger" type="button" onclick="javascript:dlaction(\'canceldownload\')"><i class="fa fa-times"></i></button>
   <button class="btn btn-outline-secondary" type="button" onclick="javascript:dlaction(\'settargetdir\')"><i class="fa fa-folder"></i></button>
   <button class="btn btn-outline-secondary text-danger" type="button" onclick="location.href=\'index.php?site=Downloads&action=cleandownloadlist&dl_id=1\'"><i class="fa fa-trash"></i></button>
@@ -75,7 +69,7 @@ echo'<div class="row clearfix">
 </div>
 </div></div></div>
 <div class="table-responsive">
-<table class="table border mb-0">
+<table class="table border mb-0 table-striped">
                       <thead class="fw-semibold text-nowrap">
                         <tr class="align-middle">
                           <th class="bg-body-secondary"></th>
@@ -99,7 +93,7 @@ foreach(array_keys($Downloadlist->subdirs) as $subdir){
 	if(!empty($subdir)){
   
 		//Unterverzeichnis
-    echo'<tr><td></td><td colspan="5">
+    echo'<tr class="table-info"><td></td><td colspan="5">
     ' . htmlspecialchars($subdir) . ' ( ' . count($downloadids) . ' )
 </td>
   </tr>';
@@ -210,7 +204,7 @@ echo'</div>';
         Downloadpage::list_once($status, $title, $balken, $sources, $size, $parts, $rest, $speed, $time, $restzeit, $a, $b, $c, $subdircounter, $pdl);
     #echo'
 # <div class="card-body" id="zeile_' . $a . '" onclick="change(' . $a . ');">
- ##       <a onclick="javascript:rename(' . $a . ')" title="' . $lang->Downloads->rename . '">
+ ##       <a onclick="javascript:rename(' . $a . ')" title="' . $language->translate('Downloads.rename . '">
  #       <span><a onclick="location.href=\'index.php?site=dl_users&dl_id=' . $a . ' \'" title="Mehr Info"></div>';
 					
   }

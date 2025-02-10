@@ -12,31 +12,62 @@ $template = new template();
 $language = Language::getLanguage();
 
 //einstellungen aendern
-if(!empty($_POST['change'])){
-	switch($_POST['change']){
-		case 'standard':
-			$_POST['incdir']=urlencode($_POST['incdir']);
-			$_POST['tempdir']=urlencode($_POST['tempdir']);
-			$_POST['nick'] = urlencode($_POST['nick']);
-            
-			$core->command("function","setsettings?Incomingdirectory=".$_POST['incdir']."&Temporarydirectory=".$_POST['tempdir']
-				."&Port=".$_POST['c_port']."&XMLPort=".$_POST['c_xml_port']."&Nickname=".$_POST['nick']);
-            $template->alert("success", $language->translate('Settings.get_save')."!", $lang->Settings->alert_save_1);
-        break;
-		case 'connection':
-			if(empty($_POST['autoconnect'])) $_POST['autoconnect']='false';
-			$_POST['maxul']=floor($_POST['maxul']*1024);	//von kb in bytes umrechnen
-			$_POST['maxdl']=floor($_POST['maxdl']*1024);	//von kb in bytes umrechnen
-			$core->command("function","setsettings?MaxConnections="
-				.$_POST['maxcon']."&MaxUpload=".$_POST['maxul']
-					."&Speedperslot=".$_POST['uls']."&MaxDownload="
-					.$_POST['maxdl']."&MaxNewConnectionsPerTurn="
-					.$_POST['conturn']."&AutoConnect=".$_POST['autoconnect']
-					."&MaxSourcesPerFile=".$_POST['maxdlsrc']);
-            $template->alert("success", $language->translate('Settings.get_save')."!", $language->translate('Settings.alert_save_2'));
-            break;
-	}
+if (!empty($_POST['change'])) {
+    // Helper function to clean POST data
+    function sanitize_input($data) {
+        return urlencode(trim($data));
+    }
+
+    // Collect all POST data based on the form submitted
+    $incomingDirectory = sanitize_input($_POST['incdir']);
+    $temporaryDirectory = sanitize_input($_POST['tempdir']);
+    $nickname = sanitize_input($_POST['nick']);
+    $port = $_POST['c_port'];
+    $xmlPort = $_POST['c_xml_port'];
+
+    // Default values for 'connection' form
+    $maxConnections = $_POST['maxcon'];
+    $maxUpload = floor($_POST['maxul'] * 1024);  // KB to bytes
+    $maxDownload = floor($_POST['maxdl'] * 1024);  // KB to bytes
+    $speedPerSlot = $_POST['uls'];
+    $newConnectionsPerTurn = $_POST['conturn'];
+    $maxSourcesPerFile = $_POST['maxdlsrc'];
+    $autoConnect = empty($_POST['autoconnect']) ? 'false' : $_POST['autoconnect'];
+
+    // Handling the 'standard' form submission
+    if ($_POST['change'] === 'standard') {
+        $params = [
+            'Incomingdirectory' => $incomingDirectory,
+            'Temporarydirectory' => $temporaryDirectory,
+            'Port' => $port,
+            'XMLPort' => $xmlPort,
+            'Nickname' => $nickname
+        ];
+
+        // Prepare the query string
+        $queryString = http_build_query($params);
+        $core->command("function", "setsettings?" . $queryString);
+        $template->alert("success", $language->translate('Settings.get_save') . "!", $language->translate('Settings.alert_save_1'));
+    }
+    // Handling the 'connection' form submission
+    elseif ($_POST['change'] === 'connection') {
+        $params = [
+            'MaxConnections' => $maxConnections,
+            'MaxUpload' => $maxUpload,
+            'Speedperslot' => $speedPerSlot,
+            'MaxDownload' => $maxDownload,
+            'MaxNewConnectionsPerTurn' => $newConnectionsPerTurn,
+            'AutoConnect' => $autoConnect,
+            'MaxSourcesPerFile' => $maxSourcesPerFile
+        ];
+
+        // Prepare the query string
+        $queryString = http_build_query($params);
+        $core->command("function", "setsettings?" . $queryString);
+        $template->alert("success", $language->translate('Settings.get_save') . "!", $language->translate('Settings.alert_save_2'));
+    }
 }
+
 
 $settings_xml=$core->command("xml","settings.xml");
 

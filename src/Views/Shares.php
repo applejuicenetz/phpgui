@@ -4,7 +4,6 @@ use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\appleJuice\Share;
 use appleJuiceNETZ\GUI\template;
 use appleJuiceNETZ\UI\Language;
-use appleJuiceNETZ\Kernel;
 
 $core = new Core();
 $share = new Share();
@@ -16,7 +15,8 @@ $language = Language::getLanguage();
 //einstellungen fuer unterverzeichnis aendern
 if(!empty($_GET['setsubs'])){
 	$share->changesub($_GET['setsubs'], $_GET['newsub']);
-	$template->alert("info", $language->translate('Share.in_progress'), $language->translate('Share.set_share'));
+	$template->alert("info", $language->translate('Share.inprogress'), $language->translate('Share.set_share'));
+	echo'';
 }
 
 //verzeichnis aus share nehmen
@@ -27,7 +27,8 @@ if(!empty($_GET['share_del'])){
 //verzeichnis sharen
 if(!empty($_GET['new_share'])){
 	$share->add_share($_GET['new_share'], $_GET['new_subs']);
-	$template->alert("info", $language->translate('Share.in_progress'), $language->translate('Share.new_share'));
+	$template->alert("info", $language->translate('Share.inprogress'), $language->translate('Share.newshare'));
+	
 }
 
 echo "<form action=\"\" name=\"mainform\">";
@@ -36,7 +37,7 @@ echo'<div class="row clearfix">
                         <div class="card">
                         	<div class="card-body">
                         	<div class="mb-2">
-                        	<a href="?site=shares&setsubs=*sharecheck&newsub=0" class="btn btn-primary"><i class="fa fa-refresh"></i> ' . $language->translate('Share.check') . '</a></div>
+                        	<a href="?site=Shares&setsubs=*sharecheck&newsub=0" class="btn btn-primary"><i class="fa fa-refresh"></i> ' . $language->translate('Share.check') . '</a></div>
                             	<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
@@ -52,7 +53,7 @@ echo'<div class="row clearfix">
 echo'<tr>
 		<td width="1"><i class="fa fa-folder"></i></td>
 		<td colspan="4">
-			<a href="index.php?site=sharefiles&dir='.addslashes(htmlspecialchars($share->get_temp())).'" aria-current="true">
+			<a href="index.php?site=Sharefiles&dir='.addslashes(htmlspecialchars($share->get_temp())).'" aria-current="true">
             '.htmlspecialchars($share->get_temp()).'
             </a>
         </td>
@@ -95,8 +96,8 @@ echo'
 //echo "<br />\n";
 //echo "<div align=\"center\"><table><tr>\n";
 //echo "<td><input type=\"button\" onclick=\"do_setsubs('*sharecheck',0);\" value=\""
-//	.$lang->Share->check."\" /></td>";
+//	.$language->translate('Share->check."\" /></td>";
 //echo "<td><input type=\"button\" onclick=\"share_export()\" value=\""
-//	.$lang->Share->exportlist."\" /></td>\n";
+//	.$language->translate('Share->exportlist."\" /></td>\n";
 echo "</tr></table></div>\n";
 echo "</form>\n";

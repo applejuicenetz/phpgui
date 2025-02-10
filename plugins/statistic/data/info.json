@@ -1,0 +1,7 @@
+{
+    "name": "Share Statistik", 
+    "shortname": "statistic", 
+    "version": "0.2.0", 
+    "description": "Das Plugin zeigt die Statitik alle geledenen Files an. Hier aknnst du erkennen welche Dateien gefragt sind und welche nur herumliegen. Außerdem kannst du erkennen, wann welche Datei angefragt wurde.", 
+    "image": "plugin.jpg" 
+  }

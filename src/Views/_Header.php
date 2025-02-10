@@ -9,7 +9,7 @@ $template= new template();
 //Language
 $lang = Language::getLanguage();
 
-if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard"; 
+if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard";
 ?>
 <!DOCTYPE html><!--
 * CoreUI - Free Bootstrap Admin Template
@@ -23,10 +23,10 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard";
     <base href="./">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AppleJuice WebUI - Written in PHP, HTML and Javascript">
+    <meta name="author" content="KDDK22">
+    <meta name="robots" content="noindex, nofollow">
     <title><?php echo WEBUI_TITLE; ?></title>
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo WEBUI_THEME; ?>assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="<?php echo WEBUI_THEME; ?>assets/favicon/apple-icon-60x60.png">
@@ -41,9 +41,15 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard";
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo WEBUI_THEME; ?>assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo WEBUI_THEME; ?>assets/favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo WEBUI_THEME; ?>assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="<?php echo WEBUI_THEME; ?>assets/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="<?php echo WEBUI_THEME; ?>assets/favicon/ms-icon-144x144.png">
+    <!-- manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="AppleJuice WebUI">
+    <meta name="apple-mobile-web-app-title" content="AppleJuice WebUI">
+    <meta name="msapplication-navbutton-color" content="#aa0000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="/">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendors styles-->
     <link rel="stylesheet" href="<?php echo WEBUI_THEME; ?>vendors/simplebar/css/simplebar.css">
@@ -52,6 +58,23 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "Dashboard";
     <link href="<?php echo WEBUI_THEME; ?>assets/icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Main styles for this application-->
     <link href="<?php echo WEBUI_THEME; ?>css/style.css" rel="stylesheet">
+    <style>
+        @keyframes blinken {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .blink-text {
+            animation: blinken 1ms linear infinite;
+        }
+    </style>
     <!-- We use those styles to show code examples, you should remove them in your application.-->
     <link href="<?php echo WEBUI_THEME; ?>css/examples.css" rel="stylesheet">
     <script src="<?php echo WEBUI_THEME; ?>js/config.js"></script>

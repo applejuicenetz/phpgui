@@ -54,7 +54,7 @@ echo'<div class="row clearfix">
                         <div class="card">
                             <div class="card-body">
                                 <div class="align-right">
-                                	'. strtr($language->translate('Uploads->limit'), array("%percent"=>$uploaduserpercent)).'
+                                	'. strtr($language->translate('Uploads.limit'), array("%percent"=>$uploaduserpercent)).'
                                 </div>';
 //Tabellen�berschrift
 echo'<div class="table-responsive">
@@ -107,8 +107,8 @@ if(!empty($Uploadlist->cache['UPLOAD'])){
                             	' . htmlspecialchars($current_share['SHORTFILENAME']) . '
                             </div>
                             <div class="small text-body-secondary text-nowrap">
-                            <span>'.$lang->Uploads->username.': ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '</span>
-                             | ' . $lang->Uploads->pdl . ': ' . $pdlwert . $current_upload['PRIORITY'] . '</div>
+                            <span>'.$language->translate('Uploads.username').': ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '</span>
+                             | ' . $language->translate('Uploads.pdl') . ': ' . $pdlwert . $current_upload['PRIORITY'] . '</div>
                           </td>
 
                           <td>
@@ -165,6 +165,11 @@ if(!empty($Uploadlist->cache['UPLOAD'])){
 					-$current_upload['LASTCONNECTION'])
 					/1000;
 			}
+      $minutes = (int)($ul_timediff / 60);  // Minuten berechnen
+      $seconds = (int)($ul_timediff - $minutes * 60);  // Sekunden berechnen
+
+    // Ausgabe im gewünschten Format
+    
 			echo'<tr class="align-middle">
                           <td>
                         	' . $icon_img->directstate['WAIT'] . '
@@ -174,8 +179,8 @@ if(!empty($Uploadlist->cache['UPLOAD'])){
                             	' . htmlspecialchars($current_share['SHORTFILENAME']) . '
                             </div>
                             <div class="small text-body-secondary text-nowrap">
-                            <span>'.$lang->Uploads->username.': ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '</span>
-                             | ' . $lang->Uploads->pdl . ': ' . $pdlwert . $current_upload['PRIORITY'] . '</div>
+                            <span>'.$language->translate('Uploads.username').': ' . htmlspecialchars(subs::cutstring($current_upload['NICK'],30)) . '</span>
+                             | ' . $language->translate('Uploads.pdl') . ': ' . $pdlwert . $current_upload['PRIORITY'] . '</div>
                           </td>
 
                           <td>
@@ -183,7 +188,7 @@ if(!empty($Uploadlist->cache['UPLOAD'])){
                           </td>
                           <td>
                             <div class="d-flex justify-content-between align-items-baseline">
-                              <div class="fw-semibold">' . sprintf("%dmin %02ds",$ul_timediff/60,$ul_timediff%60) . '</div>
+                              <div class="fw-semibold">' . sprintf("%dmin %02ds", $minutes, $seconds) . '</div>
                               <div class="text-nowrap small text-body-secondary ms-3"> 
                               ' . subs::sizeformat(
 				($current_upload['UPLOADTO'])

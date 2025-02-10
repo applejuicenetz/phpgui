@@ -72,6 +72,7 @@ class Dashboard
       $language = Language::getLanguage();
         $Uploadlist = new Uploads();
         
+        
         echo'<div class="col-6 col-lg-5 col-xl-4 col-xxl-4">
                         <div class="card">
                           <div class="card-body">
@@ -164,6 +165,7 @@ echo'</div>
     static function Server()
     {
       $Servers = new Server();
+      $core = new Core();
       $language = Language::getLanguage();
 
       echo'<div class="col-12 col-lg-12 col-xl-8 col-xxl-8">
@@ -179,23 +181,31 @@ echo'</div>
            if (!empty($Servers->netstats['welcome'])) {
                         echo $Servers->netstats['welcome'];
                     }
-          echo'</div>
-          <div class="small text-body-secondary text-uppercase fw-semibold text-truncate text-end">
+          echo'</div>';
+          $statusbar_xml=$core->command("xml","modified.xml?filter=informations");
+        $temp2=array_keys($statusbar_xml['NETWORKINFO']);
+        $netinfo=&$statusbar_xml['NETWORKINFO'][$temp2[0]];
+        
+        if($netinfo['CONNECTEDWITHSERVERID'] < 0)
+        {
+          echo'<div class="small text-body-secondary text-uppercase fw-semibold text-truncate text-end" style="animation: blinken 1s linear infinite;">
+          <p></p>
+          <p class="class="blink-text text-center">Verbindung wird hergestellt...</p>
+          </div>';
+        }else{
+          echo'<div class="small text-body-secondary text-uppercase fw-semibold text-truncate text-end">
             ' . $language->translate('Start.connected_since') . ' ';
-            $srv_timediff = $Servers->netstats['timeconnected'];
+            $srv_timediff = floor($Servers->netstats['timeconnected']);
 
-// Berechnungen für Stunden und Minuten
-$hours = (int)floor($srv_timediff / 3600); // Wandelt in Stunden um (ganzzahlige Division)
-$minutes = (int)floor(($srv_timediff % 3600) / 60); // Wandelt in Minuten um
+// Berechnungen für Stunden und Minuten mit intdiv()
+$srv_timediff_formatted = gmdate("H\h i\m", $srv_timediff);
 
-// Formatierung der Ausgabe
-$srv_timediff_formatted = sprintf("%dh %dmin", $hours, $minutes);
-
-// Ausgabe
+// Ausgabe der formatierten Zeit
 echo $srv_timediff_formatted . '
             
-          </div>
-        </div>
+          </div>';
+        }
+        echo'</div>
       </div>
     </div>';
     }

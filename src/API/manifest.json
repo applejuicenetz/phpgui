@@ -1,0 +1,15 @@
+{
+    "name": "AppleJuice WebUI",
+    "description": "WebUI for P2P client appleJuice",
+    "start_url": "/WebUi",
+    "lang": "de-DE",
+    "theme_color": "#aa0000",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "public/assets/images/icons/manifest/icon512_maskable.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

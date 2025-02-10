@@ -15,7 +15,7 @@ if (file_exists(GUI_ROOT . 'vendor/autoload.php')) {
     });
 }
 // Die Konfigurationsdateien laden
-require_once GUI_ROOT . 'config/config.php';       // Weitere allgemeine Konfigurationen
+require_once GUI_ROOT . '/config/config.php';       // Weitere allgemeine Konfigurationen
 
 //Prüfe auf die Richtige PHP Version
 if (!version_compare(PHP_VERSION, '8.2')) {

@@ -169,7 +169,7 @@ echo '<div class="row clearfix">
 										}
 							  echo '</select>
 									<button class="btn btn-outline-secondary" type="button" onclick="changeshareprio()">' . $language->translate('Downloads.set_pdl') . '</button>
-									<button class="btn btn-outline-secondary" onklick="" disabled>123' .$Sharelist->get_prio() . strtr($lang->Share->prio_spent ,array("%spent"=>$Sharelist->get_prio())) . '</button>
+									<button class="btn btn-outline-secondary" onklick="" disabled>123' .$Sharelist->get_prio() . strtr($language->translate('Share->prio_spent ,array("%spent"=>$Sharelist->get_prio())) . '</button>
 								</div>
 
                             	<div class="table-responsive">

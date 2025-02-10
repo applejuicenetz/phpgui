@@ -17,7 +17,6 @@ class Router
         }
         else
         {
-echo "hallo"; 
             if (isset($_POST['host'])) {
                 
                 $core_host = $_POST['host'].":". $_ENV['CORE_PORT'];
@@ -33,7 +32,6 @@ echo "hallo";
                 }
     
                 $url = $core_host . '/' . base64_decode($type) . '/' . base64_decode($anfrage) . '?' . http_build_query($params);
-    echo $url;
                 $xml_file = file_get_contents($url);
     
                 if (empty($xml_file)) {
@@ -45,6 +43,7 @@ echo "hallo";
                     if (empty($_SESSION['host']) && empty($_SESSION['wrong_pass'])) {
                         $_SESSION['core_pass'] = $core_pass;
                         $_SESSION["core_host"] = $core_host;
+                        echo'<meta http-equiv="refresh" content="0;url=index.php" />';
                     }
                 }
             }

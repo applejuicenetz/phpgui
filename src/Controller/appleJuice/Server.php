@@ -129,6 +129,7 @@ class Server
     function action($action, $id)
     {
         return $action . ' &rArr; ' . $this->core->command('function', $action . '?id=' . $id);
+        template::toast($_GET['site'], $_GET['action'], "info");
     }
 
 }
