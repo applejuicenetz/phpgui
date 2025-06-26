@@ -130,4 +130,4 @@ MIT License - siehe [LICENSE](../../LICENSE) für Details.
 
 ---
 
-**Version:** 1.0.0 (Beta) | **Status:** 🧪 Aktive Entwicklung
+**Version:** 0.1.0 (Beta) | **Status:** 🧪 Aktive Entwicklung
