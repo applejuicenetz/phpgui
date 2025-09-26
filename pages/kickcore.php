@@ -15,3 +15,6 @@ $core->command("function", "exitcore");
 echo "<script>
 	parent.location.href='index.php';
 	</script>";
+
+session_destroy();
+exit;
