@@ -13,11 +13,9 @@ foreach ($Plugin->liste as $a) {
 // $phpaj_show enthält die url zum plugin und muss vom plugin immer
 //als "show" mit get oder post übergeben werden
 $phpaj_ownurl = $_SERVER['PHP_SELF'] . "?" . SID;
-$phpaj_show = "";
-if (!empty($_GET['show'])) $phpaj_show = $_GET['show'];
-if (!empty($_POST['show'])) $phpaj_show = $_POST['show'];
+$phpaj_show = $_REQUEST['show'] ?? '';
 if (!empty($phpaj_show)) {
-    $phpaj_ownurl .= "&show=" . $phpaj_show;
+    $phpaj_ownurl .= "site=extras&show=" . $phpaj_show;
     //check, ob die an show übergebene url auch zu einem plugin gehört ;)
     if (in_array($phpaj_show, $phpaj_pluginurllist))
         include "plugins/" . $phpaj_show;

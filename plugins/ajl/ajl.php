@@ -1,6 +1,7 @@
 <?php
 
 use appleJuiceNETZ\appleJuice\Core;
+use appleJuiceNETZ\GUI\subs;
 
 ?>
 <script>
@@ -20,13 +21,13 @@ function layout(typ){
 <?php
 echo'<div class="card mb-4">
 		<div class="card-body">
-			<form name="conselect" methode="post" action"' . $phpaj_ownurl . '" enctype="multipart/form-data">
+			<form name="conselect" method="post" action="' . $phpaj_ownurl . '" enctype="multipart/form-data">
 				<div class="row mb-3">
 					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
 						Filetype
 					</label>
 					<div class="col-sm-10">
-    					<select class="form-select" name="filetype" aria-label="Default select example">
+    					<select class="form-select" name="filetype" aria-label="Default select example" required>
 							<option selected>Open this select menu</option>
 							<option value="ajl">.ajl-file</option>
 							<option value="text">text/html</option>
