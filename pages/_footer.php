@@ -125,8 +125,7 @@ $lang = $language->translate();
     </footer>
 </div>
       <footer class="footer px-4">
-        <div>create with <i class="col-danger fa fa-heart"></i> by <b>red171</b> & <b>kddk22</b>
-                    </div>
+          <div>create with <i class="col-danger fa fa-heart"></i> by <b>kddk22</b>, inspired by <b>UP</b></div>
         <div class="ms-auto"><b>v<?php echo PHP_GUI_VERSION; ?></b></div>
       </footer>
     </div>
