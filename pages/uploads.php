@@ -25,9 +25,8 @@ $uploaduserpercent="?";
 if(!empty($Uploadlist->cache['IDS']['VALUES']['UPLOADID']))
 	$uploadusercount=
 		count($Uploadlist->cache['IDS']['VALUES']['UPLOADID']);
-if(isset($Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS'])){
-	$uploaduserpercent= (int) ((($uploadusercount/
-		$Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS'])*100)+0.5);
+if(isset($Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS']) && $Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS'] > 0) {
+	$uploaduserpercent= (int) ((($uploadusercount / $Uploadlist->cache['phpaj_MAXUPLOADPOSITIONS'])*100)+0.5);
 }
 if(empty($Uploadlist->cache['UPLOAD']) && empty($Uploadlist->cache['UPLOAD'])){
 	echo'<div class="bg-body-tertiary d-flex flex-row align-items-center">
