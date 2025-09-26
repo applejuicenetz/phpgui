@@ -28,7 +28,7 @@ echo'<div class="card mb-4">
 					</label>
 					<div class="col-sm-10">
     					<select class="form-select" name="filetype" aria-label="Default select example" required>
-							<option selected>Open this select menu</option>
+							<option value="">Open this select menu</option>
 							<option value="ajl">.ajl-file</option>
 							<option value="text">text/html</option>
 						</select>

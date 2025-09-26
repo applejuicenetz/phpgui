@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.29.9
+
+- ajl import fix
+- upload page fix if upload slots zero
+- fix server error 500 on exit core command
+
 ## 0.29.8
 
 - backward compatibility fixes for browser extension

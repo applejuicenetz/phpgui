@@ -37,7 +37,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           tags: |
-            type=raw,value=beta,branch=main
+            type=raw,value=beta,branch=Beta
           images: |
             docker.io/${{ github.repository }}
             ghcr.io/${{ github.repository }}
