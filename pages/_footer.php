@@ -31,7 +31,7 @@ $lang = $language->translate();
                                 <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                            	<form method="post" action="" name="linkform">
+                            	<form method="post" action="index.php?site=downloads" name="linkform">
 									<div class="mb-3">
 										<label for="exampleFormControlTextarea1" class="form-label">AJ-Links</label>
 										<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="ajfsp_link" id="link"></textarea>
@@ -55,7 +55,7 @@ $lang = $language->translate();
                         </div>
                         <div class="modal-body">
                         M&ouml;chtest du wirklich den Core beenden?
-                        S&auml;mtliche Punkte gehen verloren!
+                        S&auml;mtliche Credits gehen verloren!
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" onclick="window.location.href ='index.php?site=kickcore'">Ja Core beenden</button>

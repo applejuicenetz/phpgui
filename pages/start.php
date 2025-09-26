@@ -213,7 +213,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                 <table class="table">
                     <tbody>
                     <tr>
-                        <td nowrap><?php echo $lang->Start->download_speed; ?></td>
+                        <td width="20%" nowrap><?php echo $lang->Start->download_speed; ?></td>
                         <td nowrap><?php echo subs::sizeformat($information['DOWNLOADSPEED']); ?></td>
                     </tr>
                     <tr>
@@ -226,7 +226,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->all_data; ?></td>
-                        <td nowrap><?php echo number_format($Servers->netstats['filecount']) . "<br>" . subs::sizeformat($Servers->netstats['filesize']); ?></td>
+                        <td nowrap><?php echo number_format($Servers->netstats['filecount'], 0, ',', '.') . ' (' . subs::sizeformat($Servers->netstats['filesize']); ?>)</td>
                     </tr>
                     
                     </tbody>

@@ -21,7 +21,7 @@ $settings_xml=$core->command("xml","settings.xml");
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
-if( empty( $_GET['site'] ) ) $_GET['site'] = "start";   
+if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
 
 ?>
 <!DOCTYPE html><!--
@@ -54,7 +54,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     <link href="themes/CoreUI/css/style.css" rel="stylesheet">
     <link href="themes/CoreUI/css/ads.css" rel="stylesheet">
     <link href="themes/CoreUI/vendors/@coreui/icons/css/free.min.css" rel="stylesheet">
-  
+
     <script src="themes/CoreUI/js/config.js"></script>
     <script src="themes/CoreUI/js/color-modes.js"></script>
     <?php template::js_file($_GET['site']); ?>
@@ -72,7 +72,6 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     		<br>
     		<span class="sidebar-brand-narrow"></span>
         </div>
-        
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item">
@@ -131,7 +130,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
           <ul class="nav-group-items compact">
          <?php $Plugin = new Plugins();
 		$Plugin->Find_Plugins();
-		
+
 		foreach($Plugin->liste as $a)
 		{
             echo '<li class="nav-item">
@@ -141,7 +140,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             ';
         }
  ?>
-         
+
           </ul>
         </li>
         <li class="nav-item">
@@ -153,7 +152,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
          </li>
       </ul>
       <div class="sidebar-footer border-top d-none d-md-flex">
-      
+
       </div>
     </div>
     <div class="wrapper d-flex flex-column min-vh-100">
@@ -166,14 +165,17 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
           </button>
           <ul class="header-nav ms-auto">
           <?php template::lang(); ?>
-            <li class="nav-item"><a class="nav-link" onClick="window.location.reload()">
+            <li class="nav-item dropdown">
+                <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" onClick="window.location.reload()">
                 <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>
-                </svg></a></li>
-            <li class="nav-item"><a class="nav-link" data-coreui-toggle="modal" data-coreui-target="#search">
-                <svg class="icon icon-lg">
+                </svg></button>
+            </li>
+            <li class="nav-item dropdown">
+                    <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" data-coreui-toggle="modal" data-coreui-target="#search" id="downloadModalButton">
+                    <svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
-                </svg></a></li>
+                </svg></button></li>
            </ul>
           <ul class="header-nav">
             <li class="nav-item py-1">
@@ -213,17 +215,17 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                
+
                 	<svg class="icon icon-lg">
                   <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                 </svg>
-                
+
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"><?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?></div>
                 <a href="index.php?site=logout" class="dropdown-item">Logout</a>  <a class="dropdown-item" href="#">
                 <a class="dropdown-item"  data-coreui-toggle="modal" data-coreui-target="#coreexit"><?php echo $lang->Navigation->kick_core; ?></a>
-                    
+
                    </li>
                    </ul>
         </div>

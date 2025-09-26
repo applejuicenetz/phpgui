@@ -10,6 +10,10 @@
               <option name="containerPort" value="80" />
               <option name="hostPort" value="9999" />
             </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="443" />
+              <option name="hostPort" value="9998" />
+            </DockerPortBindingImpl>
           </list>
         </option>
         <option name="commandLineOptions" value="--env-file .env" />

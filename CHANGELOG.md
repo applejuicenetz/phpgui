@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.29.9
+## 0.30.0
 
+- register `web+ajfsp` protocol handler if gui is running in https
 - ajl import fix
 - upload page fix if upload slots zero
 - fix server error 500 on exit core command

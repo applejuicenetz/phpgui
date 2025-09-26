@@ -1,7 +1,9 @@
-$(document).ready(function(){
-	setInterval(function(){//setInterval() method execute on every interval until called clearInterval()
-		$('#load_posts').load("src/GUI/ajax.php").fadeIn("slow");
-	 	//load() method fetch data from fetch.php page
-	}, 1000);
-	
-   });
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(function () {
+        window.fetch("index.php?site=ajax")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("load_posts").innerHTML = data;
+            });
+    }, 1000);
+});

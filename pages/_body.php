@@ -14,11 +14,18 @@ $lang = $language->translate();
 
 subs::ccts();
 
-require(GUI_ROOT . "/pages/_header.php");
 
 if (!isset($_GET["show"])) $_GET["show"] = "";
 if (empty($_GET["site"])) $_GET["site"] = "start";
-// Wichtige Fehlermeldungen auf allen Seiten anzeigen
+
+if($_GET["site"] === 'ajax') {
+    require(GUI_ROOT . "/pages/ajax.php");
+    exit;
+}
+
+require(GUI_ROOT . "/pages/_header.php");
+
+
 //Firewall aktiv
 if ($Servers->netstats['firewalled'] === 'true') {
     $template->alert("danger", "Firewall", $lang->System->firewall);
@@ -68,31 +75,16 @@ if (!empty($_REQUEST['ajfsp_link'])) {
                 $template->alert("success", $lang->Downloads->get_start, $text);
             }
 
-            if (!empty($_REQUEST['showlinkpage'])) {
-                echo "<script>parent.main.location.href='?site=downloads';</script>";
-            }
+            $_GET['site'] = 'downloads';
         }
         //Infos für Serverlink anzeigen + im hauptfenster die server zeigen
         if ('server' === $link[1]) {
             echo htmlspecialchars($link[2]) . ':' . htmlspecialchars($link[3]) . ' &rArr; ';
             echo $core->command('function', 'processlink?link=' . urlencode($link[0]));
-            if (!empty($_REQUEST['showlinkpage'])) {
-                echo "<script>parent.main.location.href='server.php';</script>";
-            }
+            $_GET['site'] = 'server';
         }
-
-
     }
 }
-
-$currentUrl = sprintf(
-    '%s://%s%s',
-    isset($_SERVER['HTTPS']) ? 'https' : 'http',
-    $_SERVER['HTTP_HOST'],
-    str_replace('top.php', 'index.php', $_SERVER['REQUEST_URI'])
-);
-
-$permaLink = sprintf('%s|%s', $_SESSION['core_host'], $_SESSION['core_pass']);
 
 $page = basename($_GET['site'] ?? 'start');
 
