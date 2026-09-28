@@ -8,7 +8,7 @@ use appleJuiceNETZ\GUI\Plugins;
 use appleJuiceNETZ\Kernel;
 
 $gui = new GUI();
-$gui::refresh();
+
 
 //Templatedaten lesen
 $template= new template();
@@ -57,10 +57,27 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
 
     <script src="themes/CoreUI/js/config.js"></script>
     <script src="themes/CoreUI/js/color-modes.js"></script>
+    <script>
+    function syncSidebar() {
+        var theme = document.documentElement.getAttribute('data-coreui-theme');
+        var sidebar = document.getElementById('sidebar');
+        if (!sidebar) return;
+        if (theme === 'dark') {
+            sidebar.classList.add('sidebar-dark');
+            sidebar.classList.remove('sidebar-light');
+        } else {
+            sidebar.classList.remove('sidebar-dark');
+            sidebar.classList.add('sidebar-light');
+        }
+    }
+    document.documentElement.addEventListener('ColorSchemeChange', syncSidebar);
+    document.addEventListener('DOMContentLoaded', syncSidebar);
+    </script>
+    <script src="themes/js/ajax-polling.js?v=<?= filemtime(GUI_ROOT . '/themes/js/ajax-polling.js') ?>"></script>
     <?php template::js_file($_GET['site']); ?>
   </head>
   <body>
-    <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
+    <div class="sidebar sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
         	<div class="sidebar-brand-full">
@@ -164,17 +181,31 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
             </svg>
           </button>
           <ul class="header-nav ms-auto">
-          <?php template::lang(); ?>
-            <li class="nav-item dropdown">
-                <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" onClick="window.location.reload()">
-                <svg class="icon icon-lg">
-                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-reload"></use>
-                </svg></button>
+          <?php
+          template::lang();
+          $modified_header = $core->command("xml", "modified.xml?filter=informations");
+          $temp_header = array_keys($modified_header['INFORMATION']);
+          $info_header =& $modified_header['INFORMATION'][$temp_header[0]];
+          $credit_color = $info_header['CREDITS'] < 0 ? ' text-danger' : '';
+          ?>
+            <li class="nav-item d-flex align-items-center px-2">
+                <div class="d-flex align-items-center border rounded overflow-hidden">
+                    <div class="bg-warning text-white px-2 py-1">
+                        <svg class="icon">
+                            <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-diamond"></use>
+                        </svg>
+                    </div>
+                    <div class="px-2 py-1">
+                        <div class="fw-semibold small lh-1<?php echo $credit_color; ?>" id="aj-header-credits"><?php echo subs::sizeformat($info_header['CREDITS']); ?></div>
+                        <div class="text-body-secondary text-uppercase lh-1" style="font-size:.6rem">Credits</div>
+                    </div>
+                </div>
             </li>
+
             <li class="nav-item dropdown">
                     <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" data-coreui-toggle="modal" data-coreui-target="#search" id="downloadModalButton">
                     <svg class="icon icon-lg">
-                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-search"></use>
+                  <use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-plus"></use>
                 </svg></button></li>
            </ul>
           <ul class="header-nav">
@@ -233,5 +264,5 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
         <?php template::bread($_GET['site'], subs::get_title($_GET['site'])); ?>
         </div>
       </header>
-      <div class="body flex-grow-1">
-        <div class="container-lg px-4">
+      <div class="body flex-grow-1 d-flex flex-column">
+        <div class="container-fluid px-4">

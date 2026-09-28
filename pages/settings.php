@@ -97,7 +97,7 @@ echo'<div class="row">
 		</div>
         </form>
         <div class="col-lg-6 col-md-6 col-sm-12 col-sx-12">
-		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection"  class="form-floating">
+		<form method="post" action="'.$_SERVER["PHP_SELF"].'?site=settings&'.SID.'\" name="connection" onsubmit="return convertUnitsBeforeSubmit()" class="form-floating">
 			<div class="card mb-4">
 				<div class="card-header">
 				' . $lang->Settings->head_con . '
@@ -107,17 +107,25 @@ echo'<div class="row">
 						<input type="number" class="form-control" id="maxcon" name="maxcon" value="' . $maxcon . '">
 						<label for="floatingInput">' . $lang->Settings->max_connections . '</label>
 					</div>
-					<div class="form-floating mb-3">
-						<input type="number" class="form-control" id="maxul" name="maxul" value="' . $maxul . '">
-						<label for="floatingInput">' . $lang->Settings->max_ul . '</label>
+					<div class="mb-3">
+						<label for="maxul">' . $lang->Settings->max_ul . '</label>
+						<div class="input-group">
+							<input type="text" inputmode="numeric" class="form-control" id="maxul" name="maxul" value="' . $maxul . '">
+							<button class="btn btn-outline-secondary active" type="button" id="maxul_kb" onclick="setUnit(\'maxul\', \'kb\')">KB/s</button>
+							<button class="btn btn-outline-secondary" type="button" id="maxul_mb" onclick="setUnit(\'maxul\', \'mb\')">MB/s</button>
+						</div>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="number" class="form-control" id="uls" name="uls" value="' . $uls . '">
 						<label for="floatingInput">' . $lang->Settings->speed_per_slot . '</label>
 					</div>
-					<div class="form-floating mb-3">
-						<input type="number" class="form-control" id="maxdl" name="maxdl" value="' . $maxdl . '">
-						<label for="floatingInput">' . $lang->Settings->max_dl . '</label>
+					<div class="mb-3">
+						<label for="maxdl">' . $lang->Settings->max_dl . '</label>
+						<div class="input-group">
+							<input type="text" inputmode="numeric" class="form-control" id="maxdl" name="maxdl" value="' . $maxdl . '">
+							<button class="btn btn-outline-secondary active" type="button" id="maxdl_kb" onclick="setUnit(\'maxdl\', \'kb\')">KB/s</button>
+							<button class="btn btn-outline-secondary" type="button" id="maxdl_mb" onclick="setUnit(\'maxdl\', \'mb\')">MB/s</button>
+						</div>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="number" class="form-control" id="conturn" name="conturn" value="' . $conturn . '">
@@ -141,4 +149,46 @@ echo'<div class="row">
         </form>
     </div>
 </div>';
+
+echo '<script>
+var units = { maxul: "kb", maxdl: "kb" };
+
+function parseVal(str) {
+    return parseFloat(String(str).replace(",", ".")) || 0;
+}
+
+function setUnit(field, unit) {
+    var input = document.getElementById(field);
+    var val = parseVal(input.value);
+    var current = units[field];
+
+    if (current === unit) return;
+
+    if (unit === "mb") {
+        input.value = (val / 1024).toFixed(1);
+    } else {
+        input.value = Math.round(val * 1024);
+    }
+
+    units[field] = unit;
+    document.getElementById(field + "_kb").classList.toggle("active", unit === "kb");
+    document.getElementById(field + "_mb").classList.toggle("active", unit === "mb");
+    localStorage.setItem("settings_unit_" + field, unit);
+}
+
+function convertUnitsBeforeSubmit() {
+    ["maxul", "maxdl"].forEach(function(field) {
+        if (units[field] === "mb") {
+            var input = document.getElementById(field);
+            input.value = Math.round(parseVal(input.value) * 1024);
+        }
+    });
+    return true;
+}
+
+["maxul", "maxdl"].forEach(function(field) {
+    var saved = localStorage.getItem("settings_unit_" + field);
+    if (saved === "mb") setUnit(field, "mb");
+});
+</script>';
 

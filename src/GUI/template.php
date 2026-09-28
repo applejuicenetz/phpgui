@@ -35,12 +35,13 @@ class template
         if ($alert == "danger") $icon = "exclamation-triangle";
 		
 		echo '
-		
-		<div class="alert alert-' . $alert . ' alert-dismissible fade show" role="alert">
+
+		<div id="aj-alert-popup" class="alert alert-' . $alert . ' alert-dismissible fade show" role="alert">
 				<i class="fa fa-fw fa-' . $icon . '"></i>
 				<strong>' . $strong . '</strong> ' . $text . '
 				<button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
-			  </div>';
+			  </div>
+		<script>setTimeout(function(){var a=document.getElementById("aj-alert-popup");if(a){a.classList.remove("show");setTimeout(function(){if(a.parentElement)a.remove();},300);}},2000);</script>';
     }
 
     function errors()
@@ -180,10 +181,11 @@ class template
 	}
 	public static function js_file($site)
 	{
-		if (file_exists(GUI_ROOT . "/themes/js/" . $site . ".js"))
+		$file = GUI_ROOT . "/themes/js/" . $site . ".js";
+		if (file_exists($file))
 		{
-    		echo'<script src="themes/js/' . $site . '.js"></script>';
-    	}	
+    		echo'<script src="themes/js/' . $site . '.js?v=' . filemtime($file) . '"></script>';
+    	}
 	}
 	public static function toast($site, $action, $alert)
 	{
@@ -196,12 +198,13 @@ class template
 		if($action == "canceldownload") $text = $lang->Downloads->canceldownload;
 		
 		
-		return '<div class="toast align-items-center text-white bg-' . $alert . ' border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
+		return '<div id="aj-toast-popup" class="toast align-items-center text-white bg-' . $alert . ' border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
                       <div class="d-flex">
                         <div class="toast-body">' . $text . '</div>
                         <button class="btn-close btn-close-white me-2 m-auto" type="button" data-coreui-dismiss="toast" aria-label="Close"></button>
                       </div>
-                    </div>';	
+                    </div>
+                    <script>setTimeout(function(){var t=document.getElementById("aj-toast-popup");if(t){t.classList.remove("show");setTimeout(function(){if(t.parentElement)t.parentElement.style.display="none";},300);}},2000);</script>';	
 	}
 	public static function lang()
 	{

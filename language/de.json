@@ -4,7 +4,7 @@
     "ok": "Ok",
     "login": "Login",
     "password": "Passwort",
-    "remember": "an mich errinnern!"
+    "remember": "an mich erinnern!"
   },
   "System": {
     "warning": "Warnung!",
@@ -14,7 +14,7 @@
     "none": "Keine",
     "error404": {
       "title": "Entschuldige, die Seite existiert nicht!",
-      "subtitle": "Es scheint als w&uuml;dest du eine falsche Adresse eingegeben haben der eine veraltete Seite aufrufen wollen. Bitte kontaktiere den Administrator."
+      "subtitle": "Es scheint als w&uuml;rdest du eine falsche Adresse eingegeben haben oder eine veraltete Seite aufrufen wollen. Bitte kontaktiere den Administrator."
     },
     "pagetitle": {
       "start": "Dashboard",
@@ -22,7 +22,7 @@
       "uploads": "Uploads",
       "search": "Suche",
       "shares": "geteilte Ordner",
-      "settings": "Einstellugen",
+      "settings": "Einstellungen",
       "server": "Serverliste",
       "sharefiles": "geteilte Dateien",
       "extras": "Addons",
@@ -69,7 +69,7 @@
   },
   "Downloads": {
     "source": "Quellen",
-    "filename": "Dateiennamen",
+    "filename": "Datei",
     "statuss": "Status",
     "speed": "Geschwindigkeit",
     "pdl": "PDL",
@@ -157,6 +157,7 @@
       "status_6": "Versuche indir. zu verbinden",
       "status_7": "Kann nicht verbinden"
     },
+    "progress": "Fortschritt",
     "queue": "Warteschlange"
   },
   "Server": {
@@ -181,21 +182,21 @@
     "nick": "Nickname",
     "Connection": "Verbindung",
     "max_connections": "Max. Verbindungen",
-    "max_ul": "Max. Upload in KB/s",
+    "max_ul": "Maximale Uploadgeschwindigkeit",
     "speed_per_slot": "KB/s pro upload-slot",
-    "max_dl": "Max. Download in KB/s",
+    "max_dl": "Maximale Downloadgeschwindigkeit",
     "max_dl_src": "Max. Quellen pro Datei",
     "max_connections_per_turn": "Max. neue Verbindungen /10sek (1-200)",
     "autoconnect": "Automatisch verbinden",
     "ok": "OK",
     "save": "Speichern",
     "get_save": "Gespeichert",
-    "alert_save_1": "Einstellungen aktualliesiert!",
-    "alert_save_2": "Verbindungseinstellungen aktualliesiert!",
+    "alert_save_1": "Einstellungen aktualisiert!",
+    "alert_save_2": "Verbindungseinstellungen aktualisiert!",
     "alert_save_theme": "GUI-Theme gespeichert!",
     "password": "Passwort",
     "head_con": "Verbindungseinstellungen",
-    "head_all": "Standarteinstellungen"
+    "head_all": "Standardeinstellungen"
   },
   "Share": {
     "shared_directories": "Freigegebene Verzeichnisse",
@@ -204,8 +205,8 @@
     "prio": "Prio",
     "check": "Share&uuml;berpr&uuml;fung starten",
     "exportlist": "Link Export",
-    "set_share": "Shareverzichnisse werden neu eingelesen und an den Server weitergeleitet.",
-    "new_share": "Neues VErzeichniss wird eingelesen.",
+    "set_share": "Shareverzeichnisse werden neu eingelesen und an den Server weitergeleitet.",
+    "new_share": "Neues Verzeichnis wird eingelesen.",
     "inprogress": "Anfrage verarbeiten",
     "success": "Erfolgreich!",
     "link_export_alert": "Linkexport erfolgreich geleert!",
@@ -213,10 +214,10 @@
     "delet_export": "Liste leeren",
     "export": "Links exportieren",
     "prio_spent": "Priorit&auml;t: %spent von 1000 Punkten vergeben",
-    "shared_directories_new": "Neues Verzeichniss",
-    "way": "Verzeihniss-Pfad",
+    "shared_directories_new": "Neues Verzeichnis",
+    "way": "Verzeichnis-Pfad",
     "with_subs": "mit Unterverzeichnissen",
-    "directory_name": "Verzeichnissname",
+    "directory_name": "Verzeichnisname",
     "aktion": "Aktion",
     "subs": "mit Unterverzeichnissen?"
   },
@@ -224,8 +225,10 @@
     "button": "Suchen",
     "all": "Alle",
     "nolimit": "Alle Sucheintr&auml;ge anzeigen",
-    "name": "Dateienname",
+    "name": "Dateiname",
     "size": "Gr&ouml;&szlig;e",
+    "format": "Format",
+    "sources": "Quellen",
     "counter": "Anzahl",
     "know_filename": "Datei bekannt als",
     "delet": "alle l&ouml;schen",

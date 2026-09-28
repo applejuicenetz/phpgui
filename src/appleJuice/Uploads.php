@@ -53,6 +53,13 @@ class Uploads
 					continue;
 				}
 				$current_upload=$this->get_upload($a);
+				$this->cache['UPLOAD'][$a]['phpaj_STATUS_SORT'] = match((int)$current_upload['STATUS']) {
+					1       => 0,
+					2       => 1,
+					5, 6    => 2,
+					7       => 3,
+					default => 4,
+				};
 				if($current_upload['STATUS']==="1"){
 					//laufende uploads
 					$this->cache['phpaj_ul']++;

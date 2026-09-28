@@ -7,8 +7,8 @@ ENV CORE_HOST="" \
     GUI_SHOW_SHARE=1
 
 RUN apt update && \
-    apt install -y --no-install-recommends libpng-dev ssl-cert \
-    && docker-php-ext-install gd opcache \
+    apt install -y --no-install-recommends libpng-dev libzip-dev ssl-cert \
+    && docker-php-ext-install gd opcache zip \
     && a2enmod ssl && a2ensite default-ssl \
     && apt clean && \
     mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
@@ -21,6 +21,8 @@ RUN apt update && \
 COPY --from=composer /usr/bin/composer /usr/local/bin/
 
 COPY . /var/www/html/
+
+RUN cd /var/www/html && composer install --no-dev --no-interaction --optimize-autoloader
 
 EXPOSE 80
 

@@ -62,6 +62,9 @@ class Search
                 $names = array_keys($sort_names);
                 //dateiname der angezeigt wird
                 $suchergebnis['phpaj_FILENAME'] = $names[0];
+                //dateiformat (extension)
+                $ext = pathinfo($names[0], PATHINFO_EXTENSION);
+                $suchergebnis['phpaj_FORMAT'] = strtoupper($ext !== '' ? $ext : '?');
                 //anzahl aller dateinamen zusammen
                 $suchergebnis['phpaj_COUNT'] = $gesamt_anzahl;
                 //counter fuer ergebnisse der jeweiligen suche hochz�hlen
@@ -122,21 +125,25 @@ class Search
                 "cancelsearch?id=" . $id);
     }
 
-    function sortieren($type = "count")
+    function sortieren($type = "count", $dir = null)
     {
         $searchsort = array();
         switch ($type) {
             case "name":
                 $searchsort = subs::ajsort($this->cache['SEARCHENTRY'],
-                    'phpaj_FILENAME', SORT_STRING, 0);
+                    'phpaj_FILENAME', SORT_STRING, $dir ?? 0);
+                break;
+            case "format":
+                $searchsort = subs::ajsort($this->cache['SEARCHENTRY'],
+                    'phpaj_FORMAT', SORT_STRING, $dir ?? 0);
                 break;
             case "size":
                 $searchsort = subs::ajsort($this->cache['SEARCHENTRY'],
-                    'SIZE', SORT_NUMERIC, 1);
+                    'SIZE', SORT_NUMERIC, $dir ?? 1);
                 break;
             default:
                 $searchsort = subs::ajsort($this->cache['SEARCHENTRY'],
-                    'phpaj_COUNT', SORT_NUMERIC, 1);
+                    'phpaj_COUNT', SORT_NUMERIC, $dir ?? 1);
                 break;
         }
         return $searchsort;

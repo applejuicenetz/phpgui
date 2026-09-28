@@ -226,6 +226,8 @@
      "nolimit": "Show all search entries",
      "name": "file name",
      "size": "Size",
+     "format": "Format",
+     "sources": "Sources",
      "counter": "Count",
      "know_filename": "File known as",
      "delet": "delete all",

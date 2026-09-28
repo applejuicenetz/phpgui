@@ -533,6 +533,7 @@ button,
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
+  appearance: button;
 }
 button:not(:disabled),
 [type=button]:not(:disabled),
@@ -590,6 +591,7 @@ legend + * {
 
 [type=search] {
   -webkit-appearance: textfield;
+  appearance: textfield;
   outline-offset: -2px;
 }
 
@@ -616,6 +618,7 @@ legend + * {
 ::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
+  appearance: button;
 }
 
 output {
@@ -2452,7 +2455,6 @@ textarea.form-control-lg {
   background-size: contain;
   border: var(--cui-border-width) solid var(--cui-border-color);
   -webkit-print-color-adjust: exact;
-  color-adjust: exact;
   print-color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
@@ -14029,7 +14031,7 @@ textarea.form-control-lg {
 }
 
 .switch:checked {
-  background-color: rgba(236, 72, 153, 1);
+  background-color: rgb(236, 72, 153);
 }
 
 .switch::before {
@@ -14043,21 +14045,35 @@ textarea.form-control-lg {
   cursor: pointer;
   border: 1px solid rgba(100, 116, 139, 0.527);
   border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgb(255, 255, 255);
   box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
   transition: all .3s ease;
 }
 
 .switch:hover::before {
-  box-shadow: 0 0 0px 8px rgba(0, 0, 0, .15)
+  box-shadow: 0 0 0px 8px rgba(0, 0, 0, .15);
 }
 
 .switch:checked:hover::before {
-  box-shadow: 0 0 0px 8px rgba(236, 72, 153, .15)
+  box-shadow: 0 0 0px 8px rgba(236, 72, 153, .15);
 }
 
-.switch:checked:before {
+.switch:checked::before {
   transform: translateX(100%);
-  border-color: rgba(236, 72, 153, 1);
+  border-color: rgb(236, 72, 153);
 }
 
+
+
+/* purple background utility */
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+
+/* download row selection highlight */
+tr.dl-selected td {
+    background-color: #CEE3F6 !important;
+}
+html[data-coreui-theme="dark"] tr.dl-selected td {
+    background-color: rgba(22, 8, 91, 0.8) !important;
+}

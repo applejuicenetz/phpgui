@@ -140,6 +140,15 @@ class Downloads
                     else
                         $download['phpaj_STATUS'] = '0_1';
                 }
+                // numeric sort priority: aktiv first (0), then searching (1), paused (2), aborted (3), done (4)
+                $download['phpaj_STATUS_SORT'] = match($download['phpaj_STATUS']) {
+                    '0_2'  => 0,
+                    '0_1'  => 1,
+                    '18'   => 2,
+                    '17'   => 3,
+                    '14'   => 4,
+                    default => 5,
+                };
             }
 
         }
@@ -147,7 +156,7 @@ class Downloads
 
 
     //ids aller downloads sortiert zurueckgeben
-    function ids($sort = "name", $subdir = "")
+    function ids($sort = "name", $subdir = "", $dir = null)
     {
         $dlsort = array();
         if (!empty($this->subdirs[$subdir])) {
@@ -155,35 +164,35 @@ class Downloads
             switch ($sort) {
                 case "sources":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_quellen_gesamt', SORT_NUMERIC, 1);
+                        'phpaj_quellen_gesamt', SORT_NUMERIC, $dir ?? 1);
                     break;
                 case "status":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_STATUS', SORT_STRING, 1);
+                        'phpaj_STATUS_SORT', SORT_NUMERIC, $dir ?? 0);
                     break;
                 case "speed":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_dl_speed', SORT_NUMERIC, 1);
+                        'phpaj_dl_speed', SORT_NUMERIC, $dir ?? 1);
                     break;
                 case "pdl":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'POWERDOWNLOAD', SORT_NUMERIC, 1);
+                        'POWERDOWNLOAD', SORT_NUMERIC, $dir ?? 1);
                     break;
                 case "size":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'SIZE', SORT_NUMERIC, 1);
+                        'SIZE', SORT_NUMERIC, $dir ?? 1);
                     break;
                 case "rest":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_REST', SORT_NUMERIC, 0);
+                        'phpaj_REST', SORT_NUMERIC, $dir ?? 0);
                     break;
                 case "done":
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_DONE', SORT_NUMERIC, 1);
+                        'phpaj_DONE', SORT_NUMERIC, $dir ?? 1);
                     break;
                 default:
                     $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'FILENAME', SORT_STRING, 0);
+                        'FILENAME', SORT_STRING, $dir ?? 0);
                     break;
             }
         }
@@ -246,13 +255,13 @@ class Downloads
             $icon = "bi-search";
         }
         if ($wert == "0_1") {
-            $icon = "<span class='badge bg-primary'>Suchen..</span>";
+            $icon = "<span class='badge bg-primary'>Suchen...</span>";
         }
-        if ($wert == "0_2") $icon = "<span class='badge bg-info'>Lade..</span>";
+        if ($wert == "0_2") $icon = "<span class='badge bg-info'>Laden...</span>";
         if ($wert == "0") $icon = "bi-search";
         if ($wert == "14") $icon = "<span class='badge bg-success'>Fertig</span>";
-        if ($wert == "18") $icon = "<span class='badge bg-warning'>pausiert</span>";
-        if ($wert == "17") $icon = "<span class='badge bg-danger'>Abbruch</span>";
+        if ($wert == "18") $icon = "<span class='badge bg-warning'>Pause</span>";
+        if ($wert == "17") $icon = "<span class='badge bg-danger'>Abgebrochen</span>";
         return $icon;
     }
 }
