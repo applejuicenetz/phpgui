@@ -103,6 +103,7 @@ $core = new Core();
 <!-- CoreUI and necessary plugins-->
 <script src="themes/CoreUI/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
 <script src="themes/CoreUI/vendors/simplebar/js/simplebar.min.js"></script>
+<script src="themes/js/protocol-handler.js"></script>
 <script>
     const header = document.querySelector('header.header');
 
@@ -113,11 +114,7 @@ $core = new Core();
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        if (navigator.registerProtocolHandler) {
-            navigator.registerProtocolHandler('web+ajfsp', 'https://<?php echo $_ENV['HTTP_HOST']; ?>/index.php?ajfsp_link=%s', 'appleJuice Link');
-        }
-
-        document.getElementById('ajfsp_link').value = new URLSearchParams(window.location.search).get('ajfsp_link');
+        document.getElementById('ajfsp_link').value = new URLSearchParams(window.location.search).get('ajfsp_link') || '';
     });
 </script>
 </body>

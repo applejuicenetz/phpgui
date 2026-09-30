@@ -35,6 +35,16 @@ class subs
                     ],
                 ]
             ));
+        if ($news_file === false) {
+            return '';
+        }
+
+        // The news endpoint returns a complete HTML page, but this content is
+        // inserted into the existing dashboard card.
+        if (preg_match('~<body\b[^>]*>(.*?)</body\s*>~is', $news_file, $matches)) {
+            return $matches[1];
+        }
+
         return $news_file;
     }
 
@@ -210,4 +220,3 @@ class subs
     }
     
 }
-

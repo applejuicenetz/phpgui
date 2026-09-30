@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## 0.32.1
+
+- Registrierung des `web+ajfsp`-Protokollhandlers für HTTPS korrigiert und auch in der angemeldeten GUI aktiviert
+- Vollständige HTML-Dokumente aus dem News-Feed als Inhalt der Dashboard-Karte eingebunden
+- Release-Prozess dokumentiert und Dokumentation sowie Tests aus dem Docker-Build-Kontext ausgeschlossen
+
 ## 0.32.0
 
 - Instanz-Permalinks aus der 0.27-Reihe wiederhergestellt; bestehende Links funktionieren weiterhin
