@@ -63,6 +63,7 @@
      "addons": "Plugins",
      "server_list": "Server List",
      "logout": "Logout",
+     "permalink": "Permalink (includes credentials)",
      "kick_core": "Kick core",
      "user_settings": "User Settings",
      "help": "Help"

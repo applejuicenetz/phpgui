@@ -1,202 +1,198 @@
-# Changelog
+# Änderungsprotokoll
 
-All notable changes to this project will be documented in this file.
+Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
+
+## 0.32.0
+
+- Instanz-Permalinks aus der 0.27-Reihe wiederhergestellt; bestehende Links funktionieren weiterhin
+- Export von Links zu freigegebenen Dateien mit zuverlässiger Auswahl und kopierbarer Ausgabe wiederhergestellt
 
 ## 0.31.0
 
 ### Downloads
-- sortable columns, checkbox-only selection, select-all checkbox, removed redundant links below the table
-- filtering for the downloads table
-- trash icon replaced with a clearer cleanup icon
-- direct speed settings (KB/s ↔ MB/s toggle)
+- Spalten sortierbar gemacht, Auswahl auf Kontrollkästchen beschränkt, Kontrollkästchen für „Alle auswählen“ ergänzt und überflüssige Links unter der Tabelle entfernt
+- Filter für die Download-Tabelle ergänzt
+- Papierkorb-Symbol durch ein deutlicheres Aufräumsymbol ersetzt
+- Geschwindigkeit direkt einstellbar, mit Umschaltung zwischen KB/s und MB/s
 
 ### Uploads
-- aligned with the improved Downloads list for a consistent UX
-- direct speed settings
+- Darstellung an die verbesserte Download-Liste angepasst
+- Geschwindigkeit direkt einstellbar
 
 ### Dashboard
-- card order adjusted so credits stay visible at the top on mobile
-- server time formatted as DD.MM.YYYY
-- download/upload speeds shown with `/s` suffix
-- new Public IP row, sourced from the core's `NETWORKINFO/IP` (matching the Java GUI)
+- Reihenfolge der Karten angepasst, damit Credits auf Mobilgeräten oben sichtbar bleiben
+- Serverzeit im Format TT.MM.JJJJ angezeigt
+- Download- und Uploadgeschwindigkeiten mit dem Zusatz /s angezeigt
+- Zeile für die öffentliche IP-Adresse ergänzt; sie verwendet NETWORKINFO/IP des Cores wie die Java-GUI
 
-### Search
-- sortable columns (name, size, format, sources)
-- multi-select with multi-download
-- filename filter and file-format filter
+### Suche
+- Spalten für Name, Größe, Format und Quellen sortierbar gemacht
+- Mehrfachauswahl und gleichzeitigen Download mehrerer Treffer ergänzt
+- Filter für Dateinamen und Dateiformate ergänzt
 
-### Layout & navigation
-- wider GUI container on widescreen, footer pinned to the bottom
-- current credits shown in the top menu bar
-- top header "Add links" action: magnifier replaced with "+" icon, modal renamed to "Links hinzufügen"
+### Layout und Navigation
+- GUI auf breiten Bildschirmen verbreitert und Fußzeile unten fixiert
+- Aktuelle Credits in der oberen Menüleiste angezeigt
+- Bei „Links hinzufügen“ das Lupensymbol durch ein Pluszeichen ersetzt und den Dialog entsprechend umbenannt
 
-### Settings
-- KB/s and MB/s toggles for speed values
+### Einstellungen
+- Umschaltung zwischen KB/s und MB/s für Geschwindigkeitswerte ergänzt
 
-### Core / infrastructure
-- AJAX-based live page updates (no full reload)
-- fixed part-mapping regex and added support for 7z parts
-- build/setup fixes for local builds, typo cleanup, version bumped to 0.31.0
+### Core und Infrastruktur
+- Laufende Aktualisierung der Seiten per AJAX ohne vollständiges Neuladen ergänzt
+- Regulären Ausdruck für die Zuordnung von Dateiteilen korrigiert und 7z-Dateiteile unterstützt
+- Build und Einrichtung für lokale Builds korrigiert, Tippfehler behoben und Version auf 0.31.0 erhöht
 
 
 ## 0.30.0
 
-- register `web+ajfsp` protocol handler if gui is running in https
-- ajl import fix
-- upload page fix if upload slots zero
-- fix server error 500 on exit core command
+- Protokollhandler für web+ajfsp registriert, wenn die GUI über HTTPS läuft
+- AJL-Import korrigiert
+- Upload-Seite bei null verfügbaren Upload-Slots korrigiert
+- Serverfehler 500 beim Beenden des Cores behoben
 
 ## 0.29.8
 
-- backward compatibility fixes for browser extension
+- Abwärtskompatibilität mit der Browser-Erweiterung korrigiert
 
 ## 0.29.7
 
-- fix Bugs in Dashboard
-- delet at first progressbar for downloads
+- Fehler im Dashboard behoben
+- Ersten Fortschrittsbalken bei Downloads entfernt
 
 ## 0.29.6
 
-- Style fixed
+- Darstellung korrigiert
 
 ## 0.29.5
 
-- add languagepack english
-- fix bugs on all pages
-- add serverconnection page
-- add mobile Navbar on bottom of screen
+- Englische Übersetzung ergänzt
+- Fehler auf allen Seiten behoben
+- Seite für die Serververbindung ergänzt
+- Mobile Navigationsleiste am unteren Bildschirmrand ergänzt
 
 ## 0.29.4
 
-- fix dashboard
-- fix search
-- fix download ->buttons now with function
-- features remove:
-    - style switcher
-- fix share
+- Dashboard korrigiert
+- Suche korrigiert
+- Download-Schaltflächen wieder funktionsfähig gemacht
+- Design-Umschalter entfernt
+- Share-Ansicht korrigiert
 
 ## 0.29.3
 
-- Bug fix
-  -simple Theme
+- Fehler im einfachen Design behoben
 
 ## 0.29.2
 
-- code structure improvements (eg. PSR4)
+- Codestruktur verbessert, unter anderem durch PSR-4
 
 ## 0.29.1
 
-- fix login
-- fix style switcher
+- Login korrigiert
+- Design-Umschalter korrigiert
 
 ## 0.29.0
 
-- new modern Style
-- Community Version
-- features add:
-    - style switcher
-    - version checker
-    - fix Search
-    - fix Uploads
-    - fix Downloads
-    - fix Dashboard
-    - fix Sharefiles
+- Neues, modernes Design eingeführt
+- Community-Version veröffentlicht
+- Design-Umschalter und Versionsprüfung ergänzt
+- Suche, Uploads, Downloads, Dashboard und Ansicht freigegebener Dateien korrigiert
 
 ## 0.28.1
 
-- fix style switcher
+- Design-Umschalter korrigiert
 
 ## 0.28.0
 
-- php 8 adaptations
-- fix memory overflow on large shares
+- Anpassungen für PHP 8 vorgenommen
+- Speicherüberlauf bei großen Shares behoben
 
 ## 0.27.10
 
-- revert back to PHP 7 in docker image
+- Docker-Image wieder auf PHP 7 umgestellt
 
 ## 0.27.9
 
-- set php `memory_limit` to `-1` in docker container
-- `phpinfo` plugin
-- use PHP 8 as base docker image
-- install php `opcache` extension for better performance
+- PHP-Wert memory_limit im Docker-Container auf -1 gesetzt
+- phpinfo-Plugin ergänzt
+- PHP 8 als Basis des Docker-Images verwendet
+- PHP-Erweiterung opcache für bessere Leistung installiert
 
 ## 0.27.8
 
-- alphabetical ordering in files view
+- Dateien in der Dateiansicht alphabetisch sortiert
 
 ## 0.27.7
 
-- restore gd stuff for partlist
+- GD-Funktionen für die Teilliste wiederhergestellt
 
 ## 0.27.6
 
-- correct rel info url
+- RelInfo-URL korrigiert
 
 ## 0.27.5
 
-- make `NEWS_URL` configurable
-- make `SERVERLIST_URL` configurable
-- get GUI NEWS from Github
+- NEWS_URL und SERVERLIST_URL konfigurierbar gemacht
+- GUI-Nachrichten von GitHub bezogen
 
 ## 0.27.4
 
-- set default `error_reporting` to `0` (can be changed with `PHP_INI_ERROR_REPORTING`)
-- set default `display_errors` to `Off` (can be changed with `PHP_INI_DISPLAY_ERRORS`)
+- Standardwert für error_reporting auf 0 gesetzt; über PHP_INI_ERROR_REPORTING änderbar
+- Standardwert für display_errors auf Off gesetzt; über PHP_INI_DISPLAY_ERRORS änderbar
 
 ## 0.27.3
 
-- allow tab selection in perma link
+- Auswahl eines Tabs im Permalink ermöglicht
 
 ## 0.27.2
 
-- fix permalink usage
+- Verwendung von Permalinks korrigiert
 
 ## 0.27.1
 
-- fix relinfo link builder
+- Erstellung von RelInfo-Links korrigiert
 
 ## 0.27.0
 
-- add back a simplified RelInfo Icon in `downloads`, `uploads`, `share` and `search` view
-- add `permalink` on top Bar
-- load http files with `file_get_contents` instead of `fsockopen`
-- refactor code and style of `/index.php` for better readability
-- removed `minigui`
+- Vereinfachtes RelInfo-Symbol in den Ansichten für Downloads, Uploads, Shares und Suche wieder ergänzt
+- Permalink in der oberen Leiste ergänzt
+- HTTP-Dateien mit file_get_contents statt fsockopen geladen
+- Code und Gestaltung von /index.php für bessere Lesbarkeit überarbeitet
+- minigui entfernt
 
 ## 0.26.0
 
-- document `ENV` variables for docker
-- remove phpaj `savebw` option
-- remove phpaj downloads `autoclean` option
-- remove now useless phpaj options from settings view
-- allow progressbar configuration from ENV
-- allow auto login in `top` frame
+- Umgebungsvariablen für Docker dokumentiert
+- phpaj-Option savebw entfernt
+- phpaj-Option autoclean für Downloads entfernt
+- Nicht mehr benötigte phpaj-Optionen aus den Einstellungen entfernt
+- Konfiguration der Fortschrittsbalken über Umgebungsvariablen ermöglicht
+- Automatische Anmeldung im oberen Frame ermöglicht
 
 ## 0.25.5
 
-- add ability to handle multiple links
+- Verarbeitung mehrerer Links ermöglicht
 
 ## 0.25.4
 
-- fix link exporter (AJL and BB-Code)
+- Linkexport für AJL und BB-Code korrigiert
 
 ## 0.25.3
 
-- switch from `fsockopen` to `curl` for all core requests (faster)
+- Für alle Core-Anfragen von fsockopen auf das schnellere curl umgestellt
 
 ## 0.25.2
 
-- remove PopUps on link export
+- Pop-ups beim Linkexport entfernt
 
 ## 0.25.1
 
-- fix minigui for PHP 7.X
+- minigui für PHP 7.x korrigiert
 
 ## 0.25.0
 
-- import project into VCS
-- make Code PHP 7.X compatible
-- add Docker support
-- remove outdated `appledocs` implementation
+- Projekt in die Versionsverwaltung importiert
+- Code mit PHP 7.x kompatibel gemacht
+- Docker-Unterstützung ergänzt
+- Veraltete Implementierung von appledocs entfernt

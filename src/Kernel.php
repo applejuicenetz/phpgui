@@ -40,6 +40,8 @@ class Kernel
 
         $_ENV['GUI_SHOW_SHARE'] = $_ENV['GUI_SHOW_SHARE'] ?? 1;
 
+        $_ENV['TOP_SHOW_PERMALINK'] = $_ENV['TOP_SHOW_PERMALINK'] ?? 1;
+
         date_default_timezone_set($_ENV['TZ'] ?? 'Europe/Berlin');
 
         ini_set('error_reporting', $_ENV['PHP_INI_ERROR_REPORTING'] ?? '1');
