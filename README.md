@@ -8,47 +8,41 @@
 ![](https://img.shields.io/docker/pulls/applejuicenetz/phpgui)
 ![](https://img.shields.io/docker/image-size/applejuicenetz/phpgui)
 
-appleJuice Client GUI geschrieben in PHP.
+In PHP geschriebene Benutzeroberfläche für den appleJuice Client.
 
 ## Abhängigkeiten
 
-Es wird mindestens PHP `8.2` benötigt!
+Benötigt wird mindestens PHP `8.2`.
 
-## Hosted instances
+## Konfiguration (beim Selbsthosting ohne Docker)
 
-- Current: https://phpgui.applejuicenet.cc
-- Beta: https://phpgui-beta.applejuicenet.cc
-- Old: https://phpgui-old.applejuicenet.cc
+Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit einem Texteditor anpassen.
 
-## Konfiguration (nur bei selbst hosting ohne Docker)
+### Umgebungsvariablen
 
-Die Datei `.env.dist` kopieren, zu `.env` umbenennen und mit einem Texteditor die gewünschte Konfiguration vornehmen.
+| Variable             | Beispielwert         | Beschreibung                                                         |
+|----------------------|----------------------|----------------------------------------------------------------------|
+| `CORE_HOST`          | `http://192.168.2.1` | IP-Adresse oder Hostname des Core, einschließlich Protokoll          |
+| `CORE_PORT`          | `9851`               | XML-Port des Core                                                    |
+| `GUI_LANGUAGE`       | `de`                 | Sprache: `de` oder `en`                                              |
+| `GUI_SHOW_NEWS`      | `1`                  | Nachrichten auf der Statusseite anzeigen                             |
+| `GUI_SHOW_SHARE`     | `1`                  | Freigabestatistiken auf der Statusseite anzeigen                     |
+| `TOP_SHOW_PERMALINK` | `1`                  | Dauerlink zur Instanz im Benutzermenü anzeigen (`0` blendet ihn aus) |
+| `NEWS_URL`           | `http://XY`          | URL für Nachrichten                                                  |
+| `SERVERLIST_URL`     | `http://ABC`         | URL zum Abrufen neuer Server                                         |
+| `REL_INFO`           | `http://MN/ajfps/%s` | Leer lassen, um die Spalte mit Release-Informationen auszublenden    |
 
-### Environment Variables
-
-| Variable             | Value                | Description                                |
-|----------------------|----------------------|--------------------------------------------|
-| `CORE_HOST`          | `http://192.168.2.1` | IP/HOST where Core is running, with scheme |
-| `CORE_PORT`          | `9851`               | Core XML Port                              |
-| `GUI_LANGUAGE`       | `de`                 | `de` or `en`                               |
-| `GUI_SHOW_NEWS`      | `1`                  | show news on `status page`                 |
-| `GUI_SHOW_SHARE`     | `1`                  | show share stats on `status page`          |
-| `TOP_SHOW_PERMALINK` | `1`                  | show the instance permalink in the user menu (`0` hides it) |
-| `NEWS_URL`           | `http://XY`          | url where to get news from                 |
-| `SERVERLIST_URL`     | `http://ABC`         | url where to find new servers              |
-| `REL_INFO`           | `http://MN/ajfps/%s` | set them to empty to disable rel info col  |
-
-The permalink contains the Core address and password hash. Anyone with the link can access that Core, so store and share it like a password. Existing `index.php?l=...` links from older versions are supported.
+Der Dauerlink enthält die Adresse des Core und einen Passwort-Hash. Wer den Link besitzt, kann auf diesen Core zugreifen. Deshalb sollte der Link wie ein Passwort aufbewahrt und nur entsprechend weitergegeben werden. Bestehende Links im Format `index.php?l=...` aus älteren Versionen werden weiterhin unterstützt.
 
 ## Docker
 
-### Exposed Ports
+### Freigegebene Ports
 
-- `80` - HTTP Port
+- `80` – HTTP-Port
 
 ### docker run
 
-create and run `phpgui` container with the following command
+Den `phpgui`-Container mit folgendem Befehl erstellen und starten:
 
 ```bash
 docker run -d \
@@ -57,9 +51,9 @@ docker run -d \
         ghcr.io/applejuicenetz/phpgui:latest
 ```
 
-optional: add `CORE_HOST` and/or `CORE_PORT` with your environment
+Optional können `CORE_HOST` und/oder `CORE_PORT` als Umgebungsvariablen gesetzt werden.
 
-eg.
+Beispiel:
 
 ```bash
 docker run -d \
