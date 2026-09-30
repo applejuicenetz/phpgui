@@ -5,6 +5,7 @@ use appleJuiceNETZ\GUI\GUI;
 use appleJuiceNETZ\GUI\template;
 use appleJuiceNETZ\GUI\subs;
 use appleJuiceNETZ\GUI\Plugins;
+use appleJuiceNETZ\GUI\Permalink;
 use appleJuiceNETZ\Kernel;
 
 $gui = new GUI();
@@ -254,9 +255,12 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"><?php echo $settings_xml['NICK']['VALUES']['CDATA']; ?></div>
-                <a href="index.php?site=logout" class="dropdown-item">Logout</a>  <a class="dropdown-item" href="#">
-                <a class="dropdown-item"  data-coreui-toggle="modal" data-coreui-target="#coreexit"><?php echo $lang->Navigation->kick_core; ?></a>
-
+                <?php if ($_ENV['TOP_SHOW_PERMALINK']): ?>
+                <a class="dropdown-item" href="<?php echo htmlspecialchars(Permalink::create($_SESSION['core_host'], $_SESSION['core_pass']), ENT_QUOTES); ?>" title="<?php echo htmlspecialchars($lang->Navigation->permalink, ENT_QUOTES); ?>"><?php echo $lang->Navigation->permalink; ?></a>
+                <?php endif; ?>
+                <a href="index.php?site=logout" class="dropdown-item"><?php echo $lang->Navigation->logout; ?></a>
+                <a class="dropdown-item" data-coreui-toggle="modal" data-coreui-target="#coreexit"><?php echo $lang->Navigation->kick_core; ?></a>
+              </div>
                    </li>
                    </ul>
         </div>

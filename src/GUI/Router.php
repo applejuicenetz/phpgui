@@ -8,10 +8,15 @@ class Router
 {
     function handle(): void
     {
-        if (isset($_POST['host'])) {
+        $permalink = isset($_GET['l']) && is_string($_GET['l'])
+            ? Permalink::parse($_GET['l'])
+            : null;
+
+        if ($permalink !== null || isset($_POST['host'])) {
             $core = new Core();
-            $core_host = $_POST['host'];
-            $core_pass = 32 === strlen($_POST['cpass']) ? $_POST['cpass'] : md5($_POST['cpass']);
+            $core_host = $permalink[0] ?? $_POST['host'];
+            $password = $permalink[1] ?? $_POST['cpass'];
+            $core_pass = 32 === strlen($password) ? $password : md5($password);
             $anfrage = "settings.xml";
             $type = "xml";
 
@@ -35,6 +40,10 @@ class Router
                 if (empty($_SESSION['login']['host']) && empty($_SESSION['login']['wrong_pass'])) {
                     $_SESSION['core_pass'] = $core_pass;
                     $_SESSION["core_host"] = $core_host;
+                    if ($permalink !== null) {
+                        header('Location: index.php', true, 303);
+                        return;
+                    }
                 }
             }
         }

@@ -119,7 +119,7 @@ class Share
 
     function get_fileids($verzeichnis = '')
     {
-        if (empty($this->cache['SHARES']['VALUES']['SHARE'])) return;
+        if (empty($this->cache['SHARES']['VALUES']['SHARE'])) return [];
         if (empty($this->separator)) $this->directory("", 1);
         $ids = array();
         $sfsort = array();
@@ -132,7 +132,7 @@ class Share
                 $this->spentprio += $file['PRIORITY'];
             if (substr($file['FILENAME'], 0, $temp) == $verzeichnis
                 && strpos($file['FILENAME'], $this->separator, $temp) === false)
-                $ids[$a] =& $file;
+                $ids[$a] = $file;
         }
         if (!empty($ids))
             $sfsort = subs::ajsort($ids, 'SHORTFILENAME', SORT_STRING, 0);
@@ -228,4 +228,3 @@ class Share
         return $dirlist;
     }
 }
-

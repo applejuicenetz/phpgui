@@ -14,9 +14,6 @@ $template = new template();
 $language = Kernel::getLanguage();
 $lang = $language->translate();
 
-$queryString = strstr($_SERVER['REQUEST_URI'], '?');
-$queryString = ($queryString === false) ? '' : substr($queryString, 1);
-
 $Sharelist = $Share;
 
 if (!empty($_GET['clear_list'])) {
@@ -24,9 +21,25 @@ if (!empty($_GET['clear_list'])) {
     $template->alert("success", $lang->Share->success, $lang->Share->link_export_alert);
 }
 
-if (!empty($_GET['shareexpfile'])) {
+if (!empty($_GET['forcereload'])) {
+    $Sharelist->refresh_cache(0);
+} else {
+    $Sharelist->refresh_cache(60);
+}
+
+if (!empty($_POST['exportlinks']) || !empty($_GET['shareexpfile'])) {
     $_SESSION['shareexport'] = [];
-    foreach ($_GET['shareexpfile'] as $expid) {
+    $selected = $_POST['shareexpfile'] ?? $_GET['shareexpfile'] ?? [];
+    if (!is_array($selected)) {
+        $selected = [];
+    }
+    if (!$selected) {
+        $selected = $Sharelist->get_fileids($_GET['dir'] ?? '');
+    }
+    foreach ($selected as $expid) {
+        if (!ctype_digit((string) $expid)) {
+            continue;
+        }
         $shareentry = $Sharelist->get_file($expid);
         $export_currlink = $shareentry['LINK'];
         $testx = array_search($export_currlink, $_SESSION['shareexport']);
@@ -48,27 +61,10 @@ if (!empty($_GET['shareexpfile'])) {
               <h5 class="card-title">' . $lang->Share->Link_export_title . '</h5>';
 
     if (!empty($_SESSION['shareexport'])) {
-        asort($_SESSION['shareexport']);
-
-        foreach ($_SESSION['shareexport'] as $a) {
-            $share_ex = explode('/', $a);
-            $share_ex = explode('|', $share_ex[2]);
-            $share_ex_link = $a;
-            if (!empty($_GET['withsource']) && $_GET['withsource'] == "true") {
-                $share_ex_link = substr($share_ex_link, 0, strlen($share_ex_link) - 1) . "|"
-                    . $curr_coreip . ":" . $_SESSION['phpaj']['core_source_port']
-                    . $curr_serverip . $curr_serverport . "/";
-            }
-            $share_ex_name = $share_ex[1];
-            $share_ex_hash = $share_ex[2];
-            $share_ex_bytesize = $share_ex[3];
-            $share_ex_size = subs::sizeformat($share_ex[3]);
-        }
-
-        for ($i = 0, $anzahl = count($_SESSION['shareexport']); $i < $anzahl; ++$i) {
-            echo $_SESSION['shareexport'][$i] . "<br>";
-        }
-
+        sort($_SESSION['shareexport']);
+        echo '<textarea class="form-control" rows="12" readonly>'
+            . htmlspecialchars(implode("\n", $_SESSION['shareexport']), ENT_QUOTES)
+            . '</textarea>';
     }
     echo "</div></div>";
     echo "<input type=\"button\" value=\""
@@ -84,9 +80,6 @@ if (!empty($_GET['sharefile'])) {
     $Sharelist->setpriority($_GET['sharefile'], $_GET['sprio']);
 }
 
-if (!empty($_GET['forcereload'])) {
-    $Sharelist->refresh_cache(0);
-}
 echo"<script>
 share_ids = [];
 
@@ -123,19 +116,6 @@ function changeshareprio(){
 	window.location.href='index.php?site=sharefiles&dir=" . urlencode($_GET['dir']) . "'+ shareline + '&sprio=' + document.shareprioform.shareprio.value + '&" . SID . "';
 }
 
-function exportlinks(){
-	var shareexpline='';
-	var counter=-1;
-	
-	for (var i in share_ids){
-		if(share_ids[i]==0) continue;
-		counter++;
-		shareexpline+='&shareexpfile['+counter+']=' + i;
-	}
-
-	window.location.href='?site=sharefiles&dir=" . urlencode($_GET['dir']) . "'+ shareexpline+'&" . SID . "';
-}
-
 function selectall(){
 	for(var v in share_ids){
 		if(share_ids[v]==0) change(v);
@@ -149,16 +129,13 @@ function selectnone(){
 }
 </script>
 ";
-//sharecache neu laden, falls aelter als 60min
-$Sharelist->refresh_cache(60);
-
-echo "<form name=\"shareprioform\" action=\"\">\n";
+echo '<form name="shareprioform" method="post" action="index.php?site=sharefiles&amp;dir=' . rawurlencode($_GET['dir'] ?? '') . '">';
 echo '<div class="row clearfix">
                     <div class="col-sm-12 mb-4">
                         <div class="card">
                             <div class="card-body">
                             	<div class="input-group mb-2">
-                            		<button class="btn btn-outline-secondary" type="button" onclick="exportlinks()">' . $lang->Share->export . '</button>
+                                <button class="btn btn-outline-secondary" type="submit" name="exportlinks" value="1">' . $lang->Share->export . '</button>
 									<button class="btn btn-outline-secondary" type="button" onclick="location.href=\'index.php?site=sharefiles&dir=' . urlencode($_GET['dir']) . '&forcereload=1\';
 "><i class="fa fa-repeat"></i></button>
 									<select class="form-control" name="shareprio">';
@@ -227,13 +204,13 @@ foreach ($list as $shareentry) {
     $tooltip = "<small align='left'>ID:" . $a . "<br>Letzte Anfrage: " . $lastasked . "<br>Anzahl Anfragen: "
         . $shareentry['ASKCOUNT'] . "<br>Anzahl Suchanfragen: " . $shareentry['SEARCHCOUNT'] . "<br>"
         . "<a href='" . addslashes($shareentry['LINK']) . "'>Scource Link</a></small>";
-    echo '<tr>
-		<td width="1" class="form-group"><input type="checkbox" id="sharecheck_' . $a . '" onclick="change(' . $a . ')" />';
+    echo '<tr id="zeile_' . $a . '">
+		<td width="1" class="form-group"><input type="checkbox" name="shareexpfile[]" value="' . $a . '" id="sharecheck_' . $a . '" onclick="change(' . $a . ')" />';
     echo "<script>\n"
         . "share_ids[$a]=0;\n"
         . "</script>";
     echo '</td>
-		<td id="zeile_' . $a . '" data-toggle="tooltip" data-placement="bottom" title="' . $tooltip . '" twipsy-content-set="true" data-html="true" aria-current="true">
+		<td data-toggle="tooltip" data-placement="bottom" title="' . $tooltip . '" twipsy-content-set="true" data-html="true" aria-current="true">
 			' . $shareentry["SHORTFILENAME"] . '</td>
 		<td>';
     echo "<a href='" . sprintf($_ENV['REL_INFO'], $shareentry['LINK']) . "'><i class='fa fa-info-circle'></i></a>";

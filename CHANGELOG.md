@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- restore instance permalinks from the 0.27 series, including support for existing links
+- restore shared-file link export with reliable selection and copyable output
+
 ## 0.31.0
 
 ### Downloads
