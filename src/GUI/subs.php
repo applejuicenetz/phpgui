@@ -123,7 +123,7 @@ class subs
 
 
 //Dateigroessen die richtige einheit verpassen (groesse in bytes uebergeben)
-	public static function sizeformat($bytes, $precision = 2)
+	public static function sizeformat($bytes, $precision = 2, $strip_trailing = false)
     {
     	$i = 0;
         while (abs($bytes) >= 1024 && $i < 6) {
@@ -132,7 +132,15 @@ class subs
         }
 
         $bezeichnung = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
-        $newsize = ($i > 0) ? number_format($bytes, $precision) : (int)$bytes;
+        if ($i > 0) {
+            $newsize = number_format($bytes, $precision);
+            if ($strip_trailing) {
+                $newsize = rtrim(rtrim($newsize, '0'), '.');
+                if (strpos($newsize, '.') === false) $newsize .= '.0';
+            }
+        } else {
+            $newsize = (int)$bytes;
+        }
         return ("$newsize $bezeichnung[$i]");
     }
 
@@ -171,35 +179,34 @@ class subs
     }
     static function parts($part)
     {
-    	$str1 = "part";
-    	$str2 = "part2";
-    	$str3 = "part3";
-    	$Part2 = substr($part, -5, -4);
-
-    if (strpos($part, $str1) !== false) {
-    		return " | Part: $Part2";
-		}
-		if (strpos($part, $str2) !== false) {
-    		return " | Part: 2";
-		}
-		if (strpos($part, $str3) !== false) {
-    		return " | Part: 3";
-		} else {
-    	}
+        if (preg_match('/\.part(\d+)\./i', $part, $matches)) {
+            return " | Part: " . (int)$matches[1];
+        }
+        if (preg_match('/\.(\d+)$/i', $part, $matches)) {
+            return " | Part: " . (int)$matches[1];
+        }
     }
     static function UploadStatus($wert)
     {
         $language = new Language($_ENV['GUI_LANGUAGE']);
         $lang = $language->translate();
-  
-        if ($wert == 1) $wert = $lang->Uploads->ul_status->status_1;
-        if ($wert == 2) $wert = $lang->Uploads->ul_status->status_2;
-        if ($wert == 5) $wert = $lang->Uploads->ul_status->status_5;
-        if ($wert == 6) $wert = $lang->Uploads->ul_status->status_6;
-        if ($wert == 7) $wert = $lang->Uploads->ul_status->status_7;
-        
 
-        return $wert;
+        $text = match((int)$wert) {
+            1 => $lang->Uploads->ul_status->status_1,
+            2 => $lang->Uploads->ul_status->status_2,
+            5 => $lang->Uploads->ul_status->status_5,
+            6 => $lang->Uploads->ul_status->status_6,
+            7 => $lang->Uploads->ul_status->status_7,
+            default => $wert,
+        };
+        $class = match((int)$wert) {
+            1       => 'bg-success',
+            2       => 'bg-warning',
+            5, 6    => 'bg-info',
+            7       => 'bg-danger',
+            default => 'bg-secondary',
+        };
+        return "<span class='badge $class'>$text</span>";
     }
     
 }

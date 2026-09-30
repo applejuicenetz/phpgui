@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.31.0
+
+### Downloads
+- sortable columns, checkbox-only selection, select-all checkbox, removed redundant links below the table
+- filtering for the downloads table
+- trash icon replaced with a clearer cleanup icon
+- direct speed settings (KB/s ↔ MB/s toggle)
+
+### Uploads
+- aligned with the improved Downloads list for a consistent UX
+- direct speed settings
+
+### Dashboard
+- card order adjusted so credits stay visible at the top on mobile
+- server time formatted as DD.MM.YYYY
+- download/upload speeds shown with `/s` suffix
+- new Public IP row, sourced from the core's `NETWORKINFO/IP` (matching the Java GUI)
+
+### Search
+- sortable columns (name, size, format, sources)
+- multi-select with multi-download
+- filename filter and file-format filter
+
+### Layout & navigation
+- wider GUI container on widescreen, footer pinned to the bottom
+- current credits shown in the top menu bar
+- top header "Add links" action: magnifier replaced with "+" icon, modal renamed to "Links hinzufügen"
+
+### Settings
+- KB/s and MB/s toggles for speed values
+
+### Core / infrastructure
+- AJAX-based live page updates (no full reload)
+- fixed part-mapping regex and added support for 7z parts
+- build/setup fixes for local builds, typo cleanup, version bumped to 0.31.0
+
+
 ## 0.30.0
 
 - register `web+ajfsp` protocol handler if gui is running in https

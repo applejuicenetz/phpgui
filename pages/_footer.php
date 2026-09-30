@@ -27,7 +27,7 @@ $lang = $language->translate();
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLiveLabel">Search</h5>
+                                <h5 class="modal-title" id="exampleModalLiveLabel">Links hinzufügen</h5>
                                 <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
@@ -124,7 +124,7 @@ $lang = $language->translate();
 		
     </footer>
 </div>
-      <footer class="footer px-4">
+      <footer class="footer px-4 mt-auto">
           <div>create with <i class="col-danger fa fa-heart"></i> by <b>kddk22</b>, inspired by <b>UP</b></div>
         <div class="ms-auto"><b>v<?php echo PHP_GUI_VERSION; ?></b></div>
       </footer>

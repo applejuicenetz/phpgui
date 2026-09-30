@@ -76,7 +76,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         </svg>
                     </div>
                 	<div>
-                		<div class="fs-4 fw-semibold"><?php template::dashboard("download"); ?></div>
+                		<div class="fs-4 fw-semibold" id="aj-dash-downloads"><?php template::dashboard("download"); ?></div>
                 		<div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_downloads; ?></div>
                 		
                 		
@@ -89,13 +89,13 @@ if ($Servers->netstats['firewalled'] === 'true') {
         	<div class="col-12 col-sm-6 col-xl-6">
             <div class="card overflow-hidden" onclick="location.href='index.php?site=uploads'">
             	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-primary text-white p-4 me-2">
+                	<div class="bg-purple text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
                         	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-cloud-upload"></use>
                         </svg>
                     </div>
                 <div>
-                <div class="fs-4 fw-semibold"><?php echo $Uploadlist->cache['phpaj_ul']; ?></div>
+                <div class="fs-4 fw-semibold" id="aj-dash-uploads"><?php echo $Uploadlist->cache['phpaj_ul']; ?></div>
                 <div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->active_uploads; ?></div>
                 </div>
                 </div>
@@ -103,40 +103,35 @@ if ($Servers->netstats['firewalled'] === 'true') {
         </div>
         <!-- end -->
         	<div class="col-12 col-sm-6 col-xl-6">
-            <div class="card overflow-hidden" onclick="location.href='index.php?site=shares'">
-            	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-warning text-white p-4 me-2">
-                    	<svg class="icon icon-xxl">
-                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-folder-open"></use>
-                        </svg>
-                    </div>
-                	<div>
-                		<?php template::dashboard("share"); ?>
-                	</div>
-                </div>
-        	</div>
-        </div>
-        <!-- end-->
-        	<div class="col-12 col-sm-6 col-xl-6">
             <div class="card overflow-hidden" onclick="location.href='index.php?site=extras&show=credits/credits.php'">
             	<div class="card-body p-0 d-flex align-items-center">
-                	<div class="bg-primary text-white p-4 me-2">
+                	<div class="bg-warning text-white p-4 me-2">
                     	<svg class="icon icon-xxl">
                         	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-diamond"></use>
                         </svg>
                     </div>
                 <div>
-                <div class="fs-4 fw-semibold"><?php
-
-                    if ($information['CREDITS'] <= 0) {
-                        $creditcolor = " class='text-danger'";
-                    } else {
-                        $creditcolor = " class='ext-success'";
-                    }
-                    echo "<span" . $creditcolor . " >" . subs::sizeformat($information['CREDITS']) . "</span>";
+                <div class="fs-4 fw-semibold" id="aj-dash-credits"><?php
+                    $creditcolor = $information['CREDITS'] < 0 ? " class='text-danger'" : "";
+                    echo "<span" . $creditcolor . ">" . subs::sizeformat($information['CREDITS']) . "</span>";
                     ?></div>
                 <div class="text-body-secondary text-uppercase small"><?php echo $lang->Start->credits; ?></div>
                 </div>
+                </div>
+        	</div>
+        </div>
+        <!-- end-->
+        	<div class="col-12 col-sm-6 col-xl-6">
+            <div class="card overflow-hidden" onclick="location.href='index.php?site=shares'">
+            	<div class="card-body p-0 d-flex align-items-center">
+                	<div class="bg-purple text-white p-4 me-2">
+                    	<svg class="icon icon-xxl">
+                        	<use xlink:href="themes/CoreUI/vendors/@coreui/icons/svg/free.svg#cil-folder-open"></use>
+                        </svg>
+                    </div>
+                	<div id="aj-dash-shares">
+                		<?php template::dashboard("share"); ?>
+                	</div>
                 </div>
         	</div>
         </div>
@@ -167,7 +162,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                         <td><?php echo $lang->Start->server_time; ?></td>
                         <td>
                             <?php
-                            echo $Servers->time();
+                            echo date("d.m.Y - H:i:s", ($Servers->server_xml['TIME']['VALUES']['CDATA']) / 1000);
                             ?>
                         </td>
                     <tr>
@@ -180,7 +175,7 @@ if ($Servers->netstats['firewalled'] === 'true') {
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->connected_since; ?></td>
-                        <td nowrap>
+                        <td nowrap id="aj-dash-connected">
                             <?php
                             $srv_timediff = $Servers->netstats['timeconnected'];
                             $srv_timediff = sprintf("%dh %dmin", $srv_timediff / 3600, ($srv_timediff % 3600) / 60, $srv_timediff % 60);
@@ -190,15 +185,15 @@ if ($Servers->netstats['firewalled'] === 'true') {
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->open_connections; ?></td>
-                        <td nowrap><?php echo $info['OPENCONNECTIONS']; ?></td>
+                        <td nowrap id="aj-dash-open-conn"><?php echo $info['OPENCONNECTIONS']; ?></td>
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->bytes_in; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['SESSIONDOWNLOAD']); ?></td>
+                        <td nowrap id="aj-dash-session-dl"><?php echo subs::sizeformat($information['SESSIONDOWNLOAD']); ?></td>
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->bytes_out; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['SESSIONUPLOAD']); ?></td>
+                        <td nowrap id="aj-dash-session-ul"><?php echo subs::sizeformat($information['SESSIONUPLOAD']); ?></td>
                     </tr>
                     
                     </tbody>
@@ -214,11 +209,15 @@ if ($Servers->netstats['firewalled'] === 'true') {
                     <tbody>
                     <tr>
                         <td width="20%" nowrap><?php echo $lang->Start->download_speed; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['DOWNLOADSPEED']); ?></td>
+                        <td nowrap id="aj-dash-dl-speed"><?php echo subs::sizeformat($information['DOWNLOADSPEED']) . '/s'; ?></td>
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->upload_speed; ?></td>
-                        <td nowrap><?php echo subs::sizeformat($information['UPLOADSPEED']); ?></td>
+                        <td nowrap id="aj-dash-ul-speed"><?php echo subs::sizeformat($information['UPLOADSPEED']) . '/s'; ?></td>
+                    </tr>
+                    <tr>
+                        <td nowrap>Public IP</td>
+                        <td nowrap><?php echo htmlspecialchars($netinfo['IP'] ?? 'n/a'); ?></td>
                     </tr>
                     <tr>
                         <td nowrap><?php echo $lang->Start->shared_users; ?></td>

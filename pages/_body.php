@@ -23,6 +23,11 @@ if($_GET["site"] === 'ajax') {
     exit;
 }
 
+if($_GET["site"] === 'api') {
+    require(GUI_ROOT . "/pages/api.php");
+    exit;
+}
+
 require(GUI_ROOT . "/pages/_header.php");
 
 
