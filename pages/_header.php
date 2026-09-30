@@ -75,6 +75,7 @@ if( empty( $_GET['site'] ) ) $_GET['site'] = "start";
     document.addEventListener('DOMContentLoaded', syncSidebar);
     </script>
     <script src="themes/js/ajax-polling.js?v=<?= filemtime(GUI_ROOT . '/themes/js/ajax-polling.js') ?>"></script>
+    <script src="themes/js/protocol-handler.js"></script>
     <?php template::js_file($_GET['site']); ?>
   </head>
   <body>
