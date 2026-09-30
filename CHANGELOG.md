@@ -2,18 +2,18 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
-## 0.32.1
+## 0.32.1 (2026-09-30)
 
 - Registrierung des `web+ajfsp`-Protokollhandlers für HTTPS korrigiert und auch in der angemeldeten GUI aktiviert
 - Vollständige HTML-Dokumente aus dem News-Feed als Inhalt der Dashboard-Karte eingebunden
 - Release-Prozess dokumentiert und Dokumentation sowie Tests aus dem Docker-Build-Kontext ausgeschlossen
 
-## 0.32.0
+## 0.32.0 (2026-09-30)
 
 - Instanz-Permalinks aus der 0.27-Reihe wiederhergestellt; bestehende Links funktionieren weiterhin
 - Export von Links zu freigegebenen Dateien mit zuverlässiger Auswahl und kopierbarer Ausgabe wiederhergestellt
 
-## 0.31.0
+## 0.31.0 (2026-09-28)
 
 ### Downloads
 - Spalten sortierbar gemacht, Auswahl auf Kontrollkästchen beschränkt, Kontrollkästchen für „Alle auswählen“ ergänzt und überflüssige Links unter der Tabelle entfernt
@@ -50,34 +50,34 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Build und Einrichtung für lokale Builds korrigiert, Tippfehler behoben und Version auf 0.31.0 erhöht
 
 
-## 0.30.0
+## 0.30.0 (2025-09-26)
 
 - Protokollhandler für web+ajfsp registriert, wenn die GUI über HTTPS läuft
 - AJL-Import korrigiert
 - Upload-Seite bei null verfügbaren Upload-Slots korrigiert
 - Serverfehler 500 beim Beenden des Cores behoben
 
-## 0.29.8
+## 0.29.8 (2024-10-09)
 
 - Abwärtskompatibilität mit der Browser-Erweiterung korrigiert
 
-## 0.29.7
+## 0.29.7 (2024-09-21)
 
 - Fehler im Dashboard behoben
 - Ersten Fortschrittsbalken bei Downloads entfernt
 
-## 0.29.6
+## 0.29.6 (2024-07-15)
 
 - Darstellung korrigiert
 
-## 0.29.5
+## 0.29.5 (2024-05-15)
 
 - Englische Übersetzung ergänzt
 - Fehler auf allen Seiten behoben
 - Seite für die Serververbindung ergänzt
 - Mobile Navigationsleiste am unteren Bildschirmrand ergänzt
 
-## 0.29.4
+## 0.29.4 (2024-05-07)
 
 - Dashboard korrigiert
 - Suche korrigiert
@@ -85,81 +85,81 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Design-Umschalter entfernt
 - Share-Ansicht korrigiert
 
-## 0.29.3
+## 0.29.3 (2024-04-30)
 
 - Fehler im einfachen Design behoben
 
-## 0.29.2
+## 0.29.2 (2024-04-25)
 
 - Codestruktur verbessert, unter anderem durch PSR-4
 
-## 0.29.1
+## 0.29.1 (2024-04-24)
 
 - Login korrigiert
 - Design-Umschalter korrigiert
 
-## 0.29.0
+## 0.29.0 (2024-04-23)
 
 - Neues, modernes Design eingeführt
 - Community-Version veröffentlicht
 - Design-Umschalter und Versionsprüfung ergänzt
 - Suche, Uploads, Downloads, Dashboard und Ansicht freigegebener Dateien korrigiert
 
-## 0.28.1
+## 0.28.1 (2023-12-07)
 
 - Design-Umschalter korrigiert
 
-## 0.28.0
+## 0.28.0 (2023-08-21)
 
 - Anpassungen für PHP 8 vorgenommen
 - Speicherüberlauf bei großen Shares behoben
 
-## 0.27.10
+## 0.27.10 (2023-08-21)
 
 - Docker-Image wieder auf PHP 7 umgestellt
 
-## 0.27.9
+## 0.27.9 (2023-07-18)
 
 - PHP-Wert memory_limit im Docker-Container auf -1 gesetzt
 - phpinfo-Plugin ergänzt
 - PHP 8 als Basis des Docker-Images verwendet
 - PHP-Erweiterung opcache für bessere Leistung installiert
 
-## 0.27.8
+## 0.27.8 (2021-12-21)
 
 - Dateien in der Dateiansicht alphabetisch sortiert
 
-## 0.27.7
+## 0.27.7 (2021-09-17)
 
 - GD-Funktionen für die Teilliste wiederhergestellt
 
-## 0.27.6
+## 0.27.6 (2021-01-04)
 
 - RelInfo-URL korrigiert
 
-## 0.27.5
+## 0.27.5 (2020-11-16)
 
 - NEWS_URL und SERVERLIST_URL konfigurierbar gemacht
 - GUI-Nachrichten von GitHub bezogen
 
-## 0.27.4
+## 0.27.4 (2020-10-01)
 
 - Standardwert für error_reporting auf 0 gesetzt; über PHP_INI_ERROR_REPORTING änderbar
 - Standardwert für display_errors auf Off gesetzt; über PHP_INI_DISPLAY_ERRORS änderbar
 
-## 0.27.3
+## 0.27.3 (2020-10-01)
 
 - Auswahl eines Tabs im Permalink ermöglicht
 
-## 0.27.2
+## 0.27.2 (2020-09-23)
 
 - Verwendung von Permalinks korrigiert
 
-## 0.27.1
+## 0.27.1 (2020-09-12)
 
 - Erstellung von RelInfo-Links korrigiert
 
-## 0.27.0
+## 0.27.0 (2020-09-11)
 
 - Vereinfachtes RelInfo-Symbol in den Ansichten für Downloads, Uploads, Shares und Suche wieder ergänzt
 - Permalink in der oberen Leiste ergänzt
@@ -167,7 +167,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Code und Gestaltung von /index.php für bessere Lesbarkeit überarbeitet
 - minigui entfernt
 
-## 0.26.0
+## 0.26.0 (2020-02-26)
 
 - Umgebungsvariablen für Docker dokumentiert
 - phpaj-Option savebw entfernt
@@ -176,27 +176,27 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Konfiguration der Fortschrittsbalken über Umgebungsvariablen ermöglicht
 - Automatische Anmeldung im oberen Frame ermöglicht
 
-## 0.25.5
+## 0.25.5 (2020-01-27)
 
 - Verarbeitung mehrerer Links ermöglicht
 
-## 0.25.4
+## 0.25.4 (2020-01-24)
 
 - Linkexport für AJL und BB-Code korrigiert
 
-## 0.25.3
+## 0.25.3 (2019-12-16)
 
 - Für alle Core-Anfragen von fsockopen auf das schnellere curl umgestellt
 
-## 0.25.2
+## 0.25.2 (2019-12-09)
 
 - Pop-ups beim Linkexport entfernt
 
-## 0.25.1
+## 0.25.1 (2019-12-06)
 
 - minigui für PHP 7.x korrigiert
 
-## 0.25.0
+## 0.25.0 (2019-07-30)
 
 - Projekt in die Versionsverwaltung importiert
 - Code mit PHP 7.x kompatibel gemacht
