@@ -51,7 +51,7 @@ $nick = htmlspecialchars($settings_xml["NICK"]["VALUES"]["CDATA"]);
 
 $maxcon = $settings_xml["MAXCONNECTIONS"]["VALUES"]["CDATA"];
 $maxul = $settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"] / 1024;
-$uls = $settings_xml["MAXUPLOAD"]["VALUES"]["CDATA"];
+$uls = $settings_xml["SPEEDPERSLOT"]["VALUES"]["CDATA"];
 $maxdl = $settings_xml["MAXDOWNLOAD"]["VALUES"]["CDATA"] / 1024;
 $conturn = $settings_xml["MAXNEWCONNECTIONSPERTURN"]["VALUES"]["CDATA"];
 $maxdlsrc = $settings_xml["MAXSOURCESPERFILE"]["VALUES"]["CDATA"];
@@ -152,6 +152,7 @@ echo'<div class="row">
 
 echo '<script>
 var units = { maxul: "kb", maxdl: "kb" };
+var exact = {};
 
 function parseVal(str) {
     return parseFloat(String(str).replace(",", ".")) || 0;
@@ -159,15 +160,18 @@ function parseVal(str) {
 
 function setUnit(field, unit) {
     var input = document.getElementById(field);
-    var val = parseVal(input.value);
     var current = units[field];
 
     if (current === unit) return;
 
     if (unit === "mb") {
-        input.value = (val / 1024).toFixed(1);
+        var kb = parseVal(input.value);
+        exact[field] = { kb: kb, shown: (kb / 1024).toFixed(2) };
+        input.value = exact[field].shown;
+    } else if (exact[field] && input.value === exact[field].shown) {
+        input.value = exact[field].kb;
     } else {
-        input.value = Math.round(val * 1024);
+        input.value = Math.round(parseVal(input.value) * 1024);
     }
 
     units[field] = unit;
@@ -180,7 +184,11 @@ function convertUnitsBeforeSubmit() {
     ["maxul", "maxdl"].forEach(function(field) {
         if (units[field] === "mb") {
             var input = document.getElementById(field);
-            input.value = Math.round(parseVal(input.value) * 1024);
+            if (exact[field] && input.value === exact[field].shown) {
+                input.value = exact[field].kb;
+            } else {
+                input.value = Math.round(parseVal(input.value) * 1024);
+            }
         }
     });
     return true;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use appleJuiceNETZ\Kernel;
 
-const PHP_GUI_VERSION = '0.32.1';
+const PHP_GUI_VERSION = '0.32.2';
 
 // prepare for composer
 if (file_exists(GUI_ROOT . '/vendor/autoload.php')) {

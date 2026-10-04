@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## 0.32.2 (2026-10-04)
+
+- Slot-Geschwindigkeit in den Verbindungseinstellungen aus `SPEEDPERSLOT` statt aus dem gesamten Upload-Limit gelesen; Speichern übernimmt damit wieder den richtigen Slot-Wert
+- Exakte Upload- und Download-Limits beim Wechsel zwischen KB/s und MB/s erhalten, solange der angezeigte Wert nicht geändert wird
+- MB/s-Anzeige in den Verbindungseinstellungen auf zwei Nachkommastellen erweitert
+
 ## 0.32.1 (2026-09-30)
 
 - Registrierung des `web+ajfsp`-Protokollhandlers für HTTPS korrigiert und auch in der angemeldeten GUI aktiviert
