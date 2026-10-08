@@ -8,7 +8,9 @@ class Share
 {
     var $core;
     var $dirxml;
-    var $cache;
+    private array $selectedFiles = [];
+    private ?array $summary = null;
+    private array $objectFiles = [];
     var $separator;
     var $spentprio;
     var $sharemode;
@@ -16,7 +18,7 @@ class Share
     function __construct()
     {
         $this->core = new Core();
-        $this->cache =& $_SESSION['cache']['SHARE'];
+        unset($_SESSION['cache']['SHARE'], $_SESSION['phpaj']['share_LASTTIMESTAMP']);
         $this->separator =& $_SESSION['SEPARATOR'];
         //Um den checkbox-status beim share richtig zu zeigen
         $this->sharemode = array("subdirectory" => "checked",
@@ -104,77 +106,88 @@ class Share
         return $this->dirxml['SHARE']['VALUES']['DIRECTORY'][$id];
     }
 
-    function refresh_cache($zeit)
+    /** Stream current metadata; no share list is stored in the session. */
+    public function scan(callable $consumer): void
     {
-        //share-cache neu laden, falls er aelter als $zeit minuten ist
-        if (empty($_SESSION['phpaj']['share_LASTTIMESTAMP'])
-            || ((time() - $_SESSION['phpaj']['share_LASTTIMESTAMP'])
-                > ($zeit * 60))) {
-            $_SESSION['phpaj']['share_LASTTIMESTAMP'] = time();
-            $this->cache = array();
-            // liste der dateien im share holen
-            $this->cache = $this->core->command("xml", "share.xml");
-        }
+        $this->core->command('xml', 'share.xml', '0', $consumer);
     }
 
-    function get_fileids($verzeichnis = '')
+    public function refresh_cache($minutes): void
     {
-        if (empty($this->cache['SHARES']['VALUES']['SHARE'])) return [];
-        if (empty($this->separator)) $this->directory("", 1);
-        $ids = array();
-        $sfsort = array();
-        $verzeichnis = $verzeichnis . $this->separator;
-        $temp = strlen($verzeichnis);
+        $this->summary = null;
+    }
+
+    public function summary(): array
+    {
+        if ($this->summary !== null) return $this->summary;
+        $summary = ['count' => 0, 'size' => 0, 'spent' => 0];
+        $this->scan(static function ($file) use (&$summary): void {
+            $summary['count']++;
+            $summary['size'] += (float)$file['SIZE'];
+            if ((int)$file['PRIORITY'] > 1) $summary['spent'] += (int)$file['PRIORITY'];
+        });
+        return $this->summary = $summary;
+    }
+
+    private function inDirectory(array $file, string $directory): bool
+    {
+        $separator = str_contains($file['FILENAME'], '\\') ? '\\' : '/';
+        $prefix = rtrim($directory, $separator) . $separator;
+        return str_starts_with($file['FILENAME'], $prefix)
+            && !str_contains(substr($file['FILENAME'], strlen($prefix)), $separator);
+    }
+
+    public function page(string $directory, int $page = 1, int $pageSize = 200): array
+    {
+        $page = max(1, $page);
+        $selection = new ShareSelection($page * $pageSize);
+        $total = 0;
         $this->spentprio = 0;
-        foreach (array_keys($this->cache['SHARES']['VALUES']['SHARE']) as $a) {
-            $file = $this->get_file($a);
-            if ($file['PRIORITY'] > 1)
-                $this->spentprio += $file['PRIORITY'];
-            if (substr($file['FILENAME'], 0, $temp) == $verzeichnis
-                && strpos($file['FILENAME'], $this->separator, $temp) === false)
-                $ids[$a] = $file;
+        $this->scan(function ($file) use ($selection, $directory, &$total): void {
+            if ((int)$file['PRIORITY'] > 1) $this->spentprio += (int)$file['PRIORITY'];
+            if (!$this->inDirectory($file, $directory)) return;
+            $total++;
+            $selection->consume($file);
+        });
+        $pages = max(1, (int)ceil($total / $pageSize));
+        $page = min($page, $pages);
+        $files = array_slice($selection->records(), ($page - 1) * $pageSize, $pageSize);
+        $this->selectedFiles = [];
+        foreach ($files as &$file) {
+            $file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
+            $this->selectedFiles[$file['ID']] = $file;
         }
-        if (!empty($ids))
-            $sfsort = subs::ajsort($ids, 'SHORTFILENAME', SORT_STRING, 0);
-        return array_keys($sfsort);
+        return compact('files', 'total', 'pages', 'page');
     }
 
-	function get_prio()
+    public function statistics(string $field, bool $descending): array
     {
-        $prio = 0;
-        foreach (array_keys($this->cache['SHARES']['VALUES']['SHARE']) as $a) {
-            $file = $this->get_file($a);
-            return $a;
-            }
-            
-       
+        $selection = new ShareSelection(50, $field, $descending);
+        $this->scan($selection->consume(...));
+        $files = $selection->records();
+        foreach ($files as &$file) $file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
+        return $files;
     }
 
-    function get_file($id)
+    public function get_file($id)
     {
-        if (empty($this->cache['SHARES']['VALUES']['SHARE'][$id])) {
-            $fileobject = $this->core->command("xml", "getobject.xml?id=$id");
-            $this->cache['SHARES']['VALUES']['SHARE'][$id] = $fileobject['SHARE'][$id];
+        if (isset($this->selectedFiles[$id])) return $this->selectedFiles[$id];
+        if (!isset($this->objectFiles[$id])) {
+            $object = $this->core->command('xml', 'getobject.xml?id=' . (int)$id);
+            $file = $object['SHARE'][$id] ?? null;
+            if (!is_array($file)) throw new \UnexpectedValueException('Unknown share ID');
+            $file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
+            $this->objectFiles[$id] = $file;
         }
-        $file = $this->cache['SHARES']['VALUES']['SHARE'][$id];
-        $file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
-        return $file;
+        return $this->objectFiles[$id];
     }
 
-    function setpriority($ids, $prio)
+    public function setpriority($ids, $priority): void
     {
-        $changeprio_ids = '';
-        for ($i = 0; $i < count($ids); $i++) {
-            $changeprio_ids .= "&id$i=" . $ids[$i];
-        }
-        $changeprio_ids = str_replace("&id0=", "id=", $changeprio_ids);
-        $this->core->command("function", "setpriority?" . $changeprio_ids
-            . "&priority=" . $prio);
-        //geaenderte dateien neu laden
-        foreach ($ids as $i) {
-            $fileobject = $this->core->command("xml", "getobject.xml?id=$i");
-            $this->cache['SHARES']['VALUES']['SHARE'][$i] = $fileobject['SHARE'][$i];
-        }
+        $parameters = ['priority' => $priority];
+        foreach ($ids as $index => $id) $parameters[$index === 0 ? 'id' : 'id' . $index] = (int)$id;
+        $this->core->command('function', 'setpriority?' . http_build_query($parameters));
+        $this->selectedFiles = $this->objectFiles = [];
     }
 
     function directory($dir = "", $getseponly = 0)

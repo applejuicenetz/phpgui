@@ -12,7 +12,7 @@ In PHP geschriebene Benutzeroberfläche für den appleJuice Client.
 
 ## Abhängigkeiten
 
-Benötigt wird mindestens PHP `8.2`.
+Benötigt wird mindestens PHP `8.5`.
 
 ## Konfiguration (beim Selbsthosting ohne Docker)
 

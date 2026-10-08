@@ -1,118 +1,45 @@
 <?php
 
-use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\appleJuice\Share;
+use appleJuiceNETZ\GUI\Format;
 use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\GUI\View;
 
-$core = new Core();
+/** @var object $lang @var string $phpaj_ownurl */
+$p = $lang->Plugins;
 
-echo'<div class="card mb-4">
-		<div class="card-body">
-			<ul class="nav">
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=last">
-    					k&uuml;rzlich angefordert
-    				</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-last">
-    					nicht k&uuml;rzlich angefordert
-    				</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=most">
-    					h&auml;ufig angefrgat
-    				</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-most">
-    					amwenigsten nachgefragt
-    				</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=search">
-    					h&auml;ufig gesucht
-    				</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link active" aria-current="page" href="?site=extras&show=sharestats/sharestats.php&amp;stats=-search">
-    					amwenigsten gesucht
-    				</a>
-				</li>
-			</ul>
-		<div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            
-                                        ';
-                
+$modes = [
+    'last' => ['label' => $p->stats_last, 'field' => 'LASTASKED', 'dir' => 1, 'col' => $p->stats_date],
+    '-last' => ['label' => $p->stats_nolast, 'field' => 'LASTASKED', 'dir' => 0, 'col' => $p->stats_date],
+    'most' => ['label' => $p->stats_most, 'field' => 'ASKCOUNT', 'dir' => 1, 'col' => $p->stats_requests],
+    '-most' => ['label' => $p->stats_least, 'field' => 'ASKCOUNT', 'dir' => 0, 'col' => $p->stats_requests],
+    'search' => ['label' => $p->stats_search, 'field' => 'SEARCHCOUNT', 'dir' => 1, 'col' => $p->stats_searches],
+    '-search' => ['label' => $p->stats_nosearch, 'field' => 'SEARCHCOUNT', 'dir' => 0, 'col' => $p->stats_searches],
+];
+$mode = isset($_GET['stats'], $modes[$_GET['stats']]) ? $_GET['stats'] : 'most';
+$cur = $modes[$mode];
 
-
-if(empty($_GET['stats'])) $_GET['stats']="most";
-$Sharelist = new Share;
-$Sharelist->refresh_cache(2);
-if(!empty($Sharelist->cache['SHARES']['VALUES']['SHARE'])){
-	echo "<th>#</th>";
-	$sfsort=array();
-	switch($_GET['stats']){
-		case "most":
-			echo "<th>Requests</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'ASKCOUNT',SORT_NUMERIC,1);
-			$statsvalue='ASKCOUNT';
-			break;
-		case "-most":
-			echo "<th>Requests</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'ASKCOUNT',SORT_NUMERIC,0);
-			$statsvalue='ASKCOUNT';
-			break;
-		case "search":
-			echo "<th>Search Requests</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'SEARCHCOUNT',SORT_NUMERIC,1);
-			$statsvalue='SEARCHCOUNT';
-			break;
-		case "-search":
-			echo "<th>Search Requests</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'SEARCHCOUNT',SORT_NUMERIC,0);
-			$statsvalue='SEARCHCOUNT';
-			break;
-		case "-last":
-			echo "<th>Date</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'LASTASKED',SORT_NUMERIC,0);
-			$statsvalue='LASTASKED';
-			break;
-		default:
-			echo "<th>Date</th>";
-			$sfsort= subs::ajsort($Sharelist->cache['SHARES']
-				['VALUES']['SHARE'],'LASTASKED',SORT_NUMERIC,1);
-			$statsvalue='LASTASKED';
-			break;
-	}
-	$sfsort=array_keys($sfsort);
-	echo "<th>Filename</th></tr>";
-	for($i=0;$i<50;$i++){
-		if(!empty($sfsort[$i])){
-			$cur_share=$Sharelist->get_file($sfsort[$i]);
-			echo "<tr><td style=\"font-weight:bold; text-align:center;\">"
-				.($i+1).".</td><td style=\"text-align:center;\">";
-			$wert=$cur_share[$statsvalue];
-			echo ($statsvalue=='LASTASKED') ?
-				date("j.n.y - H:i:s",($wert/1000)) : $wert;
-			echo "</td><td>";
-			echo "<a href=\"ajfsp://file|"
-				.$cur_share['SHORTFILENAME']."|"
-				.$cur_share['CHECKSUM']."|"
-				.$cur_share['SIZE']."/\">";
-			echo htmlspecialchars($cur_share['SHORTFILENAME']);
-			echo "</a></td></tr>";
-		}
-	}
-	echo "</tbody>
-                                    </table>
-                                </div>";
-	echo "</div>";
-}
+$share = new Share();
+$files = $share->statistics($cur['field'], $cur['dir'] === 1);
+?>
+<div class="tabs is-boxed"><ul>
+    <?php foreach ($modes as $key => $m): ?>
+        <li class="<?= $key === $mode ? 'is-active' : '' ?>"><a href="<?= View::e($phpaj_ownurl . '&stats=' . rawurlencode($key)) ?>"><?= View::e($m['label']) ?></a></li>
+    <?php endforeach; ?>
+</ul></div>
+<?php if ($files): ?>
+    <div class="table-wrap">
+        <table class="table is-fullwidth is-hoverable responsive-table">
+            <thead><tr><th>#</th><th><?= View::e($cur['col']) ?></th><th><?= View::e($p->stats_file) ?></th></tr></thead>
+            <tbody>
+            <?php foreach ($files as $i => $f): $val = $f[$cur['field']] ?? ''; ?>
+                <tr>
+                    <td data-label="#"><strong><?= $i + 1 ?>.</strong></td>
+                    <td data-label="<?= View::e($cur['col']) ?>"><?= $cur['field'] === 'LASTASKED' && $val !== '' ? View::e(date('j.n.y - H:i:s', (int)($val / 1000))) : View::e($val) ?></td>
+                    <td class="col-name" data-label="<?= View::e($p->stats_file) ?>"><a href="<?= View::e($f['LINK']) ?>"><?= View::e($f['SHORTFILENAME']) ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>

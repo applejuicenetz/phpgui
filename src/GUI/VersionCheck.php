@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace appleJuiceNETZ\GUI;
+
+/** Prüft (mit Session-Cache), ob eine neuere phpGUI-Version veröffentlicht ist. */
+final class VersionCheck
+{
+    private const TTL = 21600;
+
+    /** @return ?string neuere Version oder null */
+    public static function newer(): ?string
+    {
+        $cache = $_SESSION['phpaj']['version_check'] ?? null;
+        if (!is_array($cache) || ($cache['time'] ?? 0) < time() - self::TTL) {
+            $cache = ['time' => time(), 'version' => self::fetch()];
+            $_SESSION['phpaj']['version_check'] = $cache;
+        }
+        $latest = $cache['version'] ?? null;
+
+        return $latest !== null && version_compare($latest, PHP_GUI_VERSION, '>') ? $latest : null;
+    }
+
+    private static function fetch(): ?string
+    {
+        $url = $_ENV['CHANGELOG_URL'] ?? '';
+        if ($url === '') {
+            return null;
+        }
+        $body = @file_get_contents($url, false, stream_context_create(['http' => ['timeout' => 3, 'ignore_errors' => true]]));
+        if (!is_string($body)) {
+            return null;
+        }
+
+        return preg_match('/^##\s+(\d+(?:\.\d+)+)/m', $body, $m) === 1 ? $m[1] : null;
+    }
+}

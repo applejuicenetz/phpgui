@@ -46,13 +46,14 @@ def main() -> int:
                 page.on("pageerror", lambda e: errors.append(str(e)))
                 page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
                 page.goto(f"{a.base}/index.php")
-                page.evaluate("localStorage.setItem('coreui-free-bootstrap-admin-template-theme', %s)" % json.dumps(scheme))
+                page.evaluate("localStorage.setItem('aj-theme', %s)" % json.dumps(scheme))
                 if page.locator("input[name=host]").count():
                     page.fill("input[name=host]", a.core)
                     if page.locator("input[name=cpass]").count():
                         page.fill("input[name=cpass]", a.password)
                     page.locator("form").first.evaluate("f => f.submit()")
                     page.wait_for_load_state("networkidle")
+                assert page.locator('body[data-site]').count(), 'Login fehlgeschlagen: Mock/Core prüfen'
                 for name in a.pages.split(","):
                     errors.clear()
                     page.goto(f"{a.base}/index.php?site={name}")

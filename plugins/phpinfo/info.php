@@ -1,2 +1,2 @@
 <?php
-$this->register("phpinfo","phpinfo/php.png","phpinfo/phpinfo.php");
+$this->register("phpinfo", "", "phpinfo/phpinfo.php");

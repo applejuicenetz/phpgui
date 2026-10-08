@@ -1,4 +1,4 @@
-FROM php:8.4-apache
+FROM php:8.5-apache
 
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
@@ -6,17 +6,15 @@ ENV CORE_HOST="" \
     GUI_SHOW_NEWS=1 \
     GUI_SHOW_SHARE=1
 
-RUN apt update && \
-    apt install -y --no-install-recommends libpng-dev libzip-dev ssl-cert \
-    && docker-php-ext-install gd opcache zip \
-    && a2enmod ssl && a2ensite default-ssl \
-    && apt clean && \
-    mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
+RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
     echo "variables_order=EGPCS" > /usr/local/etc/php/conf.d/phpaj.ini && \
-    echo "memory_limit=-1" >> /usr/local/etc/php/conf.d/phpaj.ini && \
+    echo "memory_limit=256M" >> /usr/local/etc/php/conf.d/phpaj.ini && \
     ln -sf /dev/null /var/log/apache2/access.log && \
     ln -sf /dev/null /var/log/apache2/error.log && \
     ln -sf /dev/null /var/log/apache2/other_vhosts_access.log
+
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 COPY --from=composer /usr/bin/composer /usr/local/bin/
 

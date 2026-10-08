@@ -2,6 +2,13 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## 0.33.0 (2026-10-08)
+
+- Oberfläche modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
+- Downloads, Uploads und Freigaben übersichtlicher; Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
+- AJL-Dateien direkt im Textfeld bearbeiten und importieren; Teileanzeige jetzt scharf skalierbar
+- PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
+
 ## 0.32.2 (2026-10-04)
 
 - Slot-Geschwindigkeit in den Verbindungseinstellungen aus `SPEEDPERSLOT` statt aus dem gesamten Upload-Limit gelesen; Speichern übernimmt damit wieder den richtigen Slot-Wert

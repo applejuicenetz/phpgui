@@ -12,10 +12,15 @@ class Kernel
 
     public static function init(): void
     {
+        session_set_cookie_params([
+            'httponly' => true,
+            'samesite' => 'Lax',
+            'secure' => (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ($_SERVER['HTTPS'] ?? 'off')) === 'https' || ($_SERVER['HTTPS'] ?? 'off') === 'on'),
+        ]);
         session_start();
 
-        if (!version_compare(PHP_VERSION, '8.2')) {
-            die('PHP 8.2 required, used: -> ' . PHP_VERSION);
+        if (version_compare(PHP_VERSION, '8.5', '<')) {
+            throw new \RuntimeException('PHP 8.5 required; running ' . PHP_VERSION);
         }
 
         if (file_exists(GUI_ROOT . '/.env')) {
@@ -24,7 +29,7 @@ class Kernel
         }
 
         $_ENV['REAL_IP'] = 'http://' . ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
-        $_ENV['HTT_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
+        $_ENV['HTT_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? '';
         $_ENV['HTTPS'] = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ($_SERVER['HTTPS'] ?? 'off')) === 'https' ? 'https' : 'http';
 
         $_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
@@ -35,6 +40,10 @@ class Kernel
         $_ENV['ALLOWED_SERVERMSG_TAGS'] = $_ENV['ALLOWED_SERVERMSG_TAGS'] ?? '<a><b><i><u><br>';
 
         $_ENV['REL_INFO'] = $_ENV['REL_INFO'] ?? base64_decode('aHR0cHM6Ly93d3cuYXBwbGUtZGVsdXhlLmNvL2luZGV4LnBocD9jdD00MDMmdmE9JXM=');
+
+        $_ENV['CORE_HOST'] = $_ENV['CORE_HOST'] ?? '';
+        $_ENV['CORE_PORT'] = $_ENV['CORE_PORT'] ?? 9851;
+        $_ENV['GUI_LANGUAGE'] = $_ENV['GUI_LANGUAGE'] ?? 'de';
 
         $_ENV['GUI_SHOW_NEWS'] = $_ENV['GUI_SHOW_NEWS'] ?? 1;
 

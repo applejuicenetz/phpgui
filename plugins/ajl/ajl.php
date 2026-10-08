@@ -1,136 +1,51 @@
 <?php
 
 use appleJuiceNETZ\appleJuice\Core;
-use appleJuiceNETZ\GUI\subs;
+use appleJuiceNETZ\GUI\Csrf;
+use appleJuiceNETZ\GUI\Format;
+use appleJuiceNETZ\GUI\View;
 
+/** @var object $lang @var string $phpaj_ownurl @var string $phpaj_show */
+$p = $lang->Plugins;
+$results = [];
+
+$text = is_string($_POST['linktext'] ?? null) ? $_POST['linktext'] : '';
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && Csrf::valid()) {
+    $lines = explode("\n", $text);
+    $subdir = (string)($_POST['subdir'] ?? '');
+    $core = new Core();
+    $links = [];
+    // Beide Eingabewege verarbeiten ausschließlich das AJL-Format.
+    while ($lines && trim($lines[0]) !== '100') {
+        array_shift($lines);
+    }
+    array_shift($lines);
+    for ($i = 0; $i < count($lines) - 2; $i += 3) {
+        [$name, $hash, $size] = [trim($lines[$i]), trim($lines[$i + 1]), trim($lines[$i + 2])];
+        if ($size === '') {
+            break;
+        }
+        $links[] = [$name, (int)$size, 'ajfsp://file|' . $name . '|' . $hash . '|' . $size . '/'];
+    }
+    foreach ($links as [$name, $size, $link]) {
+        $reply = (string)$core->command('function', 'processlink?link=' . rawurlencode($link) . '&subdir=' . rawurlencode($subdir));
+        $results[] = [$name, $size, $reply];
+    }
+}
 ?>
-<script>
-function layout(typ){
-	switch(typ){
-		case 'upload':
-			document.getElementById('linktext').style.display='none';
-			document.getElementById('uploadfeld').style.display='block';
-			break;
-		default:
-			document.getElementById('uploadfeld').style.display='none';
-			document.getElementById('linktext').style.display='block';
-			break;
-	}
-}
-</script>
-<?php
-echo'<div class="card mb-4">
-		<div class="card-body">
-			<form name="conselect" method="post" action="' . $phpaj_ownurl . '" enctype="multipart/form-data">
-				<div class="row mb-3">
-					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
-						Filetype
-					</label>
-					<div class="col-sm-10">
-    					<select class="form-select" name="filetype" aria-label="Default select example" required>
-							<option value="">Open this select menu</option>
-							<option value="ajl">.ajl-file</option>
-							<option value="text">text/html</option>
-						</select>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
-						File
-					</label>
-					<div class="col-sm-10">
-    					<div class="form-check">
-							<input class="form-check-input" type="radio" name="source" value="upload" onclick="layout(\'upload\');" checked/>
-							<label class="form-check-label" for="flexRadioDefault1">
-    							Upload File
-							</label><br>
-							<input class="form-check-input" type="radio" name="source" value="textarea" onclick="layout(\'txt\');">
-							<label class="form-check-label" for="flexRadioDefault1">
-    							Text
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="row mb-3" id="uploadfeld">
-					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
-						File
-					</label>
-					<div class="col-sm-10">
-    					<div class="form-check">
-							<input class="form-control" type="file" name="userfile">
-						</div>
-					</div>
-				</div>
-				<div class="row mb-3" id="linktext"  style="display:none;">
-					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
-						Links
-					</label>
-					<div class="col-sm-10">
-    					<div class="form-check">
-							<textarea class="form-control" name="linktext">
-							</textarea>
-						</div>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">
-						Dowload to subdir
-					</label>
-					<div class="col-sm-10">
-    					<div class="form-check">
-							<input class="form-control" type="text" name="subdir">
-							</textarea>
-						</div>
-					</div>
-				</div>
-				<input type="hidden" name="MAX_FILE_SIZE" value="' . (200*1024) . '">
-				<input type="hidden" name="show" value="' . $phpaj_show . '">
-			</form>
-		</div>
-	</div>	
-
-';
-if(!empty($_POST['source'])){
-	if($_POST['source']=="upload" && !empty($_FILES['userfile']['name'])){
-		echo $_FILES['userfile']['name'].":<br />";
-		$ajl_file=file($_FILES['userfile']['tmp_name']);
-	}else{
-		$ajl_file=explode("\n",$_POST['linktext']);
-	}
-	$core = new Core();
-	switch($_POST['filetype']){
-		case "ajl":
-			//anfang abschneiden
-			while(!empty($ajl_file) && trim($ajl_file[0])!="100")
-				array_shift($ajl_file);
-			@array_shift($ajl_file);
-			for($i=0;$i<(count($ajl_file)-2);$i+=3){
-				$ajl_file[$i]=trim($ajl_file[$i]);
-				$ajl_file[$i+1]=trim($ajl_file[$i+1]);
-				$ajl_file[$i+2]=trim($ajl_file[$i+2]);
-				if(empty($ajl_file[$i+2])) break;
-				$link="ajfsp://file|".$ajl_file[$i]."|".$ajl_file[$i+1]."|"
-					.$ajl_file[$i+2]."/";
-				echo htmlspecialchars($ajl_file[$i])." (".subs::sizeformat($ajl_file[$i+2])
-					.") &rArr; ".$core->command("function","processlink?link="
-					.rawurlencode($link)."&subdir="
-					.rawurlencode($_POST['subdir']))."<br />";
-			}
-			break;
-		default:
-			$ajl_file=implode("",$ajl_file);
-			preg_match_all("/ajfsp:\/\/file\\|(.*)\//U",$ajl_file,
-				$link_array);
-				foreach($link_array[0] as $link){
-					$linkinfo=explode('|',$link);
-					echo htmlspecialchars($linkinfo[1])." ("
-						.subs::sizeformat($linkinfo[3]).") &rArr; "
-						.$core->command("function","processlink?link="
-						.rawurlencode($link)."&subdir="
-						.rawurlencode($_POST['subdir']));
-					echo "<br />";
-				}
-			break;
-	}
-
-}
+<form method="post" action="<?= View::e($phpaj_ownurl) ?>" id="ajl-form">
+    <?= Csrf::field() ?>
+    <p class="mb-3">.ajl</p>
+    <div class="field"><label class="label" for="ajl-file"><?= View::e($p->ajl_file) ?></label><div class="control"><input class="input" type="file" id="ajl-file" accept=".ajl"></div></div>
+    <div class="field"><label class="label" for="ajl-links"><?= View::e($p->ajl_text) ?> (.ajl)</label><div class="control"><textarea class="textarea" id="ajl-links" name="linktext" rows="8" required><?= View::e($text) ?></textarea></div></div>
+    <div class="field"><label class="label" for="ajl-subdir"><?= View::e($p->ajl_subdir) ?></label><div class="control"><input class="input" type="text" id="ajl-subdir" name="subdir"></div></div>
+    <input type="hidden" name="show" value="<?= View::e($phpaj_show) ?>">
+    <button class="button is-primary" type="submit"><?= View::e($p->ajl_submit) ?></button>
+</form>
+<?php if ($results): ?>
+    <ul class="mt-4 result-list">
+        <?php foreach ($results as [$name, $size, $reply]): ?>
+            <li><?= View::e($name) ?> (<?= View::e(Format::bytes($size)) ?>) ⇒ <strong><?= View::e($reply) ?></strong></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

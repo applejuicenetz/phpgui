@@ -36,8 +36,8 @@ class Server
         $netinfo =& $this->server_xml['NETWORKINFO'][$networkinfo[0]];
         if (!empty($this->server_xml['SERVER']
         [$netinfo['CONNECTEDWITHSERVERID']]['NAME'])) {
-            $servername = htmlspecialchars($this->server_xml['SERVER']
-            [$netinfo['CONNECTEDWITHSERVERID']]['NAME']);
+            $servername = $this->server_xml['SERVER']
+            [$netinfo['CONNECTEDWITHSERVERID']]['NAME'];
         } else {
             //wenn kein servername bekannt ip und port zeigen
             $servername = $this->server_xml['SERVER']
@@ -66,8 +66,7 @@ class Server
             ['WELCOMEMESSAGE']['VALUES']['CDATA'] = '';
         $welcomemsg = trim($this->server_xml['NETWORKINFO']
         ['WELCOMEMESSAGE']['VALUES']['CDATA']);
-        $welcomemsg = strip_tags($welcomemsg, $_ENV['ALLOWED_SERVERMSG_TAGS']);
-        $welcomemsg = str_replace("<br>", "<br />", $welcomemsg);
+        $welcomemsg = \appleJuiceNETZ\GUI\Html::sanitize($welcomemsg, $_ENV['ALLOWED_SERVERMSG_TAGS']);
 
         return array('servername' => $servername,
             'timeconnected' => $timeconnected,

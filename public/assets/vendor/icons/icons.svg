@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" data-icon-set="lucide" data-version="1.53.0">
+<symbol id="i-speedometer2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m12 14 4-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M3.34 19a10 10 0 1 1 17.32 0" />
+</symbol>
+<symbol id="i-cloud-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 13v8l-4-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m12 21 4-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284" />
+</symbol>
+<symbol id="i-cloud-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 13v8" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m8 17 4-4 4 4" />
+</symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m21 21-4.34-4.34" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="11" cy="11" r="8" />
+</symbol>
+<symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="18" cy="5" r="3" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="6" cy="12" r="3" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="18" cy="19" r="3" />
+  <line xmlns="http://www.w3.org/2000/svg" x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+  <line xmlns="http://www.w3.org/2000/svg" x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+</symbol>
+<symbol id="i-hdd-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect xmlns="http://www.w3.org/2000/svg" width="20" height="8" x="2" y="2" rx="2" ry="2" />
+  <rect xmlns="http://www.w3.org/2000/svg" width="20" height="8" x="2" y="14" rx="2" ry="2" />
+  <line xmlns="http://www.w3.org/2000/svg" x1="6" x2="6.01" y1="6" y2="6" />
+  <line xmlns="http://www.w3.org/2000/svg" x1="6" x2="6.01" y1="18" y2="18" />
+</symbol>
+<symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="3" />
+</symbol>
+<symbol id="i-puzzle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" />
+</symbol>
+<symbol id="i-info-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 16v-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 8h.01" />
+</symbol>
+<symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M4 5h16" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M4 12h16" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M4 19h16" />
+</symbol>
+<symbol id="i-plus-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M5 12h14" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 5v14" />
+</symbol>
+<symbol id="i-diamond" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M10.5 3 8 9l4 13 4-13-2.5-6" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M2 9h20" />
+</symbol>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 2v2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 20v2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m4.93 4.93 1.41 1.41" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m17.66 17.66 1.41 1.41" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M2 12h2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M20 12h2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m6.34 17.66-1.41 1.41" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m19.07 4.93-1.41 1.41" />
+</symbol>
+<symbol id="i-moon-stars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M18 5h4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M20 3v4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</symbol>
+<symbol id="i-circle-half" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 18a6 6 0 0 0 0-12v12z" />
+</symbol>
+<symbol id="i-person-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M17.925 20.056a6 6 0 0 0-11.851.001" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="11" r="4" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+</symbol>
+<symbol id="i-check-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M20 6 9 17l-5-5" />
+</symbol>
+<symbol id="i-folder2-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2" />
+</symbol>
+<symbol id="i-newspaper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M15 18h-5" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M18 14h-8" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" />
+  <rect xmlns="http://www.w3.org/2000/svg" width="8" height="4" x="10" y="6" rx="1" />
+</symbol>
+<symbol id="i-globe2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M2 12h20" />
+</symbol>
+<symbol id="i-diagram-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect xmlns="http://www.w3.org/2000/svg" x="16" y="16" width="6" height="6" rx="1" />
+  <rect xmlns="http://www.w3.org/2000/svg" x="2" y="16" width="6" height="6" rx="1" />
+  <rect xmlns="http://www.w3.org/2000/svg" x="9" y="2" width="6" height="6" rx="1" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 12V8" />
+</symbol>
+<symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M10 11v6" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M14 11v6" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M3 6h18" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+</symbol>
+<symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 15V3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m7 10 5 5 5-5" />
+</symbol>
+<symbol id="i-power" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 2v10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M18.4 6.6a9 9 0 1 1-12.77.04" />
+</symbol>
+<symbol id="i-funnel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
+</symbol>
+<symbol id="i-box-arrow-in-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m10 17 5-5-5-5" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M15 12H3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+</symbol>
+<symbol id="i-arrow-left-short" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m12 19-7-7 7-7" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M19 12H5" />
+</symbol>
+<symbol id="i-arrow-clockwise" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M21 3v5h-5" />
+</symbol>
+<symbol id="i-folder-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</symbol>
+<symbol id="i-link-45deg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline xmlns="http://www.w3.org/2000/svg" points="22 12 16 12 14 15 10 15 8 12 2 12" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+</symbol>
+<symbol id="i-arrow-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M21 3v5h-5" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M8 16H3v5" />
+</symbol>
+<symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</symbol>
+<symbol id="i-dash-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M5 12h14" />
+</symbol>
+<symbol id="i-pause-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect xmlns="http://www.w3.org/2000/svg" x="14" y="3" width="5" height="18" rx="1" />
+  <rect xmlns="http://www.w3.org/2000/svg" x="5" y="3" width="5" height="18" rx="1" />
+</symbol>
+<symbol id="i-play-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</symbol>
+<symbol id="i-x-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M18 6 6 18" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m6 6 12 12" />
+</symbol>
+<symbol id="i-magic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m14 7 3 3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M5 6v4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M19 14v4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M10 2v2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M7 8H3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M21 16h-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M11 3H9" />
+</symbol>
+<symbol id="i-three-dots-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="1" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="5" r="1" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="19" r="1" />
+</symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m15 5 4 4" />
+</symbol>
+<symbol id="i-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle xmlns="http://www.w3.org/2000/svg" cx="9" cy="7" r="4" />
+</symbol>
+<symbol id="i-bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M5 21v-6" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 21V3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M19 21V9" />
+</symbol>
+<symbol id="i-heart-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+</symbol>
+<symbol id="i-check-circle-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m16 9-5.5 5.5L8 12" />
+</symbol>
+<symbol id="i-info-circle-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle xmlns="http://www.w3.org/2000/svg" cx="12" cy="12" r="10" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 16v-4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 8h.01" />
+</symbol>
+<symbol id="i-exclamation-triangle-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 9v4" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M12 17h.01" />
+</symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="m6 9 6 6 6-6" />
+</symbol>
+<symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 20h.01" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M2 8.82a15 15 0 0 1 20 0" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M5 12.859a10 10 0 0 1 14 0" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M8.5 16.429a5 5 0 0 1 7 0" />
+</symbol>
+<symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path xmlns="http://www.w3.org/2000/svg" d="M12 20h.01" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M8.5 16.429a5 5 0 0 1 7 0" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M5 12.859a10 10 0 0 1 5.17-2.69" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M19 12.859a10 10 0 0 0-2.007-1.523" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M2 8.82a15 15 0 0 1 4.177-2.643" />
+  <path xmlns="http://www.w3.org/2000/svg" d="M22 8.82a15 15 0 0 0-11.288-3.764" />
+  <path xmlns="http://www.w3.org/2000/svg" d="m2 2 20 20" />
+</symbol>
+</svg>

@@ -7,14 +7,12 @@
     "sort-packages": true
   },
   "require": {
-    "php": "^8.2",
+    "php": "^8.5",
     "ext-curl": "*",
-    "ext-gd": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",
-    "ext-xml": "*",
-    "ext-zip": "*"
+    "ext-xml": "*"
   },
   "autoload": {
     "psr-4": {
