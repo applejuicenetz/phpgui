@@ -19,6 +19,30 @@ final class Format
         return subs::sizeformat((float)$bytes, $precision, $stripTrailing);
     }
 
+    /**
+     * Shorten large counts to a unit word, for example 4191120 to "4,19 Millionen".
+     * Values below 1000 stay plain numbers; unit words come from the language files.
+     */
+    public static function compactCount(int|float|string $count, int $precision = 2): string
+    {
+        $german = ($_ENV['GUI_LANGUAGE'] ?? 'de') === 'de';
+        [$decimal, $thousands] = $german ? [',', '.'] : ['.', ','];
+        $value = (float)$count;
+        $units = self::lang()->UI->units;
+        $labels = ['', $units->thousand, $units->million, $units->billion];
+        $step = 0;
+        while ($step < count($labels) - 1 && abs(round($value, $precision)) >= 1000) {
+            $value /= 1000;
+            ++$step;
+        }
+        if ($step === 0) {
+            return number_format($value, 0, $decimal, $thousands);
+        }
+        $number = rtrim(rtrim(number_format($value, $precision, $decimal, $thousands), '0'), $decimal);
+
+        return $number . ' ' . $labels[$step];
+    }
+
     public static function speed(int|float|string $bytesPerSecond): string
     {
         return self::bytes($bytesPerSecond) . '/s';

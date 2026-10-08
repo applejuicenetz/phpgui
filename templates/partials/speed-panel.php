@@ -3,8 +3,7 @@
 ?>
 <section class="box toolbar-box speed-panel">
     <div class="speed-panel-grid">
-        <?= $partial('speed-bar', ['id' => 'aj-' . $kind . '-speed-bar', 'label' => $label, 'percent' => $percent]) ?>
+        <?= $partial('speed-bar', ['id' => 'aj-' . $kind . '-speed-bar', 'label' => $label . (!empty($note) ? ' · ' . $note : ''), 'percent' => $percent]) ?>
         <?= $partial('limit-form', ['kind' => $kind, 'max' => $max, 'lang' => $lang]) ?>
     </div>
-    <p class="speed-panel-note"><?= $e($note ?? '') ?></p>
 </section>

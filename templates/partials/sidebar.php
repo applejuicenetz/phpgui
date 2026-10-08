@@ -1,6 +1,6 @@
 <?php
 use appleJuiceNETZ\GUI\View;
-/** @var list<array> $nav @var string $nav_site @var array $plugins @var int $uploads_active @var object $lang @var string $faq_url @var string $site */
+/** @var list<array> $nav @var string $nav_site @var array $plugins @var int $uploads_active @var int $downloads_active @var object $lang @var string $faq_url @var string $site */
 ?>
 <aside class="app-sidebar" id="sidebar" aria-label="<?= $e($lang->UI->page_of_nav) ?>">
     <a class="app-brand" href="index.php?site=start" aria-label="appleJuice">
@@ -14,8 +14,9 @@ use appleJuiceNETZ\GUI\View;
                     <a href="index.php?site=<?= $e($item['site']) ?>" class="app-nav-link<?= $nav_site === $item['site'] ? ' is-active' : '' ?>"<?= $nav_site === $item['site'] ? ' aria-current="page"' : '' ?>>
                         <?= View::icon($item['icon']) ?>
                         <span class="app-nav-label"><?= $e($item['label']) ?></span>
-                        <?php if ($item['site'] === 'uploads' && $uploads_active > 0): ?>
-                            <span class="tag is-info is-rounded app-nav-badge"><?= (int)$uploads_active ?></span>
+                        <?php $badges = ['downloads' => $downloads_active, 'uploads' => $uploads_active]; $badge = $badges[$item['site']] ?? null; ?>
+                        <?php if ($badge !== null): ?>
+                            <span class="tag is-info is-rounded app-nav-badge" data-badge="<?= $e($item['site']) ?>"<?= $badge > 0 ? '' : ' hidden' ?>><?= (int)$badge ?></span>
                         <?php endif; ?>
                     </a>
                 </li>

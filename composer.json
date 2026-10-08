@@ -8,11 +8,17 @@
   },
   "require": {
     "php": "^8.5",
-    "ext-curl": "*",
+    "ext-ctype": "*",
+    "ext-dom": "*",
     "ext-json": "*",
+    "ext-libxml": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",
+    "ext-session": "*",
     "ext-xml": "*"
+  },
+  "require-dev": {
+    "ext-curl": "*"
   },
   "autoload": {
     "psr-4": {

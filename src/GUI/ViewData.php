@@ -15,6 +15,111 @@ use appleJuiceNETZ\appleJuice\Uploads;
  */
 final class ViewData
 {
+    public static function information(): array
+    {
+        static $cache = null;
+        if ($cache === null) {
+            $xml = (new \appleJuiceNETZ\appleJuice\Core())->command('xml', 'modified.xml?filter=informations');
+            $cache = $xml['INFORMATION'][array_key_first($xml['INFORMATION'])];
+        }
+        return $cache;
+    }
+
+    /** Data blocks shared by live JSON requests. */
+    public static function live(string $type): array
+    {
+        return match ($type) {
+            'status' => self::liveStatus(),
+            'downloads' => self::liveTransfers(false),
+            'uploads' => self::liveTransfers(true),
+            'dashboard' => self::liveDashboard(),
+            'search' => self::liveSearch(),
+        };
+    }
+
+    /** Number of running transfers, used by the navigation badges. */
+    public static function activeCounts(): array
+    {
+        $downloads = new Downloads();
+        $downloads->refresh_cache();
+        $loading = 0;
+        foreach ($downloads->cache['DOWNLOAD'] ?? [] as $download) {
+            $loading += ($download['phpaj_STATUS'] ?? '') === '0_2' ? 1 : 0;
+        }
+        $uploads = new Uploads();
+        $uploads->refresh_cache();
+
+        return ['downloads_active' => $loading, 'uploads_active' => (int)($uploads->cache['phpaj_ul'] ?? 0)];
+    }
+
+    private static function liveStatus(): array
+    {
+        $info = self::information();
+        return self::activeCounts() + [
+            'credits' => Format::bytes($info['CREDITS']),
+            'credits_negative' => (float)$info['CREDITS'] < 0,
+            'dl_speed_raw' => (float)$info['DOWNLOADSPEED'],
+            'ul_speed_raw' => (float)$info['UPLOADSPEED'],
+        ];
+    }
+
+    private static function liveTransfers(bool $upload): array
+    {
+        static $settings = null;
+        $settings ??= CoreSettings::read(new \appleJuiceNETZ\appleJuice\Core());
+        $rows = $upload ? self::uploads('name') : self::downloads('name');
+        $items = [];
+        foreach ($rows as $row) {
+            $items[$row['id']] = $row;
+        }
+        $max = (int)$settings[$upload ? 'maxupload' : 'maxdownload'];
+        $note = '';
+        if ($upload) {
+            $uploads = new Uploads();
+            $used = count($uploads->cache['IDS']['VALUES']['UPLOADID'] ?? []);
+            $slots = (int)(self::information()['MAXUPLOADPOSITIONS'] ?? 0);
+            $percent = $slots > 0 ? (string)(int)round($used / $slots * 100) : '?';
+            $note = strtr(Format::lang()->Uploads->limit, ['{percent}' => $percent]);
+        }
+        return [
+            'items' => $items,
+            'speed_raw' => array_sum(array_column($rows, 'speed_raw')),
+            'max_raw' => $max,
+            'max_text' => $max > 0 ? Format::bytes($max, 2, true) : '',
+        ] + ($upload ? ['count' => count($rows), 'slot_text' => $note] : ['counts' => self::downloadCounts($rows)]);
+    }
+
+    private static function liveDashboard(): array
+    {
+        $info = self::information();
+        $servers = new \appleJuiceNETZ\appleJuice\Server();
+        $uploads = new Uploads();
+        $uploads->refresh_cache();
+        $connected = $servers->netstats['timeconnected'];
+        return self::liveStatus() + [
+            'downloads' => self::downloadCounts(self::downloads()),
+            'uploads' => (int)($uploads->cache['phpaj_ul'] ?? 0),
+            'dl_speed' => Format::speed($info['DOWNLOADSPEED']),
+            'ul_speed' => Format::speed($info['UPLOADSPEED']),
+            'session_dl' => Format::bytes($info['SESSIONDOWNLOAD']),
+            'session_ul' => Format::bytes($info['SESSIONUPLOAD']),
+            'connections' => $info['OPENCONNECTIONS'] ?? '',
+            'connected' => is_numeric($connected) ? sprintf('%dh %dmin', intdiv((int)$connected, 3600), intdiv((int)$connected % 3600, 60)) : '?',
+        ];
+    }
+
+    private static function liveSearch(): array
+    {
+        $data = self::search();
+        return [
+            'total' => $data['total'],
+            'searches' => $data['searches'],
+            'entries' => $data['entries'],
+            'running' => (bool)array_filter($data['searches'], static fn($search) => $search['running']),
+        ];
+    }
+
+
     /**
      * @return list<array<string,mixed>> Downloads; Reihenfolge nach $sort/$dir.
      */
@@ -33,6 +138,7 @@ final class ViewData
                     'id' => (int)$id,
                     'name' => (string)$d['FILENAME'],
                     'size' => Format::bytes($size),
+                    'loaded' => Format::bytes(max(0.0, $size - $rest)),
                     'part' => trim((string)subs::parts((string)$d['FILENAME']), ' |'),
                     'status' => $statusKey,
                     'status_text' => $statusText,

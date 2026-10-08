@@ -4,7 +4,9 @@
     "ok": "Ok",
     "login": "Login",
     "password": "Password",
-    "remember": "remember me!"
+    "remember": "Remember login",
+    "url_info": "Full Core URL including protocol and XML API port, e.g. http://localhost:9851.",
+    "password_info": "A password must be set in the Core."
   },
   "System": {
     "warning": "Warning!",
@@ -29,7 +31,6 @@
       "dl_users": "Download Details",
       "404": "Error 404",
       "help": "Help",
-      "user_settings": "User settings",
       "dl_parts": "Download parts",
       "login": "Login"
     },
@@ -49,7 +50,7 @@
     "connected_since": "connected since",
     "open_connections": "Connections",
     "shared_users": "Shared Users",
-    "all_data": "entire files",
+    "all_data": "Files",
     "network_info": "Network Information",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
@@ -71,7 +72,6 @@
     "logout": "Logout",
     "permalink": "Permalink (includes credentials)",
     "kick_core": "Kick core",
-    "user_settings": "User Settings",
     "help": "Help"
   },
   "Downloads": {
@@ -180,7 +180,7 @@
     "part": "Part"
   },
   "Uploads": {
-    "limit": "Upload slots {percent}% in use",
+    "limit": "Slots: {percent}%",
     "files": "File",
     "username": "Username",
     "statuss": "Status",
@@ -246,7 +246,6 @@
     "password": "Password",
     "head_con": "Connection Settings",
     "head_all": "Default settings",
-    "user_title": "User settings",
     "unit_kb": "KB/s",
     "unit_mb": "MB/s"
   },
@@ -311,6 +310,7 @@
     "searches": "Searches"
   },
   "UI": {
+    "units": {"thousand": "thousand", "million": "million", "billion": "billion"},
     "menu": "Menu",
     "more": "More",
     "close": "Close",

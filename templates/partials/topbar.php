@@ -9,6 +9,10 @@ $ui = $lang->UI;
     </button>
     <h1 class="app-title"><?= $e($title) ?></h1>
     <div class="app-topbar-actions">
+        <div class="app-transfer-speeds">
+            <span title="<?= $e($lang->Start->download_speed) ?>"><span id="aj-status-download"><?= $e($download_speed) ?></span><?= View::icon('cloud-download') ?></span>
+            <span title="<?= $e($lang->Start->upload_speed) ?>"><span id="aj-status-upload"><?= $e($upload_speed) ?></span><?= View::icon('cloud-upload') ?></span>
+        </div>
         <div class="app-credits<?= $credits_negative ? ' is-negative' : '' ?>" title="<?= $e($ui->credits) ?>">
             <?= View::icon('diamond') ?>
             <span><span id="aj-header-credits"><?= $e($credits) ?></span><small><?= $e($ui->credits) ?></small></span>
@@ -36,7 +40,6 @@ $ui = $lang->UI;
                 <div class="dropdown-content">
                     <div class="dropdown-item has-text-weight-semibold"><?= $e($nick) ?></div>
                     <hr class="dropdown-divider">
-                    <a class="dropdown-item" href="index.php?site=user_settings"><?= $e($lang->Navigation->user_settings) ?></a>
                     <?php if ($permalink): ?>
                         <a class="dropdown-item" href="<?= $e($permalink) ?>"><?= $e($lang->Navigation->permalink) ?></a>
                     <?php endif; ?>

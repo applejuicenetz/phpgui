@@ -31,7 +31,6 @@ final class Navigation
         return match ($site) {
             'dl_users', 'dl_parts' => 'downloads',
             'sharefiles' => 'shares',
-            'user_settings' => 'settings',
             default => $site,
         };
     }

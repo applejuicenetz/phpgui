@@ -24,7 +24,7 @@ $titles = ['active' => $d->transferring, 'queue' => $d->queue, 'rest' => $d->res
         <?php else: ?>
             <div class="table-wrap">
                 <table class="table is-fullwidth is-hoverable responsive-table">
-                    <thead><tr><th><?= $e($d->user_source) ?></th><th><?= $e($d->statuss) ?></th><th><?= $e($d->progress) ?></th><th><?= $e($d->speed) ?></th></tr></thead>
+                    <thead><tr><th><?= $e($d->user_source) ?></th><th><?= $e($d->statuss) ?></th><th><?= $e($d->progress) ?></th><th class="th-shrink" title="<?= $e($d->speed) ?>"><?= $e($d->speed) ?></th></tr></thead>
                     <tbody>
                     <?php foreach ($list as $u): ?>
                         <tr>

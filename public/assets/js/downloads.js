@@ -3,6 +3,8 @@ import { openModal } from './modal.js';
 import { onData } from './polling.js';
 import { initLimit, updateSpeed } from './limits.js';
 
+import { rangeSelection } from './selection.js';
+
 const form = $('#dl-form');
 const checks = () => $$('.dl-check');
 const selected = () => checks().filter(c => c.checked);
@@ -17,11 +19,16 @@ filter.addEventListener('input', filterRows);
 filterRows();
 function selection() {
     const count = selected().length;
-    $('#selection-count').textContent = count ? `${count} ${document.documentElement.lang === 'de' ? 'ausgewählt' : 'selected'}` : '';
     checks().forEach(c => c.closest('tr').classList.toggle('is-selected', c.checked));
-    $$('[data-dl-action]').forEach(b => b.disabled = count === 0 && b.dataset.dlAction !== 'cleandownloadlist');
-    $('#dl-select-all').checked = count > 0 && count === checks().length;
-    $('#dl-select-all').indeterminate = count > 0 && count < checks().length;
+    $$('[data-dl-action]').forEach(b => {
+        b.disabled = count === 0 && b.dataset.dlAction !== 'cleandownloadlist';
+        if (b.closest('.action-buttons') && /\bis-(warning|success|danger)\b/.test(b.className)) b.classList.toggle('is-light', b.disabled);
+    });
+    const master = $('#dl-select-all');
+    if (master) {
+        master.checked = count > 0 && count === checks().length;
+        master.indeterminate = count > 0 && count < checks().length;
+    }
 }
 form.addEventListener('change', e => {
     if (e.target.matches('.dl-check')) {
@@ -29,7 +36,12 @@ form.addEventListener('change', e => {
         selection();
     }
 });
-$('#dl-select-all').addEventListener('change', e => { checks().filter(c => !c.closest('tr').hidden).forEach(c => c.checked = e.target.checked); selection(); });
+const range = rangeSelection(form, '.dl-check', selection);
+$('#dl-select-all')?.addEventListener('change', e => {
+    range.visible().forEach(c => c.checked = e.target.checked);
+    range.reset();
+    selection();
+});
 selection();
 
 function submit(action, value = '', ids = selected().map(c => c.value)) {
@@ -52,23 +64,31 @@ $$('[data-pdl]').forEach(b => b.addEventListener('click', () => {
 }));
 $$('[data-dl-action]').forEach(b => b.addEventListener('click', () => {
     const action = b.dataset.dlAction;
-    if (action === 'settargetdir') openModal('modal-target');
+    if (action === 'settargetdir') { targetIds = null; $('#target-input').value = ''; openModal('modal-target'); }
     else if (action === 'canceldownload') {
         $('#cancel-list').replaceChildren(...selected().map(c => { const li = document.createElement('li'); li.textContent = c.closest('tr').dataset.name; return li; }));
         openModal('modal-cancel');
     } else submit(action, action === 'setpowerdownload' ? $('#pdl-input').value : '', action === 'cleandownloadlist' ? ['0'] : undefined);
 }));
 let renameId;
+let targetIds = null; // null: use selection; otherwise only this row
 form.addEventListener('click', e => {
-    const b = e.target.closest('[data-row-action="rename"]');
+    const b = e.target.closest('[data-row-action]');
     if (!b) return;
-    const row = b.closest('tr'); renameId = row.dataset.id;
+    const row = b.closest('tr');
+    if (b.dataset.rowAction === 'target') {
+        targetIds = [row.dataset.id];
+        $('#target-input').value = row.dataset.target || '';
+        openModal('modal-target');
+        return;
+    }
+    renameId = row.dataset.id;
     $('#rename-input').value = row.dataset.name;
     openModal('modal-rename');
 });
 $('#rename-ok').addEventListener('click', () => submit('renamedownload', $('#rename-input').value, [renameId]));
 $('#rename-input').addEventListener('keydown', e => { if (e.key === 'Enter') $('#rename-ok').click(); });
-$('#target-ok').addEventListener('click', () => submit('settargetdir', $('#target-input').value));
+$('#target-ok').addEventListener('click', () => submit('settargetdir', $('#target-input').value, targetIds ?? undefined));
 $('#cancel-ok').addEventListener('click', () => submit('canceldownload'));
 initLimit('dl');
 
@@ -80,12 +100,16 @@ onData('downloads', data => {
     if (changed && !selected().length && !$('.modal.is-active') && document.activeElement !== filter) { location.reload(); return; }
     for (const [id, d] of Object.entries(items)) {
         const row = $(`#dl-${id}`); if (!row) continue;
-        row.dataset.name = d.name; row.dataset.pdl = d.pdl;
+        row.dataset.name = d.name; row.dataset.pdl = d.pdl; row.dataset.target = d.target;
+        setText($('[data-aj="target"]', row), d.target);
+        $('[data-aj="target-line"]', row).hidden = !d.target;
         const status = $('[data-aj="status"]', row);
         status.className = 'tag status-' + d.status; setText(status, d.status_text);
         setText($('.dl-name', row), d.name);
         setText($('[data-aj="percent"]', row), d.percent + '%');
-        setText($('[data-aj="rest"]', row), d.rest + (d.eta ? ' – ' + d.eta : ''));
+        row.dataset.status = d.status;
+        setText($('[data-aj="loaded"]', row), `${d.loaded} / ${d.size}`);
+        setText($('[data-aj="eta"]', row), d.eta);
         setProgress($('[data-aj="bar"]', row), d.percent);
         setText($('[data-aj="speed"]', row), d.speed);
         setText($('[data-aj="pdl"]', row), d.pdl);

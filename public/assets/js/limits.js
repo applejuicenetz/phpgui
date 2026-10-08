@@ -36,7 +36,7 @@ export function initLimit(kind) {
         const button = $('[data-limit-apply]', root);
         button.disabled = true;
         try {
-            const result = await postJson(`index.php?site=api&action=set_max${kind}`, { value: Math.round(control.kbValue() * 1024) });
+            const result = await postJson(`index.php?api=limits&action=set_max${kind}`, { value: Math.round(control.kbValue() * 1024) });
             if (!result.ok) throw new Error('save failed');
             toast(document.documentElement.lang === 'de' ? 'Gespeichert!' : 'Saved!');
         } catch (err) { toast(String(err), 'danger'); }
@@ -51,7 +51,7 @@ export function updateSpeed(kind, data) {
     if (!bar) return;
     const max = data.max_raw || 0, speed = data.speed_raw || 0;
     bar.value = max > 0 ? Math.min(100, speed / max * 100) : 0;
-    const text = `${formatBytes(speed)}/s / ${max > 0 ? data.max_text + '/s' : '∞'}`;
+    const text = `${formatBytes(speed)}/s / ${max > 0 ? data.max_text + '/s' : '∞'}` + (data.slot_text ? ` · ${data.slot_text}` : '');
     $('[data-speed-label]', bar.parentElement).textContent = text;
     bar.parentElement.title = text;
 }

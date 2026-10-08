@@ -25,11 +25,18 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `CORE_HOST`          | `http://192.168.2.1` | IP-Adresse oder Hostname des Core, einschließlich Protokoll          |
 | `CORE_PORT`          | `9851`               | XML-Port des Core                                                    |
 | `GUI_LANGUAGE`       | `de`                 | Sprache: `de` oder `en`                                              |
+| `GUI_REFRESH_INTERVAL` | `5`                | Intervall der Live-Aktualisierung in Sekunden (1–3600)               |
 | `GUI_SHOW_NEWS`      | `1`                  | Nachrichten auf der Statusseite anzeigen                             |
 | `GUI_SHOW_SHARE`     | `1`                  | Freigabestatistiken auf der Statusseite anzeigen                     |
 | `TOP_SHOW_PERMALINK` | `1`                  | Dauerlink zur Instanz im Benutzermenü anzeigen (`0` blendet ihn aus) |
 | `NEWS_URL`           | `http://XY`          | URL für Nachrichten                                                  |
 | `SERVERLIST_URL`     | `http://ABC`         | URL zum Abrufen neuer Server                                         |
+| `FAQ_URL`            | `http://XY`          | URL der FAQ (Hilfe-Seite und Seitenleiste)                           |
+| `CHANGELOG_URL`      | `http://XY`          | URL der CHANGELOG.md für die Prüfung auf neue Versionen              |
+| `TZ`                 | `Europe/Berlin`      | Zeitzone                                                             |
+| `ALLOWED_SERVERMSG_TAGS` | `<a><b><i><u><br>` | Erlaubte HTML-Tags in Servernachrichten                            |
+| `PHP_INI_DISPLAY_ERRORS` | `On`             | PHP-Fehlerausgabe (`Off` für Produktivbetrieb empfohlen)             |
+| `PHP_INI_ERROR_REPORTING` | `1`             | PHP-`error_reporting`-Wert                                           |
 | `REL_INFO`           | `http://MN/ajfps/%s` | Leer lassen, um die Spalte mit Release-Informationen auszublenden    |
 
 Der Dauerlink enthält die Adresse des Core und einen Passwort-Hash. Wer den Link besitzt, kann auf diesen Core zugreifen. Deshalb sollte der Link wie ein Passwort aufbewahrt und nur entsprechend weitergegeben werden. Bestehende Links im Format `index.php?l=...` aus älteren Versionen werden weiterhin unterstützt.

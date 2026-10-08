@@ -34,15 +34,7 @@ abstract class Controller
         if ($cache !== null) {
             return $cache;
         }
-        $xml = $this->core->command('xml', 'settings.xml');
-        $flat = [];
-        foreach ($xml as $key => $value) {
-            if (isset($value['VALUES']['CDATA'])) {
-                $flat[strtolower((string)$key)] = $value['VALUES']['CDATA'];
-            }
-        }
-
-        return $cache = $flat + ['share' => $xml['SHARE']['VALUES']['DIRECTORY'] ?? []];
+        return $cache = \appleJuiceNETZ\GUI\CoreSettings::read($this->core);
     }
 
     /** Aktuelle Zahlen aus modified.xml?filter=informations. */
@@ -52,10 +44,7 @@ abstract class Controller
         if ($cache !== null) {
             return $cache;
         }
-        $xml = $this->core->command('xml', 'modified.xml?filter=informations');
-        $keys = array_keys($xml['INFORMATION']);
-
-        return $cache = $xml['INFORMATION'][$keys[0]];
+        return $cache = \appleJuiceNETZ\GUI\ViewData::information();
     }
 
     protected function server(): Server

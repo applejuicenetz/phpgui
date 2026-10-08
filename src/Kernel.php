@@ -29,8 +29,6 @@ class Kernel
         }
 
         $_ENV['REAL_IP'] = 'http://' . ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
-        $_ENV['HTT_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? '';
-        $_ENV['HTTPS'] = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ($_SERVER['HTTPS'] ?? 'off')) === 'https' ? 'https' : 'http';
 
         $_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
         $_ENV['FAQ_URL'] = $_ENV['FAQ_URL'] ?? 'https://applejuicenetz.github.io/faq/';
@@ -48,6 +46,10 @@ class Kernel
         $_ENV['GUI_SHOW_NEWS'] = $_ENV['GUI_SHOW_NEWS'] ?? 1;
 
         $_ENV['GUI_SHOW_SHARE'] = $_ENV['GUI_SHOW_SHARE'] ?? 1;
+
+        // Live refresh interval in seconds; invalid or out-of-range values fall back to 2.
+        $refresh = filter_var($_ENV['GUI_REFRESH_INTERVAL'] ?? 2, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 3600]]);
+        $_ENV['GUI_REFRESH_INTERVAL'] = $refresh === false ? 2 : $refresh;
 
         $_ENV['TOP_SHOW_PERMALINK'] = $_ENV['TOP_SHOW_PERMALINK'] ?? 1;
 

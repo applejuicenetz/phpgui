@@ -1,5 +1,14 @@
 // Gemeinsame Oberfläche: Navigation, Dropdowns, Modals, Meldungen, Theme, Bestätigungen.
 import { startPolling } from './polling.js';
+const remembered = document.getElementById('remember-login-data');
+if (remembered) {
+    try { localStorage.setItem('aj_remember_login', remembered.textContent); } catch (_) { /* storage unavailable */ }
+    remembered.remove();
+}
+document.querySelector('a[href="index.php?site=logout"]')?.addEventListener('click', () => {
+    try { localStorage.removeItem('aj_remember_login'); } catch (_) { /* storage unavailable */ }
+});
+if (remembered) history.replaceState(null, '', location.href);
 
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -37,12 +46,27 @@ document.addEventListener('click', (e) => {
         closeDropdowns(open ? dd : null);
         dd.classList.toggle('is-active', open);
         toggle.setAttribute('aria-expanded', String(open));
+        if (open && dd.closest('.table-wrap')) {
+            const menu = dd.querySelector('.dropdown-menu');
+            const rect = toggle.getBoundingClientRect();
+            menu.classList.add('table-dropdown-menu');
+            menu.style.left = Math.max(8, Math.min(rect.right - menu.offsetWidth, window.innerWidth - menu.offsetWidth - 8)) + 'px';
+            menu.style.top = (rect.bottom + menu.offsetHeight <= window.innerHeight - 8
+                ? rect.bottom : Math.max(8, rect.top - menu.offsetHeight)) + 'px';
+            menu.style.maxHeight = (window.innerHeight - 16) + 'px';
+        }
         return;
     }
     if (!e.target.closest('[data-dropdown] .dropdown-menu') || e.target.closest('a.dropdown-item, button.dropdown-item:not([data-keep-open])')) {
         closeDropdowns(null);
     }
 });
+
+// Close floating menus when their trigger moves.
+window.addEventListener('resize', () => closeDropdowns(null));
+document.addEventListener('scroll', (event) => {
+    if (!event.target.closest?.('.table-dropdown-menu')) closeDropdowns(null);
+}, true);
 
 /* ---- Modals ---- */
 import './modal.js';

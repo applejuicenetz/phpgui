@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "appleJuice phpGUI",
+  "short_name": "appleJuice",
+  "description": "Web interface for the appleJuice Core",
+  "start_url": "./index.php",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f5a623",
+  "icons": [
+    { "src": "assets/img/apple-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/img/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

@@ -3,6 +3,7 @@ FROM docker.io/php:8.5-apache
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
     GUI_LANGUAGE="de"  \
+    GUI_REFRESH_INTERVAL=5 \
     GUI_SHOW_NEWS=1 \
     GUI_SHOW_SHARE=1
 

@@ -28,17 +28,34 @@ class Router
         'sharefiles' => C\ShareFilesController::class,
         'server' => C\ServerController::class,
         'settings' => C\SettingsController::class,
-        'user_settings' => C\SettingsController::class,
         'extras' => C\ExtrasController::class,
         'help' => C\HelpController::class,
         'kickcore' => C\KickCoreController::class,
     ];
 
-    /** Seiten mit eigener, nicht-HTML-Antwort. */
-    private const RAW = ['api', 'showparts', 'directory'];
+    /** Routes with non-HTML responses. */
+    private const API = [
+        'live' => Api\LiveApi::class,
+        'limits' => Api\LimitsApi::class,
+        'parts' => Api\PartsImage::class,
+        'directories' => Api\ShareDirectoryApi::class,
+        'news' => Api\NewsApi::class,
+    ];
 
     public function handle(): void
     {
+        if (array_key_exists('api', $_GET)) {
+            $api = Request::get('api');
+            if (!isset(self::API[$api])) {
+                $this->apiError($api, 404, 'unknown_endpoint');
+            } elseif (empty($_SESSION['core_host'])) {
+                $this->apiError($api, 401, 'unauthorized');
+            } else {
+                $this->raw($api);
+            }
+            return;
+        }
+
         $permalink = isset($_GET['l']) && is_string($_GET['l'])
             ? Permalink::parse($_GET['l'])
             : null;
@@ -59,17 +76,12 @@ class Router
 
         if ($site === 'logout') {
             session_unset();
-            $this->redirectHeader('index.php');
+            $this->redirectHeader('index.php?logout=1');
 
             return;
         }
 
         try {
-            if (in_array($site, self::RAW, true)) {
-                $this->raw($site);
-
-                return;
-            }
             $this->dispatch($site);
         } catch (RedirectException $r) {
             $this->redirectHeader($r->url);
@@ -107,18 +119,29 @@ class Router
 
     private function raw(string $site): void
     {
-        $file = GUI_ROOT . '/endpoints/' . $site . '.php';
+        $class = self::API[$site];
         try {
-            require $file;
+            (new $class())->handle();
         } catch (CoreAuthException) {
-            http_response_code(401);
-            header('Content-Type: application/json');
-            echo json_encode(['error' => 'unauthorized']);
+            $this->apiError($site, 401, 'unauthorized');
         } catch (CoreUnavailableException) {
-            http_response_code(503);
-            header('Content-Type: application/json');
-            echo json_encode(['error' => 'core_unavailable']);
+            $this->apiError($site, 503, 'core_unavailable');
+        } catch (\Throwable $error) {
+            error_log((string)$error);
+            $this->apiError($site, 500, 'internal_error');
         }
+    }
+
+    private function apiError(string $site, int $status, string $error): void
+    {
+        http_response_code($status);
+        header('Cache-Control: no-store');
+        if ($site === 'parts') {
+            header('Content-Type: image/svg+xml; charset=utf-8');
+            return;
+        }
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => $error]);
     }
 
     /**
@@ -156,18 +179,17 @@ class Router
         $_SESSION['core_pass'] = $hash;
         $_SESSION['core_host'] = rtrim($host, '/');
         unset($_SESSION['login']);
+        if (Request::str('remember_login') === '1') {
+            $_SESSION['remember_login'] = ['url' => rtrim($host, '/'), 'md5' => $hash];
+        }
 
         $link = $_POST['ajfsp_link'] ?? '';
         if (is_string($link) && $link !== '') {
             $_SESSION['ajfsp_link'] = $link;
         }
-        if ($permalink !== null) {
-            $this->redirectHeader('index.php');
+        $this->redirectHeader('index.php');
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     private function validHost(string $host): bool
@@ -277,16 +299,18 @@ class Router
         $settings = $core->command('xml', 'settings.xml');
         $servers = new \appleJuiceNETZ\appleJuice\Server();
         $info = $servers->info();
-        $uploads = new \appleJuiceNETZ\appleJuice\Uploads();
-        $uploads->refresh_cache();
+        $active = ViewData::activeCounts();
         $plugins = new Plugins();
         $plugins->Find_Plugins();
 
         return [
             'nick' => (string)($settings['NICK']['VALUES']['CDATA'] ?? ''),
             'credits' => Format::bytes($info['CREDITS']),
+            'download_speed' => Format::speed($info['DOWNLOADSPEED']),
+            'upload_speed' => Format::speed($info['UPLOADSPEED']),
             'credits_negative' => (float)$info['CREDITS'] < 0,
-            'uploads_active' => (int)($uploads->cache['phpaj_ul'] ?? 0),
+            'uploads_active' => $active['uploads_active'],
+            'downloads_active' => $active['downloads_active'],
             'firewalled' => $servers->netstats['firewalled'] === 'true',
             'connecting' => (int)$servers->netstats['connectedwith'] < 0,
             'plugins' => $plugins->liste,

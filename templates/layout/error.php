@@ -11,6 +11,8 @@ $lang = \appleJuiceNETZ\GUI\Format::lang();
     <meta name="color-scheme" content="light dark">
     <title><?= (int)$code ?> – appleJuice phpGUI</title>
     <link rel="icon" type="image/svg+xml" href="assets/img/apple-icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f5a623">
     <link rel="stylesheet" href="<?= $e(View::asset('vendor/bulma/bulma.min.css')) ?>">
     <link rel="stylesheet" href="<?= $e(View::asset('css/app.css')) ?>">
     <script src="<?= $e(View::asset('js/theme.js')) ?>"></script>

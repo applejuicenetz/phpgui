@@ -12,11 +12,6 @@ $sortArgs = ['sort' => $sort, 'dir' => $sort_dir, 'defaults' => $sort_defaults, 
 
     <section class="box">
         <div class="selection-bar" id="selection-bar">
-            <label class="checkbox select-all">
-                <input type="checkbox" id="dl-select-all" aria-label="<?= $e($lang->UI->select_all) ?>">
-                <span><?= $e($lang->UI->select_all) ?></span>
-            </label>
-            <span class="selection-count" id="selection-count" aria-live="polite"></span>
 
             <div class="field has-addons pdl-form" id="pdl-form">
                 <p class="control"><button type="button" class="button is-small" data-pdl="dec" aria-label="−"><?= View::icon('dash-lg') ?></button></p>
@@ -30,7 +25,7 @@ $sortArgs = ['sort' => $sort, 'dir' => $sort_dir, 'defaults' => $sort_defaults, 
                 <button type="button" class="button is-success is-light" data-dl-action="resumedownload" title="<?= $e($d->resume) ?>"><?= View::icon('play-fill') ?><span class="action-text"><?= $e($d->resume) ?></span></button>
                 <button type="button" class="button is-danger is-light" data-dl-action="canceldownload" title="<?= $e($d->cancel) ?>"><?= View::icon('x-lg') ?><span class="action-text"><?= $e($d->cancel) ?></span></button>
                 <button type="button" class="button" data-dl-action="settargetdir" title="<?= $e($d->target) ?>"><?= View::icon('folder') ?><span class="action-text"><?= $e($d->target) ?></span></button>
-                <button type="button" class="button is-link is-light" data-dl-action="cleandownloadlist" title="<?= $e($d->clean) ?>"><?= View::icon('magic') ?><span class="action-text"><?= $e($d->clean) ?></span></button>
+                <button type="button" class="button is-link action-clean" data-dl-action="cleandownloadlist" title="<?= $e($d->clean) ?>"><?= View::icon('magic') ?><span class="action-text"><?= $e($d->clean) ?></span></button>
             </div>
         </div>
 
@@ -55,43 +50,44 @@ $sortArgs = ['sort' => $sort, 'dir' => $sort_dir, 'defaults' => $sort_defaults, 
                 <table class="table is-fullwidth is-hoverable responsive-table" id="dl-table">
                     <thead>
                     <tr>
-                        <th class="col-check"></th>
-                        <th><?= $e($d->filename) ?></th>
-                        <th><?= $e($d->statuss) ?></th>
-                        <th><?= $e($d->progress) ?></th>
-                        <th class="has-text-centered"><?= $e($d->pdl) ?></th>
-                        <th><?= $e($d->speed) ?></th>
+                        <th class="col-check"><input type="checkbox" id="dl-select-all" aria-label="<?= $e($lang->UI->select_all) ?>"></th>
+                        <th><?= $partial('sort-link', $sortArgs + ['field' => 'name', 'label' => $d->filename]) ?></th>
+                        <th class="has-text-centered"><?= $e($d->sources) ?></th>
+                        <th class="col-status has-text-centered"><?= $partial('sort-link', $sortArgs + ['field' => 'status', 'label' => $d->statuss]) ?></th>
+                        <th><?= $partial('sort-link', $sortArgs + ['field' => 'done', 'label' => $d->progress]) ?></th>
+                        <th class="has-text-centered"><?= $partial('sort-link', $sortArgs + ['field' => 'pdl', 'label' => $d->pdl]) ?></th>
+                        <th class="th-shrink col-speed" title="<?= $e($d->speed) ?>"><?= $e($d->speed) ?></th>
                         <th class="col-actions"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($rows as $r): ?>
-                        <tr id="dl-<?= (int)$r['id'] ?>" data-id="<?= (int)$r['id'] ?>" data-name="<?= $e($r['name']) ?>" data-pdl="<?= $e($r['pdl']) ?>" data-status="<?= $e($r['status']) ?>">
+                        <tr id="dl-<?= (int)$r['id'] ?>" data-id="<?= (int)$r['id'] ?>" data-name="<?= $e($r['name']) ?>" data-pdl="<?= $e($r['pdl']) ?>" data-target="<?= $e($r['target']) ?>" data-status="<?= $e($r['status']) ?>">
                             <td class="col-check" data-label="">
                                 <input class="dl-check" type="checkbox" name="dl_id[]" value="<?= (int)$r['id'] ?>" aria-label="<?= $e($r['name']) ?>">
                             </td>
                             <td class="col-name" data-label="<?= $e($d->filename) ?>">
                                 <div class="dl-name" title="<?= $e($r['name']) ?>"><?= $e($r['name']) ?></div>
-                                <div class="dl-meta">
-                                    <a href="index.php?site=dl_users&amp;dl_id=<?= (int)$r['id'] ?>" data-aj="sources" title="<?= $e($d->sources) ?>"><?= (int)($r['sources_queue'] + $r['sources_active']) ?>/<?= (int)$r['sources_total'] ?></a>
-                                    · <?= $e($r['size']) ?><?= $r['part'] !== '' ? ' · ' . $e($r['part']) : '' ?>
-                                </div>
+                                <div class="dl-meta dl-target" data-aj="target-line" title="<?= $e($d->target) ?>"<?= $r['target'] === '' ? ' hidden' : '' ?>><?= View::icon('folder') ?><span data-aj="target"><?= $e($r['target']) ?></span></div>
+                                <?php if ($r['part'] !== ''): ?><div class="dl-meta"><?= $e($r['part']) ?></div><?php endif; ?>
                             </td>
-                            <td data-label="<?= $e($d->statuss) ?>"><span class="tag status-<?= $e($r['status']) ?>" data-aj="status"><?= $e($r['status_text']) ?></span></td>
+                            <td class="has-text-centered" data-label="<?= $e($d->sources) ?>"><a href="index.php?site=dl_users&amp;dl_id=<?= (int)$r['id'] ?>" data-aj="sources" title="<?= $e($d->sources_show) ?>"><?= (int)($r['sources_queue'] + $r['sources_active']) ?>/<?= (int)$r['sources_total'] ?></a></td>
+                            <td class="col-status" data-label="<?= $e($d->statuss) ?>"><span class="tag status-<?= $e($r['status']) ?>" data-aj="status"><?= $e($r['status_text']) ?></span></td>
                             <td class="col-progress" data-label="<?= $e($d->progress) ?>">
                                 <div class="progress-line">
                                     <strong data-aj="percent"><?= $e($r['percent']) ?>%</strong>
-                                    <span class="dl-meta" data-aj="rest"><?= $e($r['rest']) ?><?= $r['eta'] !== '' ? ' – ' . $e($r['eta']) : '' ?></span>
+                                    <span class="dl-meta" data-aj="loaded" title="<?= $e($d->size) ?>"><?= $e($r['loaded']) ?> / <?= $e($r['size']) ?></span>
                                 </div>
-                                <progress class="progress is-success is-small" value="<?= $e($r['percent']) ?>" max="100" data-aj="bar"><?= $e($r['percent']) ?>%</progress>
+                                <progress class="progress is-small" value="<?= $e($r['percent']) ?>" max="100" data-aj="bar"><?= $e($r['percent']) ?>%</progress>
                             </td>
                             <td class="has-text-centered" data-label="<?= $e($d->pdl) ?>" data-aj="pdl"><?= $e($r['pdl']) ?></td>
-                            <td data-label="<?= $e($d->speed) ?>" data-aj="speed"><?= $e($r['speed']) ?></td>
+                            <td class="col-speed" data-label="<?= $e($d->speed) ?>"><span data-aj="speed"><?= $e($r['speed']) ?></span><div class="dl-meta dl-eta" data-aj="eta" title="<?= $e($d->rest) ?>"><?= $e($r['eta']) ?></div></td>
                             <td class="col-actions" data-label="">
                                 <div class="dropdown is-right" data-dropdown>
                                     <button type="button" class="app-icon-button is-small" data-dropdown-toggle aria-haspopup="true" aria-expanded="false" aria-label="<?= $e($lang->UI->actions) ?>"><?= View::icon('three-dots-vertical') ?></button>
                                     <div class="dropdown-menu" role="menu"><div class="dropdown-content">
                                         <button type="button" class="dropdown-item" data-row-action="rename"><?= View::icon('pencil') ?> <?= $e($d->rename) ?></button>
+                                        <button type="button" class="dropdown-item" data-row-action="target"><?= View::icon('folder') ?> <?= $e($d->target) ?></button>
                                         <a class="dropdown-item" href="index.php?site=dl_users&amp;dl_id=<?= (int)$r['id'] ?>"><?= View::icon('people') ?> <?= $e($d->sources_show) ?></a>
                                         <a class="dropdown-item" href="index.php?site=dl_parts&amp;dl_id=<?= (int)$r['id'] ?>"><?= View::icon('bar-chart') ?> <?= $e($d->parts_show) ?></a>
                                     </div></div>

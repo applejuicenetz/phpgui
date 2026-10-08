@@ -19,10 +19,10 @@ $sortArgs = ['sort' => $sort, 'dir' => $sort_dir, 'defaults' => $sort_defaults, 
                 <table class="table is-fullwidth is-hoverable responsive-table" id="ul-table">
                     <thead><tr>
                         <th class="col-check"></th>
-                        <th><?= $e($u->files) ?></th>
-                        <th><?= $e($u->statuss) ?></th>
+                        <th><?= $partial('sort-link', $sortArgs + ['field' => 'name', 'label' => $u->files]) ?></th>
+                        <th><?= $partial('sort-link', $sortArgs + ['field' => 'status', 'label' => $u->statuss]) ?></th>
                         <th><?= $e($u->progress) ?></th>
-                        <th><?= $e($u->speed) ?></th>
+                        <th class="th-shrink" title="<?= $e($u->speed) ?>"><?= $e($u->speed) ?></th>
                     </tr></thead>
                     <tbody>
                     <?php foreach ($rows as $r): ?>

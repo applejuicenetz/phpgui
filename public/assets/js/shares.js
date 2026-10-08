@@ -3,7 +3,7 @@ import { closeModal } from './modal.js';
 let dir = '';
 async function browse(path) {
     try {
-        const data = await getJson('index.php?site=directory&dir=' + encodeURIComponent(path));
+        const data = await getJson('index.php?api=directories&dir=' + encodeURIComponent(path));
         dir = data.dir;
         $('#dirs-current').textContent = dir || '/';
         $('#dirs-list').replaceChildren(...data.entries.map(d => {

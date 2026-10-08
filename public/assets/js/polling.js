@@ -1,10 +1,10 @@
-// Gemeinsame Live-Aktualisierung über ?site=api. Seiten registrieren Handler pro Datentyp.
-import { getJson } from './lib.js';
+// Gemeinsame Live-Aktualisierung über ?api=live. Seiten registrieren Handler pro Datentyp.
+import { getJson, formatBytes } from './lib.js';
 
 const handlers = new Map();
 let timer = null;
 let failures = 0;
-const BASE_INTERVAL = 5000;
+const BASE_INTERVAL = (Number(document.body.dataset.refresh) || 5) * 1000;
 
 export function onData(type, fn) {
     handlers.set(type, fn);
@@ -12,13 +12,13 @@ export function onData(type, fn) {
 
 function types() {
     const page = (document.body.dataset.poll || '').split(',').filter(Boolean);
-    return ['header', ...page.filter((t) => t !== 'header')];
+    return ['status', ...page.filter((t) => t !== 'status')];
 }
 
 async function tick() {
     if (document.hidden || !navigator.onLine) return schedule();
     try {
-        const data = await getJson('index.php?site=api&type=' + types().join(','));
+        const data = await getJson('index.php?api=live&type=' + types().join(','));
         failures = 0;
         for (const [type, fn] of handlers) {
             if (data[type]) fn(data[type]);
@@ -51,7 +51,17 @@ export function startPolling() {
 }
 
 // Kopfzeile: Credits
-onData('header', (d) => {
+onData('status', (d) => {
+    for (const [id, value] of [['aj-status-download', d.dl_speed_raw], ['aj-status-upload', d.ul_speed_raw]]) {
+        const speed = document.getElementById(id);
+        if (speed) speed.textContent = formatBytes(value) + '/s';
+    }
+    for (const [site, count] of [['downloads', d.downloads_active], ['uploads', d.uploads_active]]) {
+        document.querySelectorAll(`[data-badge="${site}"]`).forEach((badge) => {
+            badge.textContent = count;
+            badge.hidden = !(count > 0);
+        });
+    }
     const el = document.getElementById('aj-header-credits');
     if (!el) return;
     el.textContent = d.credits;

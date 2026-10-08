@@ -1,6 +1,6 @@
 <?php
 use appleJuiceNETZ\GUI\View;
-/** @var list<array> $nav @var string $nav_site @var int $uploads_active @var object $lang */
+/** @var list<array> $nav @var string $nav_site @var int $uploads_active @var int $downloads_active @var object $lang */
 ?>
 <nav class="app-tabbar" aria-label="<?= $e($lang->UI->page_of_nav) ?>">
     <?php foreach ($nav as $item): ?>
@@ -8,8 +8,9 @@ use appleJuiceNETZ\GUI\View;
         <a href="index.php?site=<?= $e($item['site']) ?>" class="app-tab<?= $nav_site === $item['site'] ? ' is-active' : '' ?>"<?= $nav_site === $item['site'] ? ' aria-current="page"' : '' ?>>
             <span class="app-tab-icon">
                 <?= View::icon($item['icon']) ?>
-                <?php if ($item['site'] === 'uploads' && $uploads_active > 0): ?>
-                    <span class="tag is-danger is-rounded app-tab-badge"><?= (int)$uploads_active ?></span>
+                <?php $badges = ['downloads' => $downloads_active, 'uploads' => $uploads_active]; $badge = $badges[$item['site']] ?? null; ?>
+                <?php if ($badge !== null): ?>
+                    <span class="tag is-danger is-rounded app-tab-badge" data-badge="<?= $e($item['site']) ?>"<?= $badge > 0 ? '' : ' hidden' ?>><?= (int)$badge ?></span>
                 <?php endif; ?>
             </span>
             <span class="app-tab-label"><?= $e($item['label']) ?></span>

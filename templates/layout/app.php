@@ -14,19 +14,28 @@ $pageTitle = trim(($title !== '' ? $title . ' – ' : '') . 'appleJuice phpGUI')
     <meta name="csrf-token" content="<?= $e($csrf) ?>">
     <title><?= $e($pageTitle) ?></title>
     <link rel="icon" type="image/svg+xml" href="assets/img/apple-icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f5a623">
     <link rel="stylesheet" href="<?= $e(View::asset('vendor/bulma/bulma.min.css')) ?>">
     <link rel="stylesheet" href="<?= $e(View::asset('css/app.css')) ?>">
     <script src="<?= $e(View::asset('js/theme.js')) ?>"></script>
 </head>
-<body data-site="<?= $e($site) ?>" data-poll="<?= $e(implode(',', $poll)) ?>">
+<?php
+$rememberLogin = $_SESSION['remember_login'] ?? null;
+unset($_SESSION['remember_login']);
+?>
+<?php if ($rememberLogin !== null): ?>
+<script type="application/json" id="remember-login-data"><?= json_encode($rememberLogin, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>
+<?php endif; ?>
+<body data-site="<?= $e($site) ?>" data-poll="<?= $e(implode(',', $poll)) ?>" data-refresh="<?= (int)$_ENV['GUI_REFRESH_INTERVAL'] ?>">
 <?= View::iconSprite() ?>
 <a class="skip-link" href="#main"><?= $e($ui->skip) ?></a>
 
 <div class="app">
-    <?= $partial('sidebar', compact('nav', 'nav_site', 'plugins', 'uploads_active', 'lang', 'faq_url', 'site')) ?>
+    <?= $partial('sidebar', compact('nav', 'nav_site', 'plugins', 'uploads_active', 'downloads_active', 'lang', 'faq_url', 'site')) ?>
 
     <div class="app-main">
-        <?= $partial('topbar', compact('credits', 'credits_negative', 'nick', 'permalink', 'lang', 'title', 'csrf')) ?>
+        <?= $partial('topbar', compact('credits', 'credits_negative', 'download_speed', 'upload_speed', 'nick', 'permalink', 'lang', 'title', 'csrf')) ?>
 
         <main id="main" class="app-content" tabindex="-1">
             <?php foreach ($flash as $f): ?>
@@ -54,12 +63,12 @@ $pageTitle = trim(($title !== '' ? $title . ' – ' : '') . 'appleJuice phpGUI')
         </main>
 
         <footer class="app-footer">
-            <span>create with <?= View::icon('heart-fill') ?> by <b>kddk22</b>, inspired by <b>UP</b></span>
+            <span>create with <?= View::icon('heart-fill') ?> by <b>kddk22</b> &amp; <b>red171</b>, inspired by <b>UP</b></span>
             <span class="has-text-weight-bold">v<?= $e($version) ?></span>
         </footer>
     </div>
 
-    <?= $partial('tabbar', compact('nav', 'nav_site', 'uploads_active', 'lang')) ?>
+    <?= $partial('tabbar', compact('nav', 'nav_site', 'uploads_active', 'downloads_active', 'lang')) ?>
 </div>
 
 <?= $partial('modals', compact('lang', 'csrf')) ?>

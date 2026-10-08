@@ -2,7 +2,7 @@
 use appleJuiceNETZ\GUI\View;
 /** @var object $lang */
 ?>
-<div class="columns is-multiline">
+<div class="columns is-multiline dashboard-columns">
     <div class="column is-12-tablet is-8-desktop">
         <section class="box">
             <h2 class="box-title"><?= View::icon('hdd-network') ?> <?= $e($lang->Start->current_server) ?></h2>
@@ -19,10 +19,10 @@ use appleJuiceNETZ\GUI\View;
             <?php endif; ?>
         </div>
 
-        <?php if ($news !== ''): ?>
-            <section class="box news">
+        <?php if ($show_news): ?>
+            <section class="box news" id="aj-news" hidden>
                 <h2 class="box-title"><?= View::icon('newspaper') ?> appleJuice News</h2>
-                <div class="content"><?= $news ?></div>
+                <div class="content" id="aj-news-content"></div>
             </section>
         <?php endif; ?>
     </div>
@@ -47,7 +47,7 @@ use appleJuiceNETZ\GUI\View;
                 <div><dt><?= $e($lang->Start->upload_speed) ?></dt><dd id="aj-dash-ul-speed"><?= $e($ul_speed) ?></dd></div>
                 <div><dt><?= $e($lang->Start->public_ip) ?></dt><dd><?= $e($public_ip) ?></dd></div>
                 <div><dt><?= $e($lang->Start->shared_users) ?></dt><dd><?= $e($users) ?></dd></div>
-                <div><dt><?= $e($lang->Start->all_data) ?></dt><dd><?= $e($filecount) ?> (<?= $e($filesize) ?>)</dd></div>
+                <div><dt><?= $e($lang->Start->all_data) ?></dt><dd class="kv-nowrap"><?= $e($filecount) ?> (<?= $e($filesize) ?>)</dd></div>
             </dl>
         </section>
     </div>

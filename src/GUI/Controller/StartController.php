@@ -6,7 +6,6 @@ namespace appleJuiceNETZ\GUI\Controller;
 
 use appleJuiceNETZ\appleJuice\Share;
 use appleJuiceNETZ\GUI\Format;
-use appleJuiceNETZ\GUI\Html;
 use appleJuiceNETZ\GUI\Icons;
 use appleJuiceNETZ\GUI\Page;
 use appleJuiceNETZ\GUI\ViewData;
@@ -34,7 +33,7 @@ final class StartController extends Controller
             'credits' => Format::bytes($info['CREDITS']),
             'credits_negative' => (float)$info['CREDITS'] < 0,
             'share' => $this->shareSummary(),
-            'server_time' => date('d.m.Y - H:i:s', (int)((float)$servers->server_xml['TIME']['VALUES']['CDATA'] / 1000)),
+            'server_time' => date('H:i:s', (int)((float)$servers->server_xml['TIME']['VALUES']['CDATA'] / 1000)),
             'core_version' => $coreinfo['VERSION'],
             'core_os' => $coreinfo['SYSTEM'],
             'core_os_icon' => Icons::osByName($coreinfo['SYSTEM']),
@@ -46,9 +45,9 @@ final class StartController extends Controller
             'ul_speed' => Format::speed($info['UPLOADSPEED']),
             'public_ip' => $this->networkIp($servers),
             'users' => $net['users'],
-            'filecount' => number_format((float)$net['filecount'], 0, ',', '.'),
+            'filecount' => Format::compactCount($net['filecount']),
             'filesize' => Format::bytes($net['filesize']),
-            'news' => !empty($_ENV['GUI_SHOW_NEWS']) ? $this->news((string)$coreinfo['VERSION']) : '',
+            'show_news' => !empty($_ENV['GUI_SHOW_NEWS']),
             'new_version_text' => null,
         ], poll: ['dashboard'], scripts: ['dashboard.js']);
     }
@@ -88,30 +87,5 @@ final class StartController extends Controller
         $s = (int)$seconds;
 
         return sprintf('%dh %dmin', intdiv($s, 3600), intdiv($s % 3600, 60));
-    }
-
-    /** Dashboard-News: kurzer Fremd-HTML-Inhalt, bereinigt und im UTF-8-Format. */
-    private function news(string $version): string
-    {
-        $cache = $_SESSION['phpaj']['news'] ?? null;
-        if (is_array($cache) && ($cache['version'] ?? '') === $version && ($cache['time'] ?? 0) > time() - 3600) {
-            return $cache['html'];
-        }
-        $body = @file_get_contents(
-            sprintf($_ENV['NEWS_URL'], $version ?: '404'),
-            false,
-            stream_context_create(['http' => ['timeout' => 3, 'ignore_errors' => true]])
-        );
-        $html = '';
-        if (is_string($body)) {
-            $body = Html::toUtf8($body);
-            if (preg_match('~<body\b[^>]*>(.*?)</body\s*>~is', $body, $m) === 1) {
-                $body = $m[1];
-            }
-            $html = Html::sanitize($body);
-        }
-        $_SESSION['phpaj']['news'] = ['version' => $version, 'time' => time(), 'html' => $html];
-
-        return $html;
     }
 }

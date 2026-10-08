@@ -16,9 +16,18 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 ## Modernisierung und Sicherheit
 
 - Modernisierung und Bereinigung der phpGUI sind ausdrücklich erlaubt, einschließlich Architektur, PHP-Code, Templates, CSS, JavaScript und Abhängigkeiten. Bestehende Funktionen und Integrationen erhalten und durch Tests absichern; das Layout soll erkennbar bleiben und mobile-first ausgelegt sein.
+- Interne URLs, Routen, API-Strukturen und deren Aufteilung dürfen geändert und vereinheitlicht werden. Alle betroffenen Frontend-Aufrufer, Templates und Tests gemeinsam anpassen; bisherige interne URLs müssen nicht erhalten bleiben. Bestehende Funktionen erhalten. Die Frontend-Integration für `web+ajfsp` und bestehende Permalinks müssen weiterhin funktionieren, einschließlich Link-Übernahme und Anmeldung. Diese Integrationen bei Änderungen an Routing, Authentifizierung oder Link-Verarbeitung durch Regressionstests absichern.
 - PHP 8.5 ist das freigegebene Modernisierungsziel. PHP-Dateien und Laufzeit entsprechend anpassen; Versionsanforderungen in Composer, Container und Dokumentation gemeinsam aktualisieren. Kompatibilität durch tatsächlich ausgeführte Tests unter PHP 8.5 belegen, nicht allein durch Syntaxprüfung.
 - Sicherheit systematisch verbessern: Eingaben validieren, Ausgaben kontextgerecht maskieren, dynamische Codeausführung vermeiden, zustandsändernde Aktionen gegen CSRF schützen und Sessions sowie Core-Zugriffe absichern. Zugangsdaten und Passwort-Hashes weder protokollieren noch unbeabsichtigt ausgeben. Gewollte Integrationen, insbesondere Permalinks und Browser-Erweiterung, kompatibel halten und Sicherheitsgrenzen dokumentieren.
 - Sicherheitsverbesserungen gelten erst nach Prüfung als umgesetzt. Keine pauschale Behauptung, die Anwendung sei „sicher“; getestete Schutzmaßnahmen und verbleibende Risiken konkret benennen.
+
+## Interne API
+
+- Daten- und Bildanfragen laufen über `index.php?api=<endpoint>`, Seiten über `index.php?site=<page>`. API-Anfragen benötigen eine angemeldete Session.
+- `api=live&type=status,downloads,uploads,dashboard,search` liefert Live-Daten als JSON; `api=limits&action=set_maxdl|set_maxul` speichert Limits per POST mit `value` in Bytes/s und `_csrf`.
+- `api=news` liefert die bereinigten Dashboard-News als JSON (`html`); das Dashboard lädt sie nach dem Seitenaufbau per JavaScript, damit ein langsamer News-Server weder Seite noch Polling blockiert. `NewsFeed` gibt dafür die Session-Sperre während des Abrufs frei.
+- `api=directories&dir=<path>` liefert Verzeichnisse als JSON; `api=parts&dl_id=<id>` beziehungsweise `usr_id=<id>` liefert Part-Maps als SVG. `PartMapService` lädt die fachlichen Daten unabhängig von HTTP und SVG-Rendering.
+- `tests/raw_routes.php`, `tests/raw_errors.php` und `tests/link_integrations.php` prüfen API-Verträge, Core-Fehler und Link-Integrationen gegen einen isolierten Mock-Core. Browserseitige Protokollhandler-Registrierung zusätzlich im HTTPS-Browser prüfen.
 
 ## Release vorbereiten
 
@@ -50,12 +59,23 @@ python3 ../ajcore-mock/mock_core.py --scenario busy --port 19851 --shareidx-byte
 
 Szenarien: `empty`, `busy` (Downloads in allen Status, Uploads, Shares, Suchergebnisse, Sonderzeichen in Namen), `firewalled`, `disconnected` (negative Credits). Der Mock ersetzt keinen Test gegen den echten Core; Formate stammen aus `core-src/docs/openapi.yaml` und einem laufenden Core 0.35.185.93.
 
-phpGUI lokal gegen den Mock (PHP 8.5 mit `gd` und `zip` nötig): vordere Web-Dateien liegen unter `public/`.
+phpGUI lokal gegen den Mock: PHP 8.5 und die in `composer.json` deklarierten Laufzeit-Erweiterungen `ctype`, `dom`, `json`, `libxml`, `mbstring`, `openssl`, `session` und `xml` verwenden. `curl` wird ausschließlich für HTTP-Tests benötigt und ist unter `require-dev` deklariert. `gd` und `zip` sind keine Anforderungen der Anwendung; Part-Maps werden als SVG erzeugt. Web-Dateien liegen unter `public/`. Der Dockerfile installiert keine zusätzlichen PHP-Erweiterungen; vor einem Container-Build die Composer-Plattformanforderungen gegen das Basisimage prüfen.
 
 ```shell
-php -S 127.0.0.1:8088 -t public:
+php -S 127.0.0.1:8088 -t public
 ```
 
 Core-URL im Login: `http://127.0.0.1:19851`, Passwort leer.
 
-`tests/visual/screenshots.py` erzeugt Screenshots aller Seiten in 360, 768 und 1280 px, hell und dunkel, und meldet horizontalen Overflow sowie JS-Fehler (`report.json`). Voraussetzung ist Playwright mit Firefox in einem eigenen venv; Ausgaben unter `tests/visual/out/` sind ignoriert.
+## Tests
+
+- Tests in diesem Repository dürfen ausschließlich in PHP geschrieben werden, einschließlich Test-Hilfen und Regressionstests. Keine Python-, JavaScript- oder Shell-Tests hinzufügen. Der externe Mock-Core ist ein separater Dienst und fällt nicht unter diese Quellcode-Regel.
+- Tests unter PHP 8.5 ausführen. HTTP-Tests nutzen `tests/HttpClient.php` und benötigen `ext-curl`; Prüfungen werfen bei Fehlern Exceptions und sind unabhängig von der PHP-Einstellung `zend.assertions`.
+- Schreibende Tests ausschließlich gegen einen isolierten Mock-Core ausführen, nicht gegen einen echten Core.
+
+```shell
+php tests/smoke.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
+php tests/raw_routes.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
+php tests/link_integrations.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
+php tests/raw_errors.php http://127.0.0.1:19851
+```

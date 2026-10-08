@@ -20,12 +20,12 @@ final class DownloadPartsController extends Controller
         if ($dlId > 0 && !empty($dl->cache['DOWNLOAD'][$dlId])) {
             $d = $dl->download($dlId);
             $title = $d['TEMPORARYFILENUMBER'] . '.data - ' . $d['FILENAME'];
-            $image = 'index.php?site=showparts&dl_id=' . $dlId;
+            $image = 'index.php?api=parts&dl_id=' . $dlId;
             $back = 'index.php?site=downloads';
         } elseif ($usrId > 0 && !empty($dl->cache['USER'][$usrId])) {
             $u = $dl->user($usrId);
             $title = $u['NICKNAME'] . ' - ' . $u['FILENAME'];
-            $image = 'index.php?site=showparts&usr_id=' . $usrId;
+            $image = 'index.php?api=parts&usr_id=' . $usrId;
             $back = 'index.php?site=dl_users&dl_id=' . (int)$u['DOWNLOADID'];
         } else {
             $this->redirect('index.php?site=downloads');

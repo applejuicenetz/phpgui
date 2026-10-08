@@ -4,7 +4,9 @@
     "ok": "Ok",
     "login": "Login",
     "password": "Passwort",
-    "remember": "an mich erinnern!"
+    "remember": "Login merken",
+    "url_info": "Vollständige Core-URL mit Protokoll und XML-API-Port, z. B. http://localhost:9851.",
+    "password_info": "Im Core muss zwingend ein Passwort gesetzt sein."
   },
   "System": {
     "warning": "Warnung!",
@@ -29,7 +31,6 @@
       "dl_users": "Downloaddetails",
       "404": "Error 404",
       "help": "Hilfe",
-      "user_settings": "Benutzereinstellungen",
       "dl_parts": "Download-Teile",
       "login": "Login"
     },
@@ -49,7 +50,7 @@
     "connected_since": "verbunden seit",
     "open_connections": "Verbindungen",
     "shared_users": "Shared User",
-    "all_data": "gesamte Dateien",
+    "all_data": "Dateien",
     "network_info": "Netzwerk Informationen",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
@@ -71,7 +72,6 @@
     "logout": "Logout",
     "permalink": "Permalink (enthält Zugangsdaten)",
     "kick_core": "Core beenden",
-    "user_settings": "Benutzereinstellungen",
     "help": "Hilfe"
   },
   "Downloads": {
@@ -180,7 +180,7 @@
     "part": "Part"
   },
   "Uploads": {
-    "limit": "Upload-Slots zu {percent} % belegt",
+    "limit": "Slots: {percent}%",
     "files": "Datei",
     "username": "Username",
     "statuss": "Status",
@@ -246,7 +246,6 @@
     "password": "Passwort",
     "head_con": "Verbindungseinstellungen",
     "head_all": "Standardeinstellungen",
-    "user_title": "Benutzereinstellungen",
     "unit_kb": "KB/s",
     "unit_mb": "MB/s"
   },
@@ -311,6 +310,7 @@
     "searches": "Suchen"
   },
   "UI": {
+    "units": {"thousand": "Tausend", "million": "Millionen", "billion": "Milliarden"},
     "menu": "Menü",
     "more": "Mehr",
     "close": "Schließen",
