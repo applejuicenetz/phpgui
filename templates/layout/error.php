@@ -10,7 +10,7 @@ $lang = \appleJuiceNETZ\GUI\Format::lang();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <title><?= (int)$code ?> – appleJuice phpGUI</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon_32.png">
+    <link rel="icon" type="image/svg+xml" href="assets/img/apple-icon.svg">
     <link rel="stylesheet" href="<?= $e(View::asset('vendor/bulma/bulma.min.css')) ?>">
     <link rel="stylesheet" href="<?= $e(View::asset('css/app.css')) ?>">
     <script src="<?= $e(View::asset('js/theme.js')) ?>"></script>

@@ -13,9 +13,7 @@ $pageTitle = trim(($title !== '' ? $title . ' – ' : '') . 'appleJuice phpGUI')
     <meta name="color-scheme" content="light dark">
     <meta name="csrf-token" content="<?= $e($csrf) ?>">
     <title><?= $e($pageTitle) ?></title>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon_32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon_16.png">
-    <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon/favicon_128.png">
+    <link rel="icon" type="image/svg+xml" href="assets/img/apple-icon.svg">
     <link rel="stylesheet" href="<?= $e(View::asset('vendor/bulma/bulma.min.css')) ?>">
     <link rel="stylesheet" href="<?= $e(View::asset('css/app.css')) ?>">
     <script src="<?= $e(View::asset('js/theme.js')) ?>"></script>
