@@ -1,4 +1,4 @@
-FROM php:8.5-apache
+FROM docker.io/php:8.5-apache
 
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
@@ -16,7 +16,7 @@ RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-COPY --from=composer /usr/bin/composer /usr/local/bin/
+COPY --from=docker.io/composer /usr/bin/composer /usr/local/bin/
 
 COPY . /var/www/html/
 

@@ -1,11 +1,10 @@
 .github
+.git
 .idea
 .run
 .env
 .gitignore
-README.md
-CHANGELOG.md
 Dockerfile
 AGENTS.md
-CLAUDE.md
 tests/
+TODO.txt

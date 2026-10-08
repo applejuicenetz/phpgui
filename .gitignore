@@ -3,3 +3,4 @@
 tests/visual/out/
 .venv/
 __pycache__/
+TODO.txt
