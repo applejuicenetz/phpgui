@@ -1,2 +1,5 @@
 .idea
 .env
+tests/visual/out/
+.venv/
+__pycache__/
