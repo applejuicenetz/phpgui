@@ -7,6 +7,9 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Oberfläche mit Vue.js modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
 - alle Seiten laden jetzt dynamisch, ohne die gesamte Seite neu zu laden; Seitenwechsel und AJAX-Updates sind jetzt flüssiger
 - Neuer Login-Hintergrund, Dashboard mit getrennten Karten für Netzwerk und Community, Verbindungen mit konfiguriertem Maximum
+- Kopfzeile zeigt Download, Upload, Credits und offene Verbindungen als vier Symbol-Tags, auch auf dem Smartphone; neuer Button mit Kettensymbol für „Links hinzufügen“
+- Dashboard auf dem Smartphone mit vier Kacheln nebeneinander; Verbindungsdauer oben rechts in der Server-Karte, Community vor Netzwerk und Core-Informationen
+- Suche: bereits geteilte oder ladende Treffer sind markiert; ajfsp Link und Link mit Quelle lassen sich pro Treffer anzeigen
 - Downloads, Uploads und Freigaben übersichtlicher; Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
 - Im Dialog „Links hinzufügen“ ein Zielverzeichnis wählen und AJL-Dateien direkt auswählen und in Downloads umwandeln; Teileanzeige jetzt scharf skalierbar
 - Statistik der geteilten Dateien als Tab unter „geteilte Ordner“; Addons-Menü und phpinfo entfallen
