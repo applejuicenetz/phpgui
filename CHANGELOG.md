@@ -13,6 +13,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Suche in geteilten Ordnern direkt auf der Freigaben-Seite, über alle Ordner und Unterordner, ohne Beachtung der Groß-/Kleinschreibung
 - Sprache im Benutzermenü per Flagge (Deutsch/Englisch) pro Browser umschaltbar; `GUI_LANGUAGE` bleibt der Standard
 - Öffentliche IP im Dashboard teilweise maskiert, die vollständige Adresse erscheint beim Darüberfahren
+- Uploads: Klick auf den Dateinamen öffnet den geteilten Ordner auf der passenden Seite und hebt die Datei hervor
 - Geteilte Dateien: „ajfsp Link anzeigen“ öffnet ein Overlay mit dem Link und dem Link mit Quelle zum Kopieren
 - Login-Seite zeigt, wie viele per `ajfsp`-Link oder `.ajl`-Datei übergebene Links nach der Anmeldung übernommen werden
 - Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt (nicht unter iOS)

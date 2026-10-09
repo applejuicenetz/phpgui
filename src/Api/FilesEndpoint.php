@@ -44,7 +44,20 @@ final class FilesEndpoint extends Endpoint
         $share = new Share();
         $dir = $this->directory();
         $filter = trim(Request::get('q'));
-        $result = $share->page($dir, max(1, Request::int('page', 1)), self::PAGE_SIZE, $filter);
+        $page = max(1, Request::int('page', 1));
+        $focus = Request::int('focus', 0);
+        if ($focus > 0 && $dir !== null && $filter === '' && !array_key_exists('page', $_GET)) {
+            // Jump to the page that holds the requested file.
+            try {
+                $target = $share->get_file($focus);
+                if (Share::parentDirectory((string)$target['FILENAME']) === rtrim($dir, '/\\') || Share::parentDirectory((string)$target['FILENAME']) === $dir) {
+                    $page = intdiv($share->position($dir, $target), self::PAGE_SIZE) + 1;
+                }
+            } catch (\UnexpectedValueException) {
+                // Unknown ID: show the first page.
+            }
+        }
+        $result = $share->page($dir, $page, self::PAGE_SIZE, $filter);
         $files = [];
         foreach ($result['files'] as $f) {
             $files[] = [

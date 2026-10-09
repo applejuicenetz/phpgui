@@ -133,6 +133,8 @@ final class CoreData
             $rows[] = [
                 'id' => (int)$id,
                 'name' => (string)($share['SHORTFILENAME'] ?? ''),
+                'share_id' => (int)$u['SHAREID'],
+                'dir' => isset($share['FILENAME']) ? Share::parentDirectory((string)$share['FILENAME']) : '',
                 'nick' => (string)($u['NICK'] ?? ''),
                 'priority' => (int)$u['PRIORITY'],
                 'pdl' => $bonus,

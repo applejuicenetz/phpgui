@@ -141,6 +141,26 @@ class Share
         return compact('files', 'total', 'pages', 'page');
     }
 
+    /** Parent directory of a share path, using the separator the path itself uses. */
+    public static function parentDirectory(string $filename): string
+    {
+        $separator = str_contains($filename, '\\') ? '\\' : '/';
+        $cut = strrpos($filename, $separator);
+        return $cut === false || $cut === 0 ? ($cut === 0 ? $separator : '') : substr($filename, 0, $cut);
+    }
+
+    /** Zero-based position of a file among the direct children of its directory, in list order (name, then ID). */
+    public function position(string $directory, array $file): int
+    {
+        $position = 0;
+        $this->scan(function ($other) use ($directory, $file, &$position): void {
+            if (!$this->inDirectory($other, $directory)) return;
+            $order = strcmp((string)$other['SHORTFILENAME'], (string)$file['SHORTFILENAME']) ?: ((int)$other['ID'] <=> (int)$file['ID']);
+            if ($order < 0) $position++;
+        });
+        return $position;
+    }
+
     public function statistics(string $field, bool $descending): array
     {
         $selection = new ShareSelection(50, $field, $descending);

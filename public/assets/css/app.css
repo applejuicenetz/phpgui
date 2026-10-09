@@ -412,3 +412,8 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 /* Inline popover with the ajfsp link and the link with source. */
 .link-popover { z-index: 80; padding: .75rem; max-width: calc(100vw - 16px); box-shadow: var(--bulma-shadow); }
 .link-popover .input { font-family: var(--bulma-family-code); cursor: text; }
+
+/* Uploads: file name links to the shared folder. Share row reached from there is highlighted. */
+.upload-file-link { color: inherit; }
+.upload-file-link:hover { text-decoration: underline; }
+.responsive-table tr.is-focus { outline: 2px solid var(--bulma-link); outline-offset: -2px; }
