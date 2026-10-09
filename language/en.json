@@ -296,6 +296,8 @@
     "none": "No searches yet.",
     "empty": "No results yet.",
     "info": "Info",
+    "in_share": "Already shared",
+    "in_download": "Already downloading",
     "searches": "Searches"
   },
   "UI": {

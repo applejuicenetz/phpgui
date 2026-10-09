@@ -7,8 +7,10 @@ namespace appleJuiceNETZ\Api;
 use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\appleJuice\Downloads;
 use appleJuiceNETZ\appleJuice\Search;
+use appleJuiceNETZ\appleJuice\Server;
 use appleJuiceNETZ\appleJuice\Share;
 use appleJuiceNETZ\appleJuice\Uploads;
+use appleJuiceNETZ\GUI\CoreSettings;
 use appleJuiceNETZ\GUI\subs;
 
 /** Turns the Core's legacy XML structures into flat arrays with raw values (no formatting, no translation). */
@@ -174,6 +176,16 @@ final class CoreData
             ];
         }
         $entries = [];
+        $shared = [];
+        $loading = [];
+        if (!empty($search->cache['SEARCHENTRY'])) {
+            (new Share())->scan(static function (array $file) use (&$shared): void {
+                $shared[strtolower((string)$file['CHECKSUM'])] = true;
+            });
+            $downloads = new Downloads();
+            $downloads->refresh_cache();
+            foreach ($downloads->cache['DOWNLOAD'] ?? [] as $download) $loading[strtolower((string)$download['HASH'])] = true;
+        }
         foreach ($search->cache['SEARCHENTRY'] ?? [] as $eid => $e) {
             $name = (string)$e['phpaj_FILENAME'];
             $entries[] = [
@@ -183,11 +195,34 @@ final class CoreData
                 'size' => (int)$e['SIZE'],
                 'format' => (string)$e['phpaj_FORMAT'],
                 'sources' => (int)$e['phpaj_COUNT'],
+                'shared' => isset($shared[strtolower((string)$e['CHECKSUM'])]),
+                'downloading' => isset($loading[strtolower((string)$e['CHECKSUM'])]),
                 'link' => 'ajfsp://file|' . $name . '|' . $e['CHECKSUM'] . '|' . $e['SIZE'] . '/',
             ];
         }
 
-        return ['searches' => $searches, 'entries' => $entries, 'total' => (int)($search->cache['SEARCHENTRY_count'] ?? 0)];
+        return ['searches' => $searches, 'entries' => $entries, 'total' => (int)($search->cache['SEARCHENTRY_count'] ?? 0), 'source' => $entries === [] ? null : self::source()];
+    }
+
+    /**
+     * Own address used for source links, like the Java GUI: external IP and listen port,
+     * plus the connected server when there is one. Empty when the Core cannot tell.
+     *
+     * @return array{ip:string,port:int,server_host:string,server_port:int}
+     */
+    public static function source(): array
+    {
+        $servers = new Server();
+        $network = $servers->server_xml['NETWORKINFO'] ?? [];
+        $info = $network[array_key_first($network)] ?? [];
+        $server = $servers->server_xml['SERVER'][$info['CONNECTEDWITHSERVERID'] ?? -1] ?? [];
+        $connected = !empty($server['HOST']) && (string)($info['CONNECTEDWITHSERVERID'] ?? '-1') !== '-1';
+        return [
+            'ip' => (string)($info['IP'] ?? ''),
+            'port' => (int)(CoreSettings::read($servers->core)['port'] ?? 0),
+            'server_host' => $connected ? (string)$server['HOST'] : '',
+            'server_port' => $connected ? (int)($server['PORT'] ?? 0) : 0,
+        ];
     }
 
     public static function relInfo(): string

@@ -61,19 +61,22 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .app-topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: .5rem; height: var(--app-topbar-h); padding: 0 .5rem 0 .75rem; background: var(--app-surface); border-bottom: 1px solid var(--app-line); }
 .app-title { flex: 1; min-width: 0; font-size: 1.05rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .app-topbar-actions { display: flex; align-items: center; gap: .25rem; }
-.app-transfer-speeds { display: flex; flex-direction: column; align-items: stretch; gap: .1rem; min-width: 7.5rem; padding: 0 .35rem; font-size: .7rem; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.app-transfer-speeds > span { display: flex; align-items: center; justify-content: flex-end; gap: .2rem; }
-.app-transfer-speeds .icon { width: .9rem; height: .9rem; }
+.app-status-tags { display: grid; grid-template-columns: repeat(2, max-content); gap: .2rem .35rem; padding-right: .25rem; font-variant-numeric: tabular-nums; }
+.app-status-tag.tag { display: inline-flex; justify-content: flex-end; gap: .5rem; height: 1.25rem; padding: 0 .2rem 0 .4rem; font-size: .7rem; line-height: 1; color: var(--bulma-text-strong); background: color-mix(in srgb, var(--status-tint) 16%, var(--app-surface)); }
+.app-status-tag:nth-child(1) { --status-tint: #6793b5; }
+.app-status-tag:nth-child(2) { --status-tint: #b49b63; }
+.app-status-tag:nth-child(3) { --status-tint: #709a85; }
+.app-status-tag:nth-child(4) { --status-tint: #9382ad; }
+.app-status-tag > span:not(.icon) { flex: 1; text-align: right; }
+.app-status-tag .icon { order: 1; flex: none; width: .9rem; height: .9rem; color: color-mix(in srgb, var(--status-tint) 80%, var(--bulma-text-strong)); }
 .app-menu-toggle { display: none; }
 .app-icon-button { display: inline-flex; align-items: center; justify-content: center; width: var(--app-touch); height: var(--app-touch); border: 0; border-radius: 50%; background: transparent; color: var(--bulma-text); cursor: pointer; }
 .app-icon-button:hover { background: var(--app-surface-alt); }
 .app-icon-button.is-small { width: 2.25rem; height: 2.25rem; }
+.app-icon-button.app-add-links { border-radius: .6rem; color: var(--bulma-link); background: color-mix(in srgb, var(--bulma-link) 14%, var(--app-surface)); }
+.app-icon-button.app-add-links:hover { background: color-mix(in srgb, var(--bulma-link) 24%, var(--app-surface)); }
 .app-icon-button .icon { width: 1.3em; height: 1.3em; }
-.app-credits { display: flex; align-items: center; gap: .4rem; padding: .15rem .5rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); line-height: 1.1; }
-.app-credits > .icon { color: var(--bulma-warning); }
-.app-credits small { display: none; text-transform: uppercase; font-size: .6rem; color: var(--bulma-text-weak); }
-.app-credits > span { display: flex; flex-direction: column; font-size: .8rem; font-weight: 600; }
-.app-credits.is-negative > span > span { color: var(--bulma-danger); }
+
 
 /* Sidebar: auf Mobil als Overlay über „Mehr" */
 .app-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(18rem, 85vw); display: flex; flex-direction: column; background: var(--app-surface); border-right: 1px solid var(--app-line); transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility 0s .2s; overflow-y: auto; padding-bottom: var(--app-safe-b); }
@@ -158,6 +161,17 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .stat-body { display: flex; flex-direction: column; justify-content: center; padding: .75rem 1rem; min-width: 0; }
 .stat-value { font-size: 1.35rem; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
 .stat-label { font-size: .75rem; text-transform: uppercase; color: var(--bulma-text-weak); }
+.server-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.server-card-heading .dl-meta { margin: 0; text-align: right; }
+@media screen and (max-width: 768px) {
+    .dashboard-columns .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; }
+    .dashboard-columns .stat-card { flex-direction: column; }
+    .dashboard-columns .stat-icon { min-width: 0; padding: .45rem; }
+    .dashboard-columns .stat-icon .icon { width: 1.25rem; height: 1.25rem; }
+    .dashboard-columns .stat-body { flex: 1; padding: .45rem .25rem; text-align: center; }
+    .dashboard-columns .stat-value { font-size: .9rem; }
+    .dashboard-columns .stat-label { margin-top: .2rem; font-size: .6rem; line-height: 1.25; overflow-wrap: anywhere; }
+}
 
 .kv { margin: 0; }
 .kv > div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-bottom: 1px solid var(--app-line); }
@@ -259,10 +273,15 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 @media screen and (min-width: 769px) and (max-width: 1023px) { .app-menu-toggle.app-icon-button { display: inline-flex; } }
 .toast-host { position: fixed; right: 1rem; top: 4rem; z-index: 100; max-width: calc(100vw - 2rem); }
 .app-toast { margin-bottom: .5rem; } .app-topbar .dropdown-menu { max-width: calc(100vw - 1rem); } .dropdown-item { white-space: normal; }  .buttons { gap: .5rem; }
-@media screen and (max-width: 768px) { .app-credits > .icon { display: none; } .app-topbar-actions { gap: 0; } .app-topbar-actions .app-icon-button { width: 2.5rem; } .app-title { font-size: .95rem; } } .col-check input { cursor: pointer; } .col-check { min-width: 1.5rem; }
+@media screen and (max-width: 768px) { .app-topbar-actions { gap: 0; } .app-topbar-actions .app-icon-button { width: 2.5rem; } .app-title { font-size: .95rem; } } .col-check input { cursor: pointer; } .col-check { min-width: 1.5rem; }
 .responsive-table td[data-label]:not([data-label=""]):not(.col-name):not(.col-progress)::before { content: attr(data-label); color: var(--bulma-text-weak); font-size: .75rem; text-transform: uppercase; }
 .responsive-table tr.is-selected { background: var(--bulma-link-light); border-color: var(--bulma-link); }
 .responsive-table tr[hidden] { display: none; }
+#search-table tr.is-shared { background: color-mix(in srgb, var(--bulma-success) 20%, transparent); }
+#search-table tr.is-downloading { background: color-mix(in srgb, var(--bulma-info) 20%, transparent); }
+#search-table tr.is-shared.is-downloading { background: color-mix(in srgb, var(--bulma-warning) 20%, transparent); }
+#search-table .tag.is-success.is-light { background: color-mix(in srgb, var(--bulma-success) 40%, var(--bulma-scheme-main)); color: var(--bulma-text-strong); }
+#search-table .tag.is-info.is-light { background: color-mix(in srgb, var(--bulma-info) 40%, var(--bulma-scheme-main)); color: var(--bulma-text-strong); }
 .dl-name { font-weight: 600; overflow-wrap: anywhere; word-break: break-word; }
 .dl-meta { font-size: .8rem; color: var(--bulma-text-weak); overflow-wrap: anywhere; }
 .dl-eta { min-height: 1.2em; line-height: 1.2; }
@@ -301,7 +320,6 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .app-footer { padding-bottom: .75rem; }
     .app-tabbar { display: none; }
     .app-menu-toggle { display: inline-flex; }
-    .app-credits small { display: block; }
     .box { padding: 1.25rem; }
     .speed-panel-grid { grid-template-columns: minmax(12rem, 1fr) minmax(19rem, 24rem); }
     .toolbar { flex-direction: row; align-items: center; flex-wrap: wrap; }
@@ -369,6 +387,9 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .responsive-table td.col-status .tag { min-width: 6rem; justify-content: center; }
     .responsive-table .col-narrow { width: 1%; white-space: nowrap; padding-left: .5rem; padding-right: .5rem; }
     .responsive-table .col-actions { width: 1%; }
+    #search-table tr.is-shared td { background: color-mix(in srgb, var(--bulma-success) 20%, transparent); }
+    #search-table tr.is-downloading td { background: color-mix(in srgb, var(--bulma-info) 20%, transparent); }
+    #search-table tr.is-shared.is-downloading td { background: color-mix(in srgb, var(--bulma-warning) 20%, transparent); }
     .responsive-table tr.is-selected td { background: var(--bulma-link-light); }
     .responsive-table tr[hidden] { display: none; }
     .sort-bar { display: none; }

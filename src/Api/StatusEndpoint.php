@@ -17,6 +17,8 @@ final class StatusEndpoint extends Endpoint
         return CoreData::activeCounts() + [
             'nick' => (string)($settings['nick'] ?? ''),
             'credits' => (float)$info['CREDITS'],
+            'connections' => (int)($info['OPENCONNECTIONS'] ?? 0),
+            'max_connections' => (int)($settings['maxconnections'] ?? 0),
             'download_speed' => (int)$info['DOWNLOADSPEED'],
             'upload_speed' => (int)$info['UPLOADSPEED'],
             'firewalled' => $server->netstats['firewalled'] === 'true',

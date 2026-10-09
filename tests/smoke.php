@@ -11,6 +11,9 @@ $started = microtime(true);
 $dashboard = $client->get('dashboard');
 check(microtime(true)-$started < 2, 'Dashboard independent of news');
 check(is_int($dashboard['time']), 'Raw server timestamp');
+$status = $client->get('status');
+check(is_int($status['connections']) && is_int($status['max_connections']), 'Raw topbar connection counts');
+check($status['connections'] === $dashboard['connections'] && $status['max_connections'] === $dashboard['max_connections'], 'Topbar and dashboard connection counts match');
 check($client->get('parts',['dl_id'=>105])['parts'] !== [], 'Download parts');
 $sources = $client->get('sources',['dl_id'=>105]);
 check(isset($sources['groups']['active']), 'Source groups');
@@ -46,6 +49,8 @@ $client->post('settings',['change'=>'connection','maxcon'=>'250','maxul'=>'26214
 check($client->get('downloads')['max']===1263616, 'Settings bytes');
 $client->post('search',['action'=>'start','searchstring'=>'probe']);
 check(in_array('probe',array_column($client->get('search')['searches'],'text'),true), 'Search start');
+$marks=[];foreach($client->get('search')['entries'] as $e)$marks[$e['name']]=[$e['shared'],$e['downloading']];
+check(($marks['debian-live-xfce.iso']??null)===[true,false] && ($marks['debian-notes.txt']??null)===[false,true] && ($marks['debian-unknown.iso']??null)===[false,false], 'Search share/download marks');
 $run=bin2hex(random_bytes(4));
 $link='ajfsp://file|targeted-'.$run.'.iso|'.md5($run).'|5000/';
 check($client->post('links',['ajfsp_link'=>$link,'ajfsp_target'=>'/Linux//ISOs/'])['results'][0]['ok'], 'Targeted link');
