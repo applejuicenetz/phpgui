@@ -79,9 +79,9 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .app-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(18rem, 85vw); display: flex; flex-direction: column; background: var(--app-surface); border-right: 1px solid var(--app-line); transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility 0s .2s; overflow-y: auto; padding-bottom: var(--app-safe-b); }
 .app-sidebar.is-open { transform: none; visibility: visible; transition: transform .2s ease; }
 .app-scrim { position: fixed; inset: 0; z-index: 55; background: hsla(0, 0%, 0%, .45); }
-.app-brand { display: block; padding: 0; overflow: hidden; border-bottom: 1px solid var(--app-line); }
+.app-brand { display: block; box-sizing: border-box; height: var(--app-topbar-h); padding: 0; overflow: hidden; border-bottom: 1px solid var(--app-line); }
 /* Full-bleed grass banner; cover keeps the apple visible at the left. */
-.app-brand-logo { display: block; width: 100%; height: auto; aspect-ratio: 1.9; object-fit: cover; object-position: left center; }
+.app-brand-logo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left 0%; }
 .app-nav { list-style: none; margin: 0; padding: .5rem; }
 .app-nav-link { display: flex; align-items: center; gap: .75rem; min-height: var(--app-touch); padding: .5rem .75rem; border-radius: var(--bulma-radius); color: var(--bulma-text); cursor: pointer; list-style: none; }
 
@@ -312,14 +312,14 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .modal-card { max-width: 36rem; align-self: center; border-radius: var(--app-radius); margin: auto; }
 
     .app-sidebar { width: var(--app-sidebar-w-narrow); transform: none; visibility: visible; transition: width .2s ease; overflow: visible; z-index: 50; }
-    .app-brand-logo { aspect-ratio: 1; object-position: 12% center; }
+    .app-brand-logo { object-position: 12% 0%; }
     .app-nav-label{ display: none; }
     .app-nav-link { justify-content: center; position: relative; padding: .5rem; }
     .app-nav-badge { position: absolute; top: .1rem; right: .1rem; }
     .app-main { margin-left: var(--app-sidebar-w-narrow); }
     .app-sidebar.is-open { width: var(--app-sidebar-w); box-shadow: var(--bulma-shadow); }
     .app-sidebar.is-open .app-nav-label{ display: block; }
-    .app-sidebar.is-open .app-brand-logo { aspect-ratio: 1.9; object-position: left center; }
+    .app-sidebar.is-open .app-brand-logo { object-position: left 0%; }
     .app-sidebar.is-open .app-nav-link { justify-content: flex-start; padding: .5rem .75rem; }
     .app-sidebar.is-open .app-nav-badge { position: static; }
 }
@@ -345,6 +345,18 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .responsive-table td.col-name .dl-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .responsive-table td.col-progress { min-width: 10rem; }
     #dl-table td, #dl-table th { padding-left: .5rem; padding-right: .5rem; }
+    /* Uploads: fixed layout so column widths do not jump when rows come and go. */
+    #ul-table { table-layout: fixed; width: 100%; font-variant-numeric: tabular-nums; }
+    #ul-table th:nth-child(1) { width: 2.25rem; }
+    #ul-table th:nth-child(3) { width: 7rem; }
+    #ul-table th:nth-child(4) { width: 13.2rem; }
+    #ul-table th:nth-child(5) { width: 7.5rem; }
+    #ul-table td, #ul-table th { padding-left: .5rem; padding-right: .5rem; overflow: hidden; text-overflow: ellipsis; }
+    #ul-table td.col-name { min-width: 0; width: auto; }
+    #ul-table td.col-progress { min-width: 0; }
+    #ul-table td.col-name .dl-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #ul-table td.col-progress .dl-meta { white-space: nowrap; }
+    #ul-table .progress-line { display: flex; justify-content: space-between; gap: .5rem; }
     #dl-table td.col-progress .dl-meta { white-space: nowrap; }
     .responsive-table .col-check { width: 1%; }
     /* Fixed width so status changes never shift the other columns. */
@@ -362,7 +374,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .app-sidebar, .app-sidebar.is-open { width: var(--app-sidebar-w); box-shadow: none; }
     .app-menu-toggle { display: none; }
     .app-nav-label { display: block; }
-    .app-brand-logo { aspect-ratio: 1.9; object-position: left center; }
+    .app-brand-logo { object-position: left 0%; }
     .app-nav-link { justify-content: flex-start; padding: .5rem .75rem; }
     .app-nav-badge { position: static; }
 

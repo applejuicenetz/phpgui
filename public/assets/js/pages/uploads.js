@@ -10,7 +10,9 @@ export default {
         const rows = computed(() => (source.data.value?.items || []).slice().sort((a,b) => {
             const states = ['active','queue','connecting','failed','unknown'];
             const result = sort.value === 'name' ? a.name.localeCompare(b.name) : states.indexOf(a.status)-states.indexOf(b.status);
-            return direction.value === 'asc' ? result : -result;
+            // Tie-breakers keep row order stable between polls.
+            const stable = result || a.name.localeCompare(b.name) || String(a.id).localeCompare(String(b.id));
+            return direction.value === 'asc' || !result ? stable : -result;
         }));
         function changeSort(field) { direction.value = sort.value === field && direction.value === 'asc' ? 'desc' : 'asc'; sort.value = field; }
         return {...source,rows,sort,direction,changeSort,t,bytes,speed,directImage};
