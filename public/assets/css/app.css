@@ -405,3 +405,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .lang-flag:hover, .lang-flag.is-active { opacity: 1; }
 .lang-flag.is-active { border-color: var(--bulma-link); }
 .lang-flag img { display: block; border-radius: 2px; }
+
+/* Inline popover with the ajfsp link and the link with source. */
+.link-popover { z-index: 80; padding: .75rem; max-width: calc(100vw - 16px); box-shadow: var(--bulma-shadow); }
+.link-popover .input { font-family: var(--bulma-family-code); cursor: text; }

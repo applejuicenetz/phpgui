@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace appleJuiceNETZ\Api;
 
+use appleJuiceNETZ\appleJuice\Server;
 use appleJuiceNETZ\appleJuice\Share;
+use appleJuiceNETZ\GUI\CoreSettings;
 use appleJuiceNETZ\GUI\Request;
 
 final class FilesEndpoint extends Endpoint
@@ -14,6 +16,27 @@ final class FilesEndpoint extends Endpoint
     private function directory(): ?string
     {
         return array_key_exists('dir', $_GET) ? Request::get('dir') : null;
+    }
+
+    /**
+     * Own address used for source links, like the Java GUI: external IP and listen port,
+     * plus the connected server when there is one. Empty when the Core cannot tell.
+     *
+     * @return array{ip:string,port:int,server_host:string,server_port:int}
+     */
+    private function source(): array
+    {
+        $servers = new Server();
+        $network = $servers->server_xml['NETWORKINFO'] ?? [];
+        $info = $network[array_key_first($network)] ?? [];
+        $server = $servers->server_xml['SERVER'][$info['CONNECTEDWITHSERVERID'] ?? -1] ?? [];
+        $connected = !empty($server['HOST']) && (string)($info['CONNECTEDWITHSERVERID'] ?? '-1') !== '-1';
+        return [
+            'ip' => (string)($info['IP'] ?? ''),
+            'port' => (int)(CoreSettings::read($servers->core)['port'] ?? 0),
+            'server_host' => $connected ? (string)$server['HOST'] : '',
+            'server_port' => $connected ? (int)($server['PORT'] ?? 0) : 0,
+        ];
     }
 
     public function get(): array
@@ -37,7 +60,7 @@ final class FilesEndpoint extends Endpoint
             $folders[] = ['path' => (string)$path, 'name' => (string)$name];
         }
         return [
-            'files' => $files, 'folders' => $folders, 'filter' => $filter, 'spent' => $share->spentprio,
+            'files' => $files, 'source' => $files === [] ? null : $this->source(), 'folders' => $folders, 'filter' => $filter, 'spent' => $share->spentprio,
             'page' => $result['page'], 'pages' => $result['pages'], 'total' => $result['total'],
         ];
     }
