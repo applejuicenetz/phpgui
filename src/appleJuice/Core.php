@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace appleJuiceNETZ\appleJuice;
 
 use appleJuiceNETZ\Exception\CoreAuthException;
@@ -8,7 +10,7 @@ use appleJuiceNETZ\Exception\CoreUnavailableException;
 class Core
 {
     /** Send a Core command; decode XML incrementally without buffering the response. */
-    public function command($type, $request, $update = '0', ?callable $shareConsumer = null)
+    public function command(string $type, string $request, array|string $update = '0', ?callable $shareConsumer = null): array|string
     {
         $request .= str_contains($request, '?') ? '&' : '?';
         $url = $_SESSION['core_host'] . '/' . $type . '/' . $request
@@ -40,7 +42,7 @@ class Core
         }
     }
 
-    public function getcoreversion()
+    public function getcoreversion(): array
     {
         if (empty($_SESSION['cache']['STATUSBAR']['VERSION'])) {
             $info = $this->command('xml', 'information.xml');

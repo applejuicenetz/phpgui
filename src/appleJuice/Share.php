@@ -1,107 +1,84 @@
 <?php
 
-namespace appleJuiceNETZ\appleJuice;
+declare(strict_types=1);
 
-use appleJuiceNETZ\GUI\subs;
+namespace appleJuiceNETZ\appleJuice;
 
 class Share
 {
-    var $core;
-    var $dirxml;
+    private Core $core;
+    private array $dirxml = [];
     private array $selectedFiles = [];
     private ?array $summary = null;
     private array $objectFiles = [];
-    var $separator;
-    var $spentprio;
-    var $sharemode;
+    public string $separator;
+    public int $spentprio = 0;
 
-    function __construct()
+    public function __construct()
     {
         $this->core = new Core();
         unset($_SESSION['cache']['SHARE'], $_SESSION['phpaj']['share_LASTTIMESTAMP']);
+        $_SESSION['SEPARATOR'] ??= '/';
         $this->separator =& $_SESSION['SEPARATOR'];
-        //Um den checkbox-status beim share richtig zu zeigen
-        $this->sharemode = array("subdirectory" => "checked",
-            "singledirectory" => "");
     }
 
-    function add_share($name, $sharesubs = 0)
+    private function sharedDirectories(): array
     {
-        $oldshares = $this->get_shared_dirs();
-        $countshares = count($oldshares) + 1;
-        $share_args = "countshares=" . $countshares . "&";
-        $i = 0;
-        foreach ($oldshares as $a) {
-            $i++;
-            $cur_dir = $this->get_shared_dir($a);
-            $share_args .= "sharedirectory" . $i . "=" . urlencode($cur_dir['NAME'])
-                . "&sharesub" . $i . "="
-                . (($cur_dir['SHAREMODE'] == "subdirectory") ? "True&" : "False&");
+        $this->get_shared_dirs(true);
+        return array_values($this->dirxml['SHARE']['VALUES']['DIRECTORY']);
+    }
+
+    private function saveDirectories(array $directories): void
+    {
+        $parameters = ['countshares' => count($directories)];
+        foreach (array_values($directories) as $index => $directory) {
+            $number = $index + 1;
+            $parameters['sharedirectory' . $number] = $directory['NAME'];
+            $parameters['sharesub' . $number] = $directory['SHAREMODE'] === 'subdirectory' ? 'True' : 'False';
         }
-        $share_args .= "sharedirectory" . $countshares . "=" . urlencode($name)
-            . "&sharesub" . $countshares . "=";
-        $share_args .= !empty($sharesubs) ? "True&" : "False&";
-        $this->core->command("function", "setsettings?" . $share_args);
+        $this->core->command('function', 'setsettings?' . http_build_query($parameters));
+        $this->dirxml = [];
     }
 
-    function del_share($name)
+    public function add_share(string $name, int|bool $sharesubs = false): void
     {
-        $oldshares = $this->get_shared_dirs();
-        $countshares = count($oldshares) - 1;
-        $share_args = "countshares=" . $countshares . "&";
-        $i = 0;
-        foreach ($oldshares as $a) {
-            $i++;
-            $cur_dir = $this->get_shared_dir($a);
-            if ($cur_dir['NAME'] != $name) {
-                $share_args .= "sharedirectory$i=" . urlencode($cur_dir['NAME'])
-                    . "&sharesub$i="
-                    . (($cur_dir['SHAREMODE'] == "subdirectory") ? "True&" : "False&");
-            } else {
-                $i--;
-            }
+        $directories = $this->sharedDirectories();
+        $directories[] = ['NAME' => $name, 'SHAREMODE' => $sharesubs ? 'subdirectory' : 'singledirectory'];
+        $this->saveDirectories($directories);
+    }
+
+    public function del_share(string $name): void
+    {
+        $directories = array_filter($this->sharedDirectories(), static fn(array $directory): bool => $directory['NAME'] !== $name);
+        $this->saveDirectories($directories);
+    }
+
+    public function changesub(string $name, int|bool $sharesubs = false): void
+    {
+        $directories = $this->sharedDirectories();
+        foreach ($directories as &$directory) {
+            if ($directory['NAME'] === $name) $directory['SHAREMODE'] = $sharesubs ? 'subdirectory' : 'singledirectory';
         }
-        $this->core->command("function", "setsettings?" . $share_args);
+        unset($directory);
+        $this->saveDirectories($directories);
     }
 
-    function changesub($name, $sharesubs = 0)
+    public function get_temp(): string
     {
-        $shares = $this->get_shared_dirs();
-        $countshares = count($shares);
-        $share_args = "countshares=" . $countshares . "&";
-        $i = 0;
-        foreach ($shares as $a) {
-            $i++;
-            $cur_dir = $this->get_shared_dir($a);
-            if ($cur_dir['NAME'] != $name) {
-                $share_args .= "sharedirectory$i=" . urlencode($cur_dir['NAME'])
-                    . "&sharesub$i="
-                    . (($cur_dir['SHAREMODE'] == "subdirectory") ? "True&" : "False&");
-            } else {
-                $share_args .= "sharedirectory$i=" . urlencode($cur_dir['NAME'])
-                    . "&sharesub$i=" . (($sharesubs) ? "True&" : "False&");
-            }
-        }
-        $this->core->command("function", "setsettings?" . $share_args);
+        if ($this->dirxml === []) $this->get_shared_dirs();
+        $path = (string)($this->dirxml['TEMPORARYDIRECTORY']['VALUES']['CDATA'] ?? '');
+        return strlen($path) > 1 ? rtrim($path, '/\\') : $path;
     }
 
-    function get_temp()
+    public function get_shared_dirs(int|bool $force = false): array
     {
-        if (empty($this->dirxml)) $this->get_shared_dirs();
-        $tempdirname = $this->dirxml['TEMPORARYDIRECTORY']['VALUES']['CDATA'];
-        $tempdirname = substr($tempdirname, 0, strlen($tempdirname) - 1);
-        return $tempdirname;
-    }
-
-    function get_shared_dirs($force = 0)
-    {
-        if (empty($this->dirxml) || $force)
-            $this->dirxml = $this->core->command("xml", "settings.xml");
-        ksort($this->dirxml['SHARE']['VALUES']['DIRECTORY']);    //sortieren
+        if ($this->dirxml === [] || $force) $this->dirxml = $this->core->command('xml', 'settings.xml');
+        $this->dirxml['SHARE']['VALUES']['DIRECTORY'] ??= [];
+        ksort($this->dirxml['SHARE']['VALUES']['DIRECTORY']);
         return array_keys($this->dirxml['SHARE']['VALUES']['DIRECTORY']);
     }
 
-    function get_shared_dir($id)
+    public function get_shared_dir(int|string $id): array
     {
         return $this->dirxml['SHARE']['VALUES']['DIRECTORY'][$id];
     }
@@ -110,11 +87,6 @@ class Share
     public function scan(callable $consumer): void
     {
         $this->core->command('xml', 'share.xml', '0', $consumer);
-    }
-
-    public function refresh_cache($minutes): void
-    {
-        $this->summary = null;
     }
 
     public function summary(): array
@@ -129,23 +101,32 @@ class Share
         return $this->summary = $summary;
     }
 
-    private function inDirectory(array $file, string $directory): bool
+    /** Direct children only; with a filter the whole subtree is searched. A null directory matches every share. */
+    private function inDirectory(array $file, ?string $directory, bool $recursive = false): bool
     {
+        if ($directory === null) return true;
         $separator = str_contains($file['FILENAME'], '\\') ? '\\' : '/';
         $prefix = rtrim($directory, $separator) . $separator;
         return str_starts_with($file['FILENAME'], $prefix)
-            && !str_contains(substr($file['FILENAME'], strlen($prefix)), $separator);
+            && ($recursive || !str_contains(substr($file['FILENAME'], strlen($prefix)), $separator));
     }
 
-    public function page(string $directory, int $page = 1, int $pageSize = 200): array
+    /** Case-insensitive substring match on the full path; an empty filter matches everything. */
+    public static function matchesFilter(string $filename, string $filter): bool
     {
+        return $filter === '' || str_contains(mb_strtolower($filename), mb_strtolower($filter));
+    }
+
+    public function page(?string $directory, int $page = 1, int $pageSize = 200, string $filter = ''): array
+    {
+        $filter = trim($filter);
         $page = max(1, $page);
         $selection = new ShareSelection($page * $pageSize);
         $total = 0;
         $this->spentprio = 0;
-        $this->scan(function ($file) use ($selection, $directory, &$total): void {
+        $this->scan(function ($file) use ($selection, $directory, $filter, &$total): void {
             if ((int)$file['PRIORITY'] > 1) $this->spentprio += (int)$file['PRIORITY'];
-            if (!$this->inDirectory($file, $directory)) return;
+            if (!$this->inDirectory($file, $directory, $filter !== '') || !self::matchesFilter($file['FILENAME'], $filter)) return;
             $total++;
             $selection->consume($file);
         });
@@ -169,7 +150,7 @@ class Share
         return $files;
     }
 
-    public function get_file($id)
+    public function get_file(int|string $id): array
     {
         if (isset($this->selectedFiles[$id])) return $this->selectedFiles[$id];
         if (!isset($this->objectFiles[$id])) {
@@ -182,7 +163,7 @@ class Share
         return $this->objectFiles[$id];
     }
 
-    public function setpriority($ids, $priority): void
+    public function setpriority(array $ids, int $priority): void
     {
         $parameters = ['priority' => $priority];
         foreach ($ids as $index => $id) $parameters[$index === 0 ? 'id' : 'id' . $index] = (int)$id;
@@ -190,54 +171,29 @@ class Share
         $this->selectedFiles = $this->objectFiles = [];
     }
 
-    function directory($dir = "", $getseponly = 0)
+    public function directory(string $dir = '', int|bool $getseponly = false): array
     {
-        $dirlist = array();
-        if (!empty($dir))
-            $dirarg = "&directory=" . rawurlencode($dir);
-        else
-            $dirarg = '';
-        $dirxml = $this->core->command("xml", "directory.xml?$dirarg");
-        //pfad seperator holen
-        $sep = array_keys($dirxml['FILESYSTEM']);
-        $this->separator = $sep[0];
-        $sep =& $this->separator;
-        if ($getseponly == 1) return;
-        if (!empty($dirxml['DIR'])) {
-            //workarround fuer den windows desktop->arbeitsplatz mist
-            $deskname = array_keys($dirxml['DIR']);
-            if (!empty($deskname) && !empty($dirxml['DIR'][$deskname[0]]['DIR'])
-                && $dirxml['DIR'][$deskname[0]]['TYPE'] === "5")
-                $dirxml['DIR'] = $dirxml['DIR'][$deskname[0]]['DIR'];
-            //schoen sortieren ;)
-            ksort($dirxml['DIR']);
+        $xml = $this->core->command('xml', 'directory.xml?' . http_build_query(['directory' => $dir]));
+        $this->separator = (string)(array_key_first($xml['FILESYSTEM'] ?? []) ?? '/');
+        if ($getseponly) return [];
+        $directories = $xml['DIR'] ?? [];
+        $first = $directories[array_key_first($directories)] ?? [];
+        // Windows may wrap drives in a virtual desktop node.
+        if (($first['TYPE'] ?? '') === '5' && !empty($first['DIR'])) $directories = $first['DIR'];
+        ksort($directories);
+        $result = [];
+        if ($dir !== '') {
+            $segments = explode($this->separator, $dir);
+            array_pop($segments);
+            $result[] = [implode($this->separator, $segments), '..'];
         }
-
-        //eintrag ".."
-        $dirup = '';
-        if (!empty($dir)) {
-            $dirup = explode($sep, $dir);
-            array_pop($dirup);
-            $dirup = join($sep, $dirup);
-            array_push($dirlist, array($dirup, ".."));
-        }
-
-        //restliche eintraege
-        if (!empty($dirxml['DIR'])) {
-            foreach (array_keys($dirxml['DIR']) as $a) {
-                if (empty($dirxml['DIR'][$a]['PATH'])
-                    && $dirxml['DIR'][$a]['TYPE'] == '4') {
-                    //pfad falls noetig bestimmen
-                    $dirxml['DIR'][$a]['PATH'] =
-                        preg_replace("/\\" . $sep . "+/",
-                            $sep, $dir . $sep . $dirxml['DIR'][$a]['NAME']);
-                }
-                //pfad + name in array packen
-                array_push($dirlist, array($dirxml['DIR'][$a]['PATH'],
-                    $dirxml['DIR'][$a]['NAME']));
+        foreach ($directories as $directory) {
+            $path = $directory['PATH'] ?? '';
+            if ($path === '' && (string)$directory['TYPE'] === '4') {
+                $path = rtrim($dir, $this->separator) . $this->separator . $directory['NAME'];
             }
+            $result[] = [$path, $directory['NAME']];
         }
-
-        return $dirlist;
+        return $result;
     }
 }

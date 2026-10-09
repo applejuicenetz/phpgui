@@ -245,7 +245,7 @@ final class ViewData
         }
         $entries = [];
         if (!empty($search->cache['SEARCHENTRY'])) {
-            foreach (array_keys($search->sortieren($sort, $dir)) as $eid) {
+            foreach (array_keys($search->sortedResults($sort, $dir)) as $eid) {
                 $e = $search->cache['SEARCHENTRY'][$eid];
                 $name = (string)$e['phpaj_FILENAME'];
                 $link = 'ajfsp://file|' . $name . '|' . $e['CHECKSUM'] . '|' . $e['SIZE'] . '/';

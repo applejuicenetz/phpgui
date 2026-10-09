@@ -1,267 +1,145 @@
 <?php
 
+declare(strict_types=1);
+
 namespace appleJuiceNETZ\appleJuice;
 
 use appleJuiceNETZ\GUI\subs;
-use appleJuiceNETZ\Kernel;
 
 class Downloads
 {
-    var $cache;
-    var $core;
-    var $subdirs;
+    public array $cache;
+    public array $subdirs = [];
+    private Core $core;
 
-    function __construct()
+    public function __construct()
     {
+        $_SESSION['cache']['DOWNLOADS'] ??= [];
         $this->cache =& $_SESSION['cache']['DOWNLOADS'];
         $this->core = new Core();
     }
 
-    //stand der daten
-    function time()
+    public function time(): string
     {
-        return date("j.n.y - H:i:s",
-            ($this->cache['TIME']['VALUES']['CDATA']) / 1000);
+        return date('j.n.y - H:i:s', (int)((float)($this->cache['TIME']['VALUES']['CDATA'] ?? 0) / 1000));
     }
 
-    //neue infos vom core holen
-    function refresh_cache()
+    public function refresh_cache(): void
     {
-        $corecommand_filter = "down;ids;user";
-        //alte id-liste aus cache loeschen
-        if (!empty($this->cache['IDS']))
-            unset($this->cache['IDS']);
-        if (empty($this->cache['LASTTIMESTAMP']))
-            $this->cache['LASTTIMESTAMP'] = 0;
-        $this->cache =
-            $this->core->command("xml", "modified.xml?timestamp="
-                . $this->cache['LASTTIMESTAMP']
-                . "&filter=" . $corecommand_filter, $this->cache);
+        unset($this->cache['IDS']);
+        $timestamp = $this->cache['LASTTIMESTAMP'] ?? 0;
+        $this->cache = $this->core->command('xml', 'modified.xml?timestamp=' . $timestamp . '&filter=down;ids;user', $this->cache);
         $this->cache['LASTTIMESTAMP'] = $this->cache['TIME']['VALUES']['CDATA'];
-        $this->subdirs = array();
         $this->process_sources();
     }
 
-    //quelleninfos verarbeiten
-    function process_sources()
+    public function process_sources(): void
     {
-        if (!empty($this->cache['DOWNLOAD'])) {
-            //infos der downloads aus quellen zur�cksetzen
-            foreach (array_keys($this->cache['DOWNLOAD']) as $a) {
-                //alte downloads loeschen
-                if (empty($this->cache['IDS']['VALUES']['DOWNLOADID'][$a])) {
-                    unset($this->cache['DOWNLOAD'][$a]);
-                    continue;
-                }
-                $download =& $this->cache['DOWNLOAD'][$a];
-                $download['phpaj_quellen_gesamt'] = 0;
-                $download['phpaj_quellen_dl'] = 0;
-                $download['phpaj_dl_speed'] = 0;
-                $download['phpaj_ids_quellen_queue'] = array();
-                $download['phpaj_ids_quellen_dl'] = array();
-                $download['phpaj_ids_quellen_rest'] = array();
-                $download['phpaj_quellen_queue'] = 0;
-                $download['phpaj_loading_parts'] = array();
-                $download['phpaj_STATUS'] = $download['STATUS'];
-                //Fortschritt auf 100% wenn Status = Fertig
-                if ($download['STATUS'] === "14")
-                    $download['READY'] = $download['SIZE'];
-                $download['phpaj_READY'] = $download['READY'];
+        $this->subdirs = [];
+        foreach (array_keys($this->cache['DOWNLOAD'] ?? []) as $id) {
+            if (empty($this->cache['IDS']['VALUES']['DOWNLOADID'][$id])) {
+                unset($this->cache['DOWNLOAD'][$id]);
+                continue;
             }
-
-            if (!empty($this->cache['USER'])) {
-                foreach (array_keys($this->cache['USER']) as $b) {
-                    //pruefen, ob quelle noch existiert, wenn nicht -> loeschen
-                    if (empty($this->cache['IDS']['DOWNLOADID']
-                    [$this->cache['USER'][$b]['DOWNLOADID']]
-                    ['USERID'][$b])) {
-                        unset($this->cache['USER'][$b]);
-                        continue;
-                    }
-                    $quelle =& $this->cache['USER'][$b];
-                    $this->cache['DOWNLOAD']
-                    [$quelle['DOWNLOADID']]['phpaj_quellen_gesamt']++;
-                    //laufende uebertragungen
-                    if ($quelle['STATUS'] === "7") {
-                        //quellen zaehlen + geschwindigkeit berechnen
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_quellen_dl']++;
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_dl_speed'] +=
-                            $quelle['SPEED'];
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_READY'] +=
-                            $quelle['ACTUALDOWNLOADPOSITION'] - $quelle['DOWNLOADFROM'];
-                        //ladende parts eines downloads fuer anzeige merken
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_loading_parts']
-                        [$b]['DOWNLOADFROM'] = $quelle['DOWNLOADFROM'];
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_loading_parts']
-                        [$b]['DOWNLOADTO'] = $quelle['DOWNLOADTO'];
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_loading_parts']
-                        [$b]['ACTUALDOWNLOADPOSITION'] =
-                            $quelle['ACTUALDOWNLOADPOSITION'];
-                        //id merken
-                        array_push($this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_ids_quellen_dl'], $b);
-                    } elseif ($quelle['STATUS'] === "5"
-                        || $quelle['STATUS'] === "14") {
-                        //quellen in warteschlange zaehlen
-                        $this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]['phpaj_quellen_queue']++;
-                        array_push($this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]
-                        ['phpaj_ids_quellen_queue'], $b);
-                    } else {
-                        //rest
-                        array_push($this->cache['DOWNLOAD']
-                        [$quelle['DOWNLOADID']]
-                        ['phpaj_ids_quellen_rest'], $b);
-                    }
-                }
+            $download =& $this->cache['DOWNLOAD'][$id];
+            foreach (['gesamt', 'dl', 'queue'] as $group) {
+                $download['phpaj_quellen_' . $group] = 0;
             }
-
-            foreach (array_keys($this->cache['DOWNLOAD']) as $a) {
-                $download =& $this->cache['DOWNLOAD'][$a];
-                $this->subdirs[$download['TARGETDIRECTORY']][$a] =& $download;
-                $download['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $download['FILENAME'], $download['HASH'], $download['SIZE']);
-
-                //werte zum sortieren
-                $download['phpaj_REST'] =
-                    $download['SIZE'] - $download['phpaj_READY'];
-                $download['phpaj_DONE'] =
-                    ($download['phpaj_READY'] / $download['SIZE']) * 100;
-                //zwischen Suchen und Uebertrage unterscheiden
-                if ($download['STATUS'] == "0") {
-                    if ($download['phpaj_quellen_dl'] > 0)
-                        $download['phpaj_STATUS'] = '0_2';
-                    else
-                        $download['phpaj_STATUS'] = '0_1';
-                }
-                // numeric sort priority: aktiv first (0), then searching (1), paused (2), aborted (3), done (4)
-                $download['phpaj_STATUS_SORT'] = match($download['phpaj_STATUS']) {
-                    '0_2'  => 0,
-                    '0_1'  => 1,
-                    '18'   => 2,
-                    '17'   => 3,
-                    '14'   => 4,
-                    default => 5,
-                };
+            foreach (['queue', 'dl', 'rest'] as $group) {
+                $download['phpaj_ids_quellen_' . $group] = [];
             }
-
+            $download['phpaj_dl_speed'] = 0;
+            $download['phpaj_loading_parts'] = [];
+            $download['phpaj_STATUS'] = (string)$download['STATUS'];
+            if ((string)$download['STATUS'] === '14') $download['READY'] = $download['SIZE'];
+            $download['phpaj_READY'] = $download['READY'];
+            unset($download);
+        }
+        foreach ($this->cache['USER'] ?? [] as $id => $source) {
+            $downloadId = $source['DOWNLOADID'];
+            if (!isset($this->cache['DOWNLOAD'][$downloadId])
+                || empty($this->cache['IDS']['DOWNLOADID'][$downloadId]['USERID'][$id])) {
+                unset($this->cache['USER'][$id]);
+                continue;
+            }
+            $download =& $this->cache['DOWNLOAD'][$downloadId];
+            $download['phpaj_quellen_gesamt']++;
+            $status = (string)$source['STATUS'];
+            $group = match ($status) { '7' => 'dl', '5', '14' => 'queue', default => 'rest' };
+            $download['phpaj_ids_quellen_' . $group][] = $id;
+            if ($group !== 'rest') $download['phpaj_quellen_' . $group]++;
+            if ($status === '7') {
+                $download['phpaj_dl_speed'] += $source['SPEED'];
+                $download['phpaj_READY'] += $source['ACTUALDOWNLOADPOSITION'] - $source['DOWNLOADFROM'];
+                $download['phpaj_loading_parts'][$id] = array_intersect_key($source,
+                    array_flip(['DOWNLOADFROM', 'DOWNLOADTO', 'ACTUALDOWNLOADPOSITION']));
+            }
+            unset($download);
+        }
+        foreach (array_keys($this->cache['DOWNLOAD'] ?? []) as $id) {
+            $download =& $this->cache['DOWNLOAD'][$id];
+            $download['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $download['FILENAME'], $download['HASH'], $download['SIZE']);
+            $download['phpaj_REST'] = $download['SIZE'] - $download['phpaj_READY'];
+            $download['phpaj_DONE'] = (float)$download['SIZE'] > 0
+                ? $download['phpaj_READY'] / $download['SIZE'] * 100 : 0.0;
+            if ((string)$download['STATUS'] === '0') {
+                $download['phpaj_STATUS'] = $download['phpaj_quellen_dl'] > 0 ? '0_2' : '0_1';
+            }
+            $download['phpaj_STATUS_SORT'] = match ($download['phpaj_STATUS']) {
+                '0_2' => 0, '0_1' => 1, '18' => 2, '17' => 3, '14' => 4, default => 5,
+            };
+            $this->subdirs[$download['TARGETDIRECTORY']][$id] = $download;
+            unset($download);
         }
     }
 
-
-    //ids aller downloads sortiert zurueckgeben
-    function ids($sort = "name", $subdir = "", $dir = null)
+    public function ids(string $sort = 'name', string $subdir = '', ?int $dir = null): array
     {
-        $dlsort = array();
-        if (!empty($this->subdirs[$subdir])) {
-            //sortieren
-            switch ($sort) {
-                case "sources":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_quellen_gesamt', SORT_NUMERIC, $dir ?? 1);
-                    break;
-                case "status":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_STATUS_SORT', SORT_NUMERIC, $dir ?? 0);
-                    break;
-                case "speed":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_dl_speed', SORT_NUMERIC, $dir ?? 1);
-                    break;
-                case "pdl":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'POWERDOWNLOAD', SORT_NUMERIC, $dir ?? 1);
-                    break;
-                case "size":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'SIZE', SORT_NUMERIC, $dir ?? 1);
-                    break;
-                case "rest":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_REST', SORT_NUMERIC, $dir ?? 0);
-                    break;
-                case "done":
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'phpaj_DONE', SORT_NUMERIC, $dir ?? 1);
-                    break;
-                default:
-                    $dlsort = subs::ajsort($this->subdirs[$subdir],
-                        'FILENAME', SORT_STRING, $dir ?? 0);
-                    break;
+        [$field, $mode, $defaultDirection] = match ($sort) {
+            'sources' => ['phpaj_quellen_gesamt', SORT_NUMERIC, 1],
+            'status' => ['phpaj_STATUS_SORT', SORT_NUMERIC, 0],
+            'speed' => ['phpaj_dl_speed', SORT_NUMERIC, 1],
+            'pdl' => ['POWERDOWNLOAD', SORT_NUMERIC, 1],
+            'size' => ['SIZE', SORT_NUMERIC, 1],
+            'rest' => ['phpaj_REST', SORT_NUMERIC, 0],
+            'done' => ['phpaj_DONE', SORT_NUMERIC, 1],
+            default => ['FILENAME', SORT_STRING, 0],
+        };
+        return empty($this->subdirs[$subdir]) ? []
+            : subs::ajsort($this->subdirs[$subdir], $field, $mode, $dir ?? $defaultDirection);
+    }
+
+    public function download(int|string $id): array
+    {
+        return $this->cache['DOWNLOAD'][$id];
+    }
+
+    public function user(int|string $id): array
+    {
+        return $this->cache['USER'][$id];
+    }
+
+    public function action(string $action, array $ids = [], string $value = ''): string
+    {
+        $ids = array_values($ids);
+        if ($action === 'settargetdir') {
+            $result = '';
+            foreach ($ids as $id) {
+                $result .= $action . ' &rArr; ' . $this->core->command('function',
+                    $action . '?' . http_build_query(['id' => $id, 'dir' => $value], '', '&', PHP_QUERY_RFC3986)) . '<br/>';
             }
+            return $result;
         }
-        return $dlsort;
-    }
-
-    //infos zu bestimmtem download zurueckgeben
-    function download($id)
-    {
-        $download =& $this->cache['DOWNLOAD'][$id];
-        return $download;
-    }
-
-    //infos zu bestimmter quelle zurueckgeben
-    function user($id)
-    {
-        $quelle =& $this->cache['USER'][$id];
-        return $quelle;
-    }
-
-    //action
-    function action($action, $ids = array(), $value = "")
-    {
-        $info = "";
-
-        if ($action == "settargetdir") {
-            //core kann im moment das zeilverzeichnis nur fuer einen download
-            //gleichzeitig aendern...
-            for ($v = 0, $vMax = count($ids); $v < $vMax; $v++) {
-                $info .= $action . " &rArr; "
-                    . $this->core->command("function", $action
-                        . "?id=" . $ids[$v]
-                        . "&dir=" . rawurlencode($value)) . "<br/>";
-            }
-        } else {
-            $changedl = '';
-            for ($v = 0, $vMax = count((array)$ids); $v < $vMax; $v++)
-                $changedl .= "&id$v=" . $ids[$v];
-            $changedl = str_replace("&id0=", "id=", $changedl);
-            if ($action == "setpowerdownload") {
-                $value = str_replace(",", ".", $value);
-                if ($value > 1 && $value < 2.2)
-                    $value = 2.2;
-                $value = ($value * 10) - 10;
-                $changedl .= "&Powerdownload=" . $value;
-            }
-            if ($action == "renamedownload")
-                $changedl .= "&name=" . rawurlencode($value);
-
-            $info = $action . " &rArr; "
-                . $this->core->command("function", $action . "?" . $changedl);
+        $parameters = [];
+        foreach ($ids as $index => $id) $parameters[$index === 0 ? 'id' : 'id' . $index] = $id;
+        if ($action === 'setpowerdownload') {
+            $power = (float)str_replace(',', '.', $value);
+            if ($power > 1 && $power < 2.2) $power = 2.2;
+            // The Core parses an integer; a fractional value would silently become 0.
+            $parameters['Powerdownload'] = (int)round($power * 10 - 10);
         }
-        return $info;
-    }
-
-    
-    function status($wert)
-    {
-        if ($wert == "0") {
-            $icon = "bi-search";
-        }
-        if ($wert == "0_1") {
-            $icon = "<span class='badge bg-primary'>Suchen...</span>";
-        }
-        if ($wert == "0_2") $icon = "<span class='badge bg-info'>Laden...</span>";
-        if ($wert == "0") $icon = "bi-search";
-        if ($wert == "14") $icon = "<span class='badge bg-success'>Fertig</span>";
-        if ($wert == "18") $icon = "<span class='badge bg-warning'>Pause</span>";
-        if ($wert == "17") $icon = "<span class='badge bg-danger'>Abgebrochen</span>";
-        return $icon;
+        if ($action === 'renamedownload') $parameters['name'] = $value;
+        return $action . ' &rArr; ' . $this->core->command('function',
+            $action . '?' . http_build_query($parameters, '', '&', PHP_QUERY_RFC3986));
     }
 }
