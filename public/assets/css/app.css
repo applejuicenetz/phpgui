@@ -61,6 +61,9 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .app-topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: .5rem; height: var(--app-topbar-h); padding: 0 .5rem 0 .75rem; background: var(--app-surface); border-bottom: 1px solid var(--app-line); }
 .app-title { flex: 1; min-width: 0; font-size: 1.05rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .app-topbar-actions { display: flex; align-items: center; gap: .25rem; }
+.app-heartbeat { flex: none; width: .375rem; height: .375rem; margin-right: .5rem; border-radius: 50%; background: var(--bulma-text-weak); opacity: .2; animation: app-heartbeat .6s ease-out; }
+.app-heartbeat.is-busy { opacity: .55; }
+@keyframes app-heartbeat { 0% { opacity: .6; } 100% { opacity: .2; } }
 .app-status-tags { display: grid; grid-template-columns: repeat(2, max-content); gap: .2rem .35rem; padding-right: .25rem; font-variant-numeric: tabular-nums; }
 .app-status-tag.tag { display: inline-flex; justify-content: flex-end; gap: .5rem; height: 1.25rem; padding: 0 .2rem 0 .4rem; font-size: .7rem; line-height: 1; color: var(--bulma-text-strong); background: color-mix(in srgb, var(--status-tint) 16%, var(--app-surface)); }
 .app-status-tag:nth-child(1) { --status-tint: #6793b5; }
