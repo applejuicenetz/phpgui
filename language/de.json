@@ -33,7 +33,7 @@
       "login": "Login"
     },
     "version": "Version %version% ist verfügbar!",
-    "version_akt": "Eine neue Version der phpGUI steht zur verfügung! Um Fehler zu vermeiden lade sie dir bitte über GitHub herunter und installiere das Update!"
+    "version_akt": "Eine neue Version der phpGUI steht auf GitHub zum Download bereit."
   },
   "Start": {
     "current_server": "aktueller Server",

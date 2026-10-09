@@ -32,7 +32,7 @@ class Kernel
 
         $_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
         $_ENV['FAQ_URL'] = $_ENV['FAQ_URL'] ?? 'https://applejuicenetz.github.io/faq/';
-        $_ENV['CHANGELOG_URL'] = $_ENV['CHANGELOG_URL'] ?? 'https://raw.githubusercontent.com/applejuicenetz/phpgui/beta/CHANGELOG.md';
+        $_ENV['RELEASE_URL'] = $_ENV['RELEASE_URL'] ?? 'https://api.github.com/repos/applejuicenetz/phpgui/releases/latest';
         $_ENV['SERVERLIST_URL'] = $_ENV['SERVERLIST_URL'] ?? 'http://www.applejuicenet.cc/serverlist/xmllist.php';
 
         $_ENV['ALLOWED_SERVERMSG_TAGS'] = $_ENV['ALLOWED_SERVERMSG_TAGS'] ?? '<a><b><i><u><br>';

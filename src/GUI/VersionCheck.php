@@ -24,15 +24,21 @@ final class VersionCheck
 
     private static function fetch(): ?string
     {
-        $url = $_ENV['CHANGELOG_URL'] ?? '';
+        $url = $_ENV['RELEASE_URL'] ?? '';
         if ($url === '') {
             return null;
         }
-        $body = @file_get_contents($url, false, stream_context_create(['http' => ['timeout' => 3, 'ignore_errors' => true]]));
+        // The GitHub API rejects requests without a User-Agent.
+        $body = @file_get_contents($url, false, stream_context_create(['http' => [
+            'timeout' => 3,
+            'header' => "Accept: application/vnd.github+json\r\nUser-Agent: phpGUI/" . PHP_GUI_VERSION . "\r\n",
+        ]]));
         if (!is_string($body)) {
             return null;
         }
+        $release = json_decode($body, true);
+        $tag = is_array($release) ? ($release['tag_name'] ?? null) : null;
 
-        return preg_match('/^##\s+(\d+(?:\.\d+)+)/m', $body, $m) === 1 ? $m[1] : null;
+        return is_string($tag) && preg_match('/^v?(\d+(?:\.\d+)+)$/', $tag, $m) === 1 ? $m[1] : null;
     }
 }

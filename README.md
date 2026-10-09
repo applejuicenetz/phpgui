@@ -41,7 +41,7 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `NEWS_URL`           | `http://XY`          | URL für Nachrichten                                                  |
 | `SERVERLIST_URL`     | `http://ABC`         | URL zum Abrufen neuer Server                                         |
 | `FAQ_URL`            | `http://XY`          | URL der FAQ (Hilfe-Seite und Seitenleiste)                           |
-| `CHANGELOG_URL`      | `http://XY`          | URL der CHANGELOG.md für die Prüfung auf neue Versionen              |
+| `RELEASE_URL`        | `http://XY`          | GitHub-API-URL des neuesten Releases (`tag_name`) für die Versionsprüfung |
 | `TZ`                 | `Europe/Berlin`      | Zeitzone                                                             |
 | `ALLOWED_SERVERMSG_TAGS` | `<a><b><i><u><br>` | Erlaubte HTML-Tags in Servernachrichten                            |
 | `PHP_INI_DISPLAY_ERRORS` | `On`             | PHP-Fehlerausgabe (`Off` für Produktivbetrieb empfohlen)             |
