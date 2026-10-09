@@ -17,7 +17,7 @@ final class SharesEndpoint extends Endpoint
             $d = $share->get_shared_dir($id);
             $dirs[] = ['name' => (string)$d['NAME'], 'subs' => $d['SHAREMODE'] === 'subdirectory'];
         }
-        return ['temp' => $share->get_temp(), 'dirs' => $dirs];
+        return ['temp' => $share->get_temp(), 'dirs' => $dirs, 'spent' => $share->summary()['spent']];
     }
 
     public function post(): array

@@ -417,3 +417,8 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .upload-file-link { color: inherit; }
 .upload-file-link:hover { text-decoration: underline; }
 .responsive-table tr.is-focus { outline: 2px solid var(--bulma-link); outline-offset: -2px; }
+
+/* Tab bar with the priority budget on the right. */
+.share-tabs-row { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.share-tabs-row .share-tabs { margin-bottom: 0; }
+.prio-badge { margin-left: auto; padding: .35rem .75rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); background: var(--app-surface); font-size: .85rem; white-space: nowrap; font-variant-numeric: tabular-nums; }

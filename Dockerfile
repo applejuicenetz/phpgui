@@ -18,20 +18,19 @@ RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-COPY --from=docker.io/composer /usr/bin/composer /usr/local/bin/
-
-COPY . /var/www/html/
-
-RUN cd /var/www/html && composer install --no-dev --no-interaction --optimize-autoloader
+# COPY --from=docker.io/composer /usr/bin/composer /usr/local/bin/
 
 FROM base AS dev
 
-RUN apt-get update && apt-get install -y --no-install-recommends ssl-cert && rm -rf /var/lib/apt/lists/* && \
-    a2enmod ssl && a2ensite default-ssl
+RUN apt-get update && apt-get install -y --no-install-recommends ssl-cert && a2enmod ssl && a2ensite default-ssl
 
 EXPOSE 80 443
 
 FROM base AS prod
+
+COPY . /var/www/html/
+
+# RUN cd /var/www/html && composer install --no-dev --no-interaction --optimize-autoloader
 
 EXPOSE 80
 

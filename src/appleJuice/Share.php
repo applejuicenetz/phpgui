@@ -164,7 +164,11 @@ class Share
     public function statistics(string $field, bool $descending): array
     {
         $selection = new ShareSelection(50, $field, $descending);
-        $this->scan($selection->consume(...));
+        $this->spentprio = 0;
+        $this->scan(function ($file) use ($selection): void {
+            if ((int)$file['PRIORITY'] > 1) $this->spentprio += (int)$file['PRIORITY'];
+            $selection->consume($file);
+        });
         $files = $selection->records();
         foreach ($files as &$file) $file['LINK'] = sprintf('ajfsp://file|%s|%s|%s/', $file['SHORTFILENAME'], $file['CHECKSUM'], $file['SIZE']);
         return $files;
