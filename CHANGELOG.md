@@ -16,6 +16,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Uploads: Klick auf den Dateinamen öffnet den geteilten Ordner auf der passenden Seite und hebt die Datei hervor
 - Geteilte Dateien: „ajfsp Link anzeigen“ öffnet ein Overlay mit dem Link und dem Link mit Quelle zum Kopieren
 - Login-Seite zeigt, wie viele per `ajfsp`-Link oder `.ajl`-Datei übergebene Links nach der Anmeldung übernommen werden
+- App-Symbole (Startbildschirm, installierte App) und Touch-Icon nutzen den roten Apfel der Java-GUI
 - Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt (nicht unter iOS)
 - PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
 
