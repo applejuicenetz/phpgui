@@ -28,6 +28,7 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `GUI_REFRESH_INTERVAL` | `5`                | Intervall der Live-Aktualisierung in Sekunden (1–3600)               |
 | `GUI_SHOW_NEWS`      | `1`                  | Nachrichten auf der Statusseite anzeigen                             |
 | `GUI_SHOW_SHARE`     | `1`                  | Freigabestatistiken auf der Statusseite anzeigen                     |
+| `PHP_MEMORY_LIMIT`   | `256M`               | PHP `memory_limit` (Standard im Container: `256M`)                   |
 | `TOP_SHOW_PERMALINK` | `1`                  | Dauerlink zur Instanz im Benutzermenü anzeigen (`0` blendet ihn aus) |
 | `NEWS_URL`           | `http://XY`          | URL für Nachrichten                                                  |
 | `SERVERLIST_URL`     | `http://ABC`         | URL zum Abrufen neuer Server                                         |
@@ -87,4 +88,9 @@ services:
       CORE_HOST: http://192.168.1.2
       CORE_PORT: 9851
       GUI_LANGUAGE: de
+      PHP_MEMORY_LIMIT: 256M
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 ```

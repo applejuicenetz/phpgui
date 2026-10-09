@@ -16,6 +16,7 @@
             </DockerPortBindingImpl>
           </list>
         </option>
+        <option name="buildCliOptions" value="--target dev" />
         <option name="commandLineOptions" value="--env-file .env" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="Dockerfile" />

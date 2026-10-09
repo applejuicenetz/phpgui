@@ -62,7 +62,7 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 ## Release veröffentlichen
 
 1. Einen Git-Tag mit der Version am freizugebenden Commit erstellen und einen GitHub-Release für diesen Tag veröffentlichen. Der Workflow `.github/workflows/container.yml` reagiert auf das Ereignis `release: released` (sowie auf Pushes nach `main` und manuelle Starts).
-2. Der Workflow baut Images für `linux/amd64` und `linux/arm64` auf getrennten Runnern, lädt sie per Digest zu Docker Hub und GHCR hoch und erstellt anschließend die Multi-Plattform-Tags in beiden Registries. Die regulären Image-Tags werden von `docker/metadata-action` aus dem GitHub-Ereignis abgeleitet.
+2. Der Workflow baut in einem einzigen Job per QEMU und Buildx ein Multi-Plattform-Image für `linux/amd64` und `linux/arm64` und lädt es mit allen Tags zu Docker Hub und GHCR hoch. Pushes nach `main` (und manuelle Starts auf `main`) veröffentlichen den Tag `beta`; einen Tag `main` gibt es nicht. Release-Tags (und `latest`) leitet `docker/metadata-action` aus dem Release-Ereignis ab.
 3. Den Erfolg beider Build-Jobs und des Merge-Jobs in GitHub Actions sowie die veröffentlichten Tags unter `docker.io/applejuicenetz/phpgui` und `ghcr.io/applejuicenetz/phpgui` prüfen. Das README verwendet `ghcr.io/applejuicenetz/phpgui:latest` als Beispiel.
 
 Für das Hochladen benötigen die Workflows die Repository-Variablen `DOCKER_HUB_USER` und `GHCR_USER` sowie die Secrets `DOCKER_HUB_TOKEN` und `GHCR_TOKEN`.

@@ -10,16 +10,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        include:
-          - platform: linux/amd64
-            arch: amd64
-            runner: ubuntu-24.04
-          - platform: linux/arm64
-            arch: arm64
-            runner: ubuntu-24.04-arm
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -48,91 +39,25 @@ jobs:
           images: |
             docker.io/${{ github.repository }}
             ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=beta,enable=${{ github.ref == 'refs/heads/main' }}
+            type=ref,event=tag
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build and push ${{ matrix.platform }} by digest
-        id: build
+      - name: Build and push multi-platform image
         uses: docker/build-push-action@v7
         with:
           context: .
-          platforms: ${{ matrix.platform }}
+          target: prod
+          platforms: linux/amd64,linux/arm64
           provenance: false
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=phpgui-${{ matrix.arch }}
-          cache-to: type=gha,scope=phpgui-${{ matrix.arch }},mode=max
-          outputs: type=image,"name=docker.io/${{ github.repository }},ghcr.io/${{ github.repository }}",push-by-digest=true,name-canonical=true,push=true
-
-      - name: Export image digest
-        env:
-          DIGEST: ${{ steps.build.outputs.digest }}
-        run: |
-          mkdir -p /tmp/digests
-          test -n "$DIGEST"
-          touch "/tmp/digests/${DIGEST#sha256:}"
-
-      - name: Upload image digest
-        uses: actions/upload-artifact@v7
-        with:
-          name: digests-${{ matrix.arch }}
-          path: /tmp/digests/*
-          if-no-files-found: error
-          retention-days: 1
-
-  merge:
-    needs: build
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Download image digests
-        uses: actions/download-artifact@v8
-        with:
-          path: /tmp/digests
-          pattern: digests-*
-          merge-multiple: true
-
-      - name: Login to docker.io container registry
-        uses: docker/login-action@v4
-        with:
-          registry: docker.io
-          username: ${{ vars.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Login to ghcr.io container registry
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ vars.GHCR_USER }}
-          password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Create container image metadata
-        id: meta
-        uses: docker/metadata-action@v6
-        with:
-          images: |
-            docker.io/${{ github.repository }}
-            ghcr.io/${{ github.repository }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-
-      - name: Publish multi-platform image
-        env:
-          META_JSON: ${{ steps.meta.outputs.json }}
-        run: |
-          shopt -s nullglob
-          digests=(/tmp/digests/*)
-          test "${#digests[@]}" -eq 2
-          for registry in docker.io ghcr.io; do
-            image="$registry/${GITHUB_REPOSITORY,,}"
-            mapfile -t tags < <(jq -r --arg image "$image" '.tags[] | select(startswith($image + ":"))' <<< "$META_JSON")
-            test "${#tags[@]}" -gt 0
-            tag_args=()
-            digest_args=()
-            for tag in "${tags[@]}"; do tag_args+=(-t "$tag"); done
-            for digest in "${digests[@]}"; do digest_args+=("$image@sha256:${digest##*/}"); done
-            docker buildx imagetools create "${tag_args[@]}" "${digest_args[@]}"
-          done
+          cache-from: type=gha,scope=phpgui
+          cache-to: type=gha,scope=phpgui,mode=max
