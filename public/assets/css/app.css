@@ -350,12 +350,15 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     /* Uploads: fixed layout so column widths do not jump when rows come and go. */
     #ul-table { table-layout: fixed; width: 100%; font-variant-numeric: tabular-nums; }
     #ul-table th:nth-child(1) { width: 2.25rem; }
-    #ul-table th:nth-child(3) { width: 7rem; }
+    #ul-table th:nth-child(3) { width: 8.5rem; }
     #ul-table th:nth-child(4) { width: 13.2rem; }
-    #ul-table th:nth-child(5) { width: 7.5rem; }
+    #ul-table th:nth-child(5) { width: 9.5rem; }
     #ul-table td, #ul-table th { padding-left: .5rem; padding-right: .5rem; overflow: hidden; text-overflow: ellipsis; }
     #ul-table td.col-name { min-width: 0; width: auto; }
     #ul-table td.col-progress { min-width: 0; }
+    #ul-table th { white-space: nowrap; }
+    /* Long status texts wrap inside the fixed column instead of being clipped. */
+    #ul-table .tag { display: inline-flex; max-width: 100%; height: auto; min-height: 2em; padding-top: .2em; padding-bottom: .2em; white-space: normal; text-align: center; line-height: 1.25; }
     #ul-table td.col-name .dl-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     #ul-table td.col-progress .dl-meta { white-space: nowrap; }
     #ul-table .progress-line { display: flex; justify-content: space-between; gap: .5rem; }
