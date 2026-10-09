@@ -19,7 +19,7 @@ final class SessionEndpoint extends Endpoint
         return [
             'authenticated' => $authenticated,
             'csrf' => Csrf::token(),
-            'language' => $_ENV['GUI_LANGUAGE'],
+            'language' => Kernel::language(),
             'timezone' => $_ENV['TZ'],
             'translations' => Kernel::getLanguage()->translate(),
             'version' => PHP_GUI_VERSION,
@@ -37,6 +37,18 @@ final class SessionEndpoint extends Endpoint
     public function post(): array
     {
         $action = Request::str('action', 'login');
+        if ($action === 'language') {
+            $lang = Request::str('lang');
+            if (!in_array($lang, ['de', 'en'], true)) throw new ApiException(400, 'invalid_language');
+            setcookie('aj_lang', $lang, [
+                'expires' => time() + 31536000,
+                'path' => '/',
+                'samesite' => 'Lax',
+                'secure' => (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ($_SERVER['HTTPS'] ?? 'off')) === 'https' || ($_SERVER['HTTPS'] ?? 'off') === 'on'),
+            ]);
+            $_COOKIE['aj_lang'] = $lang;
+            return $this->get();
+        }
         if ($action === 'logout') {
             session_unset();
             session_regenerate_id(true);

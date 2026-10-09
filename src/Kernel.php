@@ -62,6 +62,13 @@ class Kernel
 
     public static function getLanguage(): Language
     {
-        return self::$instances[Language::class] ?? self::$instances[Language::class] = new Language($_ENV['GUI_LANGUAGE']);
+        return self::$instances[Language::class] ?? self::$instances[Language::class] = new Language(self::language());
+    }
+
+    /** Effective UI language: valid per-browser cookie, else the GUI_LANGUAGE default. */
+    public static function language(): string
+    {
+        $cookie = $_COOKIE['aj_lang'] ?? '';
+        return in_array($cookie, ['de', 'en'], true) ? $cookie : $_ENV['GUI_LANGUAGE'];
     }
 }

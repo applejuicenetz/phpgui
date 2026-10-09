@@ -108,6 +108,8 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .dropdown { position: relative; display: inline-flex; }
 .dropdown-menu { display: none; position: absolute; top: 100%; z-index: 70; min-width: 12rem; }
 .dropdown.is-right .dropdown-menu { right: 0; left: auto; }
+/* Menus outside a .dropdown wrapper (table row menus) miss Bulma's scoped variables, so set the panel explicitly. */
+.dropdown-content, .table-dropdown-menu .dropdown-content { background-color: var(--app-surface); border: 1px solid var(--app-line); border-radius: var(--bulma-radius); box-shadow: var(--bulma-shadow); padding: .25rem 0; }
 .dropdown.is-right .table-dropdown-menu { position: fixed; right: auto; max-width: calc(100vw - 16px); overflow-y: auto; }
 .dropdown.is-active > .dropdown-menu { display: block; }
 .dropdown-item { display: flex; align-items: center; gap: .5rem; width: 100%; min-height: var(--app-touch); text-align: left; border: 0; background: none; font: inherit; cursor: pointer; padding: .5rem 1rem; color: var(--bulma-text); }
@@ -395,3 +397,11 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* Language flags in the user menu, right-aligned next to the nick. */
+.dropdown-item .user-nick { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.lang-flags { display: inline-flex; gap: .35rem; margin-left: auto; }
+.lang-flag { display: inline-flex; padding: 2px; border: 1px solid transparent; border-radius: 3px; background: none; cursor: pointer; opacity: .55; }
+.lang-flag:hover, .lang-flag.is-active { opacity: 1; }
+.lang-flag.is-active { border-color: var(--bulma-link); }
+.lang-flag img { display: block; border-radius: 2px; }

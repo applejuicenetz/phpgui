@@ -1,7 +1,7 @@
 import { reactive } from './vue.js';
 import { request, setCsrf } from './api.js';
 
-export const state = reactive({ session: null, status: {}, route: {}, alerts: [], busy: false });
+export const state = reactive({ session: null, status: {}, route: {}, alerts: [], busy: false, pendingFile: '' });
 export function t(key) { return key.split('.').reduce((value, part) => value?.[part], state.session?.translations) ?? key; }
 export function notify(text, level = 'info') {
     const id = Date.now() + Math.random();

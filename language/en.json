@@ -5,7 +5,9 @@
     "password": "Password",
     "remember": "Remember login",
     "url_info": "Full Core URL including protocol and XML API port, e.g. http://localhost:9851.",
-    "password_info": "A password must be set in the Core."
+    "password_info": "A password must be set in the Core.",
+    "pending_one": "1 link will be added after login",
+    "pending_many": "{count} links will be added after login"
   },
   "System": {
     "warning": "Warning!",
@@ -361,6 +363,7 @@
       "unauthorized": "Session expired. Please log in again.",
       "wrong_password": "Wrong password",
       "invalid_host": "Invalid Core URL",
+      "invalid_language": "Invalid language",
       "core_unavailable": "Core unreachable",
       "csrf": "Invalid session. Please reload the page.",
       "invalid_id": "Invalid selection",

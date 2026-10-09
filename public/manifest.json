@@ -1,26 +1,111 @@
 {
   "id": "./",
-  "name": "appleJuice phpGUI",
+  "name": "appleJuice webGUI",
   "short_name": "appleJuice",
+  "lang": "de",
+  "dir": "ltr",
   "description": "Web interface for the appleJuice Core",
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#f5a623",
   "protocol_handlers": [
-    { "protocol": "web+ajfsp", "url": "./index.php?ajfsp_link=%s" }
+    {
+      "protocol": "web+ajfsp",
+      "url": "./index.php?ajfsp_link=%s"
+    }
   ],
   "file_handlers": [
     {
       "action": "./index.php?site=downloads",
       "name": "appleJuice link list",
-      "accept": { "application/x-applejuice-ajl": [".ajl"] }
+      "accept": {
+        "application/x-applejuice-ajl": [
+          ".ajl"
+        ]
+      }
     }
   ],
   "icons": [
-    { "src": "assets/img/apple-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "assets/img/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "assets/img/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+    {
+      "src": "assets/img/apple-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/pwa-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Downloads",
+      "short_name": "Downloads",
+      "url": "./index.html?site=downloads",
+      "icons": [
+        {
+          "src": "assets/img/pwa-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "short_name": "Uploads",
+      "url": "./index.html?site=uploads",
+      "icons": [
+        {
+          "src": "assets/img/pwa-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "short_name": "Search",
+      "url": "./index.html?site=search",
+      "icons": [
+        {
+          "src": "assets/img/pwa-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Shared folders",
+      "short_name": "Shared folders",
+      "url": "./index.html?site=shares",
+      "icons": [
+        {
+          "src": "assets/img/pwa-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }

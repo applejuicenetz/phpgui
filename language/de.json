@@ -5,7 +5,9 @@
     "password": "Passwort",
     "remember": "Login merken",
     "url_info": "Vollständige Core-URL mit Protokoll und XML-API-Port, z. B. http://localhost:9851.",
-    "password_info": "Im Core muss zwingend ein Passwort gesetzt sein."
+    "password_info": "Im Core muss zwingend ein Passwort gesetzt sein.",
+    "pending_one": "1 Link wird nach der Anmeldung übernommen",
+    "pending_many": "{count} Links werden nach der Anmeldung übernommen"
   },
   "System": {
     "warning": "Warnung!",
@@ -361,6 +363,7 @@
       "unauthorized": "Sitzung abgelaufen. Bitte erneut anmelden.",
       "wrong_password": "Falsches Passwort",
       "invalid_host": "Ungültige Core-URL",
+      "invalid_language": "Ungültige Sprache",
       "core_unavailable": "Core nicht erreichbar",
       "csrf": "Ungültige Sitzung. Bitte Seite neu laden.",
       "invalid_id": "Ungültige Auswahl",

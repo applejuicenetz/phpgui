@@ -26,3 +26,10 @@ export const directImage = code => 'assets/img/' + (code === 1 ? 'direct.svg' : 
 export const relInfo = link => state.session?.rel_info ? state.session.rel_info.replace('%s', encodeURIComponent(link)) : '';
 // Never put an arbitrary Core/config URL into a browser navigation sink.
 export function safeUrl(value) { return /^(https?:|ajfsp:)/i.test(value || '') ? value : '#'; }
+// Public IP display: last two blocks hidden until hover. Output is HTML, so escape the input.
+const escapeHtml = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+export function ipMask(ip) {
+    const parts = String(ip || '').split('.');
+    return parts.length === 4 ? escapeHtml(parts[0] + '.' + parts[1]) + '.•••.•••' : escapeHtml(ip || '');
+}
+export const ipReal = ip => escapeHtml(ip || '');
