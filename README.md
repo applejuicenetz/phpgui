@@ -8,7 +8,15 @@
 ![](https://img.shields.io/docker/pulls/applejuicenetz/phpgui)
 ![](https://img.shields.io/docker/image-size/applejuicenetz/phpgui)
 
-In PHP geschriebene Benutzeroberfläche für den appleJuice Client.
+Weboberfläche für den appleJuice Client: statisches Vue-3-Frontend ohne Build-Schritt und PHP-Backend als XML→JSON-Proxy zum Core.
+
+Das Frontend besteht aus statischen Dateien unter `public/`, das PHP-Backend liefert JSON unter `public/api.php`. Beide müssen unter derselben öffentlichen Adresse erreichbar sein.
+
+Beim Selbsthosting ohne Docker genügt `php -S 127.0.0.1:8088 -t public`; danach `http://127.0.0.1:8088/index.html` öffnen.
+
+### Hinweise zur Sicherheit
+
+Core-Adressen sind frei wählbar. phpGUI deshalb nicht als offenen Proxy im Internet betreiben. „Login merken“ speichert einen zugriffsfähigen Passwort-Hash im Browser; nur auf vertrauenswürdigen Geräten aktivieren.
 
 ## Abhängigkeiten
 

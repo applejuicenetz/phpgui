@@ -11,6 +11,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt
 - Statistik der geteilten Dateien als Tab unter „geteilte Ordner“; Addons-Menü und phpinfo entfallen
 - Suche in geteilten Ordnern direkt auf der Freigaben-Seite, über alle Ordner und Unterordner, ohne Beachtung der Groß-/Kleinschreibung
+- Oberfläche als statische Vue-3-Anwendung ohne Build-Schritt, Backend liefert nur noch JSON; Layout bleibt erhalten. Neuer Login-Hintergrund, Dashboard mit getrennten Karten für Netzwerk und Community, Verbindungen mit konfiguriertem Maximum
 
 ## 0.32.2 (2026-10-04)
 

@@ -1,48 +1,31 @@
 <?php
 
 declare(strict_types=1);
-
 require __DIR__ . '/HttpClient.php';
-[$base, $core] = testOptions();
-$client = new HttpClient($base);
-foreach (['live', 'directories', 'news', 'parts&dl_id=105'] as $endpoint) {
-    $response = $client->request('api=' . $endpoint);
-    check($response['status'] === 401, 'Unauthenticated API status');
-    check(str_starts_with($endpoint, 'parts') ? $response['body'] === '' : decodeJson($response['body']) === ['error' => 'unauthorized'], 'Unauthenticated API body');
+[$base,$core]=testOptions();
+$client=new HttpClient($base);
+foreach(['status','downloads','uploads','dashboard','search','directories','news','parts','settings','files','shares','statistics','servers','sources','links','limits'] as $endpoint){
+    $response=$client->request('endpoint='.$endpoint);
+    check($response['status']===401 && decodeJson($response['body'])===['error'=>'unauthorized'],'Authentication '.$endpoint);
 }
-$login = $client->request('', ['host' => $core, 'cpass' => '']);
-check($login['status'] === 200, 'Login');
-$csrf = csrfToken($login['body']);
-$response = $client->request('api=live&type=status,downloads,uploads,dashboard,search');
-check($response['status'] === 200 && str_contains($response['headers']['content-type'], 'application/json'), 'JSON response');
-check(array_keys(decodeJson($response['body'])) === ['status', 'downloads', 'uploads', 'dashboard', 'search'], 'Live blocks');
-$status = $client->live('status');
-foreach (['downloads_active', 'uploads_active'] as $field) {
-    check(isset($status[$field]) && is_int($status[$field]) && $status[$field] >= 0, 'Active count: ' . $field);
+check($client->request('endpoint=unknown')['status']===404,'Unknown endpoint');
+$session=$client->login($core);$csrf=$session['csrf'];
+$status=$client->get('status');
+foreach(['downloads_active','uploads_active','download_speed','upload_speed'] as $field)check(is_int($status[$field]) && $status[$field]>=0,'Numeric '.$field);
+foreach(['downloads','uploads'] as $endpoint)check(array_is_list($client->get($endpoint)['items']),'Stable lists '.$endpoint);
+check(isset($client->get('news')['html']),'News');
+check(is_int($client->get('parts',['dl_id'=>105])['size']),'JSON parts');
+foreach(['endpoint=parts','endpoint=parts&dl_id[]=105'] as $query)check($client->request($query)['status']===400,'Invalid part ID');
+check($client->request('endpoint=limits')['status']===405,'GET write rejected');
+foreach(['session','downloads','shares','files','settings','limits','servers','search','links'] as $endpoint)check($client->request('endpoint='.$endpoint,['action'=>'unknown'])['status']===403,'CSRF '.$endpoint);
+check($client->request('endpoint=limits',['_csrf'=>$csrf,'action'=>'unknown'])['status']===400,'Unknown action');
+check($client->request('endpoint=limits',['_csrf'=>$csrf,'action'=>'set_maxdl','value'=>'-1'])['status']===400,'Negative limit');
+$settings=$client->get('settings')['values'];
+check(!isset($settings['password'],$settings['xmlpassword'],$settings['core_pass']),'No settings credentials');
+foreach(['dl'=>'downloads','ul'=>'uploads'] as $kind=>$endpoint){
+    $previous=$client->get($endpoint)['max'];
+    try{$client->post('limits',['action'=>'set_max'.$kind,'value'=>42000]);check($client->get($endpoint)['max']===42000,'Limit roundtrip');}
+    finally{$client->post('limits',['action'=>'set_max'.$kind,'value'=>$previous]);}
 }
-foreach (['dl_speed_raw', 'ul_speed_raw'] as $field) {
-    check(isset($status[$field]) && is_numeric($status[$field]) && $status[$field] >= 0, 'Current transfer speed: ' . $field);
-}
-check(array_keys(decodeJson($client->request('api=live')['body'])) === ['status'], 'Default status block');
-check((bool)decodeJson($client->request('api=directories&dir=/')['body'])['entries'], 'Directories');
-$news = $client->request('api=news');
-check($news['status'] === 200 && array_keys(decodeJson($news['body'])) === ['html'], 'News API response');
-$response = $client->request('api=parts&dl_id=105');
-check($response['status'] === 200 && str_contains($response['headers']['content-type'], 'image/svg+xml') && str_starts_with($response['body'], '<svg'), 'SVG response');
-foreach (['api=parts', 'api=parts&dl_id[]=105'] as $query) {
-    check($client->request($query)['status'] === 400, 'Invalid part ID');
-}
-check($client->request('api=limits&action=set_maxdl')['status'] === 403, 'GET limit rejected');
-check($client->request('api=limits&action=set_maxdl', ['value' => 42])['status'] === 403, 'CSRF required');
-check($client->request('api=limits&action=unknown', ['_csrf' => $csrf])['status'] === 400, 'Unknown action');
-foreach (['dl' => 'downloads', 'ul' => 'uploads'] as $kind => $block) {
-    $previous = $client->live($block)['max_raw'];
-    try {
-        $response = $client->request('api=limits&action=set_max' . $kind, ['_csrf' => $csrf, 'value' => 42000]);
-        check(decodeJson($response['body']) === ['ok' => true], 'Save limit');
-        check($client->live($block)['max_raw'] === 42000, 'Limit roundtrip');
-    } finally {
-        $client->request('api=limits&action=set_max' . $kind, ['_csrf' => $csrf, 'value' => $previous]);
-    }
-}
-echo "API routes: authentication, JSON, SVG, validation, CSRF and limits passed\n";
+check($client->get('settings')['values']===$settings,'Unrelated settings preserved');
+echo "API contracts: auth, JSON types, validation, CSRF, limits and settings preservation passed\n";

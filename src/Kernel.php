@@ -41,7 +41,8 @@ class Kernel
 
         $_ENV['CORE_HOST'] = $_ENV['CORE_HOST'] ?? '';
         $_ENV['CORE_PORT'] = $_ENV['CORE_PORT'] ?? 9851;
-        $_ENV['GUI_LANGUAGE'] = $_ENV['GUI_LANGUAGE'] ?? 'de';
+        $_ENV['GUI_LANGUAGE'] = in_array($_ENV['GUI_LANGUAGE'] ?? 'de', ['de', 'en'], true) ? ($_ENV['GUI_LANGUAGE'] ?? 'de') : 'de';
+        $_ENV['TZ'] = $_ENV['TZ'] ?? 'Europe/Berlin';
 
         $_ENV['GUI_SHOW_NEWS'] = $_ENV['GUI_SHOW_NEWS'] ?? 1;
 

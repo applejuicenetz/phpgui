@@ -1,0 +1,15 @@
+import { ref } from '../vue.js';
+import { useData } from '../polling.js';
+import { t, mutate, notify } from '../store.js';
+import { UnitInput } from '../components/common.js';
+export default {
+    components:{UnitInput},
+    setup(){
+        const source=useData('settings',()=>({}),false),busy=ref(false);
+        const standard=[['tempdir','tempdir','text'],['incdir','incomingdir','text'],['c_port','port','number'],['c_xml_port','xml_port','number'],['nick','nick','text']];
+        const connection=[['maxcon','max_connections'],['uls','speed_per_slot'],['conturn','max_connections_per_turn'],['maxdlsrc','max_dl_src']];
+        async function save(change){busy.value=true;const result=await mutate('settings',{change,...source.data.value.values,autoconnect:String(source.data.value.values.autoconnect)});busy.value=false;if(result)notify(t('Settings.alert_save_'+(change==='standard'?'1':'2')),'success');}
+        return {...source,busy,standard,connection,save,t};
+    },
+    template:`<div v-if="data" class="columns"><div class="column is-6"><form class="box" @submit.prevent="save('standard')"><h2 class="box-title">{{t('Settings.head_all')}}</h2><div v-for="[field,key,type] in standard" :key="field" class="field"><label class="label" :for="field">{{t('Settings.'+key)}}</label><div class="control"><input class="input" :id="field" :type="type" v-model="data.values[field]" :min="type==='number'?1:undefined" :max="type==='number'?65535:undefined"></div></div><button class="button is-primary" :disabled="busy">{{t('Settings.save')}}</button></form></div><div class="column is-6"><form class="box" id="connection-form" @submit.prevent="save('connection')"><h2 class="box-title">{{t('Settings.head_con')}}</h2><div class="field"><label class="label" for="maxcon">{{t('Settings.max_connections')}}</label><input class="input" id="maxcon" type="number" min="0" v-model="data.values.maxcon"></div><div class="field"><label class="label" for="maxul">{{t('Settings.max_ul')}}</label><UnitInput id="maxul" v-model="data.values.maxul" storage-key="settings_unit_maxul" :label="t('Settings.max_ul')" /></div><div class="field"><label class="label" for="uls">{{t('Settings.speed_per_slot')}}</label><input class="input" id="uls" type="number" min="0" v-model="data.values.uls"></div><div class="field"><label class="label" for="maxdl">{{t('Settings.max_dl')}}</label><UnitInput id="maxdl" v-model="data.values.maxdl" storage-key="settings_unit_maxdl" :label="t('Settings.max_dl')" /></div><div v-for="[field,key] in connection.slice(2)" :key="field" class="field"><label class="label" :for="field">{{t('Settings.'+key)}}</label><input class="input" :id="field" type="number" min="0" v-model="data.values[field]"></div><div class="field"><label class="checkbox"><input type="checkbox" v-model="data.values.autoconnect"> {{t('Settings.autoconnect')}}</label></div><button class="button is-primary" :disabled="busy">{{t('Settings.save')}}</button></form></div></div><p v-else-if="loading" class="empty-state">{{t('UI.loading')}}</p>`
+};

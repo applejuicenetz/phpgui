@@ -1,7 +1,6 @@
 {
   "Login": {
-    "headline": "Log in to start",
-    "ok": "Ok",
+    "title": "appleJuice WebUI Login",
     "login": "Login",
     "password": "Password",
     "remember": "Remember login",
@@ -11,9 +10,6 @@
   "System": {
     "warning": "Warning!",
     "firewall": "It is possible that you are behind a firewall, router, proxy or similar. This reduces the chance of loading something.",
-    "select": "Select",
-    "all": "All",
-    "none": "None",
     "error404": {
       "title": "Sorry, the page doesn't exist!",
       "subtitle": "It appears that you have entered an incorrect address and are trying to access an outdated page. Please contact the administrator."
@@ -34,7 +30,6 @@
       "dl_parts": "Download parts",
       "login": "Login"
     },
-    "version_1": "New version available!",
     "version": "Version %version% is available!",
     "version_akt": "A new version of the phpGUI is available! To avoid errors, please download it via GitHub and install the update!"
   },
@@ -52,12 +47,11 @@
     "shared_users": "Shared Users",
     "all_data": "Files",
     "network_info": "Network Information",
+    "community": "Community",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
     "download_speed": "Download",
     "upload_speed": "Upload",
-    "files": "files",
-    "downloads_active": "active downloads",
     "public_ip": "Public IP"
   },
   "Navigation": {
@@ -106,9 +100,6 @@
       "status_14": "Queue full",
       "status_15": "Own limit reached",
       "status_16": "Server rejected indirect connection"
-    },
-    "dl_users": {
-      "status_7": "Transfer"
     },
     "dl_source": {
       "src_1": "ajfsp link",
@@ -185,11 +176,6 @@
     "statuss": "Status",
     "speed": "Speed",
     "pdl": "PDL",
-    "size": "Size",
-    "finish": "Done",
-    "finished": "water level",
-    "clientversion": "Version",
-    "transferring": "transfers",
     "ul_status": {
       "status_1": "Transfer",
       "status_2": "In Queue",
@@ -197,10 +183,7 @@
       "status_6": "Attempting to connect individually",
       "status_7": "Cannot connect"
     },
-    "queue": "queue",
     "none": "No uploads right now!",
-    "direct": "direct",
-    "indirect": "indirect",
     "progress": "progress"
   },
   "Server": {
@@ -254,12 +237,6 @@
     "size": "Size",
     "prio": "Prio",
     "check": "Start share check",
-    "exportlist": "Link Export",
-    "set_share": "Share directories will be reread and forwarded to the server.",
-    "new_share": "New directory will be read in.",
-    "inprogress": "Process request",
-    "success": "Successful!",
-    "link_export_alert": "Link export successfully emptied!",
     "link_export_title": "Link Export",
     "delet_export": "Delete list",
     "export": "Export links",
@@ -267,15 +244,11 @@
     "shared_directories_new": "New directory",
     "way": "Forgive path",
     "with_subs": "with subdirectories",
-    "directory_name": "Directory name",
-    "action": "action",
     "subs": "with subdirectories?",
     "browse": "Browse",
     "remove": "Remove",
     "add": "Add",
     "refresh": "Reload",
-    "files": "Files",
-    "folder_up": "Up one level",
     "choose": "Select",
     "choose_dir": "Choose directory",
     "no_files": "No files in this directory.",
@@ -287,7 +260,6 @@
     "temp": "Temp directory",
     "set_prio": "Set priority",
     "subs_toggle": "Subdirectories",
-    "aktion": "action",
     "statistics": "Statistics",
     "stats": {
       "last": "recently requested",
@@ -323,7 +295,11 @@
     "searches": "Searches"
   },
   "UI": {
-    "units": {"thousand": "thousand", "million": "million", "billion": "billion"},
+    "units": {
+      "thousand": "thousand",
+      "million": "million",
+      "billion": "billion"
+    },
     "menu": "Menu",
     "more": "More",
     "close": "Close",
@@ -374,6 +350,29 @@
     "unit_per_second": "/s",
     "download": "Download",
     "link_hidden_ok": "newlinkinfo {link} ok",
-    "core_said": "Core: {text}"
+    "core_said": "Core: {text}",
+    "loading": "Loading…",
+    "pagination": "Pagination",
+    "news": "appleJuice News",
+    "core_version": "Core version",
+    "created_by": "Created with",
+    "inspired_by": "inspired by",
+    "errors": {
+      "unauthorized": "Session expired. Please log in again.",
+      "wrong_password": "Wrong password",
+      "invalid_host": "Invalid Core URL",
+      "core_unavailable": "Core unreachable",
+      "csrf": "Invalid session. Please reload the page.",
+      "invalid_id": "Invalid selection",
+      "invalid_value": "Invalid value",
+      "invalid_target": "Invalid target directory. The links were not added.",
+      "invalid_link": "No valid ajfsp links",
+      "not_found": "Entry not found",
+      "unknown_action": "Unknown action",
+      "unknown_endpoint": "Unknown API endpoint",
+      "method_not_allowed": "HTTP method not allowed",
+      "internal_error": "Internal error",
+      "network": "API connection failed"
+    }
   }
 }

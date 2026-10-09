@@ -13,14 +13,17 @@ final class Html
     public static function sanitize(string $html, string $allowed = self::NEWS_TAGS): string
     {
         $html = strip_tags($html, $allowed);
-        if (!str_contains($html, '<a')) {
-            return $html;
-        }
         $dom = new \DOMDocument();
         $prev = libxml_use_internal_errors(true);
         $dom->loadHTML('<?xml encoding="UTF-8"><div id="aj-root">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
         libxml_use_internal_errors($prev);
+        $root = $dom->documentElement;
+        // Remove all attributes, not only anchor attributes (onerror/onmouseover/style).
+        foreach (iterator_to_array($dom->getElementsByTagName('*')) as $element) {
+            if ($element->tagName === 'a' || $element === $root) continue;
+            foreach (iterator_to_array($element->attributes) as $attribute) $element->removeAttribute($attribute->name);
+        }
         /** @var \DOMElement $a */
         foreach (iterator_to_array($dom->getElementsByTagName('a')) as $a) {
             $href = trim($a->getAttribute('href'));
@@ -35,7 +38,6 @@ final class Html
                 }
             }
         }
-        $root = $dom->getElementById('aj-root') ?? $dom->documentElement;
         $out = '';
         foreach ($root->childNodes as $child) {
             $out .= $dom->saveHTML($child);

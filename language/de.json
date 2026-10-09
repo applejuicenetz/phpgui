@@ -1,7 +1,6 @@
 {
   "Login": {
-    "headline": "Logge dich ein um zu starten",
-    "ok": "Ok",
+    "title": "appleJuice WebUI Login",
     "login": "Login",
     "password": "Passwort",
     "remember": "Login merken",
@@ -11,9 +10,6 @@
   "System": {
     "warning": "Warnung!",
     "firewall": "Es ist möglich, dass du hinter einer Firewall, einem Router, Proxy oder ähnlichem sitzt. Dies vermindert die Chance etwas zu laden.",
-    "select": "Auswählen",
-    "all": "Alle",
-    "none": "Keine",
     "error404": {
       "title": "Entschuldige, die Seite existiert nicht!",
       "subtitle": "Es scheint als würdest du eine falsche Adresse eingegeben haben oder eine veraltete Seite aufrufen wollen. Bitte kontaktiere den Administrator."
@@ -34,7 +30,6 @@
       "dl_parts": "Download-Teile",
       "login": "Login"
     },
-    "version_1": "Neue Version verfügbar!",
     "version": "Version %version% ist verfügbar!",
     "version_akt": "Eine neue Version der phpGUI steht zur verfügung! Um Fehler zu vermeiden lade sie dir bitte über GitHub herunter und installiere das Update!"
   },
@@ -52,12 +47,11 @@
     "shared_users": "Shared User",
     "all_data": "Dateien",
     "network_info": "Netzwerk Informationen",
+    "community": "Community",
     "bytes_in": "Bytes in",
     "bytes_out": "Bytes out",
     "download_speed": "Download",
     "upload_speed": "Upload",
-    "files": "Dateien",
-    "downloads_active": "aktive Downloads",
     "public_ip": "Öffentliche IP"
   },
   "Navigation": {
@@ -106,9 +100,6 @@
       "status_14": "Warteschlange voll",
       "status_15": "Eigenes Limit erreicht",
       "status_16": "Server wies Indirectconnection ab"
-    },
-    "dl_users": {
-      "status_7": "Übertrage"
     },
     "dl_source": {
       "src_1": "ajfsp-Link",
@@ -185,11 +176,6 @@
     "statuss": "Status",
     "speed": "Geschwindigkeit",
     "pdl": "PDL",
-    "size": "Größe",
-    "finish": "Fertig",
-    "finished": "Wasserstand",
-    "clientversion": "Version",
-    "transferring": "Übertragungen",
     "ul_status": {
       "status_1": "Übertrage",
       "status_2": "In Warteschlange",
@@ -198,10 +184,7 @@
       "status_7": "Kann nicht verbinden"
     },
     "progress": "Fortschritt",
-    "queue": "Warteschlange",
-    "none": "Keine Uploads zur Zeit!",
-    "direct": "direkt",
-    "indirect": "indirekt"
+    "none": "Keine Uploads zur Zeit!"
   },
   "Server": {
     "connectet": "Verbunden",
@@ -254,12 +237,6 @@
     "size": "Größe",
     "prio": "Prio",
     "check": "Shareüberprüfung starten",
-    "exportlist": "Link Export",
-    "set_share": "Shareverzeichnisse werden neu eingelesen und an den Server weitergeleitet.",
-    "new_share": "Neues Verzeichnis wird eingelesen.",
-    "inprogress": "Anfrage verarbeiten",
-    "success": "Erfolgreich!",
-    "link_export_alert": "Linkexport erfolgreich geleert!",
     "link_export_title": "Link Export",
     "delet_export": "Liste leeren",
     "export": "Links exportieren",
@@ -267,15 +244,11 @@
     "shared_directories_new": "Neues Verzeichnis",
     "way": "Verzeichnis-Pfad",
     "with_subs": "mit Unterverzeichnissen",
-    "directory_name": "Verzeichnisname",
-    "aktion": "Aktion",
     "subs": "mit Unterverzeichnissen?",
     "browse": "Durchsuchen",
     "remove": "Entfernen",
     "add": "Hinzufügen",
     "refresh": "Neu laden",
-    "files": "Dateien",
-    "folder_up": "Eine Ebene höher",
     "choose": "Auswählen",
     "choose_dir": "Verzeichnis wählen",
     "no_files": "Keine Dateien in diesem Verzeichnis.",
@@ -287,7 +260,6 @@
     "temp": "Temp-Verzeichnis",
     "set_prio": "Prio setzen",
     "subs_toggle": "Unterverzeichnisse",
-    "action": "Aktion",
     "statistics": "Statistik",
     "stats": {
       "last": "kürzlich angefordert",
@@ -323,7 +295,11 @@
     "searches": "Suchen"
   },
   "UI": {
-    "units": {"thousand": "Tausend", "million": "Millionen", "billion": "Milliarden"},
+    "units": {
+      "thousand": "Tausend",
+      "million": "Millionen",
+      "billion": "Milliarden"
+    },
     "menu": "Menü",
     "more": "Mehr",
     "close": "Schließen",
@@ -374,6 +350,29 @@
     "unit_per_second": "/s",
     "download": "Herunterladen",
     "link_hidden_ok": "newlinkinfo {link} ok",
-    "core_said": "Core: {text}"
+    "core_said": "Core: {text}",
+    "loading": "Laden…",
+    "pagination": "Seitennavigation",
+    "news": "appleJuice News",
+    "core_version": "Core-Version",
+    "created_by": "Erstellt mit",
+    "inspired_by": "inspiriert von",
+    "errors": {
+      "unauthorized": "Sitzung abgelaufen. Bitte erneut anmelden.",
+      "wrong_password": "Falsches Passwort",
+      "invalid_host": "Ungültige Core-URL",
+      "core_unavailable": "Core nicht erreichbar",
+      "csrf": "Ungültige Sitzung. Bitte Seite neu laden.",
+      "invalid_id": "Ungültige Auswahl",
+      "invalid_value": "Ungültiger Wert",
+      "invalid_target": "Ungültiges Zielverzeichnis. Die Links wurden nicht hinzugefügt.",
+      "invalid_link": "Keine gültigen ajfsp-Links",
+      "not_found": "Eintrag nicht gefunden",
+      "unknown_action": "Unbekannte Aktion",
+      "unknown_endpoint": "Unbekannter API-Endpunkt",
+      "method_not_allowed": "HTTP-Methode nicht erlaubt",
+      "internal_error": "Interner Fehler",
+      "network": "Verbindung zur API fehlgeschlagen"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "name": "appleJuice phpGUI",
   "short_name": "appleJuice",
   "description": "Web interface for the appleJuice Core",
-  "start_url": "./index.php",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",

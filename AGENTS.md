@@ -21,13 +21,29 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 - Sicherheit systematisch verbessern: Eingaben validieren, Ausgaben kontextgerecht maskieren, dynamische Codeausführung vermeiden, zustandsändernde Aktionen gegen CSRF schützen und Sessions sowie Core-Zugriffe absichern. Zugangsdaten und Passwort-Hashes weder protokollieren noch unbeabsichtigt ausgeben. Gewollte Integrationen, insbesondere Permalinks und Browser-Erweiterung, kompatibel halten und Sicherheitsgrenzen dokumentieren.
 - Sicherheitsverbesserungen gelten erst nach Prüfung als umgesetzt. Keine pauschale Behauptung, die Anwendung sei „sicher“; getestete Schutzmaßnahmen und verbleibende Risiken konkret benennen.
 
-## Interne API
+## Externe Links und Legacy-Kompatibilität
 
-- Daten- und Bildanfragen laufen über `index.php?api=<endpoint>`, Seiten über `index.php?site=<page>`. API-Anfragen benötigen eine angemeldete Session.
-- `api=live&type=status,downloads,uploads,dashboard,search` liefert Live-Daten als JSON; `api=limits&action=set_maxdl|set_maxul` speichert Limits per POST mit `value` in Bytes/s und `_csrf`.
-- `api=news` liefert die bereinigten Dashboard-News als JSON (`html`); das Dashboard lädt sie nach dem Seitenaufbau per JavaScript, damit ein langsamer News-Server weder Seite noch Polling blockiert. `NewsFeed` gibt dafür die Session-Sperre während des Abrufs frei.
-- `api=directories&dir=<path>` liefert Verzeichnisse als JSON; `api=parts&dl_id=<id>` beziehungsweise `usr_id=<id>` liefert Part-Maps als SVG. `PartMapService` lädt die fachlichen Daten unabhängig von HTTP und SVG-Rendering.
-- `tests/raw_routes.php`, `tests/raw_errors.php` und `tests/link_integrations.php` prüfen API-Verträge, Core-Fehler und Link-Integrationen gegen einen isolierten Mock-Core. Browserseitige Protokollhandler-Registrierung zusätzlich im HTTPS-Browser prüfen.
+- Interne Frontend-Links sinnvoll durch statische SPA-Routen ersetzen; `index.php` ist keine Vorgabe für interne Navigation oder die neue JSON-API.
+- Für genau vier externe Integrationen bestehende `index.php`-Aufrufe als Legacy-Fallback erhalten, auch wenn neue Registrierungen oder Aufrufer andere URLs verwenden:
+  1. `ajfsp`-Protokollregistrierung und Link-Übernahme über `web+ajfsp`, einschließlich Anmeldung bei noch nicht angemeldeter Session.
+  2. `.ajl`-Dateiregistrierung und Öffnen über den PWA-Dateihandler; Dateiinhalt im Frontend übernehmen.
+  3. Bestehende Permalinks mit `index.php?l=...`, einschließlich Anmeldung und Weiterleitung ins Frontend.
+  4. Browser-Erweiterung im indirekten Modus: phpGUI bleibt als Proxy zum Core nutzbar. Bestehende POST-Aufrufe mit `host`, `cpass` und `ajfsp_link` sowie die von der Erweiterung ausgewerteten Erfolgs- und Fehlerantworten kompatibel erhalten; eine neue API darf kein Update der installierten Erweiterung voraussetzen.
+- Alle vier Integrationen bei Änderungen an URLs, Routing, Authentifizierung oder Link-Verarbeitung durch Regressionstests absichern. Eine Dokumentationsregel oder ein erfolgreicher Seitenaufruf ersetzt keinen Integrationstest.
+
+## Frontend und JSON-API
+
+- Frontend: `public/index.html`, ES-Module unter `public/assets/js/`, selbst gehostetes Vue 3.5.43 unter `public/assets/vendor/vue/`. Kein Build-Schritt. Bulma und `app.css` bestimmen das bestehende mobile-first Layout.
+- Backend: `public/api.php?endpoint=<name>`, Routing und Endpunkte unter `src/Api/`. `CoreData` normalisiert XML-Daten zu Listen und typisierten Rohwerten; Formatierung, Übersetzungen und SVG-Geometrie liegen im Frontend. Keine PHP-Seitentemplates.
+- GET-Endpunkte: `session`, `status`, `dashboard`, `downloads`, `uploads`, `search`, `shares`, `files`, `statistics`, `servers`, `settings`, `directories`, `parts`, `news`. Nur `session` ist ohne Anmeldung erreichbar; unbekannte Endpunkte antworten mit 404, fehlende Anmeldung mit 401, Core-Verbindungsfehler mit 503, jeweils JSON mit `error`.
+- POST-Endpunkte verwenden Formularfelder und CSRF über `_csrf` oder `X-CSRF-Token`: `session` für Login/Logout/Shutdown, `downloads` für Transferaktionen, `search`, `shares`, `files` für Export/Priorität, `servers`, `settings`, `limits` und `links`. Größen und Limits sind Bytes, Geschwindigkeiten Bytes/s, Zeitstempel Millisekunden. Zugangsdaten nicht über generische settings.xml-Ausgabe veröffentlichen; Whitelist erhalten.
+- `api.js` kapselt Transport; `store.js` hält Session, Übersetzungen, Navigation und Meldungen; `polling.js` verhindert parallele Polls pro Komponente und bricht Requests beim Entfernen einer Ansicht ab. Tabellen erhalten Auswahlzustand bei Live-Updates. Vue-Templates greifen über exponierte Komponentenfunktionen auf Browser-APIs zu, nicht direkt auf nicht freigegebene Globals.
+- `news` liefert bereinigtes HTML und Versionshinweis getrennt vom Dashboard-Aufbau. `NewsFeed` gibt während des Abrufs die Session-Sperre frei. Fremdes HTML niemals als Vue-Template kompilieren; HTML-Attribute und Links serverseitig bereinigen.
+- `parts` liefert JSON-Bereiche für Download oder Quelle; `PartMapService` lädt fachliche Daten, `pages/parts.js` zeichnet SVG. Kein Bild-Endpunkt im Backend.
+- Betrieb: Frontend (`index.html`, `assets/`) am Webserver, `api.php` und `index.php` per Reverse Proxy an PHP. Beide unter derselben Origin und demselben Basispfad betreiben, weil Session-Cookie und CSRF daran hängen; kein allgemeiner Cross-Origin-API-Zugriff. Live-Daten per Polling, kein WebSocket-Dienst.
+- Sicherheitsgrenzen: Schreibzugriffe einschließlich Login und Logout verlangen CSRF. Der Legacy-Proxy der Erweiterung verlangt explizite Core-Zugangsdaten statt einer vorhandenen Session. Core-Adressen sind bewusst frei wählbar; phpGUI nicht als offenen Proxy betreiben. „Login merken“ legt einen zugriffsfähigen Passwort-Hash im Browser ab.
+- Frontend und Backend können über einen Reverse Proxy getrennt betrieben werden, bleiben öffentlich aber same-origin. `index.php`-POSTs der Erweiterung erfordern explizite Core-Zugangsdaten; Erfolgsmarker und die wörtliche Fehlermeldung `wrong password. access denied` erhalten.
+- PHP-Verträge mit `tests/raw_routes.php`, `tests/raw_errors.php`, `tests/smoke.php` und `tests/link_integrations.php` prüfen. Echte Browserregistrierung zusätzlich im HTTPS-/PWA-Browser prüfen.
 
 ## Core-Datenklassen
 
@@ -40,17 +56,17 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 
 ## Links hinzufügen
 
-- Der Dialog „Links hinzufügen“ (`templates/partials/modals.php`) nimmt `ajfsp://`-Links als Text und `.ajl`-Dateien über eine Dateiauswahl entgegen. `links.js` wandelt den Dateiinhalt im Browser mit `ajl.js` (`ajlToLinks()`) in `ajfsp://file|name|checksum|size/`-Links um und hängt sie an das Textfeld an; abgesendet wird ausschließlich Text über `ajfsp_link`. Das Feld `ajfsp_target` setzt ein Unterverzeichnis im Incoming-Ordner für Datei-Links (`processlink` mit `subdir`); `LinkProcessor::targetDirectory()` normalisiert den Pfad und lehnt `..`, `:`, Steuerzeichen und mehr als 255 Zeichen ab, weil der Core solche Werte still ignoriert. Ein ungültiger Pfad zeigt eine Warnung, es wird kein Link hinzugefügt. Server-Links ignorieren das Ziel. `tests/link_target.php` prüft die Normalisierung. Das AJL-Format besteht aus einem Kopftext, der Zeile `100` und danach Dreiergruppen aus Name, MD5-Prüfsumme und Größe. Ungültige Dateien führen zu einem Hinweis im Dialog, nicht zu einer Serveranfrage.
-- Es gibt kein Plugin-System und keine Addons-Seiten. Neue Funktionen sind Seiten in `Router::PAGES` oder Teile bestehender Seiten.
+- Der Dialog „Links hinzufügen“ (`public/assets/js/components/links.js`) nimmt `ajfsp://`-Links als Text und `.ajl`-Dateien über eine Dateiauswahl entgegen. `links.js` wandelt den Dateiinhalt im Browser mit `ajl.js` (`ajlToLinks()`) in `ajfsp://file|name|checksum|size/`-Links um und hängt sie an das Textfeld an; abgesendet wird ausschließlich Text über `ajfsp_link`. Das Feld `ajfsp_target` setzt ein Unterverzeichnis im Incoming-Ordner für Datei-Links (`processlink` mit `subdir`); `LinkProcessor::targetDirectory()` normalisiert den Pfad und lehnt `..`, `:`, Steuerzeichen und mehr als 255 Zeichen ab, weil der Core solche Werte still ignoriert. Ein ungültiger Pfad zeigt eine Warnung, es wird kein Link hinzugefügt. Server-Links ignorieren das Ziel. `tests/link_target.php` prüft die Normalisierung. Das AJL-Format besteht aus einem Kopftext, der Zeile `100` und danach Dreiergruppen aus Name, MD5-Prüfsumme und Größe. Ungültige Dateien führen zu einem Hinweis im Dialog, nicht zu einer Serveranfrage.
+- Es gibt kein Plugin-System und keine Addons-Seiten. Neue Ansichten als Vue-Komponenten in der Seitentabelle von `public/assets/js/app.js` eintragen; Backend-Endpunkte separat unter `src/Api/` ergänzen.
 
 ## Share-Suche
 
-- Die Suche liegt direkt auf `index.php?site=shares&q=<text>` und durchsucht alle freigegebenen Verzeichnisse. In einer Ordneransicht (`site=sharefiles&dir=<path>&q=<text>`) ist sie auf den Unterbaum des Ordners begrenzt. Ohne `q` zeigt `shares` die Verwaltung der Verzeichnisse, `sharefiles` die direkten Dateien und Unterordner.
+- Die Suche liegt direkt auf `index.html?site=shares&q=<text>` und durchsucht alle freigegebenen Verzeichnisse. In einer Ordneransicht (`site=sharefiles&dir=<path>&q=<text>`) ist sie auf den Unterbaum des Ordners begrenzt. Ohne `q` zeigt `shares` die Verwaltung der Verzeichnisse, `sharefiles` die direkten Dateien und Unterordner.
 - Der Filter ist ein Teilstring-Vergleich ohne Beachtung der Groß-/Kleinschreibung auf dem vollständigen Pfad (`Share::matchesFilter()`), wie in der Java-GUI. Treffer erscheinen flach mit Pfad, ohne Ordnerliste.
 - `Share::page(?string $directory, int $page, int $pageSize, string $filter)` liefert eine Seite mit 200 Einträgen; `null` bedeutet alle Shares. Pagination, Link-Export ohne Auswahl und Prioritäten wirken auf die gefilterte Menge.
 - `public/manifest.json` deklariert für die installierte PWA den Protokoll-Handler `web+ajfsp` (`index.php?ajfsp_link=%s`) und den Datei-Handler für `.ajl` (`index.php?site=downloads`); `links.js` übernimmt die geöffnete Datei über `launchQueue` in den Dialog „Links hinzufügen“. `tests/manifest.php` prüft beide Einträge.
-- Die Seiten `shares`, `sharefiles` und `sharestats` teilen die Tab-Leiste `share-tabs` („geteilte Ordner“ und „Statistik“); `sharefiles` markiert den Tab „geteilte Ordner“. `index.php?site=sharestats&stats=<modus>` zeigt die 50 am häufigsten oder zuletzt angefragten beziehungsweise gesuchten Dateien (`most`, `-most`, `last`, `-last`, `search`, `-search`; unbekannte Werte ergeben `most`). Das Dashboard verlinkt die Credits-Karte dorthin.
-- Liste und Aktionen teilen `ShareFilesBase` (Basis von `SharesController` und `ShareFilesController`) und die Partials `share-search` und `share-files`. Das Suchfeld sucht nach 400 ms Pause, Esc leert es (`sharefiles.js`).
+- Die Seiten `shares`, `sharefiles` und `sharestats` teilen die Tab-Leiste `share-tabs` („geteilte Ordner“ und „Statistik“); `sharefiles` markiert den Tab „geteilte Ordner“. `index.html?site=sharestats&stats=<modus>` zeigt die 50 am häufigsten oder zuletzt angefragten beziehungsweise gesuchten Dateien (`most`, `-most`, `last`, `-last`, `search`, `-search`; unbekannte Werte ergeben `most`). Das Dashboard verlinkt die Credits-Karte dorthin.
+- Liste und Aktionen teilen `public/assets/js/pages/shares.js`; Backend-Dateilisten und Export/Priorität liegen in `FilesEndpoint`. Das Suchfeld sucht nach 400 ms Pause, Esc leert es. Link-Export bleibt im Browser-Session-Speicher über Navigation erhalten.
 
 ## Release vorbereiten
 
@@ -73,10 +89,10 @@ Der manuelle Workflow `.github/workflows/rebuild_container.yml` nimmt einen vorh
 
 ## Lokale Tests mit Mock-Core
 
-Der eigenständige Dienst [`ajcore-mock`](https://github.com/applejuicenetz/ajcore-mock) (lokal `../ajcore-mock/mock_core.py`) ist ein zustandsbehafteter Mock der Core-API. Er ist nicht Bestandteil dieses Repositories. Er verwendet nur die Python-Standardbibliothek. Er bildet alle von phpGUI genutzten Endpunkte nach. Aktionen (`pausedownload`, `resumedownload`, `canceldownload`, `cleandownloadlist`, `renamedownload`, `settargetdir`, `setpowerdownload`, `processlink`, `search`, `serverlogin`, `removeserver`, `setsettings`) ändern den Zustand, aktive Downloads schreiten zeitbasiert voran. Passwort-Standard ist leer (MD5 `d41d8cd98f00b204e9800998ecf8427e`).
+Der eigenständige Dienst [`ajcore-mock`](https://github.com/applejuicenetz/ajcore-mock) (lokal `../ajcore-mock/src/mock_core.py`) ist ein zustandsbehafteter Mock der Core-API. Er ist nicht Bestandteil dieses Repositories. Er verwendet nur die Python-Standardbibliothek. Er bildet alle von phpGUI genutzten Endpunkte nach. Aktionen (`pausedownload`, `resumedownload`, `canceldownload`, `cleandownloadlist`, `renamedownload`, `settargetdir`, `setpowerdownload`, `processlink`, `search`, `serverlogin`, `removeserver`, `setsettings`) ändern den Zustand, aktive Downloads schreiten zeitbasiert voran. Passwort-Standard ist leer (MD5 `d41d8cd98f00b204e9800998ecf8427e`).
 
 ```shell
-python3 ../ajcore-mock/mock_core.py --scenario busy --port 19851 --shareidx-bytes 0
+python3 ../ajcore-mock/src/mock_core.py --scenario busy --port 19851 --shareidx-bytes 0
 # Omit --shareidx-bytes 0 to model a 3.5 MB share index.
 ```
 
@@ -105,6 +121,8 @@ php tests/core_services.php http://127.0.0.1:19851
 php tests/core_models.php
 php tests/share_filter.php
 php tests/link_target.php
+php tests/html.php
+php tests/core_login.php
 ```
 
-`core_services.php` führt Core-Aktionen gegen den Mock aus und stellt die Share-Einstellungen danach wieder her. `core_models.php`, `share_filter.php` und `link_target.php` benötigen keinen Dienst. `login_redirect.php`, `manifest.php` und `format.php` laufen ebenfalls ohne Dienst.
+`core_services.php` führt Core-Aktionen gegen den Mock aus und stellt die Share-Einstellungen danach wieder her. `core_models.php`, `share_filter.php` und `link_target.php` benötigen keinen Dienst. `manifest.php` benötigt den Webserver; mit `--base` dieselbe GUI-URL wie bei den HTTP-Tests übergeben. UI-Checks im echten Browser ergänzen die PHP-Verträge.

@@ -29,8 +29,11 @@ body { min-height: 100dvh; background: var(--bulma-scheme-main-bis); }
 .skip-link:focus { top: .5rem; }
 :focus-visible { outline: 2px solid var(--bulma-link); outline-offset: 2px; }
 .icon { width: 1.1em; height: 1.1em; vertical-align: -.15em; flex: none; }
-.icon.is-medium { width: 1.5em; height: 1.5em; }
+
 .icon.is-large { width: 2rem; height: 2rem; }
+/* Bulma sizes .button .icon at 1.5em and applies negative margins when the label is a bare text node (icon counts as only child). Use a flex gap instead. */
+.button { gap: .5em; }
+.button .icon, .button .icon:first-child:not(:last-child), .button .icon:last-child:not(:first-child), .button .icon:first-child:last-child { width: 1.25em; height: 1.25em; margin-inline: 0; }
 .inline-icon { vertical-align: -.2em; }
 /* Bulma sizes the input icon container; keep the nested SVG compact. */
 .control.has-icons-left > .icon > svg,
@@ -44,7 +47,7 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .button { min-height: var(--app-touch); }
 .button.is-small { min-height: 2.25rem; }
 .input, .select select, .textarea { min-height: var(--app-touch); font-size: 1rem; }
-.checkbox input, .radio input, td input[type="checkbox"], th input[type="checkbox"] { width: 1.25rem; height: 1.25rem; accent-color: var(--bulma-primary); vertical-align: middle; }
+.checkbox input, td input[type="checkbox"], th input[type="checkbox"] { width: 1.25rem; height: 1.25rem; accent-color: var(--bulma-primary); vertical-align: middle; }
 .tag { white-space: nowrap; }
 
 /* ---------- App-Rahmen ---------- */
@@ -76,18 +79,15 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .app-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(18rem, 85vw); display: flex; flex-direction: column; background: var(--app-surface); border-right: 1px solid var(--app-line); transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility 0s .2s; overflow-y: auto; padding-bottom: var(--app-safe-b); }
 .app-sidebar.is-open { transform: none; visibility: visible; transition: transform .2s ease; }
 .app-scrim { position: fixed; inset: 0; z-index: 55; background: hsla(0, 0%, 0%, .45); }
-.app-brand { display: block; padding: 1rem; border-bottom: 1px solid var(--app-line); }
-.app-brand-full { display: block; width: 100%; max-width: 11rem; height: auto; }
-.app-brand-icon { display: none; margin: 0 auto; }
+.app-brand { display: block; padding: 0; overflow: hidden; border-bottom: 1px solid var(--app-line); }
+/* Full-bleed grass banner; cover keeps the apple visible at the left. */
+.app-brand-logo { display: block; width: 100%; height: auto; aspect-ratio: 1.9; object-fit: cover; object-position: left center; }
 .app-nav { list-style: none; margin: 0; padding: .5rem; }
 .app-nav-link { display: flex; align-items: center; gap: .75rem; min-height: var(--app-touch); padding: .5rem .75rem; border-radius: var(--bulma-radius); color: var(--bulma-text); cursor: pointer; list-style: none; }
-.app-nav-link::-webkit-details-marker { display: none; }
+
 .app-nav-link:hover { background: var(--app-surface-alt); color: var(--bulma-text-strong); }
 .app-nav-link.is-active { background: var(--bulma-link-light); color: var(--bulma-link-on-scheme, var(--bulma-link)); font-weight: 600; }
 .app-nav-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.app-nav-sub { padding: 0 0 0 1.5rem; }
-.app-nav-caret { transition: transform .15s; }
-details[open] > summary .app-nav-caret { transform: rotate(180deg); }
 
 /* Tab-Leiste (Mobil) */
 .app-tabbar { position: fixed; z-index: 40; inset: auto 0 0 0; display: flex; height: calc(var(--app-tabbar-h) + var(--app-safe-b)); padding-bottom: var(--app-safe-b); background: var(--app-surface); border-top: 1px solid var(--app-line); }
@@ -103,9 +103,6 @@ details[open] > summary .app-nav-caret { transform: rotate(180deg); }
 .app-tab-badge { position: absolute; top: -.35rem; left: 55%; min-width: 1.1rem; height: 1.1rem; padding: 0 .3rem; font-size: .65rem; }
 
 /* Meldungen */
-.app-alert { margin-bottom: var(--app-gap); }
-.app-alert-body { display: flex; gap: .75rem; align-items: flex-start; }
-.app-alert-body .icon { margin-top: .1rem; }
 
 /* Dropdowns (Bulma-CSS, eigenes JS) */
 .dropdown { position: relative; display: inline-flex; }
@@ -126,8 +123,7 @@ details[open] > summary .app-nav-caret { transform: rotate(180deg); }
 
 /* ---------- Komponenten ---------- */
 .toolbar { display: flex; flex-direction: column; gap: .75rem; }
-.toolbar-group { min-width: 0; }
-.toolbar-note { font-size: .85rem; color: var(--bulma-text-weak); }
+
 .toolbar-box { padding: .75rem; }
 .speed-panel-grid { display: grid; gap: .75rem; align-items: center; }
 @media screen and (max-width: 768px) {
@@ -195,8 +191,6 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .parts-image-wrap { overflow-x: auto; }
 .parts-image { display: block; width: 100%; min-width: 300px; max-width: 700px; height: auto; image-rendering: pixelated; border: 1px solid var(--app-line); background: var(--app-surface-alt); }
 
-.result-list { list-style: none; padding: 0; }
-.result-list li { padding: .3rem 0; border-bottom: 1px solid var(--app-line); overflow-wrap: anywhere; }
 .news[hidden] { display: none; }
 .news img { max-width: 100%; height: auto; }
 .news .content ul { margin-left: 1.25rem; }
@@ -227,12 +221,9 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .search-tabs-scroll.tabs.is-boxed a { border: 1px solid var(--app-line); border-bottom-color: var(--app-line); background: var(--app-surface-alt); margin-right: .25rem; }
 .search-tabs-scroll a { display: flex; align-items: center; gap: .5rem; min-height: var(--app-touch); white-space: nowrap; }
 .search-tabs-scroll .search-term { overflow: hidden; text-overflow: ellipsis; max-width: 14rem; }
-.search-tabs-delete { flex: none; margin: 0; }
-.search-tabs-delete .button { min-height: var(--app-touch); }
+
 .search-term { overflow-wrap: anywhere; min-width: 0; }
-#search-format-list .dropdown-item { gap: .6rem; }
-.search-actions { display: contents; }
-.search-actions[hidden] { display: none; }
+
 .search-progress { flex: 1 1 100%; order: 99; margin: 0; }
 .search-toolbar .button { margin: 0; }
 .search-form { margin: 0; }
@@ -245,7 +236,11 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
     :is(#sharefiles-form, #dl-form) .responsive-table thead th:not(.col-check) { display: none; }
     :is(#sharefiles-form, #dl-form) .responsive-table thead th.col-check { display: block; border: 0; padding: 0; }
 }
-.cancel-list { list-style: disc; padding-left: 1.25rem; overflow-wrap: anywhere; }
+.cancel-list { list-style: disc; padding-left: 1.25rem; white-space: nowrap; }
+/* Dialog grows with its longest line up to the viewport; longer content scrolls instead of wrapping. */
+.modal-card.is-fit { width: max-content; min-width: min(22rem, 100%); max-width: calc(100vw - 2rem); }
+.modal-card.is-fit .modal-card-body { overflow-x: auto; overflow-y: auto; }
+@media screen and (max-width: 768px) { .modal-card.is-fit { width: 100%; max-width: none; } }
 
 /* ---------- Tabellen: Mobil als Karten ---------- */
 .table-wrap { margin: 0 -.25rem; }
@@ -261,7 +256,7 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .responsive-table td.col-progress:not(.col-check):not(.col-name):not(.col-actions) { display: block; } .responsive-table td.col-progress .dl-meta { white-space: nowrap; } .app-menu-toggle.app-icon-button { display: none; }
 @media screen and (min-width: 769px) and (max-width: 1023px) { .app-menu-toggle.app-icon-button { display: inline-flex; } }
 .toast-host { position: fixed; right: 1rem; top: 4rem; z-index: 100; max-width: calc(100vw - 2rem); }
-.app-toast { margin-bottom: .5rem; } .app-topbar .dropdown-menu { max-width: calc(100vw - 1rem); } .dropdown-item { white-space: normal; } .select-all { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; } .buttons { gap: .5rem; }
+.app-toast { margin-bottom: .5rem; } .app-topbar .dropdown-menu { max-width: calc(100vw - 1rem); } .dropdown-item { white-space: normal; }  .buttons { gap: .5rem; }
 @media screen and (max-width: 768px) { .app-credits > .icon { display: none; } .app-topbar-actions { gap: 0; } .app-topbar-actions .app-icon-button { width: 2.5rem; } .app-title { font-size: .95rem; } } .col-check input { cursor: pointer; } .col-check { min-width: 1.5rem; }
 .responsive-table td[data-label]:not([data-label=""]):not(.col-name):not(.col-progress)::before { content: attr(data-label); color: var(--bulma-text-weak); font-size: .75rem; text-transform: uppercase; }
 .responsive-table tr.is-selected { background: var(--bulma-link-light); border-color: var(--bulma-link); }
@@ -283,13 +278,12 @@ tr[data-status="paused"] progress.progress { --bulma-progress-value-background-c
 tr[data-status="done"] progress.progress { --bulma-progress-value-background-color: var(--bulma-success); }
 tr[data-status="canceled"] progress.progress { --bulma-progress-value-background-color: var(--bulma-danger); }
 
-
-
 /* ---------- Login / Fehlerseiten ---------- */
-.login-page { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; background: var(--bulma-scheme-main-bis); }
-.login-card { width: 100%; max-width: 26rem; margin: 0; }
-.login-apple { height: 10rem; margin: -1.25rem -1.25rem 1.25rem; border-radius: var(--app-radius) var(--app-radius) 0 0; background: url('../img/signin-bg.jpeg') center 65% / cover; }
-.login-footer { display: flex; flex-direction: column; gap: .25rem; text-align: center; margin-top: 1rem; font-size: .7rem; color: var(--bulma-text-weak); }
+.login-page { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; background: linear-gradient(rgb(0 0 0 / .3), rgb(0 0 0 / .3)), url('../img/login-background.jpg') center / cover no-repeat; }
+.login-page > #app { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.login-card { width: 100%; max-width: 26rem; margin: 0; box-shadow: 0 10px 30px rgb(0 0 0 / .15); }
+.login-title { margin-bottom: 1.25rem; }
+
 #login_form .field.has-addons > .control:first-child .button { width: 6.5rem; justify-content: flex-start; }
 .login-remember { position: relative; display: flex; align-items: center; gap: .65rem; min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); background: var(--app-surface-alt); font-size: .9rem; cursor: pointer; }
 .login-remember input { position: absolute; width: 1px; height: 1px; opacity: 0; }
@@ -298,8 +292,6 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .login-remember input:checked + .login-remember-switch { background: var(--bulma-primary); }
 .login-remember input:checked + .login-remember-switch::after { transform: translateX(.85rem); }
 .login-remember:focus-within { outline: 2px solid var(--bulma-link); outline-offset: 2px; }
-@media screen and (max-width: 768px) { .login-apple { margin: -.75rem -.75rem 1rem; } }
-.login-logo { display: block; margin: 0 auto 1rem; max-width: 70%; height: auto; }
 
 /* ---------- Tablet (≥769px): Tabellenansicht, zweispaltig ---------- */
 @media screen and (min-width: 769px) {
@@ -311,7 +303,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .box { padding: 1.25rem; }
     .speed-panel-grid { grid-template-columns: minmax(12rem, 1fr) minmax(19rem, 24rem); }
     .toolbar { flex-direction: row; align-items: center; flex-wrap: wrap; }
-    .toolbar-grow { flex: 1 1 14rem; }
+
     .search-toolbar { flex-direction: row; align-items: center; flex-wrap: wrap; }
     .search-toolbar .filter-field { flex: 1 1 14rem; }
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
@@ -320,21 +312,14 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .modal-card { max-width: 36rem; align-self: center; border-radius: var(--app-radius); margin: auto; }
 
     .app-sidebar { width: var(--app-sidebar-w-narrow); transform: none; visibility: visible; transition: width .2s ease; overflow: visible; z-index: 50; }
-    .app-brand-full { display: none; }
-    .app-brand-icon { display: block; }
-    .app-brand { padding: .75rem; }
-    .app-nav-label, .app-nav-caret { display: none; }
+    .app-brand-logo { aspect-ratio: 1; object-position: 12% center; }
+    .app-nav-label{ display: none; }
     .app-nav-link { justify-content: center; position: relative; padding: .5rem; }
     .app-nav-badge { position: absolute; top: .1rem; right: .1rem; }
-    .app-nav-sub { display: none; }
-    .app-nav-group details[open] .app-nav-sub { display: block; position: absolute; left: 100%; top: 0; min-width: 12rem; background: var(--app-surface); border: 1px solid var(--app-line); border-radius: var(--bulma-radius); padding: .5rem; }
-    .app-nav-group details[open] .app-nav-sub .app-nav-label { display: block; }
-    .app-nav-group { position: relative; }
     .app-main { margin-left: var(--app-sidebar-w-narrow); }
     .app-sidebar.is-open { width: var(--app-sidebar-w); box-shadow: var(--bulma-shadow); }
-    .app-sidebar.is-open .app-nav-label, .app-sidebar.is-open .app-nav-caret { display: block; }
-    .app-sidebar.is-open .app-brand-full { display: block; }
-    .app-sidebar.is-open .app-brand-icon { display: none; }
+    .app-sidebar.is-open .app-nav-label{ display: block; }
+    .app-sidebar.is-open .app-brand-logo { aspect-ratio: 1.9; object-position: left center; }
     .app-sidebar.is-open .app-nav-link { justify-content: flex-start; padding: .5rem .75rem; }
     .app-sidebar.is-open .app-nav-badge { position: static; }
 }
@@ -376,13 +361,12 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .app-main { margin-left: var(--app-sidebar-w); }
     .app-sidebar, .app-sidebar.is-open { width: var(--app-sidebar-w); box-shadow: none; }
     .app-menu-toggle { display: none; }
-    .app-brand-full, .app-sidebar.is-open .app-brand-full { display: block; }
-    .app-brand-icon { display: none; }
-    .app-nav-label, .app-nav-caret { display: block; }
+    .app-nav-label { display: block; }
+    .app-brand-logo { aspect-ratio: 1.9; object-position: left center; }
     .app-nav-link { justify-content: flex-start; padding: .5rem .75rem; }
     .app-nav-badge { position: static; }
-    .app-nav-sub { display: block; position: static; padding: 0 0 0 1.5rem; }
-    .app-nav-group details[open] .app-nav-sub { position: static; min-width: 0; border: 0; padding: 0 0 0 1.5rem; background: none; }
+
+
     .app-scrim { display: none; }
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .card-grid { grid-template-columns: repeat(3, 1fr); }
@@ -395,12 +379,6 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 }
 
 /* ---------- Dunkelmodus: Feinheiten ---------- */
-:root[data-theme="dark"] .app-brand-full,
-:root[data-theme="dark"] .login-logo { filter: brightness(1.1); }
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .app-brand-full,
-    :root:not([data-theme="light"]) .login-logo { filter: brightness(1.1); }
-}
 
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
