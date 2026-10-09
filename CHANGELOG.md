@@ -2,16 +2,21 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
-## 0.33.0 (2026-10-08)
+## 0.33.0 (2026-10-09)
 
-- Oberfläche modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
+- Oberfläche mit Vue.js modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
+- alle Seiten laden jetzt dynamisch, ohne die gesamte Seite neu zu laden; Seitenwechsel und AJAX-Updates sind jetzt flüssiger
+- Neuer Login-Hintergrund, Dashboard mit getrennten Karten für Netzwerk und Community, Verbindungen mit konfiguriertem Maximum
 - Downloads, Uploads und Freigaben übersichtlicher; Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
 - Im Dialog „Links hinzufügen“ ein Zielverzeichnis wählen und AJL-Dateien direkt auswählen und in Downloads umwandeln; Teileanzeige jetzt scharf skalierbar
-- PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
-- Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt
 - Statistik der geteilten Dateien als Tab unter „geteilte Ordner“; Addons-Menü und phpinfo entfallen
 - Suche in geteilten Ordnern direkt auf der Freigaben-Seite, über alle Ordner und Unterordner, ohne Beachtung der Groß-/Kleinschreibung
-- Oberfläche als statische Vue-3-Anwendung ohne Build-Schritt, Backend liefert nur noch JSON; Layout bleibt erhalten. Neuer Login-Hintergrund, Dashboard mit getrennten Karten für Netzwerk und Community, Verbindungen mit konfiguriertem Maximum
+- Sprache im Benutzermenü per Flagge (Deutsch/Englisch) pro Browser umschaltbar; `GUI_LANGUAGE` bleibt der Standard
+- Öffentliche IP im Dashboard teilweise maskiert, die vollständige Adresse erscheint beim Darüberfahren
+- Geteilte Dateien: „ajfsp Link anzeigen“ öffnet ein Overlay mit dem Link und dem Link mit Quelle zum Kopieren
+- Login-Seite zeigt, wie viele per `ajfsp`-Link oder `.ajl`-Datei übergebene Links nach der Anmeldung übernommen werden
+- Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt (nicht unter iOS)
+- PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
 
 ## 0.32.2 (2026-10-04)
 
