@@ -89,10 +89,10 @@ Der manuelle Workflow `.github/workflows/rebuild_container.yml` nimmt einen vorh
 
 ## Lokale Tests mit Mock-Core
 
-Der eigenständige Dienst [`ajcore-mock`](https://github.com/applejuicenetz/ajcore-mock) (lokal `../ajcore-mock/src/mock_core.py`) ist ein zustandsbehafteter Mock der Core-API. Er ist nicht Bestandteil dieses Repositories. Er verwendet nur die Python-Standardbibliothek. Er bildet alle von phpGUI genutzten Endpunkte nach. Aktionen (`pausedownload`, `resumedownload`, `canceldownload`, `cleandownloadlist`, `renamedownload`, `settargetdir`, `setpowerdownload`, `processlink`, `search`, `serverlogin`, `removeserver`, `setsettings`) ändern den Zustand, aktive Downloads schreiten zeitbasiert voran. Passwort-Standard ist leer (MD5 `d41d8cd98f00b204e9800998ecf8427e`).
+Der eigenständige Dienst [`core-mock`](https://github.com/applejuicenetz/core-mock) (lokal `../core-mock/src/mock_core.py`) ist ein zustandsbehafteter Mock der Core-API. Er ist nicht Bestandteil dieses Repositories. Er verwendet nur die Python-Standardbibliothek. Er bildet alle von phpGUI genutzten Endpunkte nach. Aktionen (`pausedownload`, `resumedownload`, `canceldownload`, `cleandownloadlist`, `renamedownload`, `settargetdir`, `setpowerdownload`, `processlink`, `search`, `serverlogin`, `removeserver`, `setsettings`) ändern den Zustand, aktive Downloads schreiten zeitbasiert voran. Passwort-Standard ist leer (MD5 `d41d8cd98f00b204e9800998ecf8427e`).
 
 ```shell
-python3 ../ajcore-mock/src/mock_core.py --scenario busy --port 19851 --shareidx-bytes 0
+python3 ../core-mock/src/mock_core.py --scenario busy --port 19851 --shareidx-bytes 0
 # Omit --shareidx-bytes 0 to model a 3.5 MB share index.
 ```
 
