@@ -1,7 +1,7 @@
 <?php
 use appleJuiceNETZ\GUI\View;
 /** @var string $content @var string $site @var string $nav_site @var string $title @var array $scripts @var array $poll */
-/** @var array $flash @var array $link_marker @var object $lang @var array $nav @var array $plugins */
+/** @var array $flash @var array $link_marker @var object $lang @var array $nav */
 $ui = $lang->UI;
 $pageTitle = trim(($title !== '' ? $title . ' – ' : '') . 'appleJuice phpGUI');
 ?>
@@ -32,7 +32,7 @@ unset($_SESSION['remember_login']);
 <a class="skip-link" href="#main"><?= $e($ui->skip) ?></a>
 
 <div class="app">
-    <?= $partial('sidebar', compact('nav', 'nav_site', 'plugins', 'uploads_active', 'downloads_active', 'lang', 'faq_url', 'site')) ?>
+    <?= $partial('sidebar', compact('nav', 'nav_site', 'uploads_active', 'downloads_active', 'lang', 'faq_url', 'site')) ?>
 
     <div class="app-main">
         <?= $partial('topbar', compact('credits', 'credits_negative', 'download_speed', 'upload_speed', 'nick', 'permalink', 'lang', 'title', 'csrf')) ?>
@@ -78,6 +78,7 @@ unset($_SESSION['remember_login']);
 <?php endforeach; ?>
 
 <script type="module" src="<?= $e(View::asset('js/app.js')) ?>"></script>
+<script type="module" src="<?= $e(View::asset('js/links.js')) ?>"></script>
 <?php foreach ($scripts as $js): ?>
     <script type="module" src="<?= $e(View::asset('js/' . $js)) ?>"></script>
 <?php endforeach; ?>

@@ -30,7 +30,7 @@ final class Navigation
     {
         return match ($site) {
             'dl_users', 'dl_parts' => 'downloads',
-            'sharefiles' => 'shares',
+            'sharefiles', 'sharestats' => 'shares',
             default => $site,
         };
     }

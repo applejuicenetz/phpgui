@@ -28,7 +28,7 @@ class Router
         'sharefiles' => C\ShareFilesController::class,
         'server' => C\ServerController::class,
         'settings' => C\SettingsController::class,
-        'extras' => C\ExtrasController::class,
+        'sharestats' => C\ShareStatsController::class,
         'help' => C\HelpController::class,
         'kickcore' => C\KickCoreController::class,
     ];
@@ -243,7 +243,12 @@ class Router
         }
 
         $lang = Format::lang();
-        $results = LinkProcessor::submit($input, new Core());
+        $target = LinkProcessor::targetDirectory(Request::str('ajfsp_target'));
+        if ($target === null) {
+            Flash::add('warning', $lang->UI->add_links_target_invalid);
+            throw new RedirectException('index.php?site=downloads');
+        }
+        $results = LinkProcessor::submit($input, new Core(), $target);
         $hasFile = false;
         $hasServer = false;
         foreach ($results as $r) {
@@ -300,8 +305,6 @@ class Router
         $servers = new \appleJuiceNETZ\appleJuice\Server();
         $info = $servers->info();
         $active = ViewData::activeCounts();
-        $plugins = new Plugins();
-        $plugins->Find_Plugins();
 
         return [
             'nick' => (string)($settings['NICK']['VALUES']['CDATA'] ?? ''),
@@ -313,7 +316,6 @@ class Router
             'downloads_active' => $active['downloads_active'],
             'firewalled' => $servers->netstats['firewalled'] === 'true',
             'connecting' => (int)$servers->netstats['connectedwith'] < 0,
-            'plugins' => $plugins->liste,
             'nav' => Navigation::items(),
             'new_version' => VersionCheck::newer(),
             'permalink' => !empty($_ENV['TOP_SHOW_PERMALINK'])

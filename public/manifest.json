@@ -8,6 +8,16 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#f5a623",
+  "protocol_handlers": [
+    { "protocol": "web+ajfsp", "url": "./index.php?ajfsp_link=%s" }
+  ],
+  "file_handlers": [
+    {
+      "action": "./index.php?site=downloads",
+      "name": "appleJuice link list",
+      "accept": { "application/x-applejuice-ajl": [".ajl"] }
+    }
+  ],
   "icons": [
     { "src": "assets/img/apple-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
     { "src": "assets/img/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

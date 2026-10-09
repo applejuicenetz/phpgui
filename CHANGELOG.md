@@ -6,8 +6,11 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 
 - Oberfläche modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
 - Downloads, Uploads und Freigaben übersichtlicher; Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
-- AJL-Dateien direkt im Textfeld bearbeiten und importieren; Teileanzeige jetzt scharf skalierbar
+- Im Dialog „Links hinzufügen“ ein Zielverzeichnis wählen und AJL-Dateien direkt auswählen und in Downloads umwandeln; Teileanzeige jetzt scharf skalierbar
 - PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
+- Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt
+- Statistik der geteilten Dateien als Tab unter „geteilte Ordner“; Addons-Menü und phpinfo entfallen
+- Suche in geteilten Ordnern direkt auf der Freigaben-Seite, über alle Ordner und Unterordner, ohne Beachtung der Groß-/Kleinschreibung
 
 ## 0.32.2 (2026-10-04)
 

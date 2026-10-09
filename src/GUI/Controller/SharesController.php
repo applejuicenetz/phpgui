@@ -9,12 +9,16 @@ use appleJuiceNETZ\GUI\Csrf;
 use appleJuiceNETZ\GUI\Page;
 use appleJuiceNETZ\GUI\Request;
 
-final class SharesController extends Controller
+final class SharesController extends ShareFilesBase
 {
     public function handle(): Page
     {
         $share = new Share();
         $this->runAction($share);
+        $filter = trim(Request::get('q'));
+        if ($filter !== '') {
+            return $this->search($share, $filter);
+        }
 
         $dirs = [];
         foreach ($share->get_shared_dirs(1) as $id) {
@@ -28,7 +32,21 @@ final class SharesController extends Controller
         return new Page('pages/shares', [
             'temp' => $share->get_temp(),
             'dirs' => $dirs,
-        ], scripts: ['shares.js']);
+            'filter' => '',
+        ], scripts: ['shares.js', 'sharefiles.js']);
+    }
+
+    /** Searches the file names of every shared directory. */
+    private function search(Share $share, string $filter): Page
+    {
+        $self = 'index.php?site=shares&q=' . rawurlencode($filter);
+        $data = $this->fileList($share, null, $filter, $self);
+
+        return new Page('pages/shares', $data + [
+            'temp' => '',
+            'dirs' => [],
+            'folders' => [],
+        ], scripts: ['shares.js', 'sharefiles.js']);
     }
 
     private function runAction(Share $share): void

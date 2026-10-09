@@ -13,7 +13,7 @@ use appleJuiceNETZ\GUI\View;
         <div class="stat-grid">
             <?= $partial('stat-card', ['icon' => 'cloud-download', 'tone' => 'warning', 'label' => $lang->Start->active_downloads, 'href' => 'index.php?site=downloads', 'id' => 'aj-dash-downloads', 'value' => $e($downloads)]) ?>
             <?= $partial('stat-card', ['icon' => 'cloud-upload', 'tone' => 'link', 'label' => $lang->Start->active_uploads, 'href' => 'index.php?site=uploads', 'id' => 'aj-dash-uploads', 'value' => $e($uploads_active)]) ?>
-            <?= $partial('stat-card', ['icon' => 'diamond', 'tone' => 'warning', 'label' => $lang->Start->credits, 'href' => 'index.php?site=extras&show=' . rawurlencode('sharestats/sharestats.php'), 'id' => 'aj-dash-credits', 'value' => '<span class="' . ($credits_negative ? 'has-text-danger' : '') . '">' . $e($credits) . '</span>']) ?>
+            <?= $partial('stat-card', ['icon' => 'diamond', 'tone' => 'warning', 'label' => $lang->Start->credits, 'href' => 'index.php?site=sharestats', 'id' => 'aj-dash-credits', 'value' => '<span class="' . ($credits_negative ? 'has-text-danger' : '') . '">' . $e($credits) . '</span>']) ?>
             <?php if ($share): ?>
                 <?= $partial('stat-card', ['icon' => 'folder2-open', 'tone' => 'link', 'label' => $share['count'] . ' ' . $lang->Start->share_dat, 'href' => 'index.php?site=shares', 'id' => 'aj-dash-shares', 'value' => $e($share['size'])]) ?>
             <?php endif; ?>

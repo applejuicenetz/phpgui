@@ -1,10 +1,17 @@
 <?php
 use appleJuiceNETZ\GUI\Csrf;
 use appleJuiceNETZ\GUI\View;
-/** @var string $temp @var list<array{name:string,subs:bool}> $dirs @var object $lang */
+/** @var string $temp @var list<array{name:string,subs:bool}> $dirs @var string $filter @var object $lang */
 $sh = $lang->Share;
 ?>
 <div id="shares-root">
+    <?= $partial('share-tabs', ['site' => 'shares', 'lang' => $lang]) ?>
+
+    <?= $partial('share-search', ['site' => 'shares', 'dir' => null, 'filter' => $filter, 'clear' => 'index.php?site=shares', 'lang' => $lang]) ?>
+
+    <?php if ($filter !== ''): ?>
+        <?= $partial('share-files', get_defined_vars()) ?>
+    <?php else: ?>
     <section class="box">
         <form method="post" action="index.php?site=shares" class="mb-4">
             <?= Csrf::field() ?>
@@ -58,8 +65,10 @@ $sh = $lang->Share;
             <button class="button is-primary" type="submit"><?= View::icon('plus-lg') ?><span><?= $e($sh->add) ?></span></button>
         </form>
     </section>
+    <?php endif; ?>
 </div>
 
+<?php if ($filter === ''): ?>
 <div class="modal" id="modal-dirs" role="dialog" aria-modal="true" aria-labelledby="modal-dirs-title" hidden>
     <div class="modal-background" data-modal-close></div>
     <div class="modal-card">
@@ -74,3 +83,4 @@ $sh = $lang->Share;
         </footer>
     </div>
 </div>
+<?php endif; ?>

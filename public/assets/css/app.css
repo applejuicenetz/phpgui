@@ -197,11 +197,6 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 
 .result-list { list-style: none; padding: 0; }
 .result-list li { padding: .3rem 0; border-bottom: 1px solid var(--app-line); overflow-wrap: anywhere; }
-.phpinfo { overflow-x: auto; }
-.phpinfo table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: .85rem; }
-.phpinfo td, .phpinfo th { border: 1px solid var(--app-line); padding: .3rem .5rem; vertical-align: baseline; word-break: break-word; }
-.phpinfo .e { font-weight: 600; background: var(--app-surface-alt); width: 30%; }
-.phpinfo img { float: right; border: 0; }
 .news[hidden] { display: none; }
 .news img { max-width: 100%; height: auto; }
 .news .content ul { margin-left: 1.25rem; }
@@ -221,6 +216,8 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .action-text { display: none; }
 .search-toolbar { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .75rem; }
 .search-toolbar .field, .search-toolbar .dropdown { margin: 0; }
+.share-tabs { margin-bottom: 1rem; }
+.share-stats-modes { flex-wrap: wrap; margin-bottom: 1rem; }
 .search-tabs { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1rem; }
 .search-tabs-scroll.tabs.is-boxed li.is-active a { background: var(--app-surface); border-color: var(--app-line); border-bottom-color: transparent; color: var(--bulma-link-on-scheme, var(--bulma-link)); font-weight: 600; }
 .search-tabs-scroll { flex: 1 1 auto; min-width: 0; margin: 0; overflow-x: auto; scrollbar-width: thin; }

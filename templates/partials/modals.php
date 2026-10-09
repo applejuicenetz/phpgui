@@ -15,6 +15,15 @@ $ui = $lang->UI;
                 <label class="label" for="ajfsp-link-input"><?= $e($ui->add_links_label) ?></label>
                 <div class="control"><textarea class="textarea" id="ajfsp-link-input" name="ajfsp_link" rows="4" placeholder="ajfsp://file|…" required></textarea></div>
             </div>
+            <div class="field">
+                <label class="label" for="ajfsp-target-input"><?= $e($ui->add_links_target) ?></label>
+                <div class="control"><input class="input" type="text" id="ajfsp-target-input" name="ajfsp_target" maxlength="255" autocomplete="off" placeholder="<?= $e($ui->add_links_target_hint) ?>"></div>
+            </div>
+            <div class="field">
+                <label class="label" for="ajfsp-file-input"><?= $e($ui->add_links_file) ?></label>
+                <div class="control"><input class="input" type="file" id="ajfsp-file-input" accept=".ajl"></div>
+                <p class="help" id="ajfsp-file-note" data-text-loaded="<?= $e($ui->add_links_loaded) ?>" data-text-invalid="<?= $e($ui->add_links_invalid) ?>" hidden></p>
+            </div>
         </section>
         <footer class="modal-card-foot">
             <button class="button is-primary" type="submit"><?= View::icon('download') ?><span><?= $e($ui->add_links_submit) ?></span></button>

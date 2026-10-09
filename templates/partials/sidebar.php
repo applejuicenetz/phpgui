@@ -1,6 +1,6 @@
 <?php
 use appleJuiceNETZ\GUI\View;
-/** @var list<array> $nav @var string $nav_site @var array $plugins @var int $uploads_active @var int $downloads_active @var object $lang @var string $faq_url @var string $site */
+/** @var list<array> $nav @var string $nav_site @var int $uploads_active @var int $downloads_active @var object $lang @var string $faq_url @var string $site */
 ?>
 <aside class="app-sidebar" id="sidebar" aria-label="<?= $e($lang->UI->page_of_nav) ?>">
     <a class="app-brand" href="index.php?site=start" aria-label="appleJuice">
@@ -21,22 +21,6 @@ use appleJuiceNETZ\GUI\View;
                     </a>
                 </li>
             <?php endforeach; ?>
-            <?php if ($plugins): ?>
-                <li class="app-nav-group">
-                    <details<?= $site === 'extras' ? ' open' : '' ?>>
-                        <summary class="app-nav-link">
-                            <?= View::icon('puzzle') ?>
-                            <span class="app-nav-label"><?= $e($lang->Navigation->addons) ?></span>
-                            <?= View::icon('chevron-down', 'app-nav-caret') ?>
-                        </summary>
-                        <ul class="app-nav app-nav-sub">
-                            <?php foreach ($plugins as $p): ?>
-                                <li><a class="app-nav-link" href="index.php?site=extras&amp;show=<?= $e(rawurlencode($p[2])) ?>"><span class="app-nav-label"><?= $e($p[0]) ?></span></a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </details>
-                </li>
-            <?php endif; ?>
             <li>
                 <a class="app-nav-link" href="<?= $e($faq_url) ?>" target="_blank" rel="noopener noreferrer">
                     <?= View::icon('info-circle') ?>

@@ -9,7 +9,7 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 
 ## Lokalisierung
 
-- Sämtliche benutzersichtbaren Texte ausschließlich in den bestehenden Sprachdateien `language/de.json` und `language/en.json` pflegen. Das gilt auch für Plugins, JavaScript-Meldungen, Dialoge, Platzhalter, Tooltips, zugängliche Beschriftungen und Fehlertexte in der Oberfläche. Keine zusätzliche `language.json` neben diesen Dateien anlegen.
+- Sämtliche benutzersichtbaren Texte ausschließlich in den bestehenden Sprachdateien `language/de.json` und `language/en.json` pflegen. Das gilt auch für JavaScript-Meldungen, Dialoge, Platzhalter, Tooltips, zugängliche Beschriftungen und Fehlertexte in der Oberfläche. Keine zusätzliche `language.json` neben diesen Dateien anlegen.
 - Übersehene oder bestehende hartcodierte Oberflächentexte in die Sprachdateien umziehen und sämtliche Verwendungen auf die entsprechenden Übersetzungsschlüssel umstellen. Schlüssel in Deutsch und Englisch vollständig und konsistent halten; JavaScript erhält benötigte Übersetzungen aus derselben Quelle.
 - Technische Protokollwerte, Code-Bezeichner und ausschließlich interne Logmeldungen sind keine Oberflächentexte und bleiben unverändert beziehungsweise englisch.
 
@@ -28,6 +28,29 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 - `api=news` liefert die bereinigten Dashboard-News als JSON (`html`); das Dashboard lädt sie nach dem Seitenaufbau per JavaScript, damit ein langsamer News-Server weder Seite noch Polling blockiert. `NewsFeed` gibt dafür die Session-Sperre während des Abrufs frei.
 - `api=directories&dir=<path>` liefert Verzeichnisse als JSON; `api=parts&dl_id=<id>` beziehungsweise `usr_id=<id>` liefert Part-Maps als SVG. `PartMapService` lädt die fachlichen Daten unabhängig von HTTP und SVG-Rendering.
 - `tests/raw_routes.php`, `tests/raw_errors.php` und `tests/link_integrations.php` prüfen API-Verträge, Core-Fehler und Link-Integrationen gegen einen isolierten Mock-Core. Browserseitige Protokollhandler-Registrierung zusätzlich im HTTPS-Browser prüfen.
+
+## Core-Datenklassen
+
+- Alle Klassen unter `src/appleJuice/` verwenden `declare(strict_types=1)` sowie explizite Parameter-, Rückgabe- und Property-Typen. Core-XML-Felder und die abgeleiteten `phpaj_*`-Schlüssel im Session-Cache bilden den Datenvertrag.
+- `Downloads`, `Uploads` und `Search` halten ihre inkrementellen Daten per Referenz im Session-Cache (`$_SESSION['cache']`), der vor dem Binden mit `[]` initialisiert wird. Aggregationen setzen ihre Zähler bei jedem Durchlauf zurück und entfernen veraltete IDs anhand der aktuellen Core-ID-Liste. Suchaktionen verwenden ausschließlich ihre übergebene ID, nie HTTP-Eingaben.
+- `Core::command()` streamt die Antwort. `Share` hält keine Dateiliste im Session-Cache: `Share::scan()` übergibt Datensätze einzeln an einen Consumer, `ShareSelection` behält nur die benötigte Seite.
+- Share-Verzeichnisse ändert `Share` über `saveDirectories()`: aktuelle Einstellungen laden, die vollständige Liste als `setsettings` mit `countshares`, `sharedirectoryN` und `sharesubN` senden, lokalen Einstellungscache verwerfen. Das Incoming-Verzeichnis ergänzt der Core selbst.
+- Der Core nutzt `-1` als Server-ID einer getrennten Verbindung; `Server::ids()` filtert sie explizit. Der Serverlisten-Import verarbeitet höchstens zehn unterschiedliche Links und toleriert leere Antworten.
+- `Powerdownload` sendet phpGUI als ganze Zahl, weil der Core den Wert als Integer parst.
+
+## Links hinzufügen
+
+- Der Dialog „Links hinzufügen“ (`templates/partials/modals.php`) nimmt `ajfsp://`-Links als Text und `.ajl`-Dateien über eine Dateiauswahl entgegen. `links.js` wandelt den Dateiinhalt im Browser mit `ajl.js` (`ajlToLinks()`) in `ajfsp://file|name|checksum|size/`-Links um und hängt sie an das Textfeld an; abgesendet wird ausschließlich Text über `ajfsp_link`. Das Feld `ajfsp_target` setzt ein Unterverzeichnis im Incoming-Ordner für Datei-Links (`processlink` mit `subdir`); `LinkProcessor::targetDirectory()` normalisiert den Pfad und lehnt `..`, `:`, Steuerzeichen und mehr als 255 Zeichen ab, weil der Core solche Werte still ignoriert. Ein ungültiger Pfad zeigt eine Warnung, es wird kein Link hinzugefügt. Server-Links ignorieren das Ziel. `tests/link_target.php` prüft die Normalisierung. Das AJL-Format besteht aus einem Kopftext, der Zeile `100` und danach Dreiergruppen aus Name, MD5-Prüfsumme und Größe. Ungültige Dateien führen zu einem Hinweis im Dialog, nicht zu einer Serveranfrage.
+- Es gibt kein Plugin-System und keine Addons-Seiten. Neue Funktionen sind Seiten in `Router::PAGES` oder Teile bestehender Seiten.
+
+## Share-Suche
+
+- Die Suche liegt direkt auf `index.php?site=shares&q=<text>` und durchsucht alle freigegebenen Verzeichnisse. In einer Ordneransicht (`site=sharefiles&dir=<path>&q=<text>`) ist sie auf den Unterbaum des Ordners begrenzt. Ohne `q` zeigt `shares` die Verwaltung der Verzeichnisse, `sharefiles` die direkten Dateien und Unterordner.
+- Der Filter ist ein Teilstring-Vergleich ohne Beachtung der Groß-/Kleinschreibung auf dem vollständigen Pfad (`Share::matchesFilter()`), wie in der Java-GUI. Treffer erscheinen flach mit Pfad, ohne Ordnerliste.
+- `Share::page(?string $directory, int $page, int $pageSize, string $filter)` liefert eine Seite mit 200 Einträgen; `null` bedeutet alle Shares. Pagination, Link-Export ohne Auswahl und Prioritäten wirken auf die gefilterte Menge.
+- `public/manifest.json` deklariert für die installierte PWA den Protokoll-Handler `web+ajfsp` (`index.php?ajfsp_link=%s`) und den Datei-Handler für `.ajl` (`index.php?site=downloads`); `links.js` übernimmt die geöffnete Datei über `launchQueue` in den Dialog „Links hinzufügen“. `tests/manifest.php` prüft beide Einträge.
+- Die Seiten `shares`, `sharefiles` und `sharestats` teilen die Tab-Leiste `share-tabs` („geteilte Ordner“ und „Statistik“); `sharefiles` markiert den Tab „geteilte Ordner“. `index.php?site=sharestats&stats=<modus>` zeigt die 50 am häufigsten oder zuletzt angefragten beziehungsweise gesuchten Dateien (`most`, `-most`, `last`, `-last`, `search`, `-search`; unbekannte Werte ergeben `most`). Das Dashboard verlinkt die Credits-Karte dorthin.
+- Liste und Aktionen teilen `ShareFilesBase` (Basis von `SharesController` und `ShareFilesController`) und die Partials `share-search` und `share-files`. Das Suchfeld sucht nach 400 ms Pause, Esc leert es (`sharefiles.js`).
 
 ## Release vorbereiten
 
@@ -57,7 +80,7 @@ python3 ../ajcore-mock/mock_core.py --scenario busy --port 19851 --shareidx-byte
 # Omit --shareidx-bytes 0 to model a 3.5 MB share index.
 ```
 
-Szenarien: `empty`, `busy` (Downloads in allen Status, Uploads, Shares, Suchergebnisse, Sonderzeichen in Namen), `firewalled`, `disconnected` (negative Credits). Der Mock ersetzt keinen Test gegen den echten Core; Formate stammen aus `core-src/docs/openapi.yaml` und einem laufenden Core 0.35.185.93.
+Szenarien: `empty`, `busy` (Downloads in allen Status, Uploads, Shares, Suchergebnisse, Sonderzeichen in Namen, etwa 300 ISO-Dateien in Ordnern unter `/mock/isos/<Distribution>/<Release>/`), `firewalled`, `disconnected` (negative Credits). Der Mock ersetzt keinen Test gegen den echten Core; Formate und Antworten folgen `core-src/docs/openapi.yaml` und `XmlServer.java`. Bei Abweichungen gilt der Core-Code, und der Mock wird korrigiert.
 
 phpGUI lokal gegen den Mock: PHP 8.5 und die in `composer.json` deklarierten Laufzeit-Erweiterungen `ctype`, `dom`, `json`, `libxml`, `mbstring`, `openssl`, `session` und `xml` verwenden. `curl` wird ausschließlich für HTTP-Tests benötigt und ist unter `require-dev` deklariert. `gd` und `zip` sind keine Anforderungen der Anwendung; Part-Maps werden als SVG erzeugt. Web-Dateien liegen unter `public/`. Der Dockerfile installiert keine zusätzlichen PHP-Erweiterungen; vor einem Container-Build die Composer-Plattformanforderungen gegen das Basisimage prüfen.
 
@@ -78,4 +101,10 @@ php tests/smoke.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
 php tests/raw_routes.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
 php tests/link_integrations.php --base=http://127.0.0.1:8088 --core=http://127.0.0.1:19851
 php tests/raw_errors.php http://127.0.0.1:19851
+php tests/core_services.php http://127.0.0.1:19851
+php tests/core_models.php
+php tests/share_filter.php
+php tests/link_target.php
 ```
+
+`core_services.php` führt Core-Aktionen gegen den Mock aus und stellt die Share-Einstellungen danach wieder her. `core_models.php`, `share_filter.php` und `link_target.php` benötigen keinen Dienst. `login_redirect.php`, `manifest.php` und `format.php` laufen ebenfalls ohne Dienst.
