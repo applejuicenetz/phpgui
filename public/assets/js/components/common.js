@@ -1,4 +1,4 @@
-import { ref, nextTick, watch, onUnmounted } from '../vue.js';
+import { ref, computed, nextTick, watch, onUnmounted } from '../vue.js';
 import { t, state, url, navigate, mutate, notify, rememberGet, rememberSet } from '../store.js';
 import { bytes, speed } from '../format.js';
 
@@ -48,10 +48,12 @@ export const SpeedPanel = {
     props: ['kind', 'data'], components: { UnitInput, Icon },
     setup(props) {
         const limit = ref(props.data.max), busy = ref(false);
+        // Use the topbar snapshot so independent page polls cannot show conflicting speeds.
+        const currentSpeed = computed(() => state.status[props.kind === 'ul' ? 'upload_speed' : 'download_speed'] ?? props.data.speed);
         async function apply() { busy.value = true; const result = await mutate('limits', {action: 'set_max' + props.kind, value: limit.value}); busy.value = false; if(result) notify(t('UI.saved'), 'success'); }
-        return { limit, busy, apply, speed, bytes, t };
+        return { limit, busy, currentSpeed, apply, speed, bytes, t };
     },
-    template: `<section class="box toolbar-box speed-panel"><div class="speed-panel-grid"><div class="speed-bar"><progress class="progress" :value="data.max > 0 ? Math.min(100, data.speed / data.max * 100) : 0" max="100"></progress><span class="speed-bar-label">{{speed(data.speed)}} / {{data.max > 0 ? speed(data.max) : '∞'}}<template v-if="kind === 'ul'"> · {{t('Uploads.limit').replace('{percent}', data.slots_max > 0 ? Math.round(data.slots_used / data.slots_max * 100) : '?')}}</template></span></div><div class="field has-addons limit-form"><div class="control is-expanded"><UnitInput v-model="limit" :storage-key="kind + '_speed_unit'" :label="t('Downloads.limit')" /></div><div class="control"><button type="button" class="button is-primary" :disabled="busy" @click="apply" :aria-label="t('Settings.save')"><Icon name="check-lg" /></button></div></div></div></section>`
+    template: `<section class="box toolbar-box speed-panel"><div class="speed-panel-grid"><div class="speed-bar"><progress class="progress" :value="data.max > 0 ? Math.min(100, currentSpeed / data.max * 100) : 0" max="100"></progress><span class="speed-bar-label">{{speed(currentSpeed)}} / {{data.max > 0 ? speed(data.max) : '∞'}}<template v-if="kind === 'ul'"> · {{t('Uploads.limit').replace('{percent}', data.slots_max > 0 ? Math.round(data.slots_used / data.slots_max * 100) : '?')}}</template></span></div><div class="field has-addons limit-form"><div class="control is-expanded"><UnitInput v-model="limit" :storage-key="kind + '_speed_unit'" :label="t('Downloads.limit')" /></div><div class="control"><button type="button" class="button is-primary" :disabled="busy" @click="apply" :aria-label="t('Settings.save')"><Icon name="check-lg" /></button></div></div></div></section>`
 };
 export const ShareTabs = { setup: () => ({t,state,url}), template: `<div class="share-tabs-row"><div class="tabs is-boxed share-tabs" role="tablist"><ul><li :class="{'is-active': state.route.site !== 'sharestats'}"><a :href="url('shares')" role="tab">{{t('Navigation.shares')}}</a></li><li :class="{'is-active': state.route.site === 'sharestats'}"><a :href="url('sharestats')" role="tab">{{t('Share.statistics')}}</a></li></ul></div><slot></slot></div>` };
 
