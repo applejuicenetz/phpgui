@@ -197,7 +197,8 @@ class Share
 
     public function directory(string $dir = '', int|bool $getseponly = false): array
     {
-        $xml = $this->core->command('xml', 'directory.xml?' . http_build_query(['directory' => $dir]));
+        // An empty value would list nothing on the Core; only a missing parameter returns the file system roots.
+        $xml = $this->core->command('xml', 'directory.xml' . ($dir === '' ? '' : '?' . http_build_query(['directory' => $dir])));
         $this->separator = (string)(array_key_first($xml['FILESYSTEM'] ?? []) ?? '/');
         if ($getseponly) return [];
         $directories = $xml['DIR'] ?? [];
@@ -214,7 +215,8 @@ class Share
         foreach ($directories as $directory) {
             $path = $directory['PATH'] ?? '';
             if ($path === '' && (string)$directory['TYPE'] === '4') {
-                $path = rtrim($dir, $this->separator) . $this->separator . $directory['NAME'];
+                // A root such as "/" already is a complete path.
+                $path = (string)$directory['NAME'] === $this->separator ? $this->separator : rtrim($dir, $this->separator) . $this->separator . $directory['NAME'];
             }
             $result[] = [$path, $directory['NAME']];
         }

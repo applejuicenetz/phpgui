@@ -11,6 +11,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Downloads: Enter im PDL-Feld setzt den Powerdownload-Wert wie der Button
 - Smartphone: passende Enter-Taste auf der Bildschirmtastatur (Suchen, Fertig, Weiter, Los); Autokorrektur und automatische Großschreibung bei Links, Pfaden und der Core-URL aus; Link-Felder öffnen beim Markieren keine Tastatur mehr
 - Geteilte Ordner: Buttons für Shareüberprüfung kompakter mit Kurzbeschriftung („Prüfung starten“, „Abbrechen“) und Tooltip; „Abbrechen“ rot hervorgehoben, auf dem Smartphone gleich breit
+- Geteilte Ordner: Verzeichnisauswahl bei „Neues Verzeichnis“ zeigt wieder die Ordner des Cores an und lässt sich durchklicken
 
 ## 0.33.0 (2026-10-09)
 
