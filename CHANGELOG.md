@@ -11,6 +11,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Kopfzeile: auf sehr schmalen Bildschirmen (bis 520 px) zeigt der Seitentitel nur noch das Menü-Symbol der Seite (z. B. Download-/Upload-Wolke) statt des Textes; Statuswerte (Down, Up, Credits, Verbindungen) bleiben sichtbar
 - Kopfzeile: Down- und Up-Anzeige mit fester Breite, damit sie bei wechselnder Geschwindigkeit nicht springen
 - Kopfzeile: Aktivitätspunkt etwas größer und hüpft bei jeder Anfrage leicht
+- Uploads (Kartenansicht): Status ohne Beschriftung („Übertrage“), rechtsbündig auf Höhe des Benutzernamens
+- Downloads (Kartenansicht): Quellen (mit Symbol), Status und PDL als Badges ohne Beschriftung auf einer Zeile, Geschwindigkeit und Restzeit als Text nebeneinander rechts auf derselben Zeile
 - Standard für `GUI_REFRESH_INTERVAL` von 5 auf 2 Sekunden gesenkt (Dockerfile, `.env.dist`, README)
 - Downloads: Enter im PDL-Feld setzt den Powerdownload-Wert wie der Button
 - Smartphone: passende Enter-Taste auf der Bildschirmtastatur (Suchen, Fertig, Weiter, Los); Autokorrektur und automatische Großschreibung bei Links, Pfaden und der Core-URL aus; Link-Felder öffnen beim Markieren keine Tastatur mehr
