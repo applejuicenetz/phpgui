@@ -240,6 +240,8 @@
     "prio": "Prio",
     "check": "Start share check",
     "stop_check": "Cancel share check",
+    "check_short": "Check shares",
+    "stop_check_short": "Cancel",
     "link_export_title": "Link Export",
     "delet_export": "Delete list",
     "export": "Export links",

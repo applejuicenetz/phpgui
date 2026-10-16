@@ -10,6 +10,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Geteilte Ordner: Button „Shareüberprüfung abbrechen“ (ab Core 0.35.186.1)
 - Downloads: Enter im PDL-Feld setzt den Powerdownload-Wert wie der Button
 - Smartphone: passende Enter-Taste auf der Bildschirmtastatur (Suchen, Fertig, Weiter, Los); Autokorrektur und automatische Großschreibung bei Links, Pfaden und der Core-URL aus; Link-Felder öffnen beim Markieren keine Tastatur mehr
+- Geteilte Ordner: Buttons für Shareüberprüfung kompakter mit Kurzbeschriftung („Prüfung starten“, „Abbrechen“) und Tooltip; „Abbrechen“ rot hervorgehoben, auf dem Smartphone gleich breit
 
 ## 0.33.0 (2026-10-09)
 

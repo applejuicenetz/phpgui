@@ -225,6 +225,9 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .action-buttons { margin: 0; flex-wrap: wrap; }
 .action-buttons .button { margin-bottom: 0; }
 .selection-bar .action-buttons { flex: 1 1 auto; }
+.share-check-buttons { margin-bottom: 1rem; flex-wrap: wrap; }
+.share-check-buttons .button { margin-bottom: 0; }
+@media (max-width: 480px) { .share-check-buttons .button { flex: 1 1 0; } }
 .action-buttons .action-clean { margin-left: auto; }
 .action-text { display: none; }
 .search-toolbar { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .75rem; }
