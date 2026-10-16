@@ -3,7 +3,7 @@ FROM docker.io/php:8.5-apache AS base
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
     GUI_LANGUAGE="de"  \
-    GUI_REFRESH_INTERVAL=5 \
+    GUI_REFRESH_INTERVAL=2 \
     GUI_SHOW_NEWS=1 \
     GUI_SHOW_SHARE=1 \
     PHP_MEMORY_LIMIT=256M

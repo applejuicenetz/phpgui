@@ -33,7 +33,7 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `CORE_HOST`          | `http://192.168.2.1` | IP-Adresse oder Hostname des Core, einschließlich Protokoll          |
 | `CORE_PORT`          | `9851`               | XML-Port des Core                                                    |
 | `GUI_LANGUAGE`       | `de`                 | Sprache: `de` oder `en`                                              |
-| `GUI_REFRESH_INTERVAL` | `5`                | Intervall der Live-Aktualisierung in Sekunden (1–3600)               |
+| `GUI_REFRESH_INTERVAL` | `2`                | Intervall der Live-Aktualisierung in Sekunden (1–3600)               |
 | `GUI_SHOW_NEWS`      | `1`                  | Nachrichten auf der Statusseite anzeigen                             |
 | `GUI_SHOW_SHARE`     | `1`                  | Freigabestatistiken auf der Statusseite anzeigen                     |
 | `PHP_MEMORY_LIMIT`   | `256M`               | PHP `memory_limit` (Standard im Container: `256M`)                   |
