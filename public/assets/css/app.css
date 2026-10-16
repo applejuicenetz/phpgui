@@ -253,10 +253,10 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .sharefiles-toolbar .buttons .button { margin-bottom: 0; }
 /* Keep the master checkbox accessible in the mobile card layout. */
 @media screen and (max-width: 1023px) {
-    :is(#sharefiles-form, #dl-form) .responsive-table thead { display: block; }
-    :is(#sharefiles-form, #dl-form) .responsive-table thead tr { display: flex; border: 0; padding: .5rem .75rem; margin-bottom: .5rem; }
-    :is(#sharefiles-form, #dl-form) .responsive-table thead th:not(.col-check) { display: none; }
-    :is(#sharefiles-form, #dl-form) .responsive-table thead th.col-check { display: block; border: 0; padding: 0; }
+    :is(#sharefiles-form) .responsive-table thead { display: block; }
+    :is(#sharefiles-form) .responsive-table thead tr { display: flex; border: 0; padding: .5rem .75rem; margin-bottom: .5rem; }
+    :is(#sharefiles-form) .responsive-table thead th:not(.col-check) { display: none; }
+    :is(#sharefiles-form) .responsive-table thead th.col-check { display: block; border: 0; padding: 0; }
 }
 .cancel-list { list-style: disc; padding-left: 1.25rem; white-space: nowrap; }
 /* Dialog grows with its longest line up to the viewport; longer content scrolls instead of wrapping. */
@@ -475,3 +475,5 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     #dl-table .dl-badge-icon { display: inline-flex; width: .9rem; height: .9rem; }
     #dl-table .dl-badge-label { display: inline; color: var(--bulma-text-weak); text-transform: uppercase; }
 }
+/* Downloads card view: master checkbox sits in the sort bar instead of its own row. */
+.sort-bar-check { align-self: center; margin-right: .25rem; cursor: pointer; }
