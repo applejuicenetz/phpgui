@@ -186,7 +186,11 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 @media screen and (min-width: 1024px) and (max-width: 1099px) { .dashboard-columns > .column { flex: none; width: 100%; } }
 
 .card-grid { display: grid; grid-template-columns: 1fr; gap: var(--app-gap); }
-.server-card { margin: 0; display: flex; flex-direction: column; gap: .75rem; }
+/* Bulma's .box:not(:last-child) adds a bottom margin that beats a plain .server-card rule, so only the last card looked different. */
+.card-grid > .server-card, .card-grid > .server-card:not(:last-child) { margin: 0; }
+.server-card { display: flex; flex-direction: column; gap: .75rem; }
+.server-card .buttons { margin-top: auto; }
+.server-info { margin-top: var(--app-gap); font-size: 1.1rem; font-weight: 500; text-align: center; padding: 1.5rem; }
 .server-head { display: flex; justify-content: space-between; gap: .5rem; align-items: flex-start; }
 .server-head .title { margin: 0; overflow-wrap: anywhere; }
 .server-state { display: inline-flex; gap: .3rem; align-items: center; font-size: .8rem; white-space: nowrap; }

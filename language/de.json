@@ -199,6 +199,7 @@
     "delet": "Löschen",
     "no_server": "Keine Server gefunden",
     "add_more": "Weitere Server holen",
+    "all_linked": "Alle Server kommunizieren untereinander, es ist für den Core egal, zu welchem der Server eine Verbindung besteht!",
     "none": "Keine Server vorhanden.",
     "tries": "Versuche",
     "host": "Server-URL",

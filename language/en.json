@@ -199,6 +199,7 @@
     "delet": "Delete",
     "no_server": "No servers found",
     "add_more": "Get more servers",
+    "all_linked": "All servers communicate with each other, so it does not matter to the Core which server it is connected to!",
     "none": "No servers.",
     "tries": "Attempts",
     "host": "Server URL",

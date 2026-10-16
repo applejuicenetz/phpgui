@@ -10,6 +10,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Geteilte Ordner: Button „Shareüberprüfung abbrechen“ (ab Core 0.35.186.1)
 - Kopfzeile: auf sehr schmalen Bildschirmen (bis 520 px) zeigt der Seitentitel nur noch das Menü-Symbol der Seite (z. B. Download-/Upload-Wolke) statt des Textes; Statuswerte (Down, Up, Credits, Verbindungen) bleiben sichtbar
 - Kopfzeile: Down- und Up-Anzeige mit fester Breite, damit sie bei wechselnder Geschwindigkeit nicht springen
+- Serverliste: letzte Karte hatte durch einen Bulma-Rand ein abweichendes Aussehen, alle Karten sind jetzt gleich
+- Serverliste: Hinweisblock unten, dass alle Server untereinander kommunizieren und dem Core die Serverwahl egal ist
 - Kopfzeile: Aktivitätspunkt etwas größer und hüpft bei jeder Anfrage leicht
 - Uploads (Kartenansicht): Status ohne Beschriftung („Übertrage“), rechtsbündig auf Höhe des Benutzernamens
 - Downloads (Kartenansicht): Quellen (mit Symbol), Status und PDL als Badges ohne Beschriftung auf einer Zeile, Geschwindigkeit und Restzeit als Text nebeneinander rechts auf derselben Zeile
