@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace appleJuiceNETZ\Api;
 
+use appleJuiceNETZ\appleJuice\Core;
 use appleJuiceNETZ\appleJuice\Share;
 use appleJuiceNETZ\GUI\Request;
 
@@ -17,7 +18,12 @@ final class SharesEndpoint extends Endpoint
             $d = $share->get_shared_dir($id);
             $dirs[] = ['name' => (string)$d['NAME'], 'subs' => $d['SHAREMODE'] === 'subdirectory'];
         }
-        return ['temp' => $share->get_temp(), 'dirs' => $dirs, 'spent' => $share->summary()['spent']];
+        return [
+            'temp' => $share->get_temp(),
+            'dirs' => $dirs,
+            'spent' => $share->summary()['spent'],
+            'can_stop_check' => Core::supportsStopSharecheck((string)(new Core())->getcoreversion()['VERSION']),
+        ];
     }
 
     public function post(): array
@@ -27,6 +33,13 @@ final class SharesEndpoint extends Endpoint
         switch (Request::str('action')) {
             case 'check':
                 $share->changesub('*sharecheck', false);
+                break;
+            case 'stopcheck':
+                $core = new Core();
+                if (!Core::supportsStopSharecheck((string)$core->getcoreversion()['VERSION'])) {
+                    throw new ApiException(400, 'unsupported_by_core');
+                }
+                $core->command('function', 'stopsharecheck');
                 break;
             case 'toggle':
                 if ($name === '') throw new ApiException(400, 'invalid_value');

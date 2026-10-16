@@ -32,7 +32,7 @@ export default {
             busy.value = true;
             const result = await mutate('downloads', {action, action_value:actionValue, dl_id:chosen});
             busy.value = false;
-            if (result) { dialog.value = ''; select.selected.value = []; notify(t('UI.saved'), 'success'); await refresh(); }
+            if (result) { dialog.value = ''; select.selected.value = []; notify(t('UI.action_done.'+action), 'success'); await refresh(); }
         }
         function open(type,row=null) { menu.value = null; actionIds.value = row ? [row.id] : [...select.selected.value]; value.value = row ? (type === 'rename' ? row.name : row.target) : ''; dialog.value = type; }
         function bump(increment) { let n = Number(pdl.value.replace(',','.')) || 1; n = increment ? (n === 1 ? 2.2 : n < 50 ? n+.1 : 1) : n < 2.3 ? 1 : n > 50 ? 50 : n-.1; pdl.value = n.toFixed(1); }

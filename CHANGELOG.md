@@ -2,10 +2,12 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
-## 0.33.1 (WIP)
+## 0.33.1 (2026-10-06)
 
 - Kopfzeile: dezenter Aktivitätspunkt, der bei jeder Anfrage an die API kurz aufleuchtet und während laufender Anfragen deutlicher sichtbar bleibt
 - Downloads und Uploads: Geschwindigkeitsbalken zeigt dieselben Werte wie die Kopfzeile
+- Rückmeldungen nach Aktionen nennen jetzt die ausgeführte Aktion (z. B. „Downloads pausiert.“) statt pauschal „Gespeichert!“
+- Geteilte Ordner: Button „Shareüberprüfung abbrechen“ (ab Core 0.35.186.1)
 
 ## 0.33.0 (2026-10-09)
 

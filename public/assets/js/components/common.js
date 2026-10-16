@@ -50,7 +50,7 @@ export const SpeedPanel = {
         const limit = ref(props.data.max), busy = ref(false);
         // Use the topbar snapshot so independent page polls cannot show conflicting speeds.
         const currentSpeed = computed(() => state.status[props.kind === 'ul' ? 'upload_speed' : 'download_speed'] ?? props.data.speed);
-        async function apply() { busy.value = true; const result = await mutate('limits', {action: 'set_max' + props.kind, value: limit.value}); busy.value = false; if(result) notify(t('UI.saved'), 'success'); }
+        async function apply() { busy.value = true; const result = await mutate('limits', {action: 'set_max' + props.kind, value: limit.value}); busy.value = false; if(result) notify(t('UI.action_done.limit'), 'success'); }
         return { limit, busy, currentSpeed, apply, speed, bytes, t };
     },
     template: `<section class="box toolbar-box speed-panel"><div class="speed-panel-grid"><div class="speed-bar"><progress class="progress" :value="data.max > 0 ? Math.min(100, currentSpeed / data.max * 100) : 0" max="100"></progress><span class="speed-bar-label">{{speed(currentSpeed)}} / {{data.max > 0 ? speed(data.max) : '∞'}}<template v-if="kind === 'ul'"> · {{t('Uploads.limit').replace('{percent}', data.slots_max > 0 ? Math.round(data.slots_used / data.slots_max * 100) : '?')}}</template></span></div><div class="field has-addons limit-form"><div class="control is-expanded"><UnitInput v-model="limit" :storage-key="kind + '_speed_unit'" :label="t('Downloads.limit')" /></div><div class="control"><button type="button" class="button is-primary" :disabled="busy" @click="apply" :aria-label="t('Settings.save')"><Icon name="check-lg" /></button></div></div></div></section>`

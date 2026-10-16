@@ -42,6 +42,14 @@ class Core
         }
     }
 
+    /** First Core version that provides /function/stopsharecheck. */
+    public const STOP_SHARECHECK_MIN_VERSION = '0.35.186.1';
+
+    public static function supportsStopSharecheck(string $version): bool
+    {
+        return version_compare($version, self::STOP_SHARECHECK_MIN_VERSION, '>=');
+    }
+
     public function getcoreversion(): array
     {
         if (empty($_SESSION['cache']['STATUSBAR']['VERSION'])) {
