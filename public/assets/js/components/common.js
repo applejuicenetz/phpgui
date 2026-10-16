@@ -42,7 +42,7 @@ export const UnitInput = {
         }
         return { unit, shown, change, input, t };
     },
-    template: `<div class="limit-row"><input class="input" type="text" inputmode="decimal" :id="id" :aria-label="label" :value="shown" @input="input($event.target.value)"><div class="buttons has-addons unit-toggle"><button v-for="u in ['kb','mb']" :key="u" type="button" class="button" :class="{'is-selected is-link is-light': unit === u}" :aria-pressed="unit === u" @click="change(u)">{{t('Settings.unit_' + u)}}</button></div></div>`
+    template: `<div class="limit-row"><input class="input" type="text" inputmode="decimal" enterkeyhint="done" :id="id" :aria-label="label" :value="shown" @input="input($event.target.value)"><div class="buttons has-addons unit-toggle"><button v-for="u in ['kb','mb']" :key="u" type="button" class="button" :class="{'is-selected is-link is-light': unit === u}" :aria-pressed="unit === u" @click="change(u)">{{t('Settings.unit_' + u)}}</button></div></div>`
 };
 export const SpeedPanel = {
     props: ['kind', 'data'], components: { UnitInput, Icon },

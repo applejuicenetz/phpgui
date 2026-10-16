@@ -45,7 +45,7 @@ export default {
         <section class="box">
             <div class="selection-bar"><div class="field has-addons pdl-form">
                 <p class="control"><button type="button" class="button is-small" @click="bump(false)" aria-label="−"><Icon name="dash-lg" /></button></p>
-                <p class="control"><input class="input is-small" id="pdl-input" v-model="pdl" inputmode="decimal" :aria-label="t('Downloads.pdl_value')"></p>
+                <p class="control"><input class="input is-small" id="pdl-input" v-model="pdl" inputmode="decimal" enterkeyhint="done" @keydown.enter.prevent="selected.length && !busy && act('setpowerdownload',pdl)" :aria-label="t('Downloads.pdl_value')"></p>
                 <p class="control"><button type="button" class="button is-small" @click="bump(true)" aria-label="+"><Icon name="plus-lg" /></button></p>
                 <p class="control"><button class="button is-small" :disabled="!selected.length || busy" @click="act('setpowerdownload',pdl)">{{t('Downloads.set_pdl')}}</button></p>
             </div><div class="buttons are-small action-buttons">
@@ -55,7 +55,7 @@ export default {
                 <button class="button" :disabled="!selected.length || busy" @click="open('target')"><Icon name="folder" /><span class="action-text">{{t('Downloads.target')}}</span></button>
                 <button class="button is-link action-clean" :disabled="busy" @click="act('cleandownloadlist','',['0'])"><Icon name="magic" /><span class="action-text">{{t('Downloads.clean')}}</span></button>
             </div></div>
-            <div class="field filter-field"><p class="control has-icons-left"><input class="input" type="search" id="dl-filter" v-model="filter" :placeholder="t('UI.filter_placeholder')" :aria-label="t('UI.filter')"><span class="icon is-left"><Icon name="funnel" /></span></p></div>
+            <div class="field filter-field"><p class="control has-icons-left"><input class="input" type="search" id="dl-filter" v-model="filter" enterkeyhint="search" :placeholder="t('UI.filter_placeholder')" :aria-label="t('UI.filter')"><span class="icon is-left"><Icon name="funnel" /></span></p></div>
             <div class="sort-bar"><SortLink v-for="[field,key] in [['name','filename'],['status','statuss'],['done','progress'],['pdl','pdl']]" :key="field" :field="field" :label="t('Downloads.'+key)" :sort="sort" :direction="direction" @sort="changeSort" /></div>
             <p v-if="!rows.length" class="empty-state">{{t('Downloads.none')}}</p>
             <div v-else class="table-wrap"><table class="table is-fullwidth is-hoverable responsive-table" id="dl-table">
@@ -78,7 +78,7 @@ export default {
         </section>
         <Modal v-if="dialog" :title="t('Downloads.'+dialog+'_title')" :danger="dialog === 'cancel'" :fit="dialog === 'cancel'" @close="dialog=''">
             <ul v-if="dialog === 'cancel'" class="cancel-list"><li v-for="row in data.items.filter(row=>actionIds.includes(row.id))" :key="row.id">{{row.name}}</li></ul>
-            <template v-else><label class="label" for="action-value">{{t('Downloads.'+dialog+'_label')}}</label><input class="input" id="action-value" v-model="value" @keydown.enter="act(dialog === 'rename' ? 'renamedownload' : 'settargetdir',value,actionIds)"></template>
+            <template v-else><label class="label" for="action-value">{{t('Downloads.'+dialog+'_label')}}</label><input class="input" id="action-value" v-model="value" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" @keydown.enter="act(dialog === 'rename' ? 'renamedownload' : 'settargetdir',value,actionIds)"></template>
             <template #footer><button class="button" :class="dialog === 'cancel' ? 'is-danger' : 'is-primary'" :disabled="busy" @click="act(dialog === 'cancel' ? 'canceldownload' : dialog === 'rename' ? 'renamedownload' : 'settargetdir',value,actionIds)">{{dialog === 'cancel' ? t('Downloads.cancel_confirm') : t('UI.ok')}}</button></template>
         </Modal>
     </div><p v-else-if="loading" class="empty-state">{{t('UI.loading')}}</p>`

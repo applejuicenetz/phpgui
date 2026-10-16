@@ -8,6 +8,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Downloads und Uploads: Geschwindigkeitsbalken zeigt dieselben Werte wie die Kopfzeile
 - Rückmeldungen nach Aktionen nennen jetzt die ausgeführte Aktion (z. B. „Downloads pausiert.“) statt pauschal „Gespeichert!“
 - Geteilte Ordner: Button „Shareüberprüfung abbrechen“ (ab Core 0.35.186.1)
+- Downloads: Enter im PDL-Feld setzt den Powerdownload-Wert wie der Button
+- Smartphone: passende Enter-Taste auf der Bildschirmtastatur (Suchen, Fertig, Weiter, Los); Autokorrektur und automatische Großschreibung bei Links, Pfaden und der Core-URL aus; Link-Felder öffnen beim Markieren keine Tastatur mehr
 
 ## 0.33.0 (2026-10-09)
 
