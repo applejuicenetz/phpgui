@@ -2,7 +2,7 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
-## 0.33.1 (2026-10-06)
+## 0.33.1 (2026-10-16)
 
 - Kopfzeile: dezenter Aktivitätspunkt, der bei jeder Anfrage an die API kurz aufleuchtet und während laufender Anfragen deutlicher sichtbar bleibt
 - Downloads und Uploads: Geschwindigkeitsbalken zeigt dieselben Werte wie die Kopfzeile
