@@ -63,6 +63,16 @@ class Share
         $this->saveDirectories($directories);
     }
 
+    public function canRemoveDirectory(string $name): bool
+    {
+        if ($this->dirxml === []) $this->get_shared_dirs();
+        $incoming = (string)($this->dirxml['INCOMINGDIRECTORY']['VALUES']['CDATA'] ?? '');
+        $name = rtrim($name, '/\\');
+        $incoming = rtrim($incoming, '/\\');
+        if ($this->separator === '\\') return strcasecmp($name, $incoming) !== 0;
+        return $name !== $incoming;
+    }
+
     public function get_temp(): string
     {
         if ($this->dirxml === []) $this->get_shared_dirs();

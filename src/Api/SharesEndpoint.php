@@ -16,7 +16,8 @@ final class SharesEndpoint extends Endpoint
         $dirs = [];
         foreach ($share->get_shared_dirs(true) as $id) {
             $d = $share->get_shared_dir($id);
-            $dirs[] = ['name' => (string)$d['NAME'], 'subs' => $d['SHAREMODE'] === 'subdirectory'];
+            $dirs[] = ['name' => (string)$d['NAME'], 'subs' => $d['SHAREMODE'] === 'subdirectory',
+                'can_remove' => $share->canRemoveDirectory((string)$d['NAME'])];
         }
         return [
             'temp' => $share->get_temp(),
@@ -46,7 +47,7 @@ final class SharesEndpoint extends Endpoint
                 $share->changesub($name, Request::str('subs') === '1');
                 break;
             case 'remove':
-                if ($name === '') throw new ApiException(400, 'invalid_value');
+                if ($name === '' || !$share->canRemoveDirectory($name)) throw new ApiException(400, 'invalid_value');
                 $share->del_share($name);
                 break;
             case 'add':

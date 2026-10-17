@@ -204,6 +204,11 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .dir-name { flex: 1 1 12rem; min-width: 0; overflow-wrap: anywhere; }
 .dir-controls { display: flex; align-items: center; gap: .75rem; margin-left: auto; }
 .dir-controls form { margin: 0; }
+@media (max-width: 768px) {
+  #shares-root .dir-controls { flex: 1 0 100%; margin-left: 0; justify-content: space-between; }
+  #shares-root .dir-controls .checkbox { display: flex; align-items: center; gap: .5rem; min-height: 2.75rem; }
+  #shares-root .dir-controls .button { min-width: 2.75rem; min-height: 2.75rem; }
+}
 .dir-path { overflow-wrap: anywhere; }
 .dir-current { font-family: var(--bulma-family-monospace); margin-bottom: .5rem; overflow-wrap: anywhere; }
 button.dir-name { text-align: left; background: none; border: 0; color: var(--bulma-link); cursor: pointer; font: inherit; padding: .4rem 0; }
@@ -450,7 +455,13 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .responsive-table tr.is-focus { outline: 2px solid var(--bulma-link); outline-offset: -2px; }
 
 /* Tab bar with the priority budget on the right. */
-.share-tabs-row { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.share-tabs-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: nowrap; margin-bottom: 1rem; }
+.share-tabs-row .share-tabs { min-width: 0; }
+@media (max-width: 520px) {
+  .share-tabs-row .share-tabs { font-size: .8rem; }
+  .share-tabs-row .share-tabs a { padding: .5em; }
+  .share-tabs-row .prio-badge { padding: .3rem .4rem; font-size: .75rem; }
+}
 .share-tabs-row .share-tabs { margin-bottom: 0; }
 .prio-badge { margin-left: auto; padding: .35rem .75rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); background: var(--app-surface); font-size: .85rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
