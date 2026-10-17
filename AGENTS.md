@@ -68,6 +68,14 @@ Diese Anleitung beschreibt den aktuellen Prozess dieses Repositories. Vor einem 
 - Die Seiten `shares`, `sharefiles` und `sharestats` teilen die Tab-Leiste `share-tabs` („geteilte Ordner“ und „Statistik“); `sharefiles` markiert den Tab „geteilte Ordner“. `index.html?site=sharestats&stats=<modus>` zeigt die 50 am häufigsten oder zuletzt angefragten beziehungsweise gesuchten Dateien (`most`, `-most`, `last`, `-last`, `search`, `-search`; unbekannte Werte ergeben `most`). Das Dashboard verlinkt die Credits-Karte dorthin.
 - Liste und Aktionen teilen `public/assets/js/pages/shares.js`; Backend-Dateilisten und Export/Priorität liegen in `FilesEndpoint`. Das Suchfeld sucht nach 400 ms Pause, Esc leert es. Link-Export bleibt im Browser-Session-Speicher über Navigation erhalten.
 
+## Changelog
+
+- `CHANGELOG.md` auf Deutsch und aus Nutzersicht schreiben.
+- Einträge pro Version nach Bereichen unter `###`-Überschriften gruppieren, etwa Oberfläche, Downloads und Uploads, Share oder Serverliste.
+- Kurze Stichpunkte statt langer Sätze verwenden; pro Punkt möglichst höchstens 80 Zeichen und eine konkrete Änderung.
+- Zusammengehörige Änderungen bündeln, Wiederholungen und technische Umsetzungsdetails vermeiden. Versionsgrenzen und wichtige Einschränkungen erhalten.
+- Nur betroffene Versionsabschnitte ändern; ältere Abschnitte ohne ausdrücklichen Auftrag unverändert lassen.
+
 ## Release vorbereiten
 
 1. Die neue Version in `bootstrap.php` (`PHP_GUI_VERSION`) eintragen. Die bisherigen Tags verwenden Nummern ohne `v`-Präfix, zum Beispiel `0.32.0`.
