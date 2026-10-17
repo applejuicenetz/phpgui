@@ -13,6 +13,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Serverliste: letzte Karte hatte durch einen Bulma-Rand ein abweichendes Aussehen, alle Karten sind jetzt gleich
 - Serverliste: Hinweisblock unten, dass alle Server untereinander kommunizieren und dem Core die Serverwahl egal ist
 - Kopfzeile: Aktivitätspunkt etwas größer und hüpft bei jeder Anfrage leicht
+- Untere Leiste (Mobile): Schnellzugriff auf „geteilte Ordner“
 - Uploads (Kartenansicht): Status ohne Beschriftung („Übertrage“), rechtsbündig auf Höhe des Benutzernamens
 - Downloads (Kartenansicht): Quellen (mit Symbol), Status und PDL als Badges ohne Beschriftung auf einer Zeile, Geschwindigkeit und Restzeit als Text nebeneinander rechts auf derselben Zeile
 - Standard für `GUI_REFRESH_INTERVAL` von 5 auf 2 Sekunden gesenkt (Dockerfile, `.env.dist`, README)
