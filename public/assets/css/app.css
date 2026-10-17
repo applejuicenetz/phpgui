@@ -230,8 +230,9 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .sort-link { padding: .35rem .7rem; border: 1px solid var(--app-line); border-radius: 999px; color: var(--bulma-text); min-height: 2.25rem; display: inline-flex; align-items: center; }
 .sort-link.is-sorted { background: var(--bulma-link-light); border-color: transparent; color: var(--bulma-link-on-scheme, var(--bulma-link)); font-weight: 600; }
 .selection-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-bottom: .75rem; }
-.pdl-form { margin: 0; }
-.pdl-form .input { width: 3.5rem; min-height: 2.25rem; height: 2.25rem; text-align: center; }
+.selection-bar .pdl-form { margin: 0; }
+.pdl-form .input { width: 3.5rem; text-align: center; }
+.pdl-form .button, .pdl-form .input { min-height: var(--app-touch); height: var(--app-touch); }
 .action-buttons { margin: 0; flex-wrap: wrap; }
 .action-buttons .button { margin-bottom: 0; }
 .selection-bar .action-buttons { flex: 1 1 auto; }
@@ -239,6 +240,17 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .share-check-buttons .button { margin-bottom: 0; }
 @media (max-width: 480px) { .share-check-buttons .button { flex: 1 1 0; } }
 .action-buttons .action-clean { margin-left: auto; }
+/* Phones: PDL controls and action buttons share one row; compact size, labels hidden. */
+@media (max-width: 768px) {
+  .selection-bar { flex-wrap: nowrap; justify-content: center; gap: .25rem; }
+  .selection-bar .pdl-form { flex: none; margin-right: .5rem; }
+  .selection-bar .button, .selection-bar .pdl-form .input { min-height: 2.25rem; height: 2.25rem; }
+  .selection-bar .pdl-form .input { width: 2.5rem; padding-inline: .25rem; }
+  .selection-bar .button { flex: none; min-width: 2.25rem; padding-inline: .4rem; margin: 0; }
+  .selection-bar .action-buttons { flex: 1 1 0; min-width: 0; flex-wrap: nowrap; gap: .25rem; }
+  .selection-bar .action-buttons .button:first-child { margin-left: auto; }
+  .selection-bar .action-buttons .action-clean { margin-left: auto; }
+}
 .action-text { display: none; }
 .search-toolbar { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .75rem; }
 .search-toolbar .field, .search-toolbar .dropdown { margin: 0; }
@@ -259,8 +271,12 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 .search-progress { flex: 1 1 100%; order: 99; margin: 0; }
 .search-toolbar .button { margin: 0; }
 .search-form { margin: 0; }
+#export-text { white-space: pre; overflow-wrap: normal; overflow-x: auto; font-family: var(--bulma-family-code, monospace); font-size: .85rem; }
 .sharefiles-toolbar { margin-bottom: 1rem; }
 .sharefiles-toolbar .buttons .button { margin-bottom: 0; }
+.sharefiles-toolbar { flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: .5rem; }
+.sharefiles-toolbar .buttons { flex-wrap: nowrap; gap: .5rem; }
+.sharefiles-toolbar .buttons .button { margin: 0; }
 /* Keep the master checkbox accessible in the mobile card layout. */
 @media screen and (max-width: 1023px) {
     :is(#sharefiles-form) .responsive-table thead { display: block; }

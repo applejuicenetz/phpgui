@@ -10,6 +10,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Stabile Breite der Down- und Up-Anzeige
 - Rückmeldungen nennen die ausgeführte Aktion
 - Aktualisierung standardmäßig alle 2 statt 5 Sekunden
+- Icons an allen Buttons
 
 ### Downloads und Uploads
 - Geschwindigkeitsbalken mit Kopfzeile synchronisiert
@@ -17,6 +18,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Geschwindigkeit und Restzeit daneben in derselben Zeile
 - Uploadstatus rechts auf Höhe des Benutzernamens
 - Enter im PDL-Feld übernimmt den Wert
+- PDL-Zeile mobil einzeilig, kompakte Buttons
 
 ### Share
 - „Share“ als Name in Navigation und Seitentitel
@@ -27,6 +29,9 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Incoming mit Badge; Entfernen in Oberfläche und API gesperrt
 - Unterverzeichnis-Auswahl mobil in eigener Zeile
 - Prioritätsbudget kompakt rechts in Tab-Leiste
+- Link-Export: Kopieren in Zwischenablage, ohne Zeilenumbruch
+- Export, Reload und Prio mobil in einer Zeile
+- Statistik: Dateiname springt in den Share-Ordner
 
 ### Serverliste
 - Einheitliche Kartenabstände und kürzere Beschriftungen

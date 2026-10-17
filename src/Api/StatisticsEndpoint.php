@@ -23,7 +23,7 @@ final class StatisticsEndpoint extends Endpoint
         $rows = [];
         $share = new Share();
         foreach ($share->statistics($field, $descending) as $file) {
-            $rows[] = ['name' => (string)$file['SHORTFILENAME'], 'link' => (string)$file['LINK'], 'value' => (int)($file[$field] ?? 0)];
+            $rows[] = ['id' => (int)$file['ID'], 'name' => (string)$file['SHORTFILENAME'], 'dir' => Share::parentDirectory((string)$file['FILENAME']), 'link' => (string)$file['LINK'], 'value' => (int)($file[$field] ?? 0)];
         }
         return ['mode' => $mode, 'rows' => $rows, 'spent' => $share->spentprio];
     }

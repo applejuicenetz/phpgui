@@ -4,7 +4,7 @@ import { bytes, speed } from '../format.js';
 
 export const Icon = { props: ['name'], template: `<svg class="icon" aria-hidden="true" focusable="false"><use :href="'assets/vendor/icons/icons.svg#i-' + name"></use></svg>` };
 export const Modal = {
-    props: ['title', 'danger', 'fit'], emits: ['close'],
+    props: ['title', 'danger', 'fit'], emits: ['close'], components: { Icon },
     setup(props, { emit }) {
         const root = ref(null), previous = document.activeElement;
         nextTick(() => { root.value?.querySelector('input, textarea, button:not(.delete)')?.focus(); document.documentElement.classList.add('is-clipped'); });
@@ -20,7 +20,7 @@ export const Modal = {
         onUnmounted(() => { document.removeEventListener('keydown', key); document.documentElement.classList.remove('is-clipped'); previous?.focus(); });
         return { root, t };
     },
-    template: `<div ref="root" class="modal is-active" :role="danger ? 'alertdialog' : 'dialog'" aria-modal="true" aria-labelledby="modal-title"><div class="modal-background" @click="$emit('close')"></div><div class="modal-card" :class="{'is-fit': fit}"><header class="modal-card-head" :class="{'has-background-danger': danger}"><h2 class="modal-card-title" id="modal-title">{{title}}</h2><button type="button" class="delete" :aria-label="t('UI.close')" @click="$emit('close')"></button></header><section class="modal-card-body"><slot></slot></section><footer class="modal-card-foot"><slot name="footer"></slot><button type="button" class="button" @click="$emit('close')">{{t('UI.cancel')}}</button></footer></div></div>`
+    template: `<div ref="root" class="modal is-active" :role="danger ? 'alertdialog' : 'dialog'" aria-modal="true" aria-labelledby="modal-title"><div class="modal-background" @click="$emit('close')"></div><div class="modal-card" :class="{'is-fit': fit}"><header class="modal-card-head" :class="{'has-background-danger': danger}"><h2 class="modal-card-title" id="modal-title">{{title}}</h2><button type="button" class="delete" :aria-label="t('UI.close')" @click="$emit('close')"></button></header><section class="modal-card-body"><slot></slot></section><footer class="modal-card-foot"><slot name="footer"></slot><button type="button" class="button" @click="$emit('close')"><Icon name="x-lg" />{{t('UI.cancel')}}</button></footer></div></div>`
 };
 export const SortLink = {
     props: ['field', 'label', 'sort', 'direction'], emits: ['sort'],
