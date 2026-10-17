@@ -4,47 +4,83 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 
 ## 0.33.1 (2026-10-16)
 
-- Kopfzeile: dezenter Aktivitätspunkt, der bei jeder Anfrage an die API kurz aufleuchtet und während laufender Anfragen deutlicher sichtbar bleibt
-- Downloads und Uploads: Geschwindigkeitsbalken zeigt dieselben Werte wie die Kopfzeile
-- Rückmeldungen nach Aktionen nennen jetzt die ausgeführte Aktion (z. B. „Downloads pausiert.“) statt pauschal „Gespeichert!“
-- Geteilte Ordner: Button „Shareüberprüfung abbrechen“ (ab Core 0.35.186.1)
-- Kopfzeile: auf sehr schmalen Bildschirmen (bis 520 px) zeigt der Seitentitel nur noch das Menü-Symbol der Seite (z. B. Download-/Upload-Wolke) statt des Textes; Statuswerte (Down, Up, Credits, Verbindungen) bleiben sichtbar
-- Kopfzeile: Down- und Up-Anzeige mit fester Breite, damit sie bei wechselnder Geschwindigkeit nicht springen
-- Serverliste: letzte Karte hatte durch einen Bulma-Rand ein abweichendes Aussehen, alle Karten sind jetzt gleich
-- Serverliste: Hinweisblock unten, dass alle Server untereinander kommunizieren und dem Core die Serverwahl egal ist
-- Kopfzeile: Aktivitätspunkt etwas größer und hüpft bei jeder Anfrage leicht
-- Untere Leiste (Mobile): Schnellzugriff auf „geteilte Ordner“
-- Uploads (Kartenansicht): Status ohne Beschriftung („Übertrage“), rechtsbündig auf Höhe des Benutzernamens
-- Downloads (Kartenansicht): Quellen (mit Symbol), Status und PDL als Badges ohne Beschriftung auf einer Zeile, Geschwindigkeit und Restzeit als Text nebeneinander rechts auf derselben Zeile
-- Standard für `GUI_REFRESH_INTERVAL` von 5 auf 2 Sekunden gesenkt (Dockerfile, `.env.dist`, README)
-- Downloads: Enter im PDL-Feld setzt den Powerdownload-Wert wie der Button
-- Smartphone: passende Enter-Taste auf der Bildschirmtastatur (Suchen, Fertig, Weiter, Los); Autokorrektur und automatische Großschreibung bei Links, Pfaden und der Core-URL aus; Link-Felder öffnen beim Markieren keine Tastatur mehr
-- Geteilte Ordner: Buttons für Shareüberprüfung kompakter mit Kurzbeschriftung („Prüfung starten“, „Abbrechen“) und Tooltip; „Abbrechen“ rot hervorgehoben, auf dem Smartphone gleich breit
-- Geteilte Ordner: Verzeichnisauswahl bei „Neues Verzeichnis“ zeigt wieder die Ordner des Cores an und lässt sich durchklicken
-- Share: Incoming-Verzeichnis mit Badge und ohne Entfernen-Aktion; Entfernen auch über die API gesperrt
-- Share: Unterverzeichnis-Auswahl auf Smartphones in eigener Zeile, Prioritätsbudget kompakt rechts in der Tab-Leiste; Navigation und Seitentitel heißen „Share“
-- Serverliste: kürzere Beschriftungen, Host und Verbindungszeit ohne Zeilenumbruch, Status unter dem einzeiligen Servernamen und gleich breite Aktionsbuttons
+### Oberfläche
+- Dezenter Aktivitätspunkt bei API-Anfragen
+- Bis 520 px: Seitensymbol statt Titel, Statuswerte bleiben sichtbar
+- Stabile Breite der Down- und Up-Anzeige
+- Rückmeldungen nennen die ausgeführte Aktion
+- Aktualisierung standardmäßig alle 2 statt 5 Sekunden
+
+### Downloads und Uploads
+- Geschwindigkeitsbalken mit Kopfzeile synchronisiert
+- Downloadkarten: Quellen, Status und PDL als Badges
+- Geschwindigkeit und Restzeit daneben in derselben Zeile
+- Uploadstatus rechts auf Höhe des Benutzernamens
+- Enter im PDL-Feld übernimmt den Wert
+
+### Share
+- „Share“ als Name in Navigation und Seitentitel
+- Mobiler Schnellzugriff in unterer Leiste
+- Shareprüfung abbrechbar ab Core 0.35.186.1
+- Kompakte Prüfbuttons, mobil gleich breit
+- Verzeichnisauswahl zeigt wieder Core-Ordner
+- Incoming mit Badge; Entfernen in Oberfläche und API gesperrt
+- Unterverzeichnis-Auswahl mobil in eigener Zeile
+- Prioritätsbudget kompakt rechts in Tab-Leiste
+
+### Serverliste
+- Einheitliche Kartenabstände und kürzere Beschriftungen
+- Servername, Host und Verbindungszeit ohne Umbruch
+- Status unter Servername, Aktionsbuttons gleich breit
+- Hinweis zur freien Serverwahl ergänzt
+
+### Smartphone-Eingaben
+- Passende Enter-Tasten für Suche, Anmeldung und Eingaben
+- Keine Autokorrektur oder Großschreibung bei Links und Pfaden
+- Core-URL ebenfalls ohne Eingabekorrektur
+- Markieren schreibgeschützter Links öffnet keine Tastatur
 
 ## 0.33.0 (2026-10-09)
 
-- Oberfläche mit Vue.js modernisiert und für Smartphones optimiert, mit besserer Darstellung im Dunkelmodus
-- alle Seiten laden jetzt dynamisch, ohne die gesamte Seite neu zu laden; Seitenwechsel und AJAX-Updates sind jetzt flüssiger
-- Neuer Login-Hintergrund, Dashboard mit getrennten Karten für Netzwerk und Community, Verbindungen mit konfiguriertem Maximum
-- Kopfzeile zeigt Download, Upload, Credits und offene Verbindungen als vier Symbol-Tags, auch auf dem Smartphone; neuer Button mit Kettensymbol für „Links hinzufügen“
-- Dashboard auf dem Smartphone mit vier Kacheln nebeneinander; Verbindungsdauer oben rechts in der Server-Karte, Community vor Netzwerk und Core-Informationen
-- Suche: bereits geteilte oder ladende Treffer sind markiert; ajfsp Link und Link mit Quelle lassen sich pro Treffer anzeigen
-- Downloads, Uploads und Freigaben übersichtlicher; Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
-- Im Dialog „Links hinzufügen“ ein Zielverzeichnis wählen und AJL-Dateien direkt auswählen und in Downloads umwandeln; Teileanzeige jetzt scharf skalierbar
-- Statistik der geteilten Dateien als Tab unter „geteilte Ordner“; Addons-Menü und phpinfo entfallen
-- Suche in geteilten Ordnern direkt auf der Freigaben-Seite, über alle Ordner und Unterordner, ohne Beachtung der Groß-/Kleinschreibung
-- Sprache im Benutzermenü per Flagge (Deutsch/Englisch) pro Browser umschaltbar; `GUI_LANGUAGE` bleibt der Standard
-- Öffentliche IP im Dashboard teilweise maskiert, die vollständige Adresse erscheint beim Darüberfahren
-- Uploads: Klick auf den Dateinamen öffnet den geteilten Ordner auf der passenden Seite und hebt die Datei hervor
-- Geteilte Dateien: „ajfsp Link anzeigen“ öffnet ein Overlay mit dem Link und dem Link mit Quelle zum Kopieren
-- Login-Seite zeigt, wie viele per `ajfsp`-Link oder `.ajl`-Datei übergebene Links nach der Anmeldung übernommen werden
-- App-Symbole (Startbildschirm, installierte App) und Touch-Icon nutzen den roten Apfel der Java-GUI
-- Installierte App öffnet `web+ajfsp`-Links und `.ajl`-Dateien direkt (nicht unter iOS)
-- PHP 8.5 erforderlich; Sicherheit und Verarbeitung großer Dateilisten verbessert
+### Oberfläche
+- Vue.js-Oberfläche mit dynamischen Seitenwechseln
+- Smartphone-Ansicht und Dunkelmodus verbessert
+- Neuer Login-Hintergrund
+- Kopfzeile mit Download, Upload, Credits und Verbindungen
+- Schnellzugriff auf „Links hinzufügen“
+- Sprache pro Browser umschaltbar: Deutsch oder Englisch
+- `GUI_LANGUAGE` bleibt Standardsprache
+- Addons-Menü und phpinfo entfernt
+
+### Dashboard
+- Getrennte Karten für Netzwerk und Community
+- Community vor Netzwerk und Core-Informationen
+- Vier Kacheln nebeneinander auf Smartphones
+- Verbindungen mit konfiguriertem Maximum
+- Verbindungsdauer oben rechts in Serverkarte
+- Öffentliche IP maskiert, vollständig beim Darüberfahren
+
+### Downloads, Uploads und Share
+- Übersichtlichere Transfer- und Freigabenansichten
+- Mehrfachauswahl mit Shift-Klick bei geteilten Dateien
+- Upload-Dateiname öffnet Share und markiert Datei
+- Share-Suche über alle Ordner und Unterordner
+- Suche unabhängig von Groß- und Kleinschreibung
+- Dateistatistik als eigener Tab
+- Kopierbare ajfsp-Links, auch mit Quelle
+- Scharf skalierbare Teileanzeige
+
+### Suche und Links
+- Geteilte und bereits ladende Suchtreffer markiert
+- ajfsp-Link und Link mit Quelle pro Suchtreffer
+- Zielverzeichnis und AJL-Import im Link-Dialog
+- Login zeigt Anzahl der zu übernehmenden Links
+
+### Installierte App und Laufzeit
+- Roter Apfel als App- und Touch-Symbol
+- `web+ajfsp`-Links und `.ajl`-Dateien direkt öffnen, außer unter iOS
+- PHP 8.5 erforderlich
+- Sicherheit und Verarbeitung großer Dateilisten verbessert
 
 ## 0.32.2 (2026-10-04)
 
