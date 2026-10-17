@@ -194,7 +194,7 @@
     "been_connected": "verbunden gewesen",
     "no_con": "nicht verbunden",
     "last_connection": "letzte Verbindung",
-    "not_yet": "noch nicht verbunden",
+    "not_yet": "Nie",
     "login": "Login",
     "delet": "Löschen",
     "no_server": "Keine Server gefunden",
@@ -202,8 +202,8 @@
     "all_linked": "Alle Server kommunizieren untereinander, es ist für den Core egal, zu welchem der Server eine Verbindung besteht!",
     "none": "Keine Server vorhanden.",
     "tries": "Versuche",
-    "host": "Server-URL",
-    "port": "Server-Port"
+    "host": "Host",
+    "port": "Port"
   },
   "Settings": {
     "zipped": "Daten komprimiert vom Core holen",
