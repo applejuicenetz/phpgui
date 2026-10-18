@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use appleJuiceNETZ\Kernel;
 
-const PHP_GUI_VERSION = '0.33.1';
+const PHP_GUI_VERSION = '0.33.2';
 
 
 // prepare for composer

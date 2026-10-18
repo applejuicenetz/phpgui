@@ -14,7 +14,7 @@ export default {
             const items = (data.value?.items || []).filter(row => row.name.toLocaleLowerCase().includes(filter.value.toLocaleLowerCase()));
             const order = ['loading','searching','paused','canceled','done','unknown'];
             return items.slice().sort((a,b) => {
-                let result = sort.value === 'name' ? a.name.localeCompare(b.name) : sort.value === 'done' ? a.percent-b.percent : sort.value === 'pdl' ? a.pdl-b.pdl : order.indexOf(a.status)-order.indexOf(b.status);
+                let result = sort.value === 'name' ? a.name.localeCompare(b.name) : sort.value === 'done' ? a.percent-b.percent : sort.value === 'pdl' ? a.pdl-b.pdl : sort.value === 'speed' ? a.speed-b.speed : order.indexOf(a.status)-order.indexOf(b.status);
                 return (direction.value === 'desc' ? -result : result) || a.id-b.id;
             });
         });
@@ -26,7 +26,7 @@ export default {
         const ids = computed(() => rows.value.map(row => row.id));
         watch(filter, value => rememberSet('aj_dl_name_filter', value));
         watch(() => data.value?.items, items => select.prune((items || []).map(row => row.id)));
-        function changeSort(field) { direction.value = sort.value === field ? (direction.value === 'asc' ? 'desc' : 'asc') : ['done','pdl'].includes(field) ? 'desc' : 'asc'; sort.value = field; }
+        function changeSort(field) { direction.value = sort.value === field ? (direction.value === 'asc' ? 'desc' : 'asc') : ['done','pdl','speed'].includes(field) ? 'desc' : 'asc'; sort.value = field; }
         function choose(row,event) { select.toggle(row.id,event,ids.value); if (event.target.checked) pdl.value = String(row.pdl); }
         async function act(action, actionValue = '', chosen = select.selected.value) {
             busy.value = true;
@@ -56,17 +56,17 @@ export default {
                 <button class="button is-link action-clean" :disabled="busy" @click="act('cleandownloadlist','',['0'])"><Icon name="magic" /><span class="action-text">{{t('Downloads.clean')}}</span></button>
             </div></div>
             <div class="field filter-field"><p class="control has-icons-left"><input class="input" type="search" id="dl-filter" v-model="filter" enterkeyhint="search" :placeholder="t('UI.filter_placeholder')" :aria-label="t('UI.filter')"><span class="icon is-left"><Icon name="funnel" /></span></p></div>
-            <div class="sort-bar"><input v-if="rows.length" type="checkbox" class="sort-bar-check" :aria-label="t('UI.select_all')" :checked="ids.length > 0 && ids.every(id=>selected.includes(id))" :indeterminate="ids.some(id=>selected.includes(id)) && !ids.every(id=>selected.includes(id))" @change="toggleAll($event,ids)"><SortLink v-for="[field,key] in [['name','filename'],['status','statuss'],['done','progress'],['pdl','pdl']]" :key="field" :field="field" :label="t('Downloads.'+key)" :sort="sort" :direction="direction" @sort="changeSort" /></div>
+            <div class="sort-bar"><input v-if="rows.length" type="checkbox" class="sort-bar-check" :aria-label="t('UI.select_all')" :checked="ids.length > 0 && ids.every(id=>selected.includes(id))" :indeterminate="ids.some(id=>selected.includes(id)) && !ids.every(id=>selected.includes(id))" @change="toggleAll($event,ids)"><SortLink v-for="[field,key] in [['name','filename'],['status','statuss'],['done','progress'],['pdl','pdl'],['speed','speed']]" :key="field" :field="field" :label="t('Downloads.'+key)" :sort="sort" :direction="direction" @sort="changeSort" /></div>
             <p v-if="!rows.length" class="empty-state">{{t('Downloads.none')}}</p>
             <div v-else class="table-wrap"><table class="table is-fullwidth is-hoverable responsive-table" id="dl-table">
                 <thead><tr><th class="col-check"><input type="checkbox" id="dl-select-all" :aria-label="t('UI.select_all')" :checked="ids.length > 0 && ids.every(id=>selected.includes(id))" :indeterminate="ids.some(id=>selected.includes(id)) && !ids.every(id=>selected.includes(id))" @change="toggleAll($event,ids)"></th>
                 <th><SortLink field="name" :label="t('Downloads.filename')" :sort="sort" :direction="direction" @sort="changeSort" /></th><th class="has-text-centered">{{t('Downloads.sources')}}</th>
                 <th class="col-status"><SortLink field="status" :label="t('Downloads.statuss')" :sort="sort" :direction="direction" @sort="changeSort" /></th>
                 <th><SortLink field="done" :label="t('Downloads.progress')" :sort="sort" :direction="direction" @sort="changeSort" /></th>
-                <th><SortLink field="pdl" :label="t('Downloads.pdl')" :sort="sort" :direction="direction" @sort="changeSort" /></th><th class="col-speed">{{t('Downloads.speed')}}</th><th></th></tr></thead>
+                <th><SortLink field="pdl" :label="t('Downloads.pdl')" :sort="sort" :direction="direction" @sort="changeSort" /></th><th class="col-speed"><SortLink field="speed" :label="t('Downloads.speed')" :sort="sort" :direction="direction" @sort="changeSort" /></th><th></th></tr></thead>
                 <tbody><tr v-for="row in rows" :key="row.id" :id="'dl-'+row.id" :data-status="row.status" :class="{'is-selected':selected.includes(row.id)}">
                     <td class="col-check"><input class="dl-check" type="checkbox" :checked="selected.includes(row.id)" :aria-label="row.name" @click="choose(row,$event)"></td>
-                    <td class="col-name" :data-label="t('Downloads.filename')"><div class="dl-name" :title="row.name">{{row.name}}</div><div v-if="row.target" class="dl-meta dl-target"><Icon name="folder" /><span>{{row.target}}</span></div><div v-if="row.part !== null" class="dl-meta">{{t('Downloads.part')}}: {{row.part}}</div></td>
+                    <td class="col-name" :data-label="t('Downloads.filename')"><div class="dl-name" :title="row.name"><a class="dl-name-link" :href="url('dl_users',{dl_id:row.id})">{{row.name}}</a></div><div v-if="row.target" class="dl-meta dl-target"><Icon name="folder" /><span>{{row.target}}</span></div><div v-if="row.part !== null" class="dl-meta">{{t('Downloads.part')}}: {{row.part}}</div></td>
                     <td class="has-text-centered dl-badge-cell dl-cell-sources" :data-label="t('Downloads.sources')"><a class="dl-badge" :href="url('dl_users',{dl_id:row.id})" :title="t('Downloads.sources')"><Icon class="dl-badge-icon" name="people" />{{row.sources_queue+row.sources_active}}/{{row.sources_total}}</a></td>
                     <td class="col-status dl-badge-cell dl-cell-status" :data-label="t('Downloads.statuss')"><span :class="'tag status-'+row.status">{{t('Downloads.state.'+row.status)}}</span></td>
                     <td class="col-progress dl-cell-progress" :data-label="t('Downloads.progress')"><div class="progress-line"><strong>{{row.percent}}%</strong><span class="dl-meta">{{bytes(row.loaded)}} / {{bytes(row.size)}}</span></div><progress class="progress is-small" :value="row.percent" max="100"></progress></td>

@@ -509,3 +509,5 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 }
 /* Downloads card view: master checkbox sits in the sort bar instead of its own row. */
 .sort-bar-check { align-self: center; margin-right: .25rem; cursor: pointer; }
+.dl-name-link { color: inherit; }
+.dl-name-link:hover { text-decoration: underline; }

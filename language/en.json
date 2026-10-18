@@ -169,7 +169,8 @@
     "files": "Files",
     "back": "Back to downloads",
     "legend": "Legend",
-    "part": "Part"
+    "part": "Part",
+    "available_parts": "Available"
   },
   "Uploads": {
     "limit": "Slots: {percent}%",
@@ -178,6 +179,7 @@
     "statuss": "Status",
     "speed": "Speed",
     "pdl": "PDL",
+    "watermark": "Watermark",
     "ul_status": {
       "status_1": "Transfer",
       "status_2": "In Queue",

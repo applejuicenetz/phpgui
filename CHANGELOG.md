@@ -2,6 +2,15 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## 0.33.2 (2026-10-18)
+
+### Downloads und Uploads
+- Sortierung nach Geschwindigkeit
+- Dateiname in Downloads öffnet die Quellenliste
+- Quellenliste zeigt die Chunk-Größe
+- Quellenliste zeigt, wie viel jede Quelle hat
+- Uploads zeigen Wasserstand sowie OS-Symbol und Version
+
 ## 0.33.1 (2026-10-16)
 
 ### Oberfläche
