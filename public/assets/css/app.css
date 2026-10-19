@@ -522,3 +522,11 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .sort-bar-check { align-self: center; margin-right: .25rem; cursor: pointer; }
 .dl-name-link { color: inherit; }
 .dl-name-link:hover { text-decoration: underline; }
+/* Firewall notice: warning icon instead of the word; one line on phones. */
+.firewall-notice .icon { width: 1.1em; height: 1.1em; vertical-align: -.2em; margin-right: .35rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media screen and (max-width: 768px) {
+    .firewall-notice { display: flex; align-items: center; padding: .5rem .75rem; }
+    .firewall-notice .icon { flex: none; }
+    .firewall-notice .firewall-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
