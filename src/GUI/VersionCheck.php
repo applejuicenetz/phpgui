@@ -12,6 +12,7 @@ final class VersionCheck
     /** @return ?string neuere Version oder null */
     public static function newer(): ?string
     {
+        if (trim((string)($_ENV['RELEASE_URL'] ?? '')) === '') return null;
         $cache = $_SESSION['phpaj']['version_check'] ?? null;
         if (!is_array($cache) || ($cache['time'] ?? 0) < time() - self::TTL) {
             $cache = ['time' => time(), 'version' => self::fetch()];

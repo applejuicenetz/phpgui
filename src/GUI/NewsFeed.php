@@ -11,6 +11,9 @@ final class NewsFeed
 
     public static function load(string $version): string
     {
+        if (trim((string)($_ENV['NEWS_URL'] ?? '')) === '') {
+            return '';
+        }
         $cache = $_SESSION['phpaj']['news'] ?? null;
         if (is_array($cache) && ($cache['version'] ?? '') === $version && ($cache['time'] ?? 0) > time() - self::CACHE_SECONDS) {
             return $cache['html'];

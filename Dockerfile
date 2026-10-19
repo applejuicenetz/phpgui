@@ -2,6 +2,7 @@ FROM docker.io/php:8.5-apache AS base
 
 ENV CORE_HOST="" \
     CORE_PORT=9851 \
+    REPOSITORY_URL="https://github.com/applejuicenetz/phpgui" \
     GUI_LANGUAGE="de"  \
     GUI_REFRESH_INTERVAL=2 \
     GUI_SHOW_NEWS=1 \

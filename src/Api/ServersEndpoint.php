@@ -31,7 +31,7 @@ final class ServersEndpoint extends Endpoint
                 'can_login' => (int)$net['connectedwith'] < 0 || $minutes >= 30,
             ];
         }
-        return ['items' => $rows];
+        return ['items' => $rows, 'can_import' => trim((string)($_ENV['SERVERLIST_URL'] ?? '')) !== ''];
     }
 
     public function post(): array

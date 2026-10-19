@@ -41,6 +41,7 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `NEWS_URL`           | `http://XY`          | URL für Nachrichten                                                  |
 | `SERVERLIST_URL`     | `http://ABC`         | URL zum Abrufen neuer Server                                         |
 | `FAQ_URL`            | `http://XY`          | URL der FAQ (Hilfe-Seite und Seitenleiste)                           |
+| `REPOSITORY_URL`     | `https://github.com/applejuicenetz/phpgui` | Repository-Link; leer blendet Login-Version und Footer-Link aus |
 | `RELEASE_URL`        | `http://XY`          | GitHub-API-URL des neuesten Releases (`tag_name`) für die Versionsprüfung |
 | `TZ`                 | `Europe/Berlin`      | Zeitzone                                                             |
 | `ALLOWED_SERVERMSG_TAGS` | `<a><b><i><u><br>` | Erlaubte HTML-Tags in Servernachrichten                            |

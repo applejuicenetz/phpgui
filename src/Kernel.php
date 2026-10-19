@@ -30,10 +30,11 @@ class Kernel
 
         $_ENV['REAL_IP'] = 'http://' . ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
 
+        $_ENV['REPOSITORY_URL'] = $_ENV['REPOSITORY_URL'] ?? 'https://github.com/applejuicenetz/phpgui';
         $_ENV['NEWS_URL'] = $_ENV['NEWS_URL'] ?? 'https://applejuicenetz.github.io/news/%s.html';
         $_ENV['FAQ_URL'] = $_ENV['FAQ_URL'] ?? 'https://applejuicenetz.github.io/faq/';
         $_ENV['RELEASE_URL'] = $_ENV['RELEASE_URL'] ?? 'https://api.github.com/repos/applejuicenetz/phpgui/releases/latest';
-        $_ENV['SERVERLIST_URL'] = $_ENV['SERVERLIST_URL'] ?? 'http://www.applejuicenet.cc/serverlist/xmllist.php';
+        $_ENV['SERVERLIST_URL'] = $_ENV['SERVERLIST_URL'] ?? 'https://www.applejuicenet.cc/serverlist/xmllist.php';
 
         $_ENV['ALLOWED_SERVERMSG_TAGS'] = $_ENV['ALLOWED_SERVERMSG_TAGS'] ?? '<a><b><i><u><br>';
 
@@ -42,7 +43,7 @@ class Kernel
         $_ENV['CORE_HOST'] = $_ENV['CORE_HOST'] ?? '';
         $_ENV['CORE_PORT'] = $_ENV['CORE_PORT'] ?? 9851;
         $_ENV['GUI_LANGUAGE'] = in_array($_ENV['GUI_LANGUAGE'] ?? 'de', ['de', 'en'], true) ? ($_ENV['GUI_LANGUAGE'] ?? 'de') : 'de';
-        $_ENV['TZ'] = $_ENV['TZ'] ?? 'Europe/Berlin';
+        $_ENV['TZ'] = trim((string)($_ENV['TZ'] ?? '')) ?: 'Europe/Berlin';
 
         $_ENV['GUI_SHOW_NEWS'] = $_ENV['GUI_SHOW_NEWS'] ?? 1;
 

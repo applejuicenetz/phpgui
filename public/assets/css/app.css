@@ -343,6 +343,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .login-page > #app { width: 100%; display: flex; flex-direction: column; align-items: center; }
 .login-card { width: 100%; max-width: 26rem; margin: 0; box-shadow: 0 10px 30px rgb(0 0 0 / .15); }
 .login-title { margin-bottom: 1.25rem; }
+.login-version { margin-top: .75rem; } .login-card.box { margin-bottom: 0; } .app-footer > a { color: inherit; } .app-footer > a:hover { text-decoration: underline; }
 
 #login_form .field.has-addons > .control:first-child .button { width: 6.5rem; justify-content: flex-start; }
 .login-remember { position: relative; display: flex; align-items: center; gap: .65rem; min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); background: var(--app-surface-alt); font-size: .9rem; cursor: pointer; }

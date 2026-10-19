@@ -64,7 +64,9 @@ class Server
 
     public function getmore(): void
     {
-        $list = @file_get_contents($_ENV['SERVERLIST_URL'], false,
+        $url = trim((string)($_ENV['SERVERLIST_URL'] ?? ''));
+        if ($url === '') return;
+        $list = @file_get_contents($url, false,
             stream_context_create(['http' => ['timeout' => 15]]));
         if ($list === false || $list === '') return;
         preg_match_all('~ajfsp://server\|[^\r\n]+?/~', $list, $matches);

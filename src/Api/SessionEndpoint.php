@@ -25,9 +25,12 @@ final class SessionEndpoint extends Endpoint
             'version' => PHP_GUI_VERSION,
             'refresh' => (int)$_ENV['GUI_REFRESH_INTERVAL'],
             'default_host' => ($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']) . ':' . $_ENV['CORE_PORT'],
-            'show_news' => !empty($_ENV['GUI_SHOW_NEWS']),
+            'show_news' => !empty($_ENV['GUI_SHOW_NEWS']) && trim((string)$_ENV['NEWS_URL']) !== '',
+            'releases_url' => trim((string)$_ENV['REPOSITORY_URL']) === '' ? '' : rtrim(trim((string)$_ENV['REPOSITORY_URL']), '/') . '/releases',
+
             'show_share' => !empty($_ENV['GUI_SHOW_SHARE']),
-            'faq_url' => $_ENV['FAQ_URL'],
+            'faq_url' => trim((string)$_ENV['FAQ_URL']),
+            'repository_url' => trim((string)$_ENV['REPOSITORY_URL']),
             'rel_info' => CoreData::relInfo(),
             'permalink' => $authenticated && !empty($_ENV['TOP_SHOW_PERMALINK'])
                 ? Permalink::create($_SESSION['core_host'], $_SESSION['core_pass']) : null,
