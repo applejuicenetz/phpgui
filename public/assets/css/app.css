@@ -487,7 +487,10 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 /* Fixed width for the speed tags (longest value: "1023.99 MB/s") so the topbar does not jitter. */
 .app-status-tag:is(:nth-child(1), :nth-child(3)) > span:not(.icon) { flex: none; min-width: 12ch; }
 /* Upload cards: status without label, right-aligned on the username line. */
-@media screen and (max-width: 768px) { #ul-table td.col-ul-status { grid-column: 3; grid-row: 1; display: block; align-self: end; text-align: right; white-space: nowrap; } #ul-table td.col-ul-status::before { content: none; } }
+@media screen and (max-width: 768px) { #ul-table td.col-ul-status { grid-column: 3; grid-row: 1; display: block; align-self: end; text-align: right; white-space: nowrap; } #ul-table td.col-ul-status::before { content: none; } #ul-table td.col-name { min-width: 0; } #ul-table td.col-name .dl-name { white-space: nowrap; overflow-wrap: normal; word-break: normal; max-width: 100%; overflow-x: auto; scrollbar-width: none; } #ul-table td.col-name .dl-name::-webkit-scrollbar { display: none; } }
+.ul-meta-icon { display: none; }
+#ul-table .ul-os-icon { width: .8rem; height: .8rem; opacity: .8; filter: grayscale(1); }
+@media screen and (max-width: 768px) { #ul-table .ul-meta-label { display: none; } #ul-table .ul-meta-extra { display: block; } #ul-table .ul-sep { display: none; } #ul-table .ul-version { margin-left: .6rem; } #ul-table .ul-meta-icon { display: inline-block; width: .85rem; height: .85rem; vertical-align: -.12em; margin-right: .2rem; } }
 /* Download cards: sources, status and PDL as badges on one line. */
 .dl-badge-icon, .dl-badge-label { display: none; }
 @media screen and (max-width: 768px) {
