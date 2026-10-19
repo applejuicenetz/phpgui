@@ -25,6 +25,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Leere optionale URLs deaktivieren nur ihre Funktion
 - Umgebungsvariablen werden geprüft, ungültige Werte fallen auf Standard
 - Assets mit ETag; Entwicklung prüft immer, Produktion cacht eine Stunde
+- HTTP-Header ohne PHP-Version, Apache-Version und Betriebssystem
 
 ## 0.33.1 (2026-10-16)
 

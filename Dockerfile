@@ -12,6 +12,7 @@ ENV CORE_HOST="" \
 RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" && \
     echo "variables_order=EGPCS" > /usr/local/etc/php/conf.d/phpaj.ini && \
     echo 'memory_limit=${PHP_MEMORY_LIMIT}' >> /usr/local/etc/php/conf.d/phpaj.ini && \
+    echo 'expose_php=Off' >> /usr/local/etc/php/conf.d/phpaj.ini && \
     ln -sf /dev/null /var/log/apache2/access.log && \
     ln -sf /dev/null /var/log/apache2/error.log && \
     ln -sf /dev/null /var/log/apache2/other_vhosts_access.log
@@ -22,7 +23,13 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
 # COPY --from=docker.io/composer /usr/bin/composer /usr/local/bin/
 
 # Static assets: ETag/Last-Modified for conditional requests (304 when unchanged). Cache policy is set per stage below.
-RUN a2enmod headers
+RUN a2enmod headers && \
+    printf '%s\n' \
+      'ServerTokens Prod' \
+      'ServerSignature Off' \
+      'Header onsuccess unset X-Powered-By' \
+      'Header always unset X-Powered-By' > /etc/apache2/conf-available/zz-response-headers.conf && \
+    a2enconf zz-response-headers
 
 FROM base AS dev
 
