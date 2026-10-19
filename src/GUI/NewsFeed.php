@@ -39,7 +39,7 @@ final class NewsFeed
     private static function fetch(string $version): string
     {
         $body = @file_get_contents(
-            sprintf($_ENV['NEWS_URL'], $version ?: '404'),
+            str_replace('%s', $version ?: '404', $_ENV['NEWS_URL']),
             false,
             stream_context_create(['http' => ['timeout' => 3, 'ignore_errors' => true]])
         );
