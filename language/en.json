@@ -70,6 +70,13 @@
     "help": "Help"
   },
   "Downloads": {
+    "sort_short": {
+      "name": "Name",
+      "status": "Status",
+      "done": "Progress",
+      "pdl": "PDL",
+      "speed": "Speed"
+    },
     "source": "Sources",
     "filename": "filename",
     "statuss": "Status",

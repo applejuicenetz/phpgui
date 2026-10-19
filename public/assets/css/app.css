@@ -227,6 +227,13 @@ button.dir-name { text-align: left; background: none; border: 0; color: var(--bu
 /* Filter, Sortierung, Auswahl */
 .filter-field { margin-bottom: .75rem; }
 .sort-bar { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-bottom: .75rem; font-size: .85rem; }
+/* Keep download sorting on one swipeable row in card view. */
+@media screen and (max-width: 1023px) {
+    #dl-form .sort-bar { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: .25rem; }
+    #dl-form .sort-bar::-webkit-scrollbar { display: none; }
+    #dl-form .sort-bar > * { flex-shrink: 0; }
+    #dl-form .sort-bar .sort-link { padding-inline: .45rem; white-space: nowrap; }
+}
 .sort-link { padding: .35rem .7rem; border: 1px solid var(--app-line); border-radius: 999px; color: var(--bulma-text); min-height: 2.25rem; display: inline-flex; align-items: center; }
 .sort-link.is-sorted { background: var(--bulma-link-light); border-color: transparent; color: var(--bulma-link-on-scheme, var(--bulma-link)); font-weight: 600; }
 .selection-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-bottom: .75rem; }
