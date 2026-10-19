@@ -54,7 +54,7 @@ button, .button, .app-icon-button, .app-tab, .dropdown-item { touch-action: mani
 .app { min-height: 100dvh; display: flex; flex-direction: column; }
 .app-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .app-content { flex: 1; padding: 1rem .75rem calc(var(--app-tabbar-h) + var(--app-safe-b) + 1rem); outline: 0; min-width: 0; }
-.app-footer { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .75rem 1rem calc(var(--app-tabbar-h) + var(--app-safe-b) + .75rem); font-size: .8rem; color: var(--bulma-text-weak); border-top: 1px solid var(--app-line); }
+.app-footer { display: flex; justify-content: space-between; gap: .15rem 1rem; flex-wrap: wrap; padding: .35rem 1rem calc(var(--app-tabbar-h) + var(--app-safe-b) + .35rem); font-size: .75rem; line-height: 1.3; color: var(--bulma-text-weak); border-top: 1px solid var(--app-line); }
 .app-footer .icon { color: var(--app-accent); }
 
 /* Topbar */
@@ -357,7 +357,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 /* ---------- Tablet (≥769px): Tabellenansicht, zweispaltig ---------- */
 @media screen and (min-width: 769px) {
     .app-content { padding: 1.25rem 1.25rem 1.5rem; }
-    .app-footer { padding-bottom: .75rem; }
+    .app-footer { padding-bottom: .35rem; }
     .app-tabbar { display: none; }
     .app-menu-toggle { display: inline-flex; }
     .box { padding: 1.25rem; }
