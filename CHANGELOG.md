@@ -10,6 +10,21 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Quellenliste zeigt die Chunk-Größe
 - Quellenliste zeigt, wie viel jede Quelle hat
 - Uploads zeigen Wasserstand sowie OS-Symbol und Version
+- Upload-Karten: Symbole statt Textlabels, Dateiname ohne Umbruch
+- Download-Sortierung mobil einzeilig mit Kurzlabels
+
+### Oberfläche
+- Versionsnummer im Footer verlinkt auf die Releases
+- Login zeigt die Version als Tag unter dem Fenster
+- Firewall-Hinweis mit Warnsymbol, mobil einzeilig
+- Schmalerer Footer
+- Serverliste: „Zuletzt“ statt „letzte Verbindung“
+
+### Betrieb
+- Neue Variable `REPOSITORY_URL`; leer blendet die Links aus
+- Leere optionale URLs deaktivieren nur ihre Funktion
+- Umgebungsvariablen werden geprüft, ungültige Werte fallen auf Standard
+- Assets mit ETag; Entwicklung prüft immer, Produktion cacht eine Stunde
 
 ## 0.33.1 (2026-10-16)
 
