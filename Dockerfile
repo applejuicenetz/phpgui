@@ -20,15 +20,34 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
 
 # COPY --from=docker.io/composer /usr/bin/composer /usr/local/bin/
 
+# Static assets: ETag/Last-Modified for conditional requests (304 when unchanged). Cache policy is set per stage below.
+RUN a2enmod headers
+
 FROM base AS dev
 
 RUN apt-get update && apt-get install -y --no-install-recommends ssl-cert && a2enmod ssl && a2ensite default-ssl
+
+# Dev: always revalidate, so edited files load without a hard reload.
+RUN printf '%s\n' \
+      '<Directory "${APACHE_DOCUMENT_ROOT}/assets">' \
+      '    FileETag MTime Size' \
+      '    Header set Cache-Control "no-cache"' \
+      '</Directory>' > /etc/apache2/conf-available/assets-cache.conf && \
+    a2enconf assets-cache
 
 EXPOSE 80 443
 
 FROM base AS prod
 
 COPY . /var/www/html/
+
+# Prod: cache for one hour, then revalidate via ETag. Asset URLs carry no version parameter, so keep this short.
+RUN printf '%s\n' \
+      '<Directory "${APACHE_DOCUMENT_ROOT}/assets">' \
+      '    FileETag MTime Size' \
+      '    Header set Cache-Control "public, max-age=3600, must-revalidate"' \
+      '</Directory>' > /etc/apache2/conf-available/assets-cache.conf && \
+    a2enconf assets-cache
 
 # RUN cd /var/www/html && composer install --no-dev --no-interaction --optimize-autoloader
 
