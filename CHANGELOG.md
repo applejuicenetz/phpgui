@@ -10,6 +10,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Quellenliste zeigt die Chunk-Größe
 - Quellenliste zeigt, wie viel jede Quelle hat
 - Uploads zeigen Wasserstand sowie OS-Symbol und Version
+- Wasserstand im Upload zeigt den korrekten Prozentwert
 - Upload-Karten: Symbole statt Textlabels, Dateiname ohne Umbruch
 - Download-Sortierung mobil einzeilig mit Kurzlabels
 

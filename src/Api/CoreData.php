@@ -148,7 +148,7 @@ final class CoreData
                 'percent' => $done === null ? 0.0 : round($done / $span * 100, 2),
                 'age' => isset($u['LASTCONNECTION']) ? (int)max(0, ($now - (float)$u['LASTCONNECTION']) / 1000) : 0,
                 'speed' => (int)$u['SPEED'],
-                'watermark' => isset($u['LOADED']) && (float)$u['LOADED'] >= 0 ? round((float)$u['LOADED'], 2) : null,
+                'watermark' => isset($u['LOADED']) && (float)$u['LOADED'] >= 0 ? round((float)$u['LOADED'] * 100, 2) : null,
                 'version' => (string)($u['VERSION'] ?? ''),
                 'direct' => $active ? (int)$u['DIRECTSTATE'] : 0,
                 'os' => self::osCode($u['OPERATINGSYSTEM'] ?? 0),
