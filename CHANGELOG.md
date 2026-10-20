@@ -13,6 +13,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Wasserstand im Upload zeigt den korrekten Prozentwert
 - Upload-Karten: Symbole statt Textlabels, Dateiname ohne Umbruch
 - Download-Sortierung mobil einzeilig mit Kurzlabels
+- Fortschritt immer mit zwei Nachkommastellen, kein Flackern bei 10.3 %
+- Upload-Karten: Dateiname nutzt die volle Kartenbreite
 
 ### Oberfläche
 - Versionsnummer im Footer verlinkt auf die Releases
