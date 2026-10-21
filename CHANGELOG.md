@@ -15,12 +15,18 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Download-Sortierung mobil einzeilig mit Kurzlabels
 - Fortschritt immer mit zwei Nachkommastellen, kein Flackern bei 10.3 %
 - Upload-Karten: Dateiname nutzt die volle Kartenbreite
+- Share-Karten: ID, Größe und Prio als Badges, Anfragen mit Symbolen
+- Upload-Karten: Nick, PDL, Wasserstand und Version aufgeräumt
+- Geschwindigkeit steht neben dem Fortschritt
+- PDL mit Blitz: gelb bei aktiv, grau bei aus
+- Restzeit in Downloads mit Uhr-Symbol
 
 ### Oberfläche
 - Versionsnummer im Footer verlinkt auf die Releases
 - Login zeigt die Version als Tag unter dem Fenster
 - Firewall-Hinweis mit Warnsymbol, mobil einzeilig
 - Schmalerer Footer
+- Login setzt den Fokus auf das Passwortfeld
 - Serverliste: „Zuletzt“ statt „letzte Verbindung“
 
 ### Betrieb
