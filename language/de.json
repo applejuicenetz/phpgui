@@ -248,6 +248,7 @@
     "name": "Name",
     "size": "Größe",
     "prio": "Prio",
+    "id": "ID",
     "check": "Shareüberprüfung starten",
     "stop_check": "Shareüberprüfung abbrechen",
     "check_short": "Prüfung starten",

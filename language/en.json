@@ -248,6 +248,7 @@
     "name": "Name",
     "size": "Size",
     "prio": "Prio",
+    "id": "ID",
     "check": "Start share check",
     "stop_check": "Cancel share check",
     "check_short": "Check shares",

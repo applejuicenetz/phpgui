@@ -410,8 +410,7 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     #ul-table { table-layout: fixed; width: 100%; font-variant-numeric: tabular-nums; }
     #ul-table th:nth-child(1) { width: 2.25rem; }
     #ul-table th:nth-child(3) { width: 8.5rem; }
-    #ul-table th:nth-child(4) { width: 13.2rem; }
-    #ul-table th:nth-child(5) { width: 9.5rem; }
+    #ul-table th:nth-child(4) { width: 21rem; }
     #ul-table td, #ul-table th { padding-left: .5rem; padding-right: .5rem; overflow: hidden; text-overflow: ellipsis; }
     #ul-table td.col-name { min-width: 0; width: auto; }
     #ul-table td.col-progress { min-width: 0; }
@@ -497,9 +496,48 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 .app-status-tag:is(:nth-child(1), :nth-child(3)) > span:not(.icon) { flex: none; min-width: 12ch; }
 /* Upload cards: status without label, right-aligned on the username line. */
 @media screen and (max-width: 768px) { #ul-table td.col-ul-status { grid-column: 3; grid-row: 2; display: block; align-self: start; text-align: right; white-space: nowrap; } #ul-table td.col-ul-status::before { content: none; } #ul-table td.col-name { display: contents; } #ul-table td.col-name .dl-name { grid-column: 2 / -1; grid-row: 1; min-width: 0; } #ul-table td.col-name .dl-meta { grid-column: 2; grid-row: 2; min-width: 0; } #ul-table td.col-name .dl-name { white-space: nowrap; overflow-wrap: normal; word-break: normal; max-width: 100%; overflow-x: auto; scrollbar-width: none; } #ul-table td.col-name .dl-name::-webkit-scrollbar { display: none; } }
+/* Share cards: file name on one line, ID/size/prio as badges, meta items wrap as units. */
+.responsive-table td.sh-cell-id { display: none; } .sh-meta-icon { display: none; } .sh-meta-item { white-space: nowrap; }
+@media screen and (max-width: 768px) {
+    #sharefiles-form .responsive-table tr { grid-template-columns: auto auto auto 1fr auto; }
+    #sharefiles-form td.col-name { display: contents; }
+    #sharefiles-form td.col-name .dl-name { grid-column: 2 / 5; grid-row: 1; min-width: 0; white-space: nowrap; overflow-wrap: normal; word-break: normal; overflow-x: auto; scrollbar-width: none; }
+    #sharefiles-form td.col-name .dl-name::-webkit-scrollbar { display: none; }
+    #sharefiles-form td.col-check, #sharefiles-form td.col-actions { grid-row: 1; align-self: start; }
+    #sharefiles-form td.col-actions { grid-column: 5; }
+    #sharefiles-form td.sh-cell-id, #sharefiles-form td.sh-cell-size, #sharefiles-form td.sh-cell-prio { display: flex; grid-row: 2; justify-self: start; }
+    #sharefiles-form td.sh-cell-id { grid-column: 2; } #sharefiles-form td.sh-cell-size { grid-column: 3; } #sharefiles-form td.sh-cell-prio { grid-column: 4; }
+    #sharefiles-form td.sh-cell-id::before, #sharefiles-form td.sh-cell-size::before, #sharefiles-form td.sh-cell-prio::before { content: none; }
+    #sharefiles-form .sh-path { grid-column: 2 / -1; grid-row: 3; }
+    #sharefiles-form .sh-meta { grid-column: 2 / -1; grid-row: 4; }
+    #sharefiles-form .sh-meta-id, #sharefiles-form .sh-sep { display: none; }
+    #sharefiles-form .sh-meta { display: flex; flex-wrap: wrap; gap: .35rem; }
+    #sharefiles-form .sh-meta-item { display: inline-flex; align-items: center; gap: .3rem; height: 1.5rem; padding: 0 .45rem; border-radius: var(--bulma-radius-rounded, 999px); background: var(--bulma-scheme-main-ter, var(--app-surface-alt)); color: var(--bulma-text-strong); font-size: .75rem; line-height: 1; white-space: nowrap; }
+    #sharefiles-form .sh-meta-label { display: none; }
+    #sharefiles-form .sh-meta-icon { display: inline-flex; width: .9rem; height: .9rem; color: var(--bulma-text-weak); }
+    #sharefiles-form .dl-badge { display: inline-flex; align-items: center; gap: .3rem; height: 1.5rem; padding: 0 .45rem; border-radius: var(--bulma-radius-rounded, 999px); background: var(--bulma-scheme-main-ter, var(--app-surface-alt)); color: var(--bulma-text-strong); font-size: .75rem; line-height: 1; white-space: nowrap; }
+    #sharefiles-form .dl-badge-icon { display: inline-flex; width: .9rem; height: .9rem; }
+    #sharefiles-form .dl-badge-label { display: inline; color: var(--bulma-text-weak); text-transform: uppercase; }
+}
 .ul-meta-icon { display: none; }
-#ul-table .ul-os-icon { width: .8rem; height: .8rem; opacity: .8; filter: grayscale(1); }
-@media screen and (max-width: 768px) { #ul-table .ul-meta-label { display: none; } #ul-table .ul-meta-extra { display: block; } #ul-table .ul-sep { display: none; } #ul-table .ul-version { margin-left: .6rem; } #ul-table .ul-meta-icon { display: inline-block; width: .85rem; height: .85rem; vertical-align: -.12em; margin-right: .2rem; } }
+/* Long nicks stay on one line with an ellipsis instead of breaking inside the word. */
+.ul-nick { display: inline-block; max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+@media screen and (max-width: 768px) {
+    #ul-table td.col-name .dl-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .1rem .6rem; }
+    #ul-table td.col-name .ul-meta-user { padding-right: 6rem; }
+    #ul-table .ul-meta-user { flex: 0 0 100%; display: flex; align-items: center; gap: .25rem; min-width: 0; }
+    #ul-table .ul-nick { flex: 0 1 auto; min-width: 0; max-width: 100%; }
+    #ul-table .ul-meta-icon { flex: none; margin-right: 0; }
+    #ul-table .ul-pdl, #ul-table .ul-meta-extra { display: inline-flex; align-items: center; white-space: nowrap; }
+    #ul-table .ul-meta-extra > * { display: inline-flex; align-items: center; }
+    #ul-table .ul-meta-extra { gap: .6rem; }
+    #ul-table .ul-version { margin-left: 0; }
+    #ul-table td.col-ul-status { overflow: visible; }
+    #ul-table td.col-ul-status .tag { white-space: nowrap; }
+}
+#ul-table .ul-pdl > .icon { margin-right: .25rem; }
+#ul-table .ul-os-icon { width: .8rem; height: .8rem; margin-right: .25rem; opacity: .8; filter: grayscale(1); }
+@media screen and (max-width: 768px) { #ul-table .ul-meta-label { display: none; } #ul-table .ul-meta-extra { display: inline-flex; align-items: center; } #ul-table .ul-sep { display: none; } #ul-table .ul-version { margin-left: 0; } #ul-table .ul-meta-icon { display: inline-block; width: .85rem; height: .85rem; vertical-align: -.12em; margin-right: .2rem; } }
 /* Download cards: sources, status and PDL as badges on one line. */
 .dl-badge-icon, .dl-badge-label { display: none; }
 @media screen and (max-width: 768px) {
@@ -531,3 +569,9 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     .firewall-notice .icon { flex: none; }
     .firewall-notice .firewall-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+#ul-table .progress-line { justify-content: flex-start; gap: .5rem; font-variant-numeric: tabular-nums; }
+#ul-table .progress-line > strong, #ul-table .ul-progress-speed { flex: none; white-space: nowrap; }
+#ul-table .progress-line > .dl-meta { margin-left: auto; }
+#ul-table .ul-progress-speed { font-size: .8rem; color: var(--bulma-text-weak); }
+@media screen and (max-width: 768px) { #ul-table tr { column-gap: .35rem; } }
