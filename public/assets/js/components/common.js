@@ -27,9 +27,9 @@ export const SortLink = {
     template: `<button type="button" class="sort-link" :class="{'is-sorted': sort === field}" @click="$emit('sort', field)">{{label}} <span v-if="sort === field" aria-hidden="true">{{direction === 'asc' ? '↑' : '↓'}}</span></button>`
 };
 export const UnitInput = {
-    props: ['modelValue', 'storageKey', 'label', 'id'], emits: ['update:modelValue'],
+    props: ['modelValue', 'storageKey', 'label', 'id', 'enterSubmit'], emits: ['update:modelValue', 'submit'],
     setup(props, { emit }) {
-        const unit = ref(rememberGet(props.storageKey, 'kb'));
+        const unit = ref(rememberGet(props.storageKey, 'mb'));
         const shown = ref('');
         function show() { shown.value = unit.value === 'mb' ? (props.modelValue / 1048576).toFixed(2) : String(props.modelValue / 1024); }
         watch(() => props.modelValue, show, { immediate: true });
@@ -40,9 +40,11 @@ export const UnitInput = {
             shown.value = value;
             emit('update:modelValue', Math.max(0, Math.round((Number(value.replace(',', '.')) || 0) * (unit.value === 'mb' ? 1048576 : 1024))));
         }
-        return { unit, shown, change, input, t };
+        // Only intercept Enter when a parent listens; inside forms the native submit stays.
+        function enter(event) { if (props.enterSubmit) { event.preventDefault(); emit('submit'); } }
+        return { unit, shown, change, input, enter, t };
     },
-    template: `<div class="limit-row"><input class="input" type="text" inputmode="decimal" enterkeyhint="done" :id="id" :aria-label="label" :value="shown" @input="input($event.target.value)"><div class="buttons has-addons unit-toggle"><button v-for="u in ['kb','mb']" :key="u" type="button" class="button" :class="{'is-selected is-link is-light': unit === u}" :aria-pressed="unit === u" @click="change(u)">{{t('Settings.unit_' + u)}}</button></div></div>`
+    template: `<div class="limit-row"><input class="input" type="number" min="0" :step="unit === 'mb' ? 0.1 : 10" inputmode="decimal" enterkeyhint="done" :id="id" :aria-label="label" :value="shown" @input="input($event.target.value)" @keydown.enter="enter"><div class="buttons has-addons unit-toggle"><button v-for="u in ['kb','mb']" :key="u" type="button" class="button" :class="{'is-selected is-link is-light': unit === u}" :aria-pressed="unit === u" @click="change(u)">{{t('Settings.unit_' + u)}}</button></div></div>`
 };
 export const SpeedPanel = {
     props: ['kind', 'data'], components: { UnitInput, Icon },
@@ -53,7 +55,7 @@ export const SpeedPanel = {
         async function apply() { busy.value = true; const result = await mutate('limits', {action: 'set_max' + props.kind, value: limit.value}); busy.value = false; if(result) notify(t('UI.action_done.limit'), 'success'); }
         return { limit, busy, currentSpeed, apply, speed, bytes, t };
     },
-    template: `<section class="box toolbar-box speed-panel"><div class="speed-panel-grid"><div class="speed-bar"><progress class="progress" :value="data.max > 0 ? Math.min(100, currentSpeed / data.max * 100) : 0" max="100"></progress><span class="speed-bar-label">{{speed(currentSpeed)}} / {{data.max > 0 ? speed(data.max) : '∞'}}<template v-if="kind === 'ul'"> · {{t('Uploads.limit').replace('{percent}', data.slots_max > 0 ? Math.round(data.slots_used / data.slots_max * 100) : '?')}}</template></span></div><div class="field has-addons limit-form"><div class="control is-expanded"><UnitInput v-model="limit" :storage-key="kind + '_speed_unit'" :label="t('Downloads.limit')" /></div><div class="control"><button type="button" class="button is-primary" :disabled="busy" @click="apply" :aria-label="t('Settings.save')"><Icon name="check-lg" /></button></div></div></div></section>`
+    template: `<section class="box toolbar-box speed-panel"><div class="speed-panel-grid"><div class="speed-bar"><progress class="progress" :value="data.max > 0 ? Math.min(100, currentSpeed / data.max * 100) : 0" max="100"></progress><span class="speed-bar-label">{{speed(currentSpeed)}} / {{data.max > 0 ? speed(data.max) : '∞'}}<template v-if="kind === 'ul'"> · {{t('Uploads.limit').replace('{percent}', data.slots_max > 0 ? Math.round(data.slots_used / data.slots_max * 100) : '?')}}</template></span></div><div class="field has-addons limit-form"><div class="control is-expanded"><UnitInput v-model="limit" :enter-submit="true" @submit="busy || apply()" :storage-key="kind + '_speed_unit'" :label="t('Downloads.limit')" /></div><div class="control"><button type="button" class="button is-primary" :disabled="busy" @click="apply" :aria-label="t('Settings.save')"><Icon name="check-lg" /></button></div></div></div></section>`
 };
 export const ShareTabs = { setup: () => ({t,state,url}), template: `<div class="share-tabs-row"><div class="tabs is-boxed share-tabs" role="tablist"><ul><li :class="{'is-active': state.route.site !== 'sharestats'}"><a :href="url('shares')" role="tab">{{t('Navigation.shares')}}</a></li><li :class="{'is-active': state.route.site === 'sharestats'}"><a :href="url('sharestats')" role="tab">{{t('Share.statistics')}}</a></li></ul></div><slot></slot></div>` };
 
