@@ -28,6 +28,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Schmalerer Footer
 - Login setzt den Fokus auf das Passwortfeld
 - Serverliste: „Zuletzt“ statt „letzte Verbindung“
+- Ladeanzeige beim Start, bis die Sitzung antwortet
 
 ### Betrieb
 - Neue Variable `REPOSITORY_URL`; leer blendet die Links aus

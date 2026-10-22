@@ -69,7 +69,7 @@ const App={
     components:{Icon,Login,Shell},
     setup(){
         const bootError=ref(false);
-        async function boot(){try{await session();if(state.session.authenticated && new URLSearchParams(location.search).has('l')) state.session.authenticated=false;routeFromLocation();bootError.value=false;}catch{bootError.value=true;}}
+        async function boot(){try{await session();if(state.session.authenticated && new URLSearchParams(location.search).has('l')) state.session.authenticated=false;routeFromLocation();bootError.value=false;}catch{bootError.value=true;}finally{document.getElementById('boot-loader')?.remove();}}
         watch(()=>state.session?.authenticated,authenticated=>{document.body.classList.toggle('login-page',!authenticated);},{immediate:true});
         function authenticated(){
             const params=Object.fromEntries(new URLSearchParams(location.search));

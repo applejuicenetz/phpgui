@@ -585,5 +585,11 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 #ul-table .progress-line { justify-content: flex-start; gap: .5rem; font-variant-numeric: tabular-nums; }
 #ul-table .progress-line > strong, #ul-table .ul-progress-speed { flex: none; white-space: nowrap; }
 #ul-table .progress-line > .dl-meta { margin-left: auto; }
+
+/* Boot loader: shown until the session request has answered (slow cold starts take seconds). */
+.boot-loader { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--bulma-text-weak, #888); opacity: 0; animation: boot-fade .3s ease .25s forwards; pointer-events: none; }
+.boot-loader svg { animation: boot-spin 1s linear infinite; opacity: .6; }
+@keyframes boot-fade { to { opacity: 1; } }
+@keyframes boot-spin { to { transform: rotate(360deg); } }
 #ul-table .ul-progress-speed { font-size: .8rem; color: var(--bulma-text-strong); }
 @media screen and (max-width: 768px) { #ul-table tr { column-gap: .35rem; } }
