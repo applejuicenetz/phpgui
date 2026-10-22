@@ -4,7 +4,7 @@
     "login": "Login",
     "password": "Password",
     "remember": "Remember login",
-    "url_info": "Full Core URL including protocol and XML API port, e.g. http://localhost:9851.",
+    "url_info": "Full Core URL including protocol and XML API port, e.g.",
     "password_info": "A password must be set in the Core.",
     "pending_one": "1 link will be added after login",
     "pending_many": "{count} links will be added after login"

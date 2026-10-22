@@ -4,7 +4,7 @@
     "login": "Login",
     "password": "Passwort",
     "remember": "Login merken",
-    "url_info": "Vollständige Core-URL mit Protokoll und XML-API-Port, z. B. http://localhost:9851.",
+    "url_info": "Vollständige Core-URL mit Protokoll und XML-API-Port, z. B.",
     "password_info": "Im Core muss zwingend ein Passwort gesetzt sein.",
     "pending_one": "1 Link wird nach der Anmeldung übernommen",
     "pending_many": "{count} Links werden nach der Anmeldung übernommen"
