@@ -421,6 +421,17 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
     #ul-table td.col-progress .dl-meta { white-space: nowrap; }
     #ul-table .progress-line { display: flex; justify-content: space-between; gap: .5rem; }
     #dl-table td.col-progress .dl-meta { white-space: nowrap; }
+    /* Share files: the nowrap meta line must not widen the table and push the action column out of view. */
+    #sharefiles-form table { table-layout: fixed; width: 100%; }
+    #sharefiles-form th:nth-child(1) { width: 2.25rem; }
+    #sharefiles-form th:nth-child(3) { width: 7rem; }
+    #sharefiles-form th:nth-child(4) { width: 5rem; }
+    #sharefiles-form th:nth-child(5) { width: 5.5rem; }
+    #sharefiles-form td.sh-cell-id { display: none; }
+    #sharefiles-form td.col-name { width: auto; min-width: 0; }
+    #sharefiles-form td, #sharefiles-form th { overflow: hidden; text-overflow: ellipsis; }
+    #sharefiles-form td.col-name .dl-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #sharefiles-form td.col-actions { white-space: nowrap; text-align: right; }
     .responsive-table .col-check { width: 1%; }
     /* Fixed width so status changes never shift the other columns. */
     .responsive-table .col-status { width: 1%; }

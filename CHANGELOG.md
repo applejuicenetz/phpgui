@@ -29,6 +29,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Login setzt den Fokus auf das Passwortfeld
 - Serverliste: „Zuletzt“ statt „letzte Verbindung“
 - Ladeanzeige beim Start, bis die Sitzung antwortet
+- Share-Dateiliste: Tabelle am Desktop nicht mehr rechts abgeschnitten
+- Seite „geteilte Dateien“ heißt jetzt „Share“
 
 ### Betrieb
 - Neue Variable `REPOSITORY_URL`; leer blendet die Links aus
