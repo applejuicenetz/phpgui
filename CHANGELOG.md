@@ -30,6 +30,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Serverliste: „Zuletzt“ statt „letzte Verbindung“
 - Ladeanzeige beim Start, bis die Sitzung antwortet
 - Share-Dateiliste: Tabelle am Desktop nicht mehr rechts abgeschnitten
+- Share-Dateiliste: Aktionssymbole werden nie mit „…“ gekürzt
 - Seite „geteilte Dateien“ heißt jetzt „Share“
 
 ### Betrieb
