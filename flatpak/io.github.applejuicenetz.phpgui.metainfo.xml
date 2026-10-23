@@ -9,5 +9,11 @@
   <url type="homepage">https://github.com/applejuicenetz/phpgui</url>
   <launchable type="desktop-id">io.github.applejuicenetz.phpgui.desktop</launchable>
   <releases><release version="0.33.2" date="2026-10-22"/></releases>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://applejuicenetz.github.io/assets/screenshots/applejuice_gui_php.png</image>
+      <caption>Dashboard</caption>
+    </screenshot>
+  </screenshots>
   <content_rating type="oars-1.1"/>
 </component>
