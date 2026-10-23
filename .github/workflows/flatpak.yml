@@ -1,0 +1,88 @@
+name: 'flatpak'
+
+on:
+  release:
+    types: [ released ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to build and attach bundles to (e.g. 0.33.2)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  TAG: ${{ inputs.tag || github.event.release.tag_name }}
+
+jobs:
+  bundle:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            arch: x86_64
+            package-arch: amd64
+          - runner: ubuntu-24.04-arm
+            arch: aarch64
+            package-arch: aarch64
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Install Flatpak builder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Build Flatpak bundle
+        env:
+          FLATPAK_ARCH: ${{ matrix.arch }}
+          PACKAGE_ARCH: ${{ matrix.package-arch }}
+        run: |
+          set -euo pipefail
+          version="$(grep -oP "PHP_GUI_VERSION = '\K[^']+" bootstrap.php)"
+          test "$version" = "$TAG" || { echo "bootstrap.php version '$version' does not match tag '$TAG'" >&2; exit 1; }
+          cd flatpak
+          sed -i -E "s|<release version=\"[^\"]+\" date=\"[^\"]+\"/>|<release version=\"$version\" date=\"$(date -u +%F)\"/>|" \
+            io.github.applejuicenetz.phpgui.metainfo.xml
+          flatpak-builder \
+            --arch="$FLATPAK_ARCH" \
+            --user \
+            --install-deps-from=flathub \
+            --disable-rofiles-fuse \
+            --force-clean \
+            --repo=flatpak-repo \
+            --default-branch=stable \
+            flatpak-build \
+            io.github.applejuicenetz.phpgui.yml
+          flatpak build-bundle \
+            --arch="$FLATPAK_ARCH" \
+            --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo \
+            flatpak-repo \
+            "AJphpGUI-linux-${PACKAGE_ARCH}.flatpak" \
+            io.github.applejuicenetz.phpgui stable
+          test -s "AJphpGUI-linux-${PACKAGE_ARCH}.flatpak"
+
+      - name: Upload bundle to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKAGE_ARCH: ${{ matrix.package-arch }}
+        run: gh release upload "$TAG" "flatpak/AJphpGUI-linux-${PACKAGE_ARCH}.flatpak" --clobber
+
+  notify-flatpak:
+    needs: bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger flatpak repository sync
+        env:
+          GH_TOKEN: ${{ secrets.PACKAGE_DISPATCH_TOKEN }}
+        run: gh api repos/applejuicenetz/flatpak/dispatches -f event_type=flatpak-release

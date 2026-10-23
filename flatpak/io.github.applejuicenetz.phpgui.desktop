@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=appleJuice phpGUI
+Comment=Local web interface for the appleJuice core
+Exec=phpgui %u
+Icon=io.github.applejuicenetz.phpgui
+Categories=Network;FileTransfer;P2P;
+MimeType=x-scheme-handler/ajfsp;
+Terminal=false

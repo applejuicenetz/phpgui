@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.applejuicenetz.phpgui</id>
+  <name>appleJuice phpGUI</name>
+  <summary>Local web interface for the appleJuice core</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <description><p>Vue-based web interface served locally from a bundled PHP runtime. Opens in your browser and connects to a local or remote appleJuice core.</p></description>
+  <url type="homepage">https://github.com/applejuicenetz/phpgui</url>
+  <launchable type="desktop-id">io.github.applejuicenetz.phpgui.desktop</launchable>
+  <releases><release version="0.33.2" date="2026-10-22"/></releases>
+  <content_rating type="oars-1.1"/>
+</component>

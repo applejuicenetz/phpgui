@@ -4,3 +4,8 @@ tests/visual/out/
 .venv/
 __pycache__/
 TODO.txt
+# Flatpak build output
+flatpak/build-dir/
+flatpak/flatpak-build/
+flatpak/flatpak-repo/
+flatpak/*.flatpak

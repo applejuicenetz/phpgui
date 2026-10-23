@@ -40,6 +40,11 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Assets mit ETag; Entwicklung prüft immer, Produktion cacht eine Stunde
 - HTTP-Header ohne PHP-Version, Apache-Version und Betriebssystem
 
+### Flatpak
+- Neues Flatpak `io.github.applejuicenetz.phpgui` für amd64 und aarch64, mit Tray-Symbol zum Beenden
+- `PHPGUI_BIND` und `PHPGUI_PORT` steuern Adresse und Port des Flatpaks
+- Neues Logo: Apfel mit Vue-V als Vektorgrafik
+
 ## 0.33.1 (2026-10-16)
 
 ### Oberfläche

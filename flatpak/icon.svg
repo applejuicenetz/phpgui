@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>appleJuice phpGUI</title>
+  <defs>
+    <linearGradient id="body" x1="0" y1="130" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b02424"/><stop offset=".3" stop-color="#9c1717"/><stop offset=".65" stop-color="#860d0d"/><stop offset="1" stop-color="#6a0909"/>
+    </linearGradient>
+    <radialGradient id="rim" cx="256" cy="300" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset=".8" stop-color="#400000" stop-opacity="0"/><stop offset="1" stop-color="#400000" stop-opacity=".3"/>
+    </radialGradient>
+    <radialGradient id="notch" cx="262" cy="190" r="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a0000" stop-opacity=".5"/><stop offset="1" stop-color="#3a0000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leaf" x1="248" y1="150" x2="370" y2="5" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5aa032"/><stop offset=".5" stop-color="#6ebc2f"/><stop offset="1" stop-color="#90d420"/>
+    </linearGradient>
+    <linearGradient id="stem" x1="180" y1="90" x2="258" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a0d00"/><stop offset="1" stop-color="#4d1b04"/>
+    </linearGradient>
+    <clipPath id="clip"><path d="M256 186C242 164 217 142 179 138C133 132 87 140 55 160C21 182 5 222 7 262C9 304 21 344 43 380C65 420 97 458 135 482C167 502 205 512 239 504C248 501 252 497 256 497C260 497 264 501 273 504C307 512 345 502 377 482C415 458 447 420 469 380C491 344 503 304 505 262C507 222 491 182 457 160C425 140 379 132 333 138C295 142 270 164 256 186Z"/></clipPath>
+    <filter id="vs" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#3a0000" flood-opacity=".4"/></filter>
+  </defs>
+  <path d="M238 150C234.0 140.3 237.8 116.1 240 100C242.2 83.9 244.9 75.2 250 62C255.1 48.8 258.8 38.3 268 28C277.2 17.7 287.2 10.9 300 6C312.8 1.0 324.8 1.9 338 1C351.2 0.1 363.2 0.1 372 1C380.8 1.9 384.2 1.4 386 6C387.8 10.6 384.6 16.8 382 26C379.4 35.2 377.1 43.9 372 56C366.9 68.1 362.4 79.9 354 92C345.6 104.1 337.4 112.5 326 122C314.6 131.5 303.7 138.3 292 144C280.3 149.7 271.9 151.9 262 153C252.1 154.1 242.0 159.7 238 150Z" fill="url(#leaf)"/>
+  <path d="M250 150C268 112 308 62 362 14" fill="none" stroke="#3f7326" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <g fill="none" stroke="#3f7326" stroke-width="4.5" stroke-linecap="round" opacity=".75">
+    <path d="M268 120C262 98 266 74 278 54"/><path d="M290 96C288 76 296 56 312 42"/><path d="M318 68C320 52 332 38 346 30"/>
+    <path d="M274 128C298 122 320 108 336 88"/><path d="M302 102C324 98 344 86 356 70"/>
+  </g>
+  <path d="M256 186C242 164 217 142 179 138C133 132 87 140 55 160C21 182 5 222 7 262C9 304 21 344 43 380C65 420 97 458 135 482C167 502 205 512 239 504C248 501 252 497 256 497C260 497 264 501 273 504C307 512 345 502 377 482C415 458 447 420 469 380C491 344 503 304 505 262C507 222 491 182 457 160C425 140 379 132 333 138C295 142 270 164 256 186Z" fill="url(#body)"/>
+  <path d="M256 186C242 164 217 142 179 138C133 132 87 140 55 160C21 182 5 222 7 262C9 304 21 344 43 380C65 420 97 458 135 482C167 502 205 512 239 504C248 501 252 497 256 497C260 497 264 501 273 504C307 512 345 502 377 482C415 458 447 420 469 380C491 344 503 304 505 262C507 222 491 182 457 160C425 140 379 132 333 138C295 142 270 164 256 186Z" fill="url(#rim)"/>
+  <circle cx="262" cy="190" r="44" fill="url(#notch)"/>
+  <g clip-path="url(#clip)" fill="none" stroke="#d05050" stroke-width="3.5" stroke-linecap="round" opacity=".5">
+    <path d="M44 176C76 152 124 144 172 150C196 154 216 162 230 174"/>
+    <path d="M304 168C332 148 372 140 410 146C444 154 470 170 484 190" opacity=".8"/>
+  </g>
+  <path d="M258 200C252 168 234 132 192 100" fill="none" stroke="url(#stem)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M250 196C242 164 226 132 190 102" fill="none" stroke="#7b3418" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+  <g transform="translate(256 334) scale(.94) translate(-256 -340)" filter="url(#vs)">
+    <path d="M124 234H198L256 336L314 234H388L256 464Z" fill="#fff"/>
+    <path d="M144 246H204L256 336L308 246H368L256 442Z" fill="#41b883"/>
+    <path d="M192 246H234L256 284L278 246H320L256 354Z" fill="#35495e"/>
+  </g>
+</svg>

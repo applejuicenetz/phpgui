@@ -51,6 +51,30 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 
 Der Dauerlink enthält die Adresse des Core und einen Passwort-Hash. Wer den Link besitzt, kann auf diesen Core zugreifen. Deshalb sollte der Link wie ein Passwort aufbewahrt und nur entsprechend weitergegeben werden. Bestehende Links im Format `index.php?l=...` aus älteren Versionen werden weiterhin unterstützt.
 
+## Flatpak
+
+Das Flatpak `io.github.applejuicenetz.phpgui` lauscht standardmäßig nur auf `127.0.0.1:8088`. Mit `PHPGUI_BIND=0.0.0.0` ist es im Netzwerk erreichbar.
+
+| Variable      | Standard           | Beschreibung                  |
+|---------------|--------------------|-------------------------------|
+| `PHPGUI_BIND` | `127.0.0.1`        | Adresse des Webservers        |
+| `PHPGUI_PORT` | `8088`             | Port des Webservers           |
+| `CORE_HOST`   | `http://127.0.0.1` | Adresse des Core              |
+| `CORE_PORT`   | `9851`             | XML-Port des Core             |
+
+```shell
+flatpak override --user \
+    --env=PHPGUI_BIND=0.0.0.0 \
+    --env=CORE_HOST=http://192.168.2.1 \
+    --env=CORE_PORT=9851 \
+    io.github.applejuicenetz.phpgui
+
+# zurücksetzen
+flatpak override --user --unset-env=PHPGUI_BIND io.github.applejuicenetz.phpgui
+```
+
+Läuft die phpGUI schon, vorher über das Tray-Symbol beenden. Beachte die Hinweise zur Sicherheit oben.
+
 ## Docker
 
 ### Freigegebene Ports
