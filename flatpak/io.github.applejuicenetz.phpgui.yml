@@ -31,9 +31,11 @@ modules:
   - name: phpgui-tray
     buildsystem: simple
     build-options:
+      build-args:
+        - --share=network
       env:
         CGO_ENABLED: '0'
-        GOFLAGS: -mod=vendor -trimpath
+        GOFLAGS: -mod=readonly -trimpath
     build-commands:
       - go build -ldflags '-s -w' -o /app/bin/phpgui .
     sources:
