@@ -33,4 +33,11 @@ check($env['TZ'] === 'Europe/Berlin' && $env['GUI_LANGUAGE'] === 'de' && $env['G
 check($env['ALLOWED_SERVERMSG_TAGS'] === '<b><br>');
 check(Kernel::validateEnvironment(['NEWS_URL' => 'https://example.com/%d'])['NEWS_URL'] === '');
 check(Kernel::validateEnvironment(['TZ' => 'UTC'])['TZ'] === 'UTC');
+check((Kernel::validateEnvironment([])['GUI_REMEMBER_LOGIN'] ?? null) === false);
+foreach (['1', 'true', 'on', 'yes', true] as $value) {
+    check((Kernel::validateEnvironment(['GUI_REMEMBER_LOGIN' => $value])['GUI_REMEMBER_LOGIN'] ?? null) === true);
+}
+foreach (['0', 'false', 'off', 'no', '', 'invalid', false, []] as $value) {
+    check((Kernel::validateEnvironment(['GUI_REMEMBER_LOGIN' => $value])['GUI_REMEMBER_LOGIN'] ?? null) === false);
+}
 print "Environment validation passed\n";

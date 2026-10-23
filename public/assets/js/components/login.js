@@ -7,7 +7,7 @@ import { safeUrl } from '../format.js';
 export default {
     components:{Icon},emits:['authenticated'],
     setup(props,{emit}) {
-        const host=ref(state.session.default_host),password=ref(''),remember=ref(false),error=ref(''),busy=ref(false);
+        const host=ref(state.session.default_host),password=ref(''),remember=ref(state.session.remember_login === true),error=ref(''),busy=ref(false);
         const hostHelp=ref(false),passwordHelp=ref(false);
         const passwordInput=ref(null);
         async function login(fields=null) {

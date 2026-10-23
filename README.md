@@ -20,7 +20,7 @@ Core-Adressen sind frei wählbar. phpGUI deshalb nicht als offenen Proxy im Inte
 
 ## Abhängigkeiten
 
-Benötigt wird mindestens PHP `8.5`.
+Benötigt wird mindestens PHP `8.3`.
 
 ## Konfiguration (beim Selbsthosting ohne Docker)
 
@@ -34,6 +34,7 @@ Die Datei `.env.dist` als `.env` kopieren und die gewünschten Einstellungen mit
 | `CORE_PORT`          | `9851`               | XML-Port des Core                                                    |
 | `GUI_LANGUAGE`       | `de`                 | Sprache: `de` oder `en`                                              |
 | `GUI_REFRESH_INTERVAL` | `2`                | Intervall der Live-Aktualisierung in Sekunden (1–3600)               |
+| `GUI_REMEMBER_LOGIN` | `0`                  | „Login merken“ mit `1` vorbelegen; bleibt im Login abschaltbar        |
 | `GUI_SHOW_NEWS`      | `1`                  | Nachrichten auf der Statusseite anzeigen                             |
 | `GUI_SHOW_SHARE`     | `1`                  | Freigabestatistiken auf der Statusseite anzeigen                     |
 | `PHP_MEMORY_LIMIT`   | `256M`               | PHP `memory_limit` (Standard im Container: `256M`)                   |

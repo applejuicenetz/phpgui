@@ -25,6 +25,7 @@ final class SessionEndpoint extends Endpoint
             'version' => PHP_GUI_VERSION,
             'refresh' => (int)$_ENV['GUI_REFRESH_INTERVAL'],
             'default_host' => ($_ENV['CORE_HOST'] ?: $_ENV['REAL_IP']) . ':' . $_ENV['CORE_PORT'],
+            'remember_login' => $_ENV['GUI_REMEMBER_LOGIN'],
             'show_news' => !empty($_ENV['GUI_SHOW_NEWS']) && trim((string)$_ENV['NEWS_URL']) !== '',
             'releases_url' => trim((string)$_ENV['REPOSITORY_URL']) === '' ? '' : rtrim(trim((string)$_ENV['REPOSITORY_URL']), '/') . '/releases',
 

@@ -3,7 +3,7 @@
 # (Debian >= bullseye) brechen dort mit "AH00141: Could not initialize random number generator" ab.
 # prod (letzte Stage = Default-Target im Workflow): nur HTTP, mod_ssl braucht getrandom() und ist entfernt.
 # dev: HTTPS auf Port 443 mit dem selbstsignierten Zertifikat des Basis-Images; nur auf modernen Kerneln.
-ARG PHP_TAG=8.5-alpine
+ARG PHP_TAG=8.3-alpine
 FROM docker.io/webdevops/php-apache:${PHP_TAG} AS base
 
 # LOG_STDOUT/LOG_STDERR muessen gesetzt sein, sonst zeigt die Synology DSM die Container-Logs als Fehler an.
@@ -12,6 +12,7 @@ ENV CORE_HOST="" \
     REPOSITORY_URL="https://github.com/applejuicenetz/phpgui" \
     GUI_LANGUAGE="de"  \
     GUI_REFRESH_INTERVAL=2 \
+    GUI_REMEMBER_LOGIN=0 \
     GUI_SHOW_NEWS=1 \
     GUI_SHOW_SHARE=1 \
     WEB_DOCUMENT_ROOT=/var/www/html/public \

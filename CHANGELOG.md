@@ -34,7 +34,9 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Seite „geteilte Dateien“ heißt jetzt „Share“
 
 ### Betrieb
-- Docker-Image auf Alpine mit PHP 8.5 für alte Kernel umgestellt
+- Docker-Image auf Alpine mit PHP 8.3 für alte Kernel umgestellt
+- PHP 8.3 als Mindestversion unterstützt
+- `GUI_REMEMBER_LOGIN` belegt „Login merken“ vor; bleibt abschaltbar
 - Neue Variable `REPOSITORY_URL`; leer blendet die Links aus
 - Leere optionale URLs deaktivieren nur ihre Funktion
 - Umgebungsvariablen werden geprüft, ungültige Werte fallen auf Standard

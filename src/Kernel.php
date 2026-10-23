@@ -19,8 +19,8 @@ class Kernel
         ]);
         session_start();
 
-        if (version_compare(PHP_VERSION, '8.5', '<')) {
-            throw new \RuntimeException('PHP 8.5 required; running ' . PHP_VERSION);
+        if (version_compare(PHP_VERSION, '8.3', '<')) {
+            throw new \RuntimeException('PHP 8.3 required; running ' . PHP_VERSION);
         }
 
         if (file_exists(GUI_ROOT . '/.env')) {
@@ -91,6 +91,7 @@ class Kernel
             $value = filter_var($text($env[$key] ?? '1'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
             $env[$key] = $value ?? true;
         }
+        $env['GUI_REMEMBER_LOGIN'] = filter_var($text($env['GUI_REMEMBER_LOGIN'] ?? '0'), FILTER_VALIDATE_BOOLEAN);
         $display = filter_var($text($env['PHP_INI_DISPLAY_ERRORS'] ?? 'On'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         $env['PHP_INI_DISPLAY_ERRORS'] = ($display ?? true) ? 'On' : 'Off';
         $env['PHP_INI_ERROR_REPORTING'] = (string)$env['PHP_INI_ERROR_REPORTING'];
