@@ -32,6 +32,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Share-Dateiliste: Tabelle am Desktop nicht mehr rechts abgeschnitten
 - Share-Dateiliste: Aktionssymbole werden nie mit „…“ gekürzt
 - Seite „geteilte Dateien“ heißt jetzt „Share“
+- Abgelaufene Sitzung: Login klappt ohne Neuladen, Button „Neu laden“ in der Meldung
 
 ### Betrieb
 - Docker-Image auf Alpine mit PHP 8.3 für alte Kernel umgestellt

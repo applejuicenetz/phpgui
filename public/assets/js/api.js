@@ -9,6 +9,18 @@ export class ApiError extends Error {
     constructor(status, code) { super(code); this.status = status; this.code = code; }
 }
 export async function request(endpoint, fields = null, params = {}, signal) {
+    try {
+        return await send(endpoint, fields, params, signal);
+    } catch (error) {
+        // Expired PHP session: the CSRF token held in memory is stale and a PWA has no reload button.
+        // Fetch a fresh token (new session) and repeat the write once.
+        if (fields === null || error.code !== 'csrf') throw error;
+        const fresh = await send('session', null, {}, signal);
+        setCsrf(fresh.csrf);
+        return send(endpoint, fields, params, signal);
+    }
+}
+async function send(endpoint, fields, params, signal) {
     const url = new URL('api.php', document.baseURI);
     url.search = new URLSearchParams({ endpoint, ...params });
     const options = { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal };
