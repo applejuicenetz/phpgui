@@ -501,6 +501,12 @@ tr[data-status="canceled"] progress.progress { --bulma-progress-value-background
 }
 .share-tabs-row .share-tabs { margin-bottom: 0; }
 .prio-badge { margin-left: auto; padding: .35rem .75rem; border: 1px solid var(--app-line); border-radius: var(--bulma-radius); background: var(--app-surface); font-size: .85rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+a.prio-badge { color: inherit; }
+a.prio-badge { display: inline-flex; align-items: center; gap: .35rem; }
+a.prio-badge:hover { border-color: var(--bulma-link); }
+a.prio-badge.is-active { background: var(--bulma-link); border-color: var(--bulma-link); color: var(--bulma-scheme-main, #fff); font-weight: 600; }
+a.prio-badge .icon { width: 1em; height: 1em; }
+a.prio-badge .prio-close { opacity: .8; }
 
 .app-title-icon { display: none; }
 @media screen and (max-width: 520px) { .app-title-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .app-title-icon { display: inline-flex; width: 1.6rem; height: 1.6rem; } }

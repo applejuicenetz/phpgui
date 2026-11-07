@@ -260,6 +260,8 @@
     "copy_failed": "Copy failed",
     "export": "Export links",
     "prio_spent": "Prio: %spent/1000",
+    "prio_list": "Show only files with a priority",
+    "prio_list_off": "Clear filter, show all files",
     "shared_directories_new": "New directory",
     "way": "Forgive path",
     "with_subs": "with subdirectories",
@@ -349,7 +351,7 @@
       "remove": "Directory removed.",
       "add": "Directory added.",
       "priority": "Priority set.",
-      "limit": "Limit set."
+        "limit": "Limit set."
     },
     "skip": "Skip to content",
     "theme": "Appearance",

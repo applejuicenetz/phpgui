@@ -4,6 +4,10 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 
 ## 0.33.2 (2026-10-18)
 
+### Share
+- Prio-Anzeige anklickbar: filtert auf Dateien mit Prio
+- Prio per Auswahl und „Prio setzen“ zurücksetzen
+
 ### Downloads und Uploads
 - Sortierung nach Geschwindigkeit
 - Dateiname in Downloads öffnet die Quellenliste

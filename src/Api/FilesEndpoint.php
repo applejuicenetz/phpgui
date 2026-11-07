@@ -16,6 +16,11 @@ final class FilesEndpoint extends Endpoint
         return array_key_exists('dir', $_GET) ? Request::get('dir') : null;
     }
 
+    private function onlyPrioritized(): bool
+    {
+        return Request::get('prio') === '1';
+    }
+
     public function get(): array
     {
         $share = new Share();
@@ -34,7 +39,7 @@ final class FilesEndpoint extends Endpoint
                 // Unknown ID: show the first page.
             }
         }
-        $result = $share->page($dir, $page, self::PAGE_SIZE, $filter);
+        $result = $share->page($dir, $page, self::PAGE_SIZE, $filter, $this->onlyPrioritized());
         $files = [];
         foreach ($result['files'] as $f) {
             $files[] = [
@@ -46,11 +51,11 @@ final class FilesEndpoint extends Endpoint
             ];
         }
         $folders = [];
-        foreach ($dir !== null && $filter === '' ? $share->directory($dir) : [] as [$path, $name]) {
+        foreach ($dir !== null && $filter === '' && !$this->onlyPrioritized() ? $share->directory($dir) : [] as [$path, $name]) {
             $folders[] = ['path' => (string)$path, 'name' => (string)$name];
         }
         return [
-            'files' => $files, 'source' => $files === [] ? null : CoreData::source(), 'folders' => $folders, 'filter' => $filter, 'spent' => $share->spentprio,
+            'files' => $files, 'source' => $files === [] ? null : CoreData::source(), 'folders' => $folders, 'filter' => $filter, 'prio' => $this->onlyPrioritized(), 'spent' => $share->spentprio,
             'page' => $result['page'], 'pages' => $result['pages'], 'total' => $result['total'],
         ];
     }
@@ -66,7 +71,7 @@ final class FilesEndpoint extends Endpoint
                 if ($ids === []) {
                     $number = 1;
                     do {
-                        $result = $share->page($this->directory(), $number++, self::PAGE_SIZE, trim(Request::get('q')));
+                        $result = $share->page($this->directory(), $number++, self::PAGE_SIZE, trim(Request::get('q')), $this->onlyPrioritized());
                         foreach ($result['files'] as $file) $links[] = $file['LINK'];
                     } while ($result['page'] < $result['pages']);
                 } else {

@@ -127,16 +127,17 @@ class Share
         return $filter === '' || str_contains(mb_strtolower($filename), mb_strtolower($filter));
     }
 
-    public function page(?string $directory, int $page = 1, int $pageSize = 200, string $filter = ''): array
+    public function page(?string $directory, int $page = 1, int $pageSize = 200, string $filter = '', bool $onlyPrioritized = false): array
     {
         $filter = trim($filter);
         $page = max(1, $page);
         $selection = new ShareSelection($page * $pageSize);
         $total = 0;
         $this->spentprio = 0;
-        $this->scan(function ($file) use ($selection, $directory, $filter, &$total): void {
+        $this->scan(function ($file) use ($selection, $directory, $filter, $onlyPrioritized, &$total): void {
             if ((int)$file['PRIORITY'] > 1) $this->spentprio += (int)$file['PRIORITY'];
-            if (!$this->inDirectory($file, $directory, $filter !== '') || !self::matchesFilter($file['FILENAME'], $filter)) return;
+            if (!$this->inDirectory($file, $directory, $filter !== '' || $onlyPrioritized) || !self::matchesFilter($file['FILENAME'], $filter)) return;
+            if ($onlyPrioritized && (int)$file['PRIORITY'] <= 1) return;
             $total++;
             $selection->consume($file);
         });

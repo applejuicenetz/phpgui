@@ -260,6 +260,8 @@
     "copy_failed": "Kopieren fehlgeschlagen",
     "export": "Links exportieren",
     "prio_spent": "Prio: %spent/1000",
+    "prio_list": "Nur Dateien mit Prio anzeigen",
+    "prio_list_off": "Filter beenden, alle Dateien zeigen",
     "shared_directories_new": "Neues Verzeichnis",
     "way": "Verzeichnis-Pfad",
     "with_subs": "mit Unterverzeichnissen",
@@ -349,7 +351,7 @@
       "remove": "Verzeichnis entfernt.",
       "add": "Verzeichnis hinzugefügt.",
       "priority": "Priorität gesetzt.",
-      "limit": "Limit gesetzt."
+        "limit": "Limit gesetzt."
     },
     "skip": "Zum Inhalt springen",
     "theme": "Darstellung",

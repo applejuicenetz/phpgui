@@ -3,14 +3,15 @@ import { useData } from '../polling.js';
 import { request } from '../api.js';
 import { t, state, url, navigate, mutate, notify, handleError } from '../store.js';
 import { bytes, date, relInfo, safeUrl } from '../format.js';
-import { Icon, Modal, ShareTabs, selection } from '../components/common.js';
+import { Icon, Modal, ShareTabs, PrioBadge, selection } from '../components/common.js';
 
 export default {
-    components: { Icon, Modal, ShareTabs },
+    components: { Icon, Modal, ShareTabs, PrioBadge },
     setup() {
         const scoped = state.route.site === 'sharefiles', filter = ref(state.route.q || ''), directory = state.route.dir || '';
-        const params = () => ({ ...(scoped ? {dir:directory} : {}), q:filter.value, ...(scoped && state.route.focus && !state.route.page && !filter.value ? {focus:state.route.focus} : {page:state.route.page || 1}) });
-        const endpoint = scoped || filter.value ? 'files' : 'shares';
+        const onlyPrio = !scoped && state.route.prio === '1', prioParam = onlyPrio ? {prio:1} : {};
+        const params = () => ({ ...(scoped ? {dir:directory} : {}), ...prioParam, q:filter.value, ...(scoped && state.route.focus && !state.route.page && !filter.value ? {focus:state.route.focus} : {page:state.route.page || 1}) });
+        const endpoint = scoped || filter.value || onlyPrio ? 'files' : 'shares';
         const source = useData(endpoint, params, false), select = selection(), exported = ref(''), linkRow = ref(null), linkStyle = ref({}), priority = ref(1), newPath = ref(''), recursive = ref(true), busy = ref(false), browsing = ref(false), browseData = ref({dir:'',entries:[]});
         const ids = computed(() => (source.data.value?.files || []).map(row=>row.id));
         const focusId = scoped ? Number(state.route.focus) || 0 : 0;
@@ -18,7 +19,7 @@ export default {
         let focused = false;
         watch(() => source.data.value?.files, files => { if (focused || !focusId || !files) return; focused = true; nextTick(() => document.getElementById('share-' + focusId)?.scrollIntoView({ block: 'center' })); });
         let timer;
-        function search() { navigate(scoped?'sharefiles':'shares', {...(scoped?{dir:directory}:{}),...(filter.value?{q:filter.value}:{})}, true); }
+        function search() { navigate(scoped?'sharefiles':'shares', {...(scoped?{dir:directory}:{}),...prioParam,...(filter.value?{q:filter.value}:{})}, true); }
         watch(filter,()=>{clearTimeout(timer);timer=setTimeout(search,400);});
         onUnmounted(()=>clearTimeout(timer));
         watch(() => source.data.value?.files, files => select.prune((files || []).map(row => row.id)));
@@ -68,9 +69,9 @@ export default {
         document.addEventListener('click', outside); document.addEventListener('keydown', escape); window.addEventListener('resize', closeLink); document.addEventListener('scroll', closeLink, true);
         onUnmounted(() => { document.removeEventListener('click', outside); document.removeEventListener('keydown', escape); window.removeEventListener('resize', closeLink); document.removeEventListener('scroll', closeLink, true); });
         function remove(name) { if(window.confirm(t('Share.remove')+': '+name)) action('remove',{name}); }
-        return {...source,scoped,directory,filter,search,ids,selected:select.selected,toggle:select.toggle,all:select.all,exported,copyExport,focusId,linkRow,linkStyle,sourceLink,showLink,priority,newPath,recursive,busy,browsing,browseData,action,fileAction,browse,remove,t,url,bytes,date,relInfo,safeUrl};
+        return {...source,scoped,directory,filter,search,ids,selected:select.selected,toggle:select.toggle,all:select.all,exported,copyExport,focusId,linkRow,linkStyle,sourceLink,showLink,priority,prioParam,newPath,recursive,busy,browsing,browseData,action,fileAction,browse,remove,t,url,bytes,date,relInfo,safeUrl};
     },
-    template:`<div v-if="data" :id="scoped ? 'sharefiles-root' : 'shares-root'"><ShareTabs><span v-if="data.spent !== undefined" class="prio-badge" id="prio-spent">{{t('Share.prio_spent').replace('%spent',data.spent)}}</span></ShareTabs>
+    template:`<div v-if="data" :id="scoped ? 'sharefiles-root' : 'shares-root'"><ShareTabs><PrioBadge v-if="data.spent !== undefined" :spent="data.spent" /></ShareTabs>
     <p v-if="scoped" class="mb-3"><a class="button is-small" :href="url('shares')"><Icon name="arrow-left-short" />{{t('Navigation.shares')}}</a> <code class="dir-path">{{directory}}</code></p>
     <form class="field has-addons" id="share-search" role="search" @submit.prevent="search"><div class="control is-expanded"><input class="input" type="search" id="share-filter" v-model="filter" enterkeyhint="search" :placeholder="t('Share.filter_hint')" :aria-label="t('Share.filter_hint')" autocomplete="off" @keydown.esc="filter=''"></div><div class="control"><button class="button" :aria-label="t('UI.filter')"><Icon name="search" /></button></div><div v-if="filter" class="control"><button class="button" type="button" @click="filter=''" :aria-label="t('UI.cancel')"><Icon name="x-lg" /></button></div></form>
     <template v-if="data.files">
@@ -84,7 +85,7 @@ export default {
             <template v-if="sourceLink(linkRow.link)"><label class="label is-small mt-3" for="link-source">{{t('Share.source_link')}}</label>
             <input id="link-source" class="input is-small" type="text" inputmode="none" readonly :value="sourceLink(linkRow.link)" @focus="$event.target.select()" @click="$event.target.select()"></template>
         </div>
-        <nav v-if="data.pages>1" class="pagination is-centered mt-4" :aria-label="t('UI.pagination')"><a v-if="data.page>1" class="pagination-previous" :href="url(scoped?'sharefiles':'shares',{...(scoped?{dir:directory}:{}),q:filter,page:data.page-1})">‹</a><a v-if="data.page<data.pages" class="pagination-next" :href="url(scoped?'sharefiles':'shares',{...(scoped?{dir:directory}:{}),q:filter,page:data.page+1})">›</a><span class="pagination-list dl-meta">{{data.page}} / {{data.pages}} · {{data.total}}</span></nav></section>
+        <nav v-if="data.pages>1" class="pagination is-centered mt-4" :aria-label="t('UI.pagination')"><a v-if="data.page>1" class="pagination-previous" :href="url(scoped?'sharefiles':'shares',{...(scoped?{dir:directory}:{}),...prioParam,q:filter,page:data.page-1})">‹</a><a v-if="data.page<data.pages" class="pagination-next" :href="url(scoped?'sharefiles':'shares',{...(scoped?{dir:directory}:{}),...prioParam,q:filter,page:data.page+1})">›</a><span class="pagination-list dl-meta">{{data.page}} / {{data.pages}} · {{data.total}}</span></nav></section>
     </template><template v-else>
         <section class="box"><div class="buttons are-small share-check-buttons"><button type="button" class="button is-primary" :disabled="busy" :title="t('Share.check')" :aria-label="t('Share.check')" @click="action('check')"><Icon name="arrow-repeat" /><span>{{t('Share.check_short')}}</span></button><button v-if="data.can_stop_check" type="button" class="button is-danger is-light" :disabled="busy" :title="t('Share.stop_check')" :aria-label="t('Share.stop_check')" @click="action('stopcheck')"><Icon name="x-lg" /><span>{{t('Share.stop_check_short')}}</span></button></div><ul class="dir-list"><li class="dir-row"><Icon name="folder-fill" class="dir-icon" /><a class="dir-name" :href="url('sharefiles',{dir:data.temp})">{{data.temp}}</a><span class="tag">{{t('Share.temp')}}</span></li><li v-for="dir in data.dirs" :key="dir.name" class="dir-row"><Icon name="folder-fill" class="dir-icon" /><a class="dir-name" :href="url('sharefiles',{dir:dir.name})">{{dir.name}}</a><span v-if="!dir.can_remove" class="tag">{{t('Share.incoming')}}</span><div class="dir-controls"><label class="checkbox"><input type="checkbox" :checked="dir.subs" :disabled="busy" @change="action('toggle',{name:dir.name,subs:$event.target.checked?'1':'0'})"> {{t('Share.subs_toggle')}}</label><button v-if="dir.can_remove" class="button is-danger is-light is-small" :disabled="busy" :aria-label="t('Share.remove')" @click="remove(dir.name)"><Icon name="trash" /></button></div></li></ul></section>
         <section class="box"><h2 class="box-title">{{t('Share.shared_directories_new')}}</h2><form @submit.prevent="action('add',{name:newPath,subs:recursive?'1':'0'})"><div class="field has-addons"><div class="control is-expanded"><input class="input" id="share-new-path" v-model="newPath" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" :placeholder="t('Share.way')" :aria-label="t('Share.way')" required></div><div class="control"><button type="button" class="button" @click="browse(newPath)"><Icon name="folder" /><span class="action-text">{{t('Share.browse')}}</span></button></div></div><div class="field"><label class="checkbox"><input type="checkbox" v-model="recursive"> {{t('Share.with_subs')}}</label></div><button class="button is-primary" :disabled="busy"><Icon name="plus-lg" />{{t('Share.add')}}</button></form></section>
